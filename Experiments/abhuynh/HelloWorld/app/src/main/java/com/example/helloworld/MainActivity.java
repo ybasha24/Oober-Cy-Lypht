@@ -1,4 +1,5 @@
 package com.example.helloworld;
+import android.content.Intent;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
@@ -12,12 +13,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
 
-        b1=(Button)findViewById(R.id.activity_main_button1);
-        b1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Clicked",Toast.LENGTH_LONG).show();
-            }
-        });
+    public void sendMessage(View view) {
+        Intent intent = new Intent(this, SecondaryActivity.class);
+        startActivity(intent);
     }
 }
