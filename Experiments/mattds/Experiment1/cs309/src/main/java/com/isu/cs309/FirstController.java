@@ -1,15 +1,15 @@
-package coms309;
+package com.isu.cs309;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
-class WelcomeController {
+class FirstController {
 
     @GetMapping("/")
     public String welcome() {
-        return "Hello and welcome to COMS 309";
+        return "This is Matt's Experimental Spring";
     }
 
     @GetMapping("/{name}")
