@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="Experiments/abhuynh/HelloWorld/app/src/androidTest/java"/>
+	<classpathentry kind="src" path="Experiments/abhuynh/HelloWorld/app/src/main/java"/>
+	<classpathentry kind="src" path="Experiments/abhuynh/HelloWorld/app/src/test/java"/>
+	<classpathentry kind="src" path="Experiments/mattds/cs309/src/main/java"/>
+	<classpathentry kind="src" path="Experiments/mattds/cs309/src/test/java"/>
+	<classpathentry kind="lib" path="Experiments/abhuynh/HelloWorld/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="Experiments/mattds/cs309/.mvn/wrapper/maven-wrapper.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
