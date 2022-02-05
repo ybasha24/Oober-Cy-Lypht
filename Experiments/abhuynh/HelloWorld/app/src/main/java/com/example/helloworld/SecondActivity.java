@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 public class SecondActivity extends AppCompatActivity {
 
+    String firstName, lastName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,8 +20,8 @@ public class SecondActivity extends AppCompatActivity {
     public void sayHello(View view){
         EditText firstNameInputLabel = (EditText) findViewById(R.id.firstNameInputLabel);
         EditText lastNameInputLabel = (EditText) findViewById(R.id.lastNameInputLabel);
-        String firstName = firstNameInputLabel.getText().toString();
-        String lastName = lastNameInputLabel.getText().toString();
+        firstName = firstNameInputLabel.getText().toString();
+        lastName = lastNameInputLabel.getText().toString();
         TextView nameTextView = findViewById(R.id.nameTextView);
         if(firstName == "" && lastName == "")
             nameTextView.setText("Please enter your name.");
@@ -31,6 +32,7 @@ public class SecondActivity extends AppCompatActivity {
 
     public void previousPage(View view) {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(firstName, lastName);
         startActivity(intent);
     }
 
