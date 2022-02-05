@@ -2,6 +2,7 @@ package com.isu.cs309;
 
 public class User {
 
+    Long id;
     String firstName;
     String lastName;
     String address;
@@ -14,6 +15,14 @@ public class User {
         this.address = address;
         this.email = email;
         this.phoneNumber = phoneNumber;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {

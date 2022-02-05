@@ -1,9 +1,12 @@
 package com.isu.cs309;
 
+import org.aspectj.apache.bcel.classfile.Module;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 class FirstController {
@@ -43,5 +46,22 @@ class FirstController {
         list.add(user1);
         list.add(user2);
         return list;
+    }
+
+    @GetMapping("/api/foos")
+    @ResponseBody
+    public String getFoos(@RequestParam(required = false) String id) {
+        return "ID: " + id;
+    }
+
+    @GetMapping("/parameter")
+    @ResponseBody
+    public User getParameter(@RequestParam Long id){
+        user1.setId(1L);
+        user2.setId(2L);
+        HashMap<Long,User > mapOfUsers = new HashMap<>();
+        mapOfUsers.put(1L, user1);
+        mapOfUsers.put(2L, user2);
+        return mapOfUsers.get(id);
     }
 }
