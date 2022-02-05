@@ -1,12 +1,10 @@
 package com.isu.cs309;
 
-import org.aspectj.apache.bcel.classfile.Module;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 class FirstController {
@@ -24,6 +22,8 @@ class FirstController {
             "615 10th St. Ames, IA 50010",
             "jdoe@iastate.edu",
             "123-456-7890");
+
+    List<String> names = new ArrayList<>();
 
     @GetMapping("/")
     public String welcome() {
@@ -57,5 +57,16 @@ class FirstController {
         mapOfUsers.put(1L, user1);
         mapOfUsers.put(2L, user2);
         return mapOfUsers.get(id);
+    }
+
+    @PutMapping("/put")
+    List addAName(@RequestBody String name) {
+
+        names.add(name);
+        for (String n : names) {
+            System.out.println(n);
+        }
+
+        return names;
     }
 }
