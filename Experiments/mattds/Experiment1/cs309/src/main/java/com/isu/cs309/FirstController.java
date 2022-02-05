@@ -48,12 +48,6 @@ class FirstController {
         return list;
     }
 
-    @GetMapping("/api/foos")
-    @ResponseBody
-    public String getFoos(@RequestParam(required = false) String id) {
-        return "ID: " + id;
-    }
-
     @GetMapping("/parameter")
     @ResponseBody
     public User getParameter(@RequestParam Long id){
