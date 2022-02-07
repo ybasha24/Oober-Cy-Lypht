@@ -30,11 +30,6 @@ public class MainActivity extends AppCompatActivity {
         mv.setEnabled(false);
         Button b = (Button) mv;
         b.setText("Button Off");
-        /*
-        v.setEnabled(false);
-        Button b = (Button) v;
-        b.setText("Button Off");
-        */
     }
 
     // Enter text and prints it out
@@ -52,14 +47,6 @@ public class MainActivity extends AppCompatActivity {
             flag = 1;
 
         }
-
-//        //Sets output text when clicking button
-//        ((TextView)findViewById(R.id.output)).setText(s);
-//
-//        //Pop up alert
-//        Toast.makeText(this, "Alert", Toast.LENGTH_LONG).show();
-//
-//        //Log.d("info", s);
     }
 
     public void launchSettings(View v) {
