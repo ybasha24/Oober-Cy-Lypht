@@ -1,13 +1,31 @@
 package com.isu.cs309;
 
-public class User {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.io.Serializable;
 
-    Long id;
+@Entity
+public class User {
+    //public class User implements Serializable {
+
+    @Id
+    @Column(name = "id", nullable = false)
+    private Long id;
+
     String firstName;
     String lastName;
     String address;
     String email;
     String phoneNumber;
+
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
 
     public User(String firstName, String lastName, String address, String email, String phoneNumber) {
         this.firstName = firstName;
@@ -15,6 +33,19 @@ public class User {
         this.address = address;
         this.email = email;
         this.phoneNumber = phoneNumber;
+    }
+
+//    public User(String firstName, String lastName, String address, String email, String phoneNumber) {
+////        this.id = id;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.address = address;
+//        this.email = email;
+//        this.phoneNumber = phoneNumber;
+//    }
+
+    public User() {
+
     }
 
     public Long getId() {

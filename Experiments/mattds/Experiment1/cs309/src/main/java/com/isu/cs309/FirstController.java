@@ -49,7 +49,6 @@ class FirstController {
     }
 
     @GetMapping("/parameter")
-    @ResponseBody
     public User getParameter(@RequestParam Long id){
         user1.setId(1L);
         user2.setId(2L);
@@ -58,9 +57,9 @@ class FirstController {
         mapOfUsers.put(2L, user2);
         return mapOfUsers.get(id);
     }
-
-    @PutMapping("/put")
-    List addAName(@RequestBody String name) {
+    
+    @PutMapping("/post")
+    List<String> addAName(@RequestBody String name) {
 
         names.add(name);
         for (String n : names) {
@@ -68,5 +67,41 @@ class FirstController {
         }
 
         return names;
+    }
+
+    //inserts a new object
+    @PostMapping("/postObject")
+    public @ResponseBody String addAnObject(@RequestBody User u) {
+
+        HashMap<Long, User> mapOfUsers = new HashMap<>();
+        System.out.println(u);
+        User u1 = new User(u.getFirstName(), u.getLastName(), u.getAddress(), u.getEmail(), u.getPhoneNumber());
+        mapOfUsers.put(u1.getId(), u1);
+
+        return "You have just created a user for " + u.getFirstName();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    HashMap<Long, User> deleteSomething(@PathVariable Long id) {
+        user1.setId(1L);
+        user2.setId(2L);
+        HashMap<Long, User> mapOfUsers = new HashMap<>();
+        mapOfUsers.put(1L, user1);
+        mapOfUsers.put(2L, user2);
+        mapOfUsers.remove(id);
+        System.out.println(mapOfUsers.get(2L));
+        return mapOfUsers;
+
+    }
+
+    @PutMapping("/put/{id}")
+    public @ResponseBody User putInfo(Long id, @RequestBody String name) {
+        HashMap<Long, User> mapOfUsers = new HashMap<>();
+        mapOfUsers.put(1L, user1);
+        mapOfUsers.put(2L, user2);
+        User user = mapOfUsers.get(id);
+        user.setFirstName(name);
+        return user;
+
     }
 }
