@@ -3,11 +3,9 @@ package com.isu.cs309;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.io.Serializable;
 
 @Entity
 public class User {
-    //public class User implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false)
@@ -34,15 +32,6 @@ public class User {
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
-
-//    public User(String firstName, String lastName, String address, String email, String phoneNumber) {
-////        this.id = id;
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.address = address;
-//        this.email = email;
-//        this.phoneNumber = phoneNumber;
-//    }
 
     public User() {
 

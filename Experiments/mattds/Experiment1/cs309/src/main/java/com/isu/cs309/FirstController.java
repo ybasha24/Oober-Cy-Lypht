@@ -57,7 +57,7 @@ class FirstController {
         mapOfUsers.put(2L, user2);
         return mapOfUsers.get(id);
     }
-    
+
     @PutMapping("/post")
     List<String> addAName(@RequestBody String name) {
 
@@ -94,14 +94,29 @@ class FirstController {
 
     }
 
+    //updates an object
     @PutMapping("/put/{id}")
-    public @ResponseBody User putInfo(Long id, @RequestBody String name) {
+    public @ResponseBody User putInfo(@PathVariable Long id, @RequestBody User userInput) {
         HashMap<Long, User> mapOfUsers = new HashMap<>();
+        user1.setId(1L);
+        user2.setId(2L);
+        mapOfUsers.put(1L, user1);
+        mapOfUsers.put(2L, user2);
+        User user = mapOfUsers.get(id);
+        user.setFirstName(userInput.getFirstName());
+        return user;
+    }
+
+    //updates an object
+    @PutMapping("/secondput/{id}")
+    public @ResponseBody User putInfo(@PathVariable Long id, @RequestBody String name) {
+        HashMap<Long, User> mapOfUsers = new HashMap<>();
+        user1.setId(1L);
+        user2.setId(2L);
         mapOfUsers.put(1L, user1);
         mapOfUsers.put(2L, user2);
         User user = mapOfUsers.get(id);
         user.setFirstName(name);
         return user;
-
     }
 }
