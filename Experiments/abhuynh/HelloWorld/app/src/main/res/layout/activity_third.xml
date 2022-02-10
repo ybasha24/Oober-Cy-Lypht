@@ -7,7 +7,7 @@
     tools:context=".ThirdActivity">
 
     <RatingBar
-        android:id="@+id/ratingBar"
+        android:id="@+id/driverRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="Rate the driver"
@@ -19,21 +19,21 @@
         app:layout_constraintVertical_bias="0.35" />
 
     <RatingBar
-        android:id="@+id/ratingBar2"
+        android:id="@+id/appRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="Rate the app"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+        app:layout_constraintTop_toBottomOf="@+id/driverRating" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Rate your driver"
-        app:layout_constraintBottom_toTopOf="@+id/ratingBar"
+        app:layout_constraintBottom_toTopOf="@+id/driverRating"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Rate this app"
-        app:layout_constraintBottom_toTopOf="@+id/ratingBar2"
+        app:layout_constraintBottom_toTopOf="@+id/appRating"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -62,4 +62,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.954" />
+
+    <TextView
+        android:id="@+id/driverRatingTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/driverRating"
+        app:layout_constraintVertical_bias="0.023" />
 </androidx.constraintlayout.widget.ConstraintLayout>

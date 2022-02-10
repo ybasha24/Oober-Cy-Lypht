@@ -19,7 +19,7 @@
         app:layout_constraintVertical_bias="0.616" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/passwordET"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:ems="10"
@@ -33,7 +33,7 @@
         app:layout_constraintVertical_bias="0.499" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/userNameET"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:ems="10"
@@ -50,12 +50,12 @@
         android:id="@+id/appNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Uber-Cy-Lyft"
+        android:text="Oober-Cy-Lphft"
         android:textColor="#FF0000"
         android:textColorHighlight="#FF0000"
         android:textSize="44sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/userNameET"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
