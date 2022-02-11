@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.view.View;
 
+import java.sql.Driver;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,11 +19,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void signIn(View view){
-        EditText username = (EditText) findViewById(R.id.usernameInput);
-        EditText password = (EditText) findViewById(R.id.passwordInput);
-        if(username.getText().toString() == "rider" && password.getText().toString() == "password"){
-            Intent intent = new Intent(this, RiderHomePage.class);
+        EditText usernameInput = (EditText) findViewById(R.id.usernameInput);
+        EditText passwordInput = (EditText) findViewById(R.id.passwordInput);
+        String username = usernameInput.getText().toString();
+        String password = passwordInput.getText().toString();
+//        if(user == "rider" && pass == "rider"){
+            Intent intent = new Intent(this, DriverHomePage.class);
+            intent.putExtra("username", username);
             startActivity(intent);
-        }
+//        }
+//        else if(user == "driver" && pass == "driver"){
+//            Intent intent = new Intent(this, DriverHomePage.class);
+//            startActivity(intent);
+//        }
     }
 }
