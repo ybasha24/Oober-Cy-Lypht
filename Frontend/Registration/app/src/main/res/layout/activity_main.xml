@@ -10,6 +10,7 @@
         android:id="@+id/loginButton"
         android:layout_width="110dp"
         android:layout_height="50dp"
+        android:onClick="signIn"
         android:text="Sign in"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,7 +20,7 @@
         app:layout_constraintVertical_bias="0.616" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/passwordInput"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:ems="10"
@@ -33,7 +34,7 @@
         app:layout_constraintVertical_bias="0.499" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/usernameInput"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:ems="10"
@@ -55,7 +56,7 @@
         android:textColorHighlight="#FF0000"
         android:textSize="44sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/usernameInput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
