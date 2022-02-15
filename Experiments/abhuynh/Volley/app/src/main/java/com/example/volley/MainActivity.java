@@ -4,41 +4,50 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.volley.app.AppController;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private String TAG = MainActivity.class.getSimpleName();
+    private String tag_string_req = "string_req";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TextView textView = (TextView) findViewById(R.id.textview);
+    }
 
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="https://www.google.com";
+    public void stringRequest(View view){
+        TextView textView = (TextView) findViewById(R.id.textview);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        textView.setText("Response is: "+ response.substring(0,500));
-                    }
-                }, new Response.ErrorListener() {
+        String url = "https:api.androidhive.info/volley/string_response.html";
+
+        StringRequest strReq = new StringRequest(Request.Method.GET, url, new Response.Listener<String>(){
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+                textView.setText(response.toString());
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                textView.setText("That didn't work!");
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                textView.setText("Error!");
             }
         });
 
-        queue.add(stringRequest);
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+
     }
 }
