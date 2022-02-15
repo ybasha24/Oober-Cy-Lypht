@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.StringRequest;
+
 import org.w3c.dom.Text;
 
 
@@ -38,14 +41,39 @@ public class MainActivity extends AppCompatActivity {
         EditText t = findViewById(R.id.Source);
         s = t.getText().toString();
 
-        if (s.equals("Name") || s.equals("name") || s.equals("")) {
+//        if (s.equals("Name") || s.equals("name") || s.equals("")) {
+//            flag = 0;
+//            Toast.makeText(this, "Didn't work", Toast.LENGTH_LONG).show();
+//            ((TextView) findViewById(R.id.output)).setText("Please type your name");
+//        } else {
+//            ((TextView) findViewById(R.id.output)).setText("Hello! " + s + "\nPlease click next to continue");
+//            flag = 1;
+//
+//        }
+        int val = 0;
+        try {
+            val = Integer.parseInt(s.trim());
+
+        }
+        catch (NumberFormatException exec) {
             flag = 0;
             Toast.makeText(this, "Didn't work", Toast.LENGTH_LONG).show();
-            ((TextView) findViewById(R.id.output)).setText("Please type your name");
-        } else {
-            ((TextView) findViewById(R.id.output)).setText("Hello! " + s + "\nPlease click next to continue");
-            flag = 1;
+            ((TextView) findViewById(R.id.output)).setText("Please type a number");
+            Toast.makeText(this, "Please type a number", Toast.LENGTH_LONG).show();
+        }
 
+        if(val > 4 || val < 1){
+            flag = 0;
+            Toast.makeText(this, "Didn't work", Toast.LENGTH_LONG).show();
+            ((TextView) findViewById(R.id.output)).setText("Please type a number between 1 and 4");
+        }
+        else
+        {
+            //((TextView) findViewById(R.id.output)).setText("Hello! " + s + "\nPlease click next to continue");
+            String url = ""; //TODO figure out how url is defined. Will try to pass in a string
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                    response -> Toast.makeText(MainActivity.this, "success", Toast.LENGTH_LONG)).show();
+            flag = 1;
         }
     }
 
