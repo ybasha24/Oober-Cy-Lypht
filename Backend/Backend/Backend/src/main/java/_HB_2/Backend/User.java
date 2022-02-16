@@ -9,19 +9,13 @@ public abstract class User {
     String zip;
     String email;
     String phoneNumber;
+    Boolean isADriver;
+    Boolean isARider;
+    Boolean isAnAdmin;
 
+
+    //no Boolean Values
     public User(String firstName, String lastName, String address, String state, String zip, String email, String phoneNumber) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.state = state;
-        this.zip = zip;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-    }
-
-    public User(int id, String firstName, String lastName, String address, String state, String zip, String email, String phoneNumber) {
-        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -93,5 +87,29 @@ public abstract class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Boolean getADriver() {
+        return isADriver;
+    }
+
+    public void setADriver(Boolean ADriver) {
+        isADriver = ADriver;
+    }
+
+    public Boolean getARider() {
+        return isARider;
+    }
+
+    public void setARider(Boolean ARider) {
+        isARider = ARider;
+    }
+
+    public Boolean getAnAdmin() {
+        return isAnAdmin;
+    }
+
+    public void setAnAdmin(Boolean anAdmin) {
+        isAnAdmin = anAdmin;
     }
 }
