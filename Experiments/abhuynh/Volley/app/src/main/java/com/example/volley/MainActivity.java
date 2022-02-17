@@ -39,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void stringRequest(View view){
-        String url = "https:api.androidhive.info/volley/string_response.html";
+//        String url = "https:api.androidhive.info/volley/string_response.html";
+        String url = "https://41096e03-1605-4363-a912-57afa92f86c7.mock.pstmn.io/bumboString";
         TextView textView = (TextView) findViewById(R.id.textview);
 
         StringRequest req = new StringRequest(Request.Method.GET, url,
@@ -57,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void jsonObjectRequest(View view){
         TextView textView = (TextView) findViewById(R.id.textview);
-        String url = "https:api.androidhive.info/volley/person_object.json";
+//        String url = "https:api.androidhive.info/volley/person_object.json";
+        String url = "https://41096e03-1605-4363-a912-57afa92f86c7.mock.pstmn.io/bumbo";
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
             response -> {
                 Log.d(TAG, response.toString());
@@ -73,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void jsonArrayRequest(View view){
         TextView textView = (TextView) findViewById(R.id.textview);
-        String url = "https:api.androidhive.info/volley/person_array.json";
+//        String url = "https:api.androidhive.info/volley/person_array.json";
+        String url = "https://41096e03-1605-4363-a912-57afa92f86c7.mock.pstmn.io/bumboArray";
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
             response -> {
                 Log.d(TAG, response.toString());
