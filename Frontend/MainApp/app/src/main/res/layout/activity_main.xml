@@ -67,6 +67,7 @@
         android:id="@+id/button4"
         android:layout_width="110dp"
         android:layout_height="50dp"
+        android:onClick="register"
         android:text="Register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
