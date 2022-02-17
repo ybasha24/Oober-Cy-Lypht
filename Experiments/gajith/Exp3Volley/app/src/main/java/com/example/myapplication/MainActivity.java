@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
                 VolleyLog.e(TAG, "Error " + error.getMessage());
             }
         });
-        //no need to add to request queue
     }
 
 
