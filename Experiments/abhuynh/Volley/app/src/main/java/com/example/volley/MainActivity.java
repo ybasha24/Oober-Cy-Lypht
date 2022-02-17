@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -106,4 +107,24 @@ public class MainActivity extends AppCompatActivity {
         });
         //no need to add to request queue
     }
+
+    public void jsonPostRequest(View view) throws JSONException {
+        TextView textView = (TextView) findViewById(R.id.textview);
+//        String url = "https://41096e03-1605-4363-a912-57afa92f86c7.mock.pstmn.io/create";
+        JSONObject obj = new JSONObject();
+//        obj.put("name", new String("He was bumbo"));
+
+        String url = "https://reqres.in/api/users";
+        obj.put("name", new String("Bumbo"));
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, obj,
+                response->{
+                    textView.setText("Bumbo was made.");
+                },
+                error -> {
+                    textView.setText("Bumbo was not made.");
+                }
+        );
+        AppController.getInstance().addToRequestQueue(req, tag_object_req);
+    }
+
 }
