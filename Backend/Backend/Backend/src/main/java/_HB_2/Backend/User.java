@@ -1,19 +1,20 @@
 package _HB_2.Backend;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 //we will need to define the name of the table where we storer the users
 //@Table(name = "users")
 public abstract class User {
 
+    /*
+     * The annotation @ID marks the field below as the primary key for the table created by springboot
+     * The @GeneratedValue generates a value if not already present, The strategy in this case is to start from 1 and increment for each table
+     */
+
     @Id
-    //this would be the strategy by which the id is generated
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     String firstName;
     String lastName;
@@ -25,9 +26,6 @@ public abstract class User {
     Boolean isADriver;
     Boolean isARider;
     Boolean isAnAdmin;
-
-    //https://stackoverflow.com/questions/18099127/java-entity-why-do-i-need-an-empty-constructor
-    public User() {}
 
     //no Boolean Values for User-These should be set in the subclass constructors
     public User(String firstName, String lastName, String address, String state, String zip, String email, String phoneNumber) {
@@ -41,7 +39,10 @@ public abstract class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public Long getId() {
+    //https://stackoverflow.com/questions/18099127/java-entity-why-do-i-need-an-empty-constructor
+    public User() {}
+
+    public int getId() {
         return id;
     }
 

@@ -12,11 +12,11 @@ public class DriverController {
     private DriverService driverService;
 
     @PostMapping("/registerDriver")
-    public @ResponseBody String saveDriver(
+    public @ResponseBody String createDriver(
             @RequestBody Driver d
     ){
         try{
-            driverService.save(d);
+            driverService.createDriver(d);
             return "You successfully registered a Driver with ID# " + d.getId();
         } catch (Exception e) {
             return "there was a problem";
