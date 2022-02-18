@@ -12,6 +12,7 @@ public class DriverService {
     DriverRepository driverRepository;
 
     public void createDriver(Driver driver) {
+
         driverRepository.save(driver);
     }
 }

@@ -3,7 +3,7 @@ package _HB_2.Backend;
 import javax.persistence.*;
 
 @Entity
-//we will need to define the name of the table where we storer the users
+//we will need to define the name of the table where we store the users
 //@Table(name = "users")
 public abstract class User {
 
