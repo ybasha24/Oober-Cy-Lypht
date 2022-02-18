@@ -5,11 +5,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface DriverRepository extends JpaRepository<User, Long> {
+public interface DriverRepository extends JpaRepository<User, Integer> {
 
         User findById(int id);
-
-        Driver save(Driver driver);
 
         @Transactional
         void deleteById(int id);
