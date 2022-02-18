@@ -1,7 +1,20 @@
 package _HB_2.Backend;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+//we will need to define the name of the table where we storer the users
+//@Table(name = "users")
 public abstract class User {
-    int id;
+
+    @Id
+    //this would be the strategy by which the id is generated
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     String firstName;
     String lastName;
     String address;
@@ -13,9 +26,12 @@ public abstract class User {
     Boolean isARider;
     Boolean isAnAdmin;
 
+    //https://stackoverflow.com/questions/18099127/java-entity-why-do-i-need-an-empty-constructor
+    public User() {}
 
-    //no Boolean Values
+    //no Boolean Values for User-These should be set in the subclass constructors
     public User(String firstName, String lastName, String address, String state, String zip, String email, String phoneNumber) {
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -25,12 +41,8 @@ public abstract class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getFirstName() {
