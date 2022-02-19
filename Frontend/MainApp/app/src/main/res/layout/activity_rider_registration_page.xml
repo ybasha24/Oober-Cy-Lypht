@@ -23,6 +23,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.042" />
 
+    <TextView
+        android:id="@+id/regStatusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#EC4F4F"
+        android:backgroundTint="#F8ACAC"
+        android:capitalize="words"
+        android:fontFamily="casual"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.958" />
+
     <EditText
         android:id="@+id/editTextFirstName"
         android:layout_width="150dp"
@@ -57,13 +73,14 @@
         android:layout_width="248dp"
         android:layout_height="59dp"
         android:backgroundTint="#D62929"
+        android:onClick="register"
         android:text="Register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.898" />
+        app:layout_constraintVertical_bias="0.861" />
 
     <EditText
         android:id="@+id/editTextPassword"
