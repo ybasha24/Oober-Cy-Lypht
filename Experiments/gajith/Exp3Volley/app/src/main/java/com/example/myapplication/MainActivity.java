@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,8 +25,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -107,10 +111,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void postRequest(View view){
+    public void postRequest(View view) throws JSONException {
         TextView textView = (TextView) findViewById(R.id.textview);
         String url = "https://d3070f82-5b4d-4c45-88f6-e4c712d30a0a.mock.pstmn.io/post";
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+        JSONObject obj = new JSONObject();
+        obj.put("name", new String("Hello"));
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, obj,
                 response -> {
                     Log.d(TAG, response.toString());
                     textView.setText("SUCCESS");
@@ -119,17 +125,31 @@ public class MainActivity extends AppCompatActivity {
                     VolleyLog.d(TAG, "Error " + error.getMessage());
                     textView.setText("Error!");
                 }
-        );{
+        ) {
+
+            /**
+             * Passing some request headers
+             * */
             @Override
-            protectedMap<String, String>getParams() {
-                Map<String, String> params =newHashMap<String, String>();
-                params.put("name","Androidhive");
-                params.put("email","abc@androidhive.info");
-                params.put("password","password123");
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("name", "Androidhive");
+                params.put("email", "abc@androidhive.info");
+                params.put("pass", "password123");
+
                 return params;
+            }
+
+        };
+
+        AppController.getInstance().addToRequestQueue(req, "json_obj_req");
 
         }
-        AppController.getInstance().addToRequestQueue(req, tag_array_req);
-
-    }
 }
