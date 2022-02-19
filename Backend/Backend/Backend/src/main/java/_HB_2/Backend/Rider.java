@@ -1,5 +1,8 @@
 package _HB_2.Backend;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Rider extends User{
 
     public Rider(String firstName, String lastName, String address, String state, String zip, String email, String phoneNumber) {
@@ -7,4 +10,7 @@ public class Rider extends User{
         this.isARider = true;
     }
 
+    public Rider() {
+
+    }
 }
