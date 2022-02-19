@@ -28,4 +28,24 @@ public class DriverController {
             return "there was a problem";
         }
     }
+
+    @GetMapping("/getDriver")
+    User getDriverById(
+            @RequestParam int id
+    ) {
+
+//        if (id == null) {
+//            return "no id sent";
+//        }
+//        try{
+//            User u = driverService.getDriverById(id);
+//            return u;
+//        } catch (Exception e) {
+//            //what should i return here?
+//            //return "there was a problem";
+//        }
+        User u = driverService.getDriverById(id);
+        return u;
+    }
+
 }
