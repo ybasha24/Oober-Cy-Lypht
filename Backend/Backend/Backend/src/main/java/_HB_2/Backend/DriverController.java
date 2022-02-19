@@ -12,7 +12,7 @@ public class DriverController {
     private DriverService driverService;
 
     @PostMapping("/registerDriver")
-    String createDriver(
+    String createDriverWithBody(
             @RequestBody Driver d
     )
 

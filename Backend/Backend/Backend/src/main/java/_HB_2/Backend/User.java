@@ -19,6 +19,7 @@ public abstract class User {
     String firstName;
     String lastName;
     String address;
+    String city;
     String state;
     String zip;
     String email;
@@ -28,11 +29,12 @@ public abstract class User {
     Boolean isAnAdmin;
 
     //no Boolean Values for User-These should be set in the subclass constructors
-    public User(String firstName, String lastName, String address, String state, String zip, String email, String phoneNumber) {
+    public User(String firstName, String lastName, String address, String city, String state, String zip, String email, String phoneNumber) {
 
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
+        this.city = city;
         this.state = state;
         this.zip = zip;
         this.email = email;
@@ -68,6 +70,14 @@ public abstract class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getState() {
