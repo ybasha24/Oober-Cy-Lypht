@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping( "/driver")
 public class DriverController {
 
@@ -12,11 +12,17 @@ public class DriverController {
     private DriverService driverService;
 
     @PostMapping("/registerDriver")
-    public @ResponseBody String saveDriver(
+    String createDriverWithBody(
             @RequestBody Driver d
-    ){
+    )
+
+    {
+        if (d == null) {
+            return "There Was No Driver Sent";
+        }
+
         try{
-            driverService.save(d);
+            driverService.createDriver(d);
             return "You successfully registered a Driver with ID# " + d.getId();
         } catch (Exception e) {
             return "there was a problem";

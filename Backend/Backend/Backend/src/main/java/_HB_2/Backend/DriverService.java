@@ -1,5 +1,6 @@
 package _HB_2.Backend;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -7,10 +8,11 @@ import java.util.HashMap;
 @Service
 public class DriverService {
 
-    public void save(Driver driver) {
-        HashMap<Long, User> mapOfUsers = new HashMap<>();
+    @Autowired
+    DriverRepository driverRepository;
 
-        mapOfUsers.put(1L,driver);
+    public void createDriver(Driver driver) {
 
+        driverRepository.save(driver);
     }
 }
