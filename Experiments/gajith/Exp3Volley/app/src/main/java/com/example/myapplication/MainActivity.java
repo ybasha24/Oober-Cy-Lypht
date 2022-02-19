@@ -25,6 +25,8 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.Map;
+
 
 public class MainActivity extends AppCompatActivity {
     private String TAG = MainActivity.class.getSimpleName();
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void jsonObjectRequest(View view){
         TextView textView = (TextView) findViewById(R.id.textview);
-        String url = "https:api.androidhive.info/volley/person_object.json";
+        String url = "https://d3070f82-5b4d-4c45-88f6-e4c712d30a0a.mock.pstmn.io/create";
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
                     Log.d(TAG, response.toString());
@@ -105,54 +107,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//    public void disable(View v) {
-//        View mv = findViewById(R.id.button);
-//        mv.setEnabled(false);
-//        Button b = (Button) mv;
-//        b.setText("Button Off");
-//    }
-//
-//    // Enter text and prints it out
-//    public void handleInput(View v) {
-//        //Takes user input
-//        EditText t = findViewById(R.id.Source);
-//        s = t.getText().toString();
-//
-//        int val = 0;
-//        try {
-//            val = Integer.parseInt(s.trim());
-//
-//        }
-//        catch (NumberFormatException exec) {
-//            flag = 0;
-//            Toast.makeText(this, "Didn't work", Toast.LENGTH_LONG).show();
-//            ((TextView) findViewById(R.id.output)).setText("Please type a number");
-//            Toast.makeText(this, "Please type a number", Toast.LENGTH_LONG).show();
-//        }
-//
-//        if(val > 4 || val < 1){
-//            flag = 0;
-//            Toast.makeText(this, "Didn't work", Toast.LENGTH_LONG).show();
-//            ((TextView) findViewById(R.id.output)).setText("Please type a number between 1 and 4");
-//        }
-//        else
-//        {
-//            //((TextView) findViewById(R.id.output)).setText("Hello! " + s + "\nPlease click next to continue");
-//            String url = ""; //TODO figure out how url is defined. Will try to pass in a string
-//            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-//                    response -> Toast.makeText(MainActivity.this, "success", Toast.LENGTH_LONG)).show();
-//            flag = 1;
-//        }
-//    }
-//
-//    public void launchSettings(View v) {
-//        if (flag == 1) {
-//            Intent i = new Intent(this, SettingsActivity.class);
-//            i.putExtra("Cool", s);
-//            startActivity(i);
-//        } else {
-//            Toast.makeText(this, "Please type your name", Toast.LENGTH_LONG).show();
-//        }
-//
-//    }
+    public void postRequest(View view){
+        TextView textView = (TextView) findViewById(R.id.textview);
+        String url = "https://d3070f82-5b4d-4c45-88f6-e4c712d30a0a.mock.pstmn.io/post";
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                response -> {
+                    Log.d(TAG, response.toString());
+                    textView.setText("SUCCESS");
+                },
+                error -> {
+                    VolleyLog.d(TAG, "Error " + error.getMessage());
+                    textView.setText("Error!");
+                }
+        );{
+            @Override
+            protectedMap<String, String>getParams() {
+                Map<String, String> params =newHashMap<String, String>();
+                params.put("name","Androidhive");
+                params.put("email","abc@androidhive.info");
+                params.put("password","password123");
+                return params;
+
+        }
+        AppController.getInstance().addToRequestQueue(req, tag_array_req);
+
+    }
 }
