@@ -13,6 +13,12 @@ public class DriverService {
 
     public void createDriver(Driver driver) {
 
+        //set the driver flag
+        driver.isADriver = true;
         driverRepository.save(driver);
+    }
+
+    public User getDriverById(int id) {
+        return driverRepository.findById(id);
     }
 }
