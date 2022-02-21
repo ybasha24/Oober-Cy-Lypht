@@ -23,14 +23,19 @@ public class MainActivity extends AppCompatActivity {
         EditText passwordInput = (EditText) findViewById(R.id.passwordInput);
         String username = usernameInput.getText().toString();
         String password = passwordInput.getText().toString();
-//        if(user == "rider" && pass == "rider"){
-            Intent intent = new Intent(this, DriverHomePage.class);
+        if(username.equals("rider")) {
+            Intent intent = new Intent(this, RiderHomePage.class);
             intent.putExtra("username", username);
             startActivity(intent);
-//        }
-//        else if(user == "driver" && pass == "driver"){
-//            Intent intent = new Intent(this, DriverHomePage.class);
-//            startActivity(intent);
-//        }
+        }
+        else if(username.equals("driver")){
+            Intent intent = new Intent(this, DriverHomePage.class);
+            startActivity(intent);
+        }
+    }
+
+    public void register(View view){
+        Intent intent = new Intent(this, RiderRegistrationPage.class);
+        startActivity(intent);
     }
 }
