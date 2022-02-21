@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void postRequest(View view) throws JSONException {
         TextView textView = (TextView) findViewById(R.id.textview);
-        String url = "https://d3070f82-5b4d-4c45-88f6-e4c712d30a0a.mock.pstmn.io/post";
+        String url = "https://10.0.2.2/driver/registerDriver";
         JSONObject obj = new JSONObject();
         obj.put("name", new String("Hello"));
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, obj,
