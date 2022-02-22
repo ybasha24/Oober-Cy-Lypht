@@ -23,4 +23,8 @@ public class RiderService {
     }
 
     //public User getRiderbyEmail(String email) { return riderRepository.}
+
+    public void deleteRiderById(int id) {
+        riderRepository.deleteById(id);
+    }
 }
