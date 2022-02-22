@@ -13,10 +13,8 @@ public class DriverController {
 
     @PostMapping("/registerDriver")
     String createDriverWithBody(
-            @RequestBody Driver d
-    )
+            @RequestBody Driver d) {
 
-    {
         if (d == null) {
             return "There Was No Driver Sent";
         }
@@ -31,8 +29,7 @@ public class DriverController {
 
     @GetMapping("/getDriver")
     User getDriverById(
-            @RequestParam int id
-    ) {
+            @RequestParam int id) {
 
 //        if (id == null) {
 //            return "no id sent";
@@ -46,6 +43,12 @@ public class DriverController {
 //        }
         User u = driverService.getDriverById(id);
         return u;
+    }
+
+    @DeleteMapping("/deleteDriver")
+    void deleteDriverById(
+            @RequestParam int id) {
+        driverService.deleteDriverById(id);
     }
 
 }
