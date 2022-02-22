@@ -1,4 +1,4 @@
-package _HB_2.Backend;
+package Backend;
 
 import javax.persistence.Entity;
 

@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.myapplication.net_utils.AppController;
+import com.example.myapplication.app.AppController;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,35 +24,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void signIn(View view) throws JSONException {
-//        EditText usernameInput = (EditText) findViewById(R.id.usernameInput);
-//        EditText passwordInput = (EditText) findViewById(R.id.passwordInput);
-//        String username = usernameInput.getText().toString();
-//        String password = passwordInput.getText().toString();
-//
-//        String url = "https://41096e03-1605-4363-a912-57afa92f86c7.mock.pstmn.io/create";
-////        JSONObject obj = new JSONObject();
-////        obj.put("username", username);
-////        obj.put("password", password);
-//
-//        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
-//                response -> {
-//                    TextView tv = (TextView) findViewById(R.id.appNameTextView);
-//                    tv.setText("Success");
-//                    Log.d("JSON Object Request", "Success");
-//
-////
-////
-//                },
-//                error ->{
-//                    TextView tv = (TextView) findViewById(R.id.appNameTextView);
-//                    tv.setText("Error");
-//                    Log.d("JSON Object Request", "Error");
-//                }
-//        );
-//        AppController.getInstance().addToRequestQueue(req, "post_object_tag");
-        Intent intent = new Intent(this, RiderHomePage.class);
-//        intent.putExtra("username", username);
+    public void signIn(View view){
+        EditText usernameInput = (EditText) findViewById(R.id.usernameInput);
+        EditText passwordInput = (EditText) findViewById(R.id.passwordInput);
+        String username = usernameInput.getText().toString();
+        String password = passwordInput.getText().toString();
+        if(username.equals("rider")) {
+            Intent intent = new Intent(this, RiderHomePage.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        }
+        else if(username.equals("driver")){
+            Intent intent = new Intent(this, DriverHomePage.class);
+            startActivity(intent);
+        }
+    }
+
+    public void register(View view){
+        Intent intent = new Intent(this, RiderRegistrationPage.class);
         startActivity(intent);
     }
 }
