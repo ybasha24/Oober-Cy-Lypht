@@ -27,8 +27,7 @@ public class RiderController {
     }
 
     @GetMapping("/getRider")
-    User getRiderById(
-            @RequestParam int id) {
+    User getRiderById(@RequestParam int id) {
 
 //        if (id == null) {
 //            return "no id sent";
