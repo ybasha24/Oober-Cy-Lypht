@@ -13,7 +13,7 @@ public class AdminService {
 
     public void createAdmin(Admin admin) {
 
-        //set the driver flag
+        //set the Admin flag
         admin.isAnAdmin = true;
         adminRepository.save(admin);
     }

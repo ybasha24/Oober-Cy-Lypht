@@ -51,3 +51,26 @@
 2022-02-21 15:25:45.851  INFO 24096 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2022-02-21 15:25:45.851  INFO 24096 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2022-02-21 15:25:45.867  INFO 24096 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-02-21 19:42:05.000  INFO 14944 --- [main] _HB_2.Backend.BackendApplication         : Starting BackendApplication using Java 14.0.2 on DESKTOP-QAHDUP7 with PID 14944 (C:\Users\MSinnwell\Projects\309\2_hb_2\Backend\Backend\Backend\target\classes started by MSinnwell in C:\Users\MSinnwell\Projects\309\2_hb_2\Backend\Backend\Backend)
+2022-02-21 19:42:05.003  INFO 14944 --- [main] _HB_2.Backend.BackendApplication         : No active profile set, falling back to default profiles: default
+2022-02-21 19:42:05.838  INFO 14944 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-02-21 19:42:05.914  INFO 14944 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 63 ms. Found 2 JPA repository interfaces.
+2022-02-21 19:42:06.595  INFO 14944 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-02-21 19:42:06.610  INFO 14944 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-02-21 19:42:06.610  INFO 14944 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.56]
+2022-02-21 19:42:06.744  INFO 14944 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-02-21 19:42:06.744  INFO 14944 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1682 ms
+2022-02-21 19:42:06.945  INFO 14944 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-02-21 19:42:07.052  INFO 14944 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.4.Final
+2022-02-21 19:42:07.354  INFO 14944 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-02-21 19:42:07.543  INFO 14944 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-02-21 19:42:08.094  INFO 14944 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-02-21 19:42:08.124  INFO 14944 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2022-02-21 19:42:09.032  INFO 14944 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-02-21 19:42:09.054  INFO 14944 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-02-21 19:42:09.466  WARN 14944 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-02-21 19:42:09.866  INFO 14944 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-02-21 19:42:09.878  INFO 14944 --- [main] _HB_2.Backend.BackendApplication         : Started BackendApplication in 5.436 seconds (JVM running for 6.767)
+2022-02-21 19:43:16.997  INFO 14944 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-02-21 19:43:16.998  INFO 14944 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-02-21 19:43:16.999  INFO 14944 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
