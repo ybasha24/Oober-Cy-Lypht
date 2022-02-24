@@ -1,15 +1,13 @@
 package com.example.volley;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.volley.app.AppController;
 import com.example.volley.net_utils.Const;
 
@@ -21,9 +19,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -105,23 +108,54 @@ public class MainActivity extends AppCompatActivity {
                 VolleyLog.e(TAG, "Error " + error.getMessage());
             }
         });
-        //no need to add to request queue
     }
 
     public void jsonPostRequest(View view) throws JSONException {
         TextView textView = (TextView) findViewById(R.id.textview);
         String url;
-        url = "https://41096e03-1605-4363-a912-57afa92f86c7.mock.pstmn.io/create";
         JSONObject obj = new JSONObject();
-        obj.put("name", new String("He was bumbo"));
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, obj,
-                response -> {
-                    textView.setText(response.toString());
-                },
-                error -> {
-                    textView.setText(error.toString());
-                }
-        );
+
+        url = "http://coms-309-030.class.las.iastate.edu:8080/driver/registerDriver/";
+        obj.put("firstName", new String("Matt"));
+        obj.put("lastName", new String("Sinwell"));
+        obj.put("address", "1234 lol St.");
+        obj.put("city", "Ames");
+        obj.put("state", "Iowa");
+        obj.put("zip", "50000");
+        obj.put("email", "g@s.com");
+        obj.put("phoneNumber", "515-911-1234");
+
+        StringRequest req = new StringRequest(Request.Method.POST, url,
+                response -> textView.setText(response),
+                error -> textView.setText(error.toString()))
+                {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("Content-Type", "application/json");
+                        return params;
+                    }
+                    @Override
+                    public byte[] getBody() {
+                            try {
+                                JSONObject obj = new JSONObject();
+                                obj.put("firstName", new String("Matt"));
+                                obj.put("lastName", new String("Sinwell"));
+                                obj.put("address", "1234 lol St.");
+                                obj.put("city", "Ames");
+                                obj.put("state", "Iowa");
+                                obj.put("zip", "50000");
+                                obj.put("email", "g@s.com");
+                                obj.put("phoneNumber", "515-911-1234");
+                                String objString =  obj.toString();
+
+                                return objString.toString().getBytes("utf-8");
+                            }
+                            catch (Exception e){
+                                return null;
+                            }
+                    }
+                };
         AppController.getInstance().addToRequestQueue(req, tag_object_req);
     }
 
