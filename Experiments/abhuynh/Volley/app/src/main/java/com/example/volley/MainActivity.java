@@ -63,16 +63,11 @@ public class MainActivity extends AppCompatActivity {
     public void jsonObjectRequest(View view){
         TextView textView = (TextView) findViewById(R.id.textview);
 //        String url = "https:api.androidhive.info/volley/person_object.json";
-        String url = "https://41096e03-1605-4363-a912-57afa92f86c7.mock.pstmn.io/bumbo";
+//        String url = "https://41096e03-1605-4363-a912-57afa92f86c7.mock.pstmn.io/bumbo";
+        String url = "http://coms-309-030.class.las.iastate.edu:8080/driver/getDriver?id=3";
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
-            response -> {
-                Log.d(TAG, response.toString());
-                textView.setText(response.toString());
-            },
-            error -> {
-                VolleyLog.d(TAG, "Error " + error.getMessage());
-                textView.setText("Error!");
-            }
+            response -> textView.setText(response.toString()),
+            error -> textView.setText("Error!")
         );
         AppController.getInstance().addToRequestQueue(req, tag_object_req);
     }
@@ -126,37 +121,36 @@ public class MainActivity extends AppCompatActivity {
         obj.put("phoneNumber", "515-911-1234");
 
         StringRequest req = new StringRequest(Request.Method.POST, url,
-                response -> textView.setText(response),
-                error -> textView.setText(error.toString()))
-                {
-                    @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<>();
-                        params.put("Content-Type", "application/json");
-                        return params;
-                    }
-                    @Override
-                    public byte[] getBody() {
-                            try {
-                                JSONObject obj = new JSONObject();
-                                obj.put("firstName", new String("Matt"));
-                                obj.put("lastName", new String("Sinwell"));
-                                obj.put("address", "1234 lol St.");
-                                obj.put("city", "Ames");
-                                obj.put("state", "Iowa");
-                                obj.put("zip", "50000");
-                                obj.put("email", "g@s.com");
-                                obj.put("phoneNumber", "515-911-1234");
-                                String objString =  obj.toString();
+            response -> textView.setText(response),
+            error -> textView.setText(error.toString()))
+            {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("Content-Type", "application/json");
+                    return params;
+                }
+                @Override
+                public byte[] getBody() {
+                    try {
+                        JSONObject obj = new JSONObject();
+                        obj.put("firstName", new String("Matt"));
+                        obj.put("lastName", new String("Sinwell"));
+                        obj.put("address", "1234 lol St.");
+                        obj.put("city", "Ames");
+                        obj.put("state", "Iowa");
+                        obj.put("zip", "50000");
+                        obj.put("email", "g@s.com");
+                        obj.put("phoneNumber", "515-911-1234");
+                        String objString =  obj.toString();
 
-                                return objString.toString().getBytes("utf-8");
-                            }
-                            catch (Exception e){
-                                return null;
-                            }
+                        return objString.toString().getBytes("utf-8");
                     }
-                };
+                    catch (Exception e){
+                        return null;
+                    }
+                }
+            };
         AppController.getInstance().addToRequestQueue(req, tag_object_req);
     }
-
 }
