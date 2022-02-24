@@ -10,14 +10,15 @@ public interface RiderRepository extends JpaRepository<User, Integer> {
 
     User findById(int id);
 
-//    @Query("SELECT u FROM User u WHERE u.email = ?1")
-    @Query(
-        value = "SELECT * FROM Users u WHERE u.email = ?1",
-        nativeQuery = true)
+    @Query("SELECT u FROM User u WHERE u.email = ?1")
     User findByEmail(String email);
+//    @Query(
+//        value = "SELECT * FROM Users u WHERE u.email=?1",
+//        nativeQuery = true)
 
-    @Query("SELECT u FROM User u WHERE u.firstName = ?1")
-    User findByFirstName(String firstname);
+
+//    @Query("SELECT u FROM User u WHERE u.firstName = ?1")
+//    User findByFirstName(String firstname);
 
     @Transactional
     void deleteById(int id);

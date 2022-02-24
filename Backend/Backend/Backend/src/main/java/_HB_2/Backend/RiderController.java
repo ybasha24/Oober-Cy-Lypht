@@ -49,11 +49,11 @@ public class RiderController {
         return u;
     }
 
-    @GetMapping("/getRiderByFirstname")
-    User getRiderByFirstname(@RequestParam String firstName) {
-        User u = riderService.getRidberbyFirstname(firstName);
-        return u;
-    }
+//    @GetMapping("/getRiderByFirstname")
+//    User getRiderByFirstname(@RequestParam String firstName) {
+//        User u = riderService.getRidberbyFirstname(firstName);
+//        return u;
+//    }
 
     @DeleteMapping("/deleteRider")
     void deleteRiderById(
