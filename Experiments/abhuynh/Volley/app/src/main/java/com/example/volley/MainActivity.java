@@ -42,8 +42,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    public void deleteRequest(View view){
+        String url = "http://coms-309-030.class.las.iastate.edu:8080/driver/deleteDriver?id=3";
+        TextView textView = (TextView) findViewById(R.id.textview);
+
+        StringRequest req = new StringRequest(Request.Method.DELETE, url,
+            response -> textView.setText("Successful delete!"),
+            error -> textView.setText("Error deleting!")
+        );
+        AppController.getInstance().addToRequestQueue(req, tag_string_req);
+    }
     public void stringRequest(View view){
-//        String url = "https:api.androidhive.info/volley/string_response.html";
         String url = "https://41096e03-1605-4363-a912-57afa92f86c7.mock.pstmn.io/bumboString";
         TextView textView = (TextView) findViewById(R.id.textview);
 
@@ -62,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void jsonObjectRequest(View view){
         TextView textView = (TextView) findViewById(R.id.textview);
-//        String url = "https:api.androidhive.info/volley/person_object.json";
-//        String url = "https://41096e03-1605-4363-a912-57afa92f86c7.mock.pstmn.io/bumbo";
         String url = "http://coms-309-030.class.las.iastate.edu:8080/driver/getDriver?id=3";
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
             response -> textView.setText(response.toString()),
@@ -74,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void jsonArrayRequest(View view){
         TextView textView = (TextView) findViewById(R.id.textview);
-//        String url = "https:api.androidhive.info/volley/person_array.json";
         String url = "https://41096e03-1605-4363-a912-57afa92f86c7.mock.pstmn.io/bumboArray";
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
             response -> {
@@ -107,19 +113,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void jsonPostRequest(View view) throws JSONException {
         TextView textView = (TextView) findViewById(R.id.textview);
-        String url;
-        JSONObject obj = new JSONObject();
-
-        url = "http://coms-309-030.class.las.iastate.edu:8080/driver/registerDriver/";
-        obj.put("firstName", new String("Matt"));
-        obj.put("lastName", new String("Sinwell"));
-        obj.put("address", "1234 lol St.");
-        obj.put("city", "Ames");
-        obj.put("state", "Iowa");
-        obj.put("zip", "50000");
-        obj.put("email", "g@s.com");
-        obj.put("phoneNumber", "515-911-1234");
-
+        String url = "http://coms-309-030.class.las.iastate.edu:8080/driver/registerDriver/";
+        
         StringRequest req = new StringRequest(Request.Method.POST, url,
             response -> textView.setText(response),
             error -> textView.setText(error.toString()))
