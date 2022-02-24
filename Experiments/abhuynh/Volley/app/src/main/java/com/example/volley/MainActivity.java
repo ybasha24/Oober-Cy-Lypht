@@ -22,12 +22,8 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectOutputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -71,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void jsonObjectRequest(View view){
         TextView textView = (TextView) findViewById(R.id.textview);
-        String url = "http://coms-309-030.class.las.iastate.edu:8080/driver/getDriver?id=3";
+        String url = "http://coms-309-030.class.las.iastate.edu:8080/driver/getDriver?id=5";
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
             response -> textView.setText(response.toString()),
             error -> textView.setText("Error!")
@@ -114,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     public void jsonPostRequest(View view) throws JSONException {
         TextView textView = (TextView) findViewById(R.id.textview);
         String url = "http://coms-309-030.class.las.iastate.edu:8080/driver/registerDriver/";
-        
+
         StringRequest req = new StringRequest(Request.Method.POST, url,
             response -> textView.setText(response),
             error -> textView.setText(error.toString()))
