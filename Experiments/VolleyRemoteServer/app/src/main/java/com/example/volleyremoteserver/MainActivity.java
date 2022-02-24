@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -75,19 +76,24 @@ public class MainActivity extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(req, tag_object_req);
     }
 
-    public void getDriver(View view){
+    public void getDriver(View view) {
         TextView textView = (TextView) findViewById(R.id.textview);
-        String url = "http://coms-309-030.class.las.iastate.edu:8080/driver/getDriver?id=5";
+        EditText editText = (EditText) findViewById(R.id.getDriverID);
+        String id = editText.getText().toString();
+        String url = "http://coms-309-030.class.las.iastate.edu:8080/driver/getDriver?id=" + id;
+
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> textView.setText(response.toString()),
-                error -> textView.setText("Error!")
+                error -> textView.setText("Error obtaining driver!")
         );
         AppController.getInstance().addToRequestQueue(req, tag_object_req);
     }
 
     public void deleteDriver(View view){
-        String url = "http://coms-309-030.class.las.iastate.edu:8080/driver/deleteDriver?id=3";
         TextView textView = (TextView) findViewById(R.id.textview);
+        EditText editText = (EditText) findViewById(R.id.getDriverID);
+        String id = editText.getText().toString();
+        String url = "http://coms-309-030.class.las.iastate.edu:8080/driver/deleteDriver?id=" + id;
 
         StringRequest req = new StringRequest(Request.Method.DELETE, url,
                 response -> textView.setText("Successful delete!"),
