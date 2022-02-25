@@ -11,34 +11,21 @@ public class RiderController {
     private RiderService riderService;
 
     @PostMapping("/registerRider")
-    String createRiderWithBody(
+    User createRiderWithBody(
             @RequestBody Rider r) {
-
-        if (r == null) {
-            return "There Was No Rider Sent";
-        }
-
-        try{
+        User u = riderService.getRiderbyEmail(r.email);
+        if (u == null){
             riderService.createRider(r);
-            return "You successfully registered a Rider with ID# " + r.getId();
-        } catch (Exception e) {
-            return "there was a problem";
+            return r;
+        }
+        else{
+            User empty = new Rider();
+            return empty;
         }
     }
 
     @GetMapping("/getRider")
     User getRiderById(@RequestParam int id) {
-
-//        if (id == null) {
-//            return "no id sent";
-//        }
-//        try{
-//            User u = riderService.getRiderById(id);
-//            return u;
-//        } catch (Exception e) {
-//            //what should i return here?
-//            //return "there was a problem";
-//        }
         User u = riderService.getRiderbyId(id);
         return u;
     }
@@ -48,12 +35,6 @@ public class RiderController {
         User u = riderService.getRiderbyEmail(email);
         return u;
     }
-
-//    @GetMapping("/getRiderByFirstname")
-//    User getRiderByFirstname(@RequestParam String firstName) {
-//        User u = riderService.getRidberbyFirstname(firstName);
-//        return u;
-//    }
 
     @DeleteMapping("/deleteRider")
     void deleteRiderById(
