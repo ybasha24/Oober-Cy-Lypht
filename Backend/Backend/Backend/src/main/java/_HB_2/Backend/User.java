@@ -22,6 +22,7 @@ public abstract class User {
     String city;
     String state;
     String zip;
+    @Column(unique = true, nullable = false)
     String email;
     String phoneNumber;
     Boolean isADriver;

@@ -43,6 +43,18 @@ public class RiderController {
         return u;
     }
 
+    @GetMapping("/getRiderByEmail")
+    User getRiderByEmail(@RequestParam String email) {
+        User u = riderService.getRiderbyEmail(email);
+        return u;
+    }
+
+//    @GetMapping("/getRiderByFirstname")
+//    User getRiderByFirstname(@RequestParam String firstName) {
+//        User u = riderService.getRidberbyFirstname(firstName);
+//        return u;
+//    }
+
     @DeleteMapping("/deleteRider")
     void deleteRiderById(
             @RequestParam int id) {
