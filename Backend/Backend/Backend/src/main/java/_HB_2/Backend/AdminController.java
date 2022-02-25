@@ -12,18 +12,23 @@ public class AdminController {
     private AdminService adminService;
 
     @PostMapping("/registerAdmin")
-    String createAdminWithBody(
+    User createAdminWithBody(
             @RequestBody Admin a
     ) {
+        //if we receive empty info from frontend
         if (a == null) {
-            return "There Was No Admin Sent";
+            //return an empty Admin
+            User u = new Admin();
+            return u;
         }
 
-        try {
-            adminService.createAdmin(a);
-            return "You successfully registered an Admin with ID# " + a.getId();
+        try{
+            Admin admin = adminService.createAdmin(a);
+            return admin;
         } catch (Exception e) {
-            return "there was a problem";
+            //there was a problem, return empty user
+            User u = new Admin();
+            return u;
         }
     }
 

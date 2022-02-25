@@ -11,11 +11,12 @@ public class DriverService {
     @Autowired
     DriverRepository driverRepository;
 
-    public void createDriver(Driver driver) {
+    public Driver createDriver(Driver driver) {
 
         //set the driver flag
         driver.isADriver = true;
-        driverRepository.save(driver);
+        Driver d = driverRepository.save(driver);
+        return d;
     }
 
     public User getDriverById(int id) {
