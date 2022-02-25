@@ -25,12 +25,21 @@ public abstract class User {
     @Column(unique = true, nullable = false)
     String email;
     String phoneNumber;
+    String password;
     Boolean isADriver;
     Boolean isARider;
     Boolean isAnAdmin;
 
     //no Boolean Values for User-These should be set in the subclass constructors
-    public User(String firstName, String lastName, String address, String city, String state, String zip, String email, String phoneNumber) {
+    public User(String firstName,
+                String lastName,
+                String address,
+                String city,
+                String state,
+                String zip,
+                String email,
+                String phoneNumber,
+                String password) {
 
         this.firstName = firstName;
         this.lastName = lastName;
@@ -40,6 +49,7 @@ public abstract class User {
         this.zip = zip;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.password = password;
     }
 
     //https://stackoverflow.com/questions/18099127/java-entity-why-do-i-need-an-empty-constructor
@@ -112,6 +122,10 @@ public abstract class User {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    public String getPassword() {return password;}
+
+    public void setPassword(String password) {this.password = password;}
 
     public Boolean getADriver() {
         return isADriver;
