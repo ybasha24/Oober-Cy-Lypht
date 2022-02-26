@@ -31,4 +31,22 @@ public class UserController {
 
     //SIGN IN CHECKPOINT!!!
 
+    @GetMapping("/getUserSignIn")
+    User getUserBySignIn(@RequestParam String email, String password) {
+        User u = userService.getUserByEmail(email);
+        if(u == null){
+            User empty = new Driver(); //If driver flag is set, you know that there is no user w that email
+            return empty;
+        }
+        else{
+            if(u.password.equals(password)){
+                return u;
+            }
+            else{
+                User empty = new Rider(); //If rider flag is set, you know that the password is incorrect for that user
+                return empty;
+            }
+        }
+    }
+
 }
