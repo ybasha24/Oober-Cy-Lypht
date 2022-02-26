@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void register(View view){
-        Intent intent = new Intent(this, RiderRegistrationPage.class);
+        Intent intent = new Intent(this, RegistrationOptions.class);
         startActivity(intent);
     }
 }
