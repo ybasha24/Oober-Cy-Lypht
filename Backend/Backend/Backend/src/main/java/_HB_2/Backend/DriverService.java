@@ -28,20 +28,20 @@ public class DriverService {
     }
 
     public User editDriver(int id, User newUserInfo) {
-        User oldUserInfo = driverRepository.getById(id);
-        oldUserInfo.setFirstName(newUserInfo.firstName);
-        oldUserInfo.setLastName(newUserInfo.lastName);
-        oldUserInfo.setAddress(newUserInfo.address);
-        oldUserInfo.setCity(newUserInfo.city);
-        oldUserInfo.setState(newUserInfo.state);
-        oldUserInfo.setZip(newUserInfo.zip);
-        oldUserInfo.setEmail(newUserInfo.email);
-        oldUserInfo.setPhoneNumber(newUserInfo.phoneNumber);
-        oldUserInfo.setPassword(newUserInfo.password);
-        oldUserInfo.setADriver(newUserInfo.isADriver);
-        oldUserInfo.setARider(newUserInfo.isARider);
-        oldUserInfo.setAnAdmin(newUserInfo.isAnAdmin);
+        driverRepository.getById(id).setFirstName(newUserInfo.firstName);
+        driverRepository.getById(id).setLastName(newUserInfo.lastName);
+        driverRepository.getById(id).setAddress(newUserInfo.address);
+        driverRepository.getById(id).setCity(newUserInfo.city);
+        driverRepository.getById(id).setState(newUserInfo.state);
+        driverRepository.getById(id).setZip(newUserInfo.zip);
+        driverRepository.getById(id).setEmail(newUserInfo.email);
+        driverRepository.getById(id).setPhoneNumber(newUserInfo.phoneNumber);
+        driverRepository.getById(id).setPassword(newUserInfo.password);
+        driverRepository.getById(id).setADriver(newUserInfo.isADriver);
+        driverRepository.getById(id).setARider(newUserInfo.isARider);
+        driverRepository.getById(id).setAnAdmin(newUserInfo.isAnAdmin);
 
-        return oldUserInfo;
+        return driverRepository.save(id);
+        //return oldUserInfo;
     }
 }

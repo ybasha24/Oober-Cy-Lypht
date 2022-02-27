@@ -11,4 +11,6 @@ public interface DriverRepository extends JpaRepository<User, Integer> {
 
         @Transactional
         void deleteById(int id);
+
+        User save(int id);
 }
