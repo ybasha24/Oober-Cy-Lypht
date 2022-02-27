@@ -11,7 +11,9 @@ public class DriverHomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_home_page);
-        String username = getIntent().getStringExtra("username");
+
+
+        String username = getIntent().getStringExtra("firstName");
 
         TextView tv = (TextView) findViewById(R.id.welcomebackTV);
         tv.setText("Welcome back " + username);
