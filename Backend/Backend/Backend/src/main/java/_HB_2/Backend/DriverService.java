@@ -41,7 +41,22 @@ public class DriverService {
         driverRepository.getById(id).setARider(newUserInfo.isARider);
         driverRepository.getById(id).setAnAdmin(newUserInfo.isAnAdmin);
 
-        return driverRepository.save(id);
-        //return oldUserInfo;
+        //do we need to save first?
+
+        return driverRepository.getById(id);
     }
+
+//    User replaceuser( int id, User newUserinfo) {
+//
+//        return driverRepository.findById(id)
+//                .map(employee -> {
+//                    employee.setName(newEmployee.getName());
+//                    employee.setRole(newEmployee.getRole());
+//                    return repository.save(employee);
+//                })
+//                .orElseGet(() -> {
+//                    newEmployee.setId(id);
+//                    return repository.save(newEmployee);
+//                });
+//    }
 }

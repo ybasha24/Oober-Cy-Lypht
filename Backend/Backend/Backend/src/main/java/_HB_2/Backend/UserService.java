@@ -26,21 +26,22 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-//    public User editUser(int id, User newUserInfo) {
-//        User oldUserInfo = userRepository.getById(id);
-//        oldUserInfo.setFirstName(newUserInfo.firstName);
-//        oldUserInfo.setLastName(newUserInfo.lastName);
-//        oldUserInfo.setAddress(newUserInfo.address);
-//        oldUserInfo.setCity(newUserInfo.city);
-//        oldUserInfo.setState(newUserInfo.state);
-//        oldUserInfo.setZip(newUserInfo.zip);
-//        oldUserInfo.setEmail(newUserInfo.email);
-//        oldUserInfo.setPhoneNumber(newUserInfo.phoneNumber);
-//        oldUserInfo.setPassword(newUserInfo.password);
-//        oldUserInfo.setADriver(newUserInfo.isADriver);
-//        oldUserInfo.setARider(newUserInfo.isARider);
-//        oldUserInfo.setAnAdmin(newUserInfo.isAnAdmin);
-//
-//        return oldUserInfo;
-//    }
+    public User editUser(int id, User newUserInfo) {
+        userRepository.getById(id).setFirstName(newUserInfo.firstName);
+        userRepository.getById(id).setLastName(newUserInfo.lastName);
+        userRepository.getById(id).setAddress(newUserInfo.address);
+        userRepository.getById(id).setCity(newUserInfo.city);
+        userRepository.getById(id).setState(newUserInfo.state);
+        userRepository.getById(id).setZip(newUserInfo.zip);
+        userRepository.getById(id).setEmail(newUserInfo.email);
+        userRepository.getById(id).setPhoneNumber(newUserInfo.phoneNumber);
+        userRepository.getById(id).setPassword(newUserInfo.password);
+        userRepository.getById(id).setADriver(newUserInfo.isADriver);
+        userRepository.getById(id).setARider(newUserInfo.isARider);
+        userRepository.getById(id).setAnAdmin(newUserInfo.isAnAdmin);
+
+        //do we need to save first?
+
+        return userRepository.getById(id);
+    }
 }
