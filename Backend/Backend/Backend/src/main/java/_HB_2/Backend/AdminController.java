@@ -50,4 +50,10 @@ public class AdminController {
         User u = adminService.getAdminById(id);
         return u;
     }
+
+    @DeleteMapping("/deleteAdmin")
+    void deleteAdminById(
+            @RequestParam int id) {
+        adminService.deleteAdminById(id);
+    }
 }
