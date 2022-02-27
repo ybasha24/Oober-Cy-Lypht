@@ -23,7 +23,7 @@ public class AdminService {
         return adminRepository.findById(id);
     }
 
-    public void deleteAdminById(int id) {
-        adminRepository.deleteById(id);
+    public User getAdminbyEmail(String email){
+        return adminRepository.findByEmail(email);
     }
 }
