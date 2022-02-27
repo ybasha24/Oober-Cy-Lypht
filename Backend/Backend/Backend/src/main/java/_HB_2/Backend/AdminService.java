@@ -11,11 +11,12 @@ public class AdminService {
     @Autowired
     AdminRepository adminRepository;
 
-    public void createAdmin(Admin admin) {
+    public Admin createAdmin(Admin admin) {
 
         //set the Admin flag
         admin.isAnAdmin = true;
-        adminRepository.save(admin);
+        Admin a = adminRepository.save(admin);
+        return a;
     }
 
     public User getAdminById(int id) {

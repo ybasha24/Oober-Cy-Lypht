@@ -12,18 +12,23 @@ public class DriverController {
     private DriverService driverService;
 
     @PostMapping("/registerDriver")
-    String createDriverWithBody(
+    User createDriverWithBody(
             @RequestBody Driver d) {
 
+        //if we receive empty info from frontend
         if (d == null) {
-            return "There Was No Driver Sent";
+            //return an empty driver
+            User u = new Driver();
+            return u;
         }
 
         try{
-            driverService.createDriver(d);
-            return "You successfully registered a Driver with ID# " + d.getId();
+            Driver driver = driverService.createDriver(d);
+            return driver;
         } catch (Exception e) {
-            return "there was a problem";
+            //there was a problem, return empty user
+            User u = new Driver();
+            return u;
         }
     }
 
