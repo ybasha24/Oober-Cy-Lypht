@@ -14,21 +14,14 @@ public class DriverController {
     @PostMapping("/registerDriver")
     User createDriverWithBody(
             @RequestBody Driver d) {
-
-        //if we receive empty info from frontend
-        if (d == null) {
-            //return an empty driver
-            User u = new Driver();
-            return u;
+        User u = driverService.getDriverbyEmail(d.email);
+        if (u == null){
+            driverService.createDriver(d);
+            return d;
         }
-
-        try{
-            Driver driver = driverService.createDriver(d);
-            return driver;
-        } catch (Exception e) {
-            //there was a problem, return empty user
-            User u = new Driver();
-            return u;
+        else{
+            User empty = new Driver();
+            return empty;
         }
     }
 
@@ -50,10 +43,5 @@ public class DriverController {
         return u;
     }
 
-    @DeleteMapping("/deleteDriver")
-    void deleteDriverById(
-            @RequestParam int id) {
-        driverService.deleteDriverById(id);
-    }
 
 }

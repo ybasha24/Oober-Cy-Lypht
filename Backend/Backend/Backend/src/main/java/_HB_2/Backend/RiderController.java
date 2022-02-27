@@ -36,10 +36,6 @@ public class RiderController {
         return u;
     }
 
-    @DeleteMapping("/deleteRider")
-    void deleteRiderById(
-            @RequestParam int id) {
-        riderService.deleteRiderById(id);
-    }
+
 
 }

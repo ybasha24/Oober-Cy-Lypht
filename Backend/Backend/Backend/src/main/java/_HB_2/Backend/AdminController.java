@@ -15,20 +15,14 @@ public class AdminController {
     User createAdminWithBody(
             @RequestBody Admin a
     ) {
-        //if we receive empty info from frontend
-        if (a == null) {
-            //return an empty Admin
-            User u = new Admin();
-            return u;
+        User u = adminService.getAdminbyEmail(a.email);
+        if (u == null){
+            adminService.createAdmin(a);
+            return a;
         }
-
-        try{
-            Admin admin = adminService.createAdmin(a);
-            return admin;
-        } catch (Exception e) {
-            //there was a problem, return empty user
-            User u = new Admin();
-            return u;
+        else{
+            User empty = new Admin();
+            return empty;
         }
     }
 
@@ -51,9 +45,5 @@ public class AdminController {
         return u;
     }
 
-    @DeleteMapping("/deleteAdmin")
-    void deleteAdminById(
-            @RequestParam int id) {
-        adminService.deleteAdminById(id);
-    }
+
 }
