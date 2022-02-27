@@ -28,21 +28,22 @@ public class DriverService {
     }
 
     public User editDriver(int id, User newUserInfo) {
-        driverRepository.getById(id).setFirstName(newUserInfo.firstName);
-        driverRepository.getById(id).setLastName(newUserInfo.lastName);
-        driverRepository.getById(id).setAddress(newUserInfo.address);
-        driverRepository.getById(id).setCity(newUserInfo.city);
-        driverRepository.getById(id).setState(newUserInfo.state);
-        driverRepository.getById(id).setZip(newUserInfo.zip);
-        driverRepository.getById(id).setEmail(newUserInfo.email);
-        driverRepository.getById(id).setPhoneNumber(newUserInfo.phoneNumber);
-        driverRepository.getById(id).setPassword(newUserInfo.password);
-        driverRepository.getById(id).setADriver(newUserInfo.isADriver);
-        driverRepository.getById(id).setARider(newUserInfo.isARider);
-        driverRepository.getById(id).setAnAdmin(newUserInfo.isAnAdmin);
 
-        //do we need to save first?
-        driverRepository.save(id);
+        User newUser = driverRepository.findById(id);
+        newUser.setFirstName(newUserInfo.firstName);
+        newUser.setLastName(newUserInfo.lastName);
+        newUser.setAddress(newUserInfo.address);
+        newUser.setCity(newUserInfo.city);
+        newUser.setState(newUserInfo.state);
+        newUser.setZip(newUserInfo.zip);
+        newUser.setEmail(newUserInfo.email);
+        newUser.setPhoneNumber(newUserInfo.phoneNumber);
+        newUser.setPassword(newUserInfo.password);
+        newUser.setADriver(newUserInfo.isADriver);
+        newUser.setARider(newUserInfo.isARider);
+        newUser.setAnAdmin(newUserInfo.isAnAdmin);
+
+        driverRepository.save(newUser);
 
         return getDriverById(id);
     }

@@ -59,8 +59,8 @@ public class DriverController {
     @PutMapping("/editDriver")
     User editDriver(
             @RequestParam int id,
-            @RequestBody User u) {
-        return driverService.editDriver(id, u);
+            @RequestBody Driver d) {
+        return driverService.editDriver(id, d);
     }
 
 }
