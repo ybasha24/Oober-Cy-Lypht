@@ -56,4 +56,11 @@ public class DriverController {
         driverService.deleteDriverById(id);
     }
 
+    @PutMapping("/editDriver")
+    User editDriver(
+            @RequestParam int id,
+            @RequestBody User u) {
+        return driverService.editDriver(id, u);
+    }
+
 }

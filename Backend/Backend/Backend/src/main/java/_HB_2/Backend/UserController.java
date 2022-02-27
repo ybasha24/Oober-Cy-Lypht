@@ -29,6 +29,13 @@ public class UserController {
         userService.deleteUserById(id);
     }
 
+//    @PutMapping("/editUser")
+//    User editUser(
+//            @RequestParam int id,
+//            @RequestBody User u) {
+//        return userService.editUser(id, u);
+//    }
+
     //SIGN IN CHECKPOINT!!!
 
 }

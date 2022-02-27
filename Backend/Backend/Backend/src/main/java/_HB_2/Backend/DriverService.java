@@ -26,4 +26,22 @@ public class DriverService {
     public void deleteDriverById(int id) {
         driverRepository.deleteById(id);
     }
+
+    public User editDriver(int id, User newUserInfo) {
+        User oldUserInfo = driverRepository.getById(id);
+        oldUserInfo.setFirstName(newUserInfo.firstName);
+        oldUserInfo.setLastName(newUserInfo.lastName);
+        oldUserInfo.setAddress(newUserInfo.address);
+        oldUserInfo.setCity(newUserInfo.city);
+        oldUserInfo.setState(newUserInfo.state);
+        oldUserInfo.setZip(newUserInfo.zip);
+        oldUserInfo.setEmail(newUserInfo.email);
+        oldUserInfo.setPhoneNumber(newUserInfo.phoneNumber);
+        oldUserInfo.setPassword(newUserInfo.password);
+        oldUserInfo.setADriver(newUserInfo.isADriver);
+        oldUserInfo.setARider(newUserInfo.isARider);
+        oldUserInfo.setAnAdmin(newUserInfo.isAnAdmin);
+
+        return oldUserInfo;
+    }
 }
