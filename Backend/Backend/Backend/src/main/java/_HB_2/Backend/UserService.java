@@ -13,6 +13,9 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    DriverRepository driverRepository;
+
 
     public User getUserByEmail(String email){
         return userRepository.findByEmail(email);
@@ -26,22 +29,26 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public User editUser(int id, User newUserInfo) {
-        userRepository.getById(id).setFirstName(newUserInfo.firstName);
-        userRepository.getById(id).setLastName(newUserInfo.lastName);
-        userRepository.getById(id).setAddress(newUserInfo.address);
-        userRepository.getById(id).setCity(newUserInfo.city);
-        userRepository.getById(id).setState(newUserInfo.state);
-        userRepository.getById(id).setZip(newUserInfo.zip);
-        userRepository.getById(id).setEmail(newUserInfo.email);
-        userRepository.getById(id).setPhoneNumber(newUserInfo.phoneNumber);
-        userRepository.getById(id).setPassword(newUserInfo.password);
-        userRepository.getById(id).setADriver(newUserInfo.isADriver);
-        userRepository.getById(id).setARider(newUserInfo.isARider);
-        userRepository.getById(id).setAnAdmin(newUserInfo.isAnAdmin);
-
-        //do we need to save first?
-
-        return userRepository.getById(id);
-    }
+    //Not sure why this doesn't work
+    //See notes in userController
+//    public User editUser(int id, User newUserInfo) {
+//
+//        User newUser = driverRepository.findById(id);
+//        newUser.setFirstName(newUserInfo.firstName);
+//        newUser.setLastName(newUserInfo.lastName);
+//        newUser.setAddress(newUserInfo.address);
+//        newUser.setCity(newUserInfo.city);
+//        newUser.setState(newUserInfo.state);
+//        newUser.setZip(newUserInfo.zip);
+//        newUser.setEmail(newUserInfo.email);
+//        newUser.setPhoneNumber(newUserInfo.phoneNumber);
+//        newUser.setPassword(newUserInfo.password);
+//        newUser.setADriver(newUserInfo.isADriver);
+//        newUser.setARider(newUserInfo.isARider);
+//        newUser.setAnAdmin(newUserInfo.isAnAdmin);
+//
+//        driverRepository.save(newUser);
+//
+//        return getUserById(id);
+//    }
 }
