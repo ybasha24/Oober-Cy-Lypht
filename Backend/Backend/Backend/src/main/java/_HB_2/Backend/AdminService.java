@@ -22,4 +22,8 @@ public class AdminService {
     public User getAdminById(int id) {
         return adminRepository.findById(id);
     }
+
+    public void deleteAdminById(int id) {
+        adminRepository.deleteById(id);
+    }
 }
