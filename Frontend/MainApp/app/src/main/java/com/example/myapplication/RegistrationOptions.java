@@ -20,5 +20,8 @@ public class RegistrationOptions extends AppCompatActivity {
 
     }
 
-    public void driverRegistration(View view){}
+    public void driverRegistration(View view){
+        Intent intent = new Intent(this, DriverRegistrationPage.class);
+        startActivity(intent);
+    }
 }
