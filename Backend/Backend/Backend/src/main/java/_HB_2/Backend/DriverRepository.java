@@ -4,6 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Repository
 public interface DriverRepository extends JpaRepository<User, Integer> {
 
@@ -12,5 +15,5 @@ public interface DriverRepository extends JpaRepository<User, Integer> {
         @Transactional
         void deleteById(int id);
 
-        User save(int id);
+        void save(int id);
 }
