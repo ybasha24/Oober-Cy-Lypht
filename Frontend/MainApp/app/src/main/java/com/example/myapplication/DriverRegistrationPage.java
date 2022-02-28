@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class DriverRegistrationPage extends AppCompatActivity {
     public static String s;
-    static JSONObject resp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,11 +60,10 @@ public class DriverRegistrationPage extends AppCompatActivity {
 
                     try {
                         Intent intent = new Intent(this, DriverHomePage.class);
-                        String id = response.getString("id");
-                        if (!response.isNull("id")) {
-                            resp = response;
+                        int id = Integer.parseInt(response.getString("id"));
+                        if (id != 0) {
+                            MainActivity.userResp = response;
                             startActivity(intent);
-                            ((TextView) findViewById(R.id.regStatusTextView)).setText(id);
                         } else {
                             ((TextView) findViewById(R.id.regStatusTextView)).setText("Email already exists");
                         }

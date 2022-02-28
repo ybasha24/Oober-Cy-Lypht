@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.view.View;
 
+import org.json.JSONObject;
+
 import java.sql.Driver;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    static JSONObject userResp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
