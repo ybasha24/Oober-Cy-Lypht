@@ -22,6 +22,7 @@ import java.util.Map;
 
 public class DriverRegistrationPage extends AppCompatActivity {
     public static String s;
+    static JSONObject resp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +38,7 @@ public class DriverRegistrationPage extends AppCompatActivity {
         String address = ((EditText) findViewById(R.id.editTextAddress)).getText().toString();
         String state = ((EditText) findViewById(R.id.editTextState)).getText().toString();
         String zip = ((EditText) findViewById(R.id.editTextZip)).getText().toString();
-        final String[] resp = new String[1];
+
 
         JSONObject obj = new JSONObject();
         obj.put("firstName", firstName);
@@ -56,12 +57,12 @@ public class DriverRegistrationPage extends AppCompatActivity {
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, obj,
                 response -> {((TextView) findViewById(R.id.regStatusTextView)).setText(response.toString());
+
                     try {
                         Intent intent = new Intent(this, DriverHomePage.class);
                         String id = response.getString("id");
-                        boolean b = id == null;
                         if (!response.isNull("id")) {
-                            intent.putExtra("id", id);
+                            resp = response;
                             startActivity(intent);
                             ((TextView) findViewById(R.id.regStatusTextView)).setText(id);
                         } else {
