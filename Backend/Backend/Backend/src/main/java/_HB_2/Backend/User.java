@@ -18,7 +18,7 @@ import javax.persistence.*;
 @Entity
 //we will need to define the name of the table where we store the users
 //@Table(name = "users")
-public abstract class User {
+public class User {
 
     /*
      * The annotation @ID marks the field below as the primary key for the table created by springboot
