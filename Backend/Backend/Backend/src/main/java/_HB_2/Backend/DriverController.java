@@ -12,27 +12,22 @@ public class DriverController {
     private DriverService driverService;
 
     @PostMapping("/registerDriver")
-    String createDriverWithBody(
-            @RequestBody Driver d
-    )
-
-    {
-        if (d == null) {
-            return "There Was No Driver Sent";
-        }
-
-        try{
+    User createDriverWithBody(
+            @RequestBody Driver d) {
+        User u = driverService.getDriverbyEmail(d.email);
+        if (u == null){
             driverService.createDriver(d);
-            return "You successfully registered a Driver with ID# " + d.getId();
-        } catch (Exception e) {
-            return "there was a problem";
+            return d;
+        }
+        else{
+            User empty = new Driver();
+            return empty;
         }
     }
 
     @GetMapping("/getDriver")
     User getDriverById(
-            @RequestParam int id
-    ) {
+            @RequestParam int id) {
 
 //        if (id == null) {
 //            return "no id sent";
@@ -46,6 +41,14 @@ public class DriverController {
 //        }
         User u = driverService.getDriverById(id);
         return u;
+    }
+
+
+    @PutMapping("/editDriver")
+    User editDriver(
+            @RequestParam int id,
+            @RequestBody Driver d) {
+        return driverService.editDriver(id, d);
     }
 
 }

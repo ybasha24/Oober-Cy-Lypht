@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name="com.example.myapplication.app.AppController"
@@ -17,10 +17,16 @@
             android:name=".RiderRegistrationPage"
             android:exported="false" />
         <activity
+            android:name=".DriverRegistrationPage"
+            android:exported="false" />
+        <activity
             android:name=".DriverHomePage"
             android:exported="false" />
         <activity
             android:name=".RiderHomePage"
+            android:exported="false" />
+        <activity
+            android:name=".RegistrationOptions"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
