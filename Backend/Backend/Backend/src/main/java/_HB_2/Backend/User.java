@@ -1,6 +1,19 @@
 package _HB_2.Backend;
 
 import javax.persistence.*;
+//import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+//import com.fasterxml.jackson.annotation.JsonSubTypes;
+//import com.fasterxml.jackson.annotation.JsonTypeInfo;
+//
+//@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
+//@JsonSubTypes({
+//        @JsonSubTypes.Type(value = Admin.class, name = "Admin"),
+//
+//        @JsonSubTypes.Type(value = Driver.class, name = "Driver") ,
+//
+//        @JsonSubTypes.Type(value = Rider.class, name = "Rider") }
+//)
 
 @Entity
 //we will need to define the name of the table where we store the users
