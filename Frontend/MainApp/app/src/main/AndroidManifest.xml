@@ -6,10 +6,7 @@
 
     <application
         android:name="com.example.myapplication.app.AppController"
-<<<<<<< HEAD
 
-=======
->>>>>>> 36ca3a9 (Riders can now register)
         android:allowBackup="true"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
