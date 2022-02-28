@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -29,5 +30,10 @@ public class RiderHomePage extends AppCompatActivity {
         } catch(JSONException e){
             tv.setText("Welcome back!");
         }
+    }
+
+    public void createRide(View view){
+        Intent intent = new Intent(this, CreateRidePage.class);
+        startActivity(intent);
     }
 }
