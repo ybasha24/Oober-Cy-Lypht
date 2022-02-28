@@ -43,9 +43,6 @@ public class UserService {
         newUser.setEmail(newUserInfo.email);
         newUser.setPhoneNumber(newUserInfo.phoneNumber);
         newUser.setPassword(newUserInfo.password);
-        newUser.setADriver(newUserInfo.isADriver);
-        newUser.setARider(newUserInfo.isARider);
-        newUser.setAnAdmin(newUserInfo.isAnAdmin);
 
         userRepository.save(newUser);
 
