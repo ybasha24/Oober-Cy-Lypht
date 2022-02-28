@@ -13,7 +13,7 @@ public class DriverHomePage extends AppCompatActivity {
         setContentView(R.layout.activity_driver_home_page);
 
 
-        String username = getIntent().getStringExtra("firstName");
+        String username = getIntent().getStringExtra("id");
 
         TextView tv = (TextView) findViewById(R.id.welcomebackTV);
         tv.setText("Welcome back " + username);

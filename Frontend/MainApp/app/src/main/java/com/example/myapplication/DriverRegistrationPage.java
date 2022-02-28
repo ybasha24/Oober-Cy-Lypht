@@ -37,52 +37,45 @@ public class DriverRegistrationPage extends AppCompatActivity {
         String address = ((EditText) findViewById(R.id.editTextAddress)).getText().toString();
         String state = ((EditText) findViewById(R.id.editTextState)).getText().toString();
         String zip = ((EditText) findViewById(R.id.editTextZip)).getText().toString();
-        String resp;
+        final String[] resp = new String[1];
+
+        JSONObject obj = new JSONObject();
+        obj.put("firstName", firstName);
+        obj.put("lastName", lastName);
+        obj.put("address", address);
+        obj.put("city", "Ames");
+        obj.put("state", state);
+        obj.put("zip", zip);
+        obj.put("email", email);
+        obj.put("phoneNumber", phone);
+        obj.put("password", password);
         //String city = ((EditText) findViewById(R.id.editTextCity)).getText().toString();
 
         String url = "http://coms-309-030.class.las.iastate.edu:8080/driver/registerDriver/";
 
 
-        StringRequest req = new StringRequest(Request.Method.POST, url,
-                response -> {((TextView) findViewById(R.id.regStatusTextView)).setText("Success!");
-                },
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, obj,
+                response -> {((TextView) findViewById(R.id.regStatusTextView)).setText(response.toString());
+                    try {
+                        Intent intent = new Intent(this, DriverHomePage.class);
+                        String id = response.getString("id");
+                        boolean b = id == null;
+                        if (!response.isNull("id")) {
+                            intent.putExtra("id", id);
+                            startActivity(intent);
+                            ((TextView) findViewById(R.id.regStatusTextView)).setText(id);
+                        } else {
+                            ((TextView) findViewById(R.id.regStatusTextView)).setText("Email already exists");
+                        }
+                    }
+                        catch(JSONException e){
+                            ((TextView) findViewById(R.id.regStatusTextView)).setText("JSON Exception Error.");
+                        }
+                        },
                 error -> ((TextView) findViewById(R.id.regStatusTextView)).setText("Error!"))
         {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/json");
-                return params;
-            }
-            @Override
-            public byte[] getBody() {
-                try {
-                    JSONObject obj = new JSONObject();
-                    obj.put("firstName", firstName);
-                    obj.put("lastName", lastName);
-                    obj.put("address", address);
-                    obj.put("city", "Ames");
-                    obj.put("state", state);
-                    obj.put("zip", zip);
-                    obj.put("email", email);
-                    obj.put("phoneNumber", phone);
-                    obj.put("password", password);
-                    String objString =  obj.toString();
-
-                    return objString.toString().getBytes();
-                }
-                catch (Exception e){
-                    return null;
-                }
-            }
         };
         AppController.getInstance().addToRequestQueue(req, "obj_req");
-
-        Intent intent = new Intent(this, DriverHomePage.class);
-        //intent.putExtra(resp, s);
-        startActivity(intent);
-
-
     }
 
 }
