@@ -48,29 +48,27 @@ public class RiderRegistrationPage extends AppCompatActivity {
         obj.put("phoneNumber", phoneNumber);
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, obj,
-                response -> {
-                    try {
-                        Intent intent = new Intent(this, RiderHomePage.class);
-                        String name = response.getString("firstName");
-                        boolean b = name == null;
-                        if(!response.isNull("firstName")){
-                            intent.putExtra("firstName", name);
-                            startActivity(intent);
-                            tv.setText(name);
-                        }
-                        else {
-                            tv.setText("Email already exists");
-                        }
+            response -> {
+                try {
+                    Intent intent = new Intent(this, RiderHomePage.class);
+                    String name = response.getString("firstName");
+                    boolean b = name == null;
+                    if(!response.isNull("firstName")){
+                        intent.putExtra("firstName", name);
+                        startActivity(intent);
+                        tv.setText(name);
                     }
-                    catch(JSONException e){
-                        tv.setText("JSON Exception Error.");
+                    else {
+                        tv.setText("Email already exists");
                     }
-                },
-                error -> {
-                    tv.setText("Please fill out each field.");
-                });
-
+                }
+                catch(JSONException e){
+                    tv.setText("JSON Exception Error.");
+                }
+            },
+            error -> {
+                tv.setText("Please fill out each field.");
+            });
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
-
     }
 }

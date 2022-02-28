@@ -1,19 +1,6 @@
-package _HB_2.Backend;
+package Backend;
 
 import javax.persistence.*;
-//import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-//import com.fasterxml.jackson.annotation.JsonSubTypes;
-//import com.fasterxml.jackson.annotation.JsonTypeInfo;
-//
-//@JsonIgnoreProperties(ignoreUnknown = true)
-//@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
-//@JsonSubTypes({
-//        @JsonSubTypes.Type(value = Admin.class, name = "Admin"),
-//
-//        @JsonSubTypes.Type(value = Driver.class, name = "Driver") ,
-//
-//        @JsonSubTypes.Type(value = Rider.class, name = "Rider") }
-//)
 
 @Entity
 //we will need to define the name of the table where we store the users
@@ -35,24 +22,14 @@ public abstract class User {
     String city;
     String state;
     String zip;
-    @Column(unique = true, nullable = false)
     String email;
     String phoneNumber;
-    String password;
     Boolean isADriver;
     Boolean isARider;
     Boolean isAnAdmin;
 
     //no Boolean Values for User-These should be set in the subclass constructors
-    public User(String firstName,
-                String lastName,
-                String address,
-                String city,
-                String state,
-                String zip,
-                String email,
-                String phoneNumber,
-                String password) {
+    public User(String firstName, String lastName, String address, String city, String state, String zip, String email, String phoneNumber) {
 
         this.firstName = firstName;
         this.lastName = lastName;
@@ -62,7 +39,6 @@ public abstract class User {
         this.zip = zip;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.password = password;
     }
 
     //https://stackoverflow.com/questions/18099127/java-entity-why-do-i-need-an-empty-constructor
@@ -135,10 +111,6 @@ public abstract class User {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
-    public String getPassword() {return password;}
-
-    public void setPassword(String password) {this.password = password;}
 
     public Boolean getADriver() {
         return isADriver;

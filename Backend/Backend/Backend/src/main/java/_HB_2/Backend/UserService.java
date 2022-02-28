@@ -33,7 +33,7 @@ public class UserService {
     //See notes in userController
 //    public User editUser(int id, User newUserInfo) {
 //
-//        User newUser = driverRepository.findById(id);
+//        User newUser = userRepository.findById(id);
 //        newUser.setFirstName(newUserInfo.firstName);
 //        newUser.setLastName(newUserInfo.lastName);
 //        newUser.setAddress(newUserInfo.address);
@@ -47,7 +47,7 @@ public class UserService {
 //        newUser.setARider(newUserInfo.isARider);
 //        newUser.setAnAdmin(newUserInfo.isAnAdmin);
 //
-//        driverRepository.save(newUser);
+//        userRepository.save(newUser);
 //
 //        return getUserById(id);
 //    }
