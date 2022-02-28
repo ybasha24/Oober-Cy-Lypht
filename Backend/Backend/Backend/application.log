@@ -3230,3 +3230,4 @@ com.fasterxml.jackson.databind.exc.InvalidDefinitionException: Cannot construct 
 2022-02-27 16:29:59.711  INFO 20696 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2022-02-27 16:29:59.716  INFO 20696 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2022-02-27 16:30:00.171  INFO 20696 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+

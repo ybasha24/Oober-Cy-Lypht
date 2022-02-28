@@ -23,7 +23,7 @@ public class DriverService {
         return driverRepository.findById(id);
     }
 
-    public void deleteDriverById(int id) {
-        driverRepository.deleteById(id);
+    public User getDriverbyEmail(String email){
+        return driverRepository.findByEmail(email);
     }
 }

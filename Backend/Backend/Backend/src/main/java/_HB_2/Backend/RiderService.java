@@ -23,15 +23,8 @@ public class RiderService {
         return riderRepository.findByEmail(email);
     }
 
-//    public User getRidberbyFirstname(String firstName){
-//        return riderRepository.findByFirstName(firstName);
-//    }
-
     public User getRiderbyId(int id) {
         return riderRepository.findById(id);
     }
 
-    public void deleteRiderById(int id) {
-        riderRepository.deleteById(id);
-    }
 }

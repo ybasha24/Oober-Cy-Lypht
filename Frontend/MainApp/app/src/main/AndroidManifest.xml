@@ -21,6 +21,9 @@
             android:name=".RiderRegistrationPage"
             android:exported="false" />
         <activity
+            android:name=".DriverRegistrationPage"
+            android:exported="false" />
+        <activity
             android:name=".DriverHomePage"
             android:exported="false" />
         <activity
