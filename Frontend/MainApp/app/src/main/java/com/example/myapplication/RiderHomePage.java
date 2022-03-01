@@ -13,13 +13,11 @@ import org.json.JSONObject;
 
 public class RiderHomePage extends AppCompatActivity {
 
-    JSONObject obj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_home_page);
-
 
         TextView tv = (TextView) findViewById(R.id.welcomeBackTV);
         tv.setText("Welcome back!");
@@ -27,7 +25,6 @@ public class RiderHomePage extends AppCompatActivity {
 
     public void profileSettings(View view){
         Intent intent = new Intent(this, ProfileSettings.class);
-        intent.putExtra("obj", obj.toString());
         startActivity(intent);
     }
 }
