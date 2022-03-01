@@ -20,18 +20,9 @@ public class RiderHomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_home_page);
 
-        String objString = getIntent().getStringExtra("obj");
-        obj = null;
-        try{
-            obj = new JSONObject(objString);
-        } catch(JSONException e){}
 
         TextView tv = (TextView) findViewById(R.id.welcomeBackTV);
-        try {
-            tv.setText("Welcome back " + obj.getString("firstName") + "!");
-        } catch(JSONException e){
-            tv.setText("Welcome back!");
-        }
+        tv.setText("Welcome back!");
     }
 
     public void profileSettings(View view){
