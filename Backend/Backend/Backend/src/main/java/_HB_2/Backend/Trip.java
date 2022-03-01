@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.Instant;
+import java.util.Date;
 
 @Entity
 public class Trip {
@@ -16,10 +17,10 @@ public class Trip {
     int RiderId;
     int DriverId;
 
-    Instant scheduledStartDate;
-    Instant scheduledEndDate;
-    Instant actualStartDate;
-    Instant actualEndDate;
+    //Instant scheduledStartDate;
+    //Instant scheduledEndDate;
+    //Instant actualStartDate;
+    //Instant actualEndDate;
 
     boolean hasARider;
     boolean hasADriver;
@@ -42,10 +43,10 @@ public class Trip {
 
     public Trip(int riderId,
                 int driverId,
-                Instant scheduledStartDate,
-                Instant scheduledEndDate,
-                Instant actualStartDate,
-                Instant actualEndDate,
+//                Instant scheduledStartDate,
+//                Instant scheduledEndDate,
+//                Instant actualStartDate,
+//                Instant actualEndDate,
                 boolean hasARider,
                 boolean hasADriver,
                 boolean isConfirmed,
@@ -62,15 +63,43 @@ public class Trip {
 
         RiderId = riderId;
         DriverId = driverId;
-        this.scheduledStartDate = scheduledStartDate;
-        this.scheduledEndDate = scheduledEndDate;
-        this.actualStartDate = actualStartDate;
-        this.actualEndDate = actualEndDate;
+//        this.scheduledStartDate = scheduledStartDate;
+//        this.scheduledEndDate = scheduledEndDate;
+//        this.actualStartDate = actualStartDate;
+//        this.actualEndDate = actualEndDate;
         this.hasARider = hasARider;
         this.hasADriver = hasADriver;
         this.isConfirmed = isConfirmed;
         this.hasStarted = hasStarted;
         this.isCompleted = isCompleted;
+        this.startAddress = startAddress;
+        this.startCity = startCity;
+        this.startState = startState;
+        this.startZip = startZip;
+        this.endAddress = endAddress;
+        this.endCity = endCity;
+        this.endState = endState;
+        this.endZip = endZip;
+    }
+
+    //create trip by Driver
+    public Trip(int driverId,
+//                Instant scheduledStartDate,
+//                Instant scheduledEndDate,
+                boolean hasADriver,
+                String startAddress,
+                String startCity,
+                String startState,
+                String startZip,
+                String endAddress,
+                String endCity,
+                String endState,
+                String endZip) {
+
+        DriverId = driverId;
+//        this.scheduledStartDate = scheduledStartDate;
+//        this.scheduledEndDate = scheduledEndDate;
+        this.hasADriver = hasADriver;
         this.startAddress = startAddress;
         this.startCity = startCity;
         this.startState = startState;
@@ -97,37 +126,37 @@ public class Trip {
         DriverId = driverId;
     }
 
-    public Instant getScheduledStartDate() {
-        return scheduledStartDate;
-    }
-
-    public void setScheduledStartDate(Instant scheduledStartDate) {
-        this.scheduledStartDate = scheduledStartDate;
-    }
-
-    public Instant getScheduledEndDate() {
-        return scheduledEndDate;
-    }
-
-    public void setScheduledEndDate(Instant scheduledEndDate) {
-        this.scheduledEndDate = scheduledEndDate;
-    }
-
-    public Instant getActualStartDate() {
-        return actualStartDate;
-    }
-
-    public void setActualStartDate(Instant actualStartDate) {
-        this.actualStartDate = actualStartDate;
-    }
-
-    public Instant getActualEndDate() {
-        return actualEndDate;
-    }
-
-    public void setActualEndDate(Instant actualEndDate) {
-        this.actualEndDate = actualEndDate;
-    }
+//    public Instant getScheduledStartDate() {
+//        return scheduledStartDate;
+//    }
+//
+//    public void setScheduledStartDate(Instant scheduledStartDate) {
+//        this.scheduledStartDate = scheduledStartDate;
+//    }
+//
+//    public Instant getScheduledEndDate() {
+//        return scheduledEndDate;
+//    }
+//
+//    public void setScheduledEndDate(Instant scheduledEndDate) {
+//        this.scheduledEndDate = scheduledEndDate;
+//    }
+//
+//    public Instant getActualStartDate() {
+//        return actualStartDate;
+//    }
+//
+//    public void setActualStartDate(Instant actualStartDate) {
+//        this.actualStartDate = actualStartDate;
+//    }
+//
+//    public Instant getActualEndDate() {
+//        return actualEndDate;
+//    }
+//
+//    public void setActualEndDate(Instant actualEndDate) {
+//        this.actualEndDate = actualEndDate;
+//    }
 
     public boolean isHasARider() {
         return hasARider;

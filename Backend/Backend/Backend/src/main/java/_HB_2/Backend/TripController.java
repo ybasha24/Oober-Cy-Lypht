@@ -13,10 +13,10 @@ public class TripController {
     @Autowired
     private TripService tripService;
 
-    @PostMapping("/createTrip")
-    Trip createTrip(
+    @PostMapping("/createTripByDriver")
+    Trip createTripByDriver(
             @RequestBody Trip trip) {
-        Trip t = tripService.createTrip(trip);
+        Trip t = tripService.createTripByDriver(trip);
 
         return t;
     }
