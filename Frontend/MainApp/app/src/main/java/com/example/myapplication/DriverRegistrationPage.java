@@ -50,7 +50,6 @@ public class DriverRegistrationPage extends AppCompatActivity {
         obj.put("email", email);
         obj.put("phoneNumber", phone);
         obj.put("password", password);
-        //String city = ((EditText) findViewById(R.id.editTextCity)).getText().toString();
 
         String url = "http://coms-309-030.class.las.iastate.edu:8080/driver/registerDriver/";
 
@@ -62,7 +61,7 @@ public class DriverRegistrationPage extends AppCompatActivity {
                         Intent intent = new Intent(this, DriverHomePage.class);
                         int id = Integer.parseInt(response.getString("id"));
                         if (id != 0) {
-                            MainActivity.userResp = response;
+                            intent.putExtra("obj", response.toString());
                             startActivity(intent);
                         } else {
                             ((TextView) findViewById(R.id.regStatusTextView)).setText("Email already exists");

@@ -22,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+/*
+Rider : abc@iastate.edu  pass: abc
+Driver: xyz@iastate.edu pass: xyz
+ */
 
     public void signIn(View view) throws JSONException{
         TextView tv = (TextView) findViewById(R.id.tv);
@@ -39,9 +43,11 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = null;
                         boolean b = name == null;
                         if(!response.isNull("firstName")){
-                            if (response.getBoolean("arider") == true)
-                                intent = new Intent(this, RiderHomePage.class);
-                            else if (response.getBoolean("adriver") == true)
+//                            if (response.getBoolean("arider") == true)
+//                                intent = new Intent(this, RiderHomePage.class);
+//                            else if (response.getBoolean("adriver") == true)
+//                                intent = new Intent(this, DriverHomePage.class);
+                            if (response.getBoolean("adriver") == true)
                                 intent = new Intent(this, DriverHomePage.class);
                             intent.putExtra("obj", response.toString());
                             startActivity(intent);
