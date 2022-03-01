@@ -49,25 +49,17 @@ public class RiderRegistrationPage extends AppCompatActivity {
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, obj,
             response -> {
-                try {
+                if(!response.isNull("firstName")){
                     Intent intent = new Intent(this, RiderHomePage.class);
-                    String name = response.getString("firstName");
-                    boolean b = name == null;
-                    if(!response.isNull("firstName")){
-                        intent.putExtra("firstName", name);
-                        startActivity(intent);
-                        tv.setText(name);
-                    }
-                    else {
-                        tv.setText("Email already exists");
-                    }
+                    MainActivity.accountObj = response;
+                    startActivity(intent);
                 }
-                catch(JSONException e){
-                    tv.setText("JSON Exception Error.");
+                else {
+                    tv.setText("Error processing registration.");
                 }
             },
             error -> {
-                tv.setText("Please fill out each field.");
+                tv.setText(error.toString());
             });
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
     }
