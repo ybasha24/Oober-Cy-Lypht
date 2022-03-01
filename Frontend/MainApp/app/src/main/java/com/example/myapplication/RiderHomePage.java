@@ -27,4 +27,10 @@ public class RiderHomePage extends AppCompatActivity {
         Intent intent = new Intent(this, ProfileSettings.class);
         startActivity(intent);
     }
+
+    public void signOut(View view){
+        MainActivity.accountObj = null;
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 }
