@@ -17,6 +17,9 @@
             android:name=".CreateRidePage"
             android:exported="false" />
         <activity
+            android:name=".ProfileSettings"
+            android:exported="false" />
+        <activity
             android:name=".RiderRegistrationPage"
             android:exported="false" />
         <activity

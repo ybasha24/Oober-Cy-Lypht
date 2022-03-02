@@ -15,11 +15,16 @@ public class DriverController {
     User createDriverWithBody(
             @RequestBody Driver d) {
         User u = driverService.getDriverbyEmail(d.email);
+
+        //if there is no driver in the database
         if (u == null){
+            //make a new one
             driverService.createDriver(d);
             return d;
         }
+        //otherwise a driver with this email already exists
         else{
+            //so just return an empty user
             User empty = new Driver();
             return empty;
         }
@@ -43,12 +48,5 @@ public class DriverController {
         return u;
     }
 
-
-    @PutMapping("/editDriver")
-    User editDriver(
-            @RequestParam int id,
-            @RequestBody Driver d) {
-        return driverService.editDriver(id, d);
-    }
 
 }

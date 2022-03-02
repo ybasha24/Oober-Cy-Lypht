@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.view.View;
+
 import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -14,12 +15,17 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
+    static JSONObject accountObj;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
 
+/*
+Rider : abc@iastate.edu  pass: abc
+Driver: xyz@iastate.edu pass: xyz
+ */
 
     public void signIn(View view) throws JSONException{
         TextView tv = (TextView) findViewById(R.id.tv);
@@ -33,28 +39,25 @@ public class MainActivity extends AppCompatActivity {
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
                     try {
-                        String name = response.getString("firstName");
+                        accountObj = response;
                         Intent intent = null;
-                        boolean b = name == null;
-                        if(!response.isNull("firstName")){
-                            if (response.getBoolean("arider") == true)
-                                intent = new Intent(this, RiderHomePage.class);
-                            else if (response.getBoolean("adriver") == true)
+                        if(!accountObj.isNull("firstName")){
+                            if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver") == true)
                                 intent = new Intent(this, DriverHomePage.class);
-                            intent.putExtra("obj", response.toString());
+                            else if (!accountObj.isNull("arider") && accountObj.getBoolean("arider") == true)
+                                intent = new Intent(this, RiderHomePage.class);
                             startActivity(intent);
-                            tv.setText("HELLO");
                         }
                         else {
-                            tv.setText(url);
+                            tv.setText("Error processing " + url);
                         }
                     }
                     catch(JSONException e){
-                        tv.setText(url);
+                        tv.setText("Error processing " + url);
                     }
                 },
                 error -> {
-                    tv.setText(url);
+                    tv.setText("Error processing " + url);
                 });
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
     }
