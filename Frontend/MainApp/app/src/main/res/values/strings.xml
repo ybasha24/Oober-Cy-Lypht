@@ -16,5 +16,6 @@
     <string name="Driver_Registration">Driver Registration</string>
 
     <string name="Registration_Option">Are you registering as a Driver or Rider?</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
 </resources>
