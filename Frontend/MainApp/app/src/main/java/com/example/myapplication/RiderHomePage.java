@@ -36,7 +36,7 @@ public class RiderHomePage extends AppCompatActivity {
 
     public void createRide(View view){
 //        Intent intent = new Intent(this, CreateRidePage.class);
-        Intent intent = new Intent(this, MapsActivity.class);
+        Intent intent = new Intent(this, ChooseRideTime.class);
         startActivity(intent);
     }
 }
