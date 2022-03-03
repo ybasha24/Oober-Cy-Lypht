@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RiderRegistrationPage">
+    tools:context=".rider.RiderRegistrationPage">
 
     <TextView
         android:id="@+id/textView"
@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:background="#EC4F4F"
         android:backgroundTint="#F8ACAC"
-        android:capitalize="words"
         android:fontFamily="casual"
         android:text="@string/Rider_Registration"
         android:textSize="34sp"
@@ -29,7 +28,6 @@
         android:layout_height="wrap_content"
         android:background="#EC4F4F"
         android:backgroundTint="#F8ACAC"
-        android:capitalize="words"
         android:fontFamily="casual"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"

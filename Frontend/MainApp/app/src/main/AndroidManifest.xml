@@ -34,26 +34,19 @@
             android:value="AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM" />
 
         <activity
-            android:name=".MapsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_maps" />
-        <activity
-            android:name=".CreateRidePage"
-            android:exported="false" />
-        <activity
             android:name=".ProfileSettings"
             android:exported="false" />
         <activity
-            android:name=".RiderRegistrationPage"
+            android:name=".rider.RiderRegistrationPage"
             android:exported="false" />
         <activity
-            android:name=".DriverRegistrationPage"
+            android:name=".driver.DriverRegistrationPage"
             android:exported="false" />
         <activity
-            android:name=".DriverHomePage"
+            android:name=".driver.DriverHomePage"
             android:exported="false" />
         <activity
-            android:name=".RiderHomePage"
+            android:name=".rider.RiderHomePage"
             android:exported="false" />
         <activity
             android:name=".RegistrationOptions"

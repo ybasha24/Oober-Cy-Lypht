@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.rider;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,16 +10,19 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.app.AppController;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import com.example.myapplication.R;
 
 public class RiderRegistrationPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_rider_registration_page);
     }
 

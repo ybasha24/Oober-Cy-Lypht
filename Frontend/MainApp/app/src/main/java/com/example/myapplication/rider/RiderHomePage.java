@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.rider;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,12 @@ import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.example.myapplication.MainActivity;
+import com.example.myapplication.ProfileSettings;
+import com.example.myapplication.R;
+import com.example.myapplication.SelectRideTime;
+
 
 public class RiderHomePage extends AppCompatActivity {
 
@@ -35,7 +41,7 @@ public class RiderHomePage extends AppCompatActivity {
     }
 
     public void createRide(View view){
-//        Intent intent = new Intent(this, MapsActivity.class);
+//        Intent intent = new Intent(this, SelectRideStart.class);
         Intent intent = new Intent(this, SelectRideTime.class);
         startActivity(intent);
     }

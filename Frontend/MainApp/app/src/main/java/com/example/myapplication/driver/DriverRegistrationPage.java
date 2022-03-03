@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.driver;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,12 +13,14 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.app.AppController;
+import com.example.myapplication.driver.DriverHomePage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import com.example.myapplication.R;
 
 public class DriverRegistrationPage extends AppCompatActivity {
     public static String s;

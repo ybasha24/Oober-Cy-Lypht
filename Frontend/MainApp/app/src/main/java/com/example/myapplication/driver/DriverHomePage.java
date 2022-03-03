@@ -1,22 +1,22 @@
-package com.example.myapplication;
+package com.example.myapplication.driver;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.TextView;
-
 import org.json.JSONException;
-import org.json.JSONObject;
+
+import com.example.myapplication.MainActivity;
+import com.example.myapplication.R;
 
 public class DriverHomePage extends AppCompatActivity {
-    JSONObject obj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_home_page);
 
-        TextView tv = (TextView) findViewById(R.id.welcomebackTV);
+        TextView tv = findViewById(R.id.welcomebackTV);
 
         try{
             String username = MainActivity.accountObj.getString("firstName");
