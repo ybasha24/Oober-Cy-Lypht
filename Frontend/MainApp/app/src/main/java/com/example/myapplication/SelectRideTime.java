@@ -10,11 +10,18 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 public class SelectRideTime extends AppCompatActivity {
+
+    private static String time;
+    private static String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +39,7 @@ public class SelectRideTime extends AppCompatActivity {
                     DateFormat.is24HourFormat(getActivity()));
         }
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            SelectRideTime.time = hourOfDay + ":" + minute;
         }
     }
 
@@ -39,19 +47,18 @@ public class SelectRideTime extends AppCompatActivity {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
             final Calendar c = Calendar.getInstance();
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
             int day = c.get(Calendar.DAY_OF_MONTH);
             return new DatePickerDialog(getActivity(), this, year, month, day);
         }
-
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
+            String m = month > 10 ? String.valueOf(month) : "0" + month;
+            String d = day > 10 ? String.valueOf(day) : "0" + day;
+            SelectRideTime.date = year + "-" + m + "-" + d;
         }
     }
-
 
     public void showTimePickerDialog(View v) {
         DialogFragment newFragment = new TimePickerFragment();
@@ -62,4 +69,13 @@ public class SelectRideTime extends AppCompatActivity {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
+
+    public void showTime(View v){
+        TextView t = (TextView) findViewById(R.id.timeTV);
+        String dateTimeString = date + " " + time;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateTimeObject = LocalDateTime.parse(dateTimeString, formatter);
+        t.setText(dateTimeObject.toString());
+    }
+
 }
