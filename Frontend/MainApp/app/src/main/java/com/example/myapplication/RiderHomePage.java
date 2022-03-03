@@ -39,4 +39,5 @@ public class RiderHomePage extends AppCompatActivity {
         Intent intent = new Intent(this, SelectRideTime.class);
         startActivity(intent);
     }
+
 }

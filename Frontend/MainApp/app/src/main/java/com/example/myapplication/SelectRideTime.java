@@ -13,6 +13,8 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -22,11 +24,15 @@ public class SelectRideTime extends AppCompatActivity {
 
     private static String time;
     private static String date;
+    private static TextView timeTV;
+    private static TextView dateTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_ride_time);
+        dateTV = findViewById(R.id.dateSelectedTV);
+        timeTV = findViewById(R.id.timeSelectedTV);
     }
 
     public static class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
@@ -38,8 +44,11 @@ public class SelectRideTime extends AppCompatActivity {
             return new TimePickerDialog(getActivity(), this, hour, minute,
                     DateFormat.is24HourFormat(getActivity()));
         }
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            SelectRideTime.time = hourOfDay + ":" + minute;
+        public void onTimeSet(TimePicker view, int hour, int minute) {
+            String h = hour > 10 ? String.valueOf(hour) : "0" + hour;
+            String m = minute > 10 ? String.valueOf(minute) : "0" + minute;
+            SelectRideTime.time = h + ":" + m;
+            SelectRideTime.timeTV.setText(SelectRideTime.time);
         }
     }
 
@@ -57,6 +66,7 @@ public class SelectRideTime extends AppCompatActivity {
             String m = month > 10 ? String.valueOf(month) : "0" + month;
             String d = day > 10 ? String.valueOf(day) : "0" + day;
             SelectRideTime.date = year + "-" + m + "-" + d;
+            SelectRideTime.dateTV.setText(SelectRideTime.date);
         }
     }
 
