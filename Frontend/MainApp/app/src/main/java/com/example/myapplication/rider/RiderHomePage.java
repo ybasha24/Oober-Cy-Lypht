@@ -5,16 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.ProfileSettings;
 import com.example.myapplication.R;
-import com.example.myapplication.SelectRideTime;
+import com.example.myapplication.selectride.SelectRideTime;
 
 
 public class RiderHomePage extends AppCompatActivity {

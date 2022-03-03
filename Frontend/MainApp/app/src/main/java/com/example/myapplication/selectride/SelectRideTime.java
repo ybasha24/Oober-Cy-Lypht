@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.selectride;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -6,6 +6,7 @@ import androidx.fragment.app.DialogFragment;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -13,9 +14,8 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import org.w3c.dom.Text;
+import com.example.myapplication.R;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -81,11 +81,16 @@ public class SelectRideTime extends AppCompatActivity {
     }
 
     public void showTime(View v){
-        TextView t = (TextView) findViewById(R.id.timeTV);
+        TextView t = findViewById(R.id.timeTV);
         String dateTimeString = date + " " + time;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime dateTimeObject = LocalDateTime.parse(dateTimeString, formatter);
         t.setText(dateTimeObject.toString());
+    }
+
+    public void selectStartLocation(View v){
+        Intent i = new Intent(this, SelectRideStart.class);
+        startActivity(i);
     }
 
 }
