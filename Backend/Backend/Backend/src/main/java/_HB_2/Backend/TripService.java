@@ -3,6 +3,9 @@ package _HB_2.Backend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class TripService {
 
@@ -33,4 +36,9 @@ public class TripService {
         return t;
     }
 
+    public List getTripsByDriverId(int id) {
+        List list = new ArrayList<>();
+
+        return list;
+    }
 }
