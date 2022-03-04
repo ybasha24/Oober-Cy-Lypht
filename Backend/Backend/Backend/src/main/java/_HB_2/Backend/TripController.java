@@ -20,12 +20,27 @@ public class TripController {
         return t;
     }
 
-    @GetMapping("/getDriverTrips")
-    List<Trip> getListOfTripsByDriverId(
+//    @GetMapping("/getDriverTrips")
+//    List<Trip> getListOfTripsByDriverId(
+//            @RequestParam int id) {
+//
+//        List list = tripService.getTripsByDriverId(id);
+//        return list;
+//    }
+
+    @GetMapping("/getTrip")
+    Trip getListOfTripsByDriverId(
             @RequestParam int id) {
 
-        List list = tripService.getTripsByDriverId(id);
-        return list;
+        Trip trip = tripService.getTripById(id);
+        return trip;
+    }
+
+    @PutMapping("/editTrip")
+    Trip getTripById(
+            @RequestParam int id,
+            @RequestBody Trip t) {
+        return tripService.editTripById(id, t);
     }
 
 }

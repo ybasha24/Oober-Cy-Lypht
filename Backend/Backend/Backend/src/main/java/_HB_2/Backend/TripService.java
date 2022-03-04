@@ -29,16 +29,45 @@ public class TripService {
                 trip.endCity,
                 trip.endState,
                 trip.endZip,
-                trip.driverPickupRadius,
-                trip.driverDropOffRadius);
+                trip.radius);
 
         tripRepository.save(t);
         return t;
     }
 
-    public List getTripsByDriverId(int id) {
-        List list = new ArrayList<>();
+//    public List getTripsByDriverId(int id) {
+//        List list = new ArrayList<>();
+//
+//        return list;
+//    }
 
-        return list;
+    public Trip getTripById(int id) {
+        return tripRepository.findById(id);
+
+    }
+
+    public User editUser(int id, Trip newTripoInfo) {
+
+        User newUser = userRepository.findById(id);
+        newUser.setFirstName(newUserInfo.firstName);
+        newUser.setLastName(newUserInfo.lastName);
+        newUser.setAddress(newUserInfo.address);
+        newUser.setCity(newUserInfo.city);
+        newUser.setState(newUserInfo.state);
+        newUser.setZip(newUserInfo.zip);
+        newUser.setEmail(newUserInfo.email);
+        newUser.setPhoneNumber(newUserInfo.phoneNumber);
+        newUser.setPassword(newUserInfo.password);
+
+        userRepository.save(newUser);
+
+        return getUserById(id);
+    }
+
+
+    public Trip editTripById(int id, Trip t) {
+
+        Trip newTrip = tripRepository.findById(id);
+        newTrip.
     }
 }
