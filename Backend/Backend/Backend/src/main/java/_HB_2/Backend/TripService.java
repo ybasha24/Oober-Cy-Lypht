@@ -14,18 +14,20 @@ public class TripService {
         //uses driver constructor
         Trip t = new Trip(
                 trip.DriverId,
-//                trip.scheduledStartDate,
-//                trip.scheduledEndDate,
+                trip.scheduledStartDate,
+                trip.scheduledEndDate,
+                //hasADriver
                 true,
                 trip.startAddress,
                 trip.startCity,
                 trip.startState,
                 trip.startZip,
-
                 trip.endAddress,
                 trip.endCity,
                 trip.endState,
-                trip.endZip);
+                trip.endZip,
+                trip.driverPickupRadius,
+                trip.driverDropOffRadius);
 
         tripRepository.save(t);
         return t;
