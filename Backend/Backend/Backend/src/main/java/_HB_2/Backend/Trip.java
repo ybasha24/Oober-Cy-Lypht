@@ -1,11 +1,11 @@
 package _HB_2.Backend;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 public class Trip {
@@ -17,10 +17,11 @@ public class Trip {
     int RiderId;
     int DriverId;
 
-    //Instant scheduledStartDate;
-    //Instant scheduledEndDate;
-    //Instant actualStartDate;
-    //Instant actualEndDate;
+    LocalDateTime scheduledStartDate;
+    LocalDateTime scheduledEndDate;
+
+    LocalDateTime actualStartDate;
+    LocalDateTime actualEndDate;
 
     boolean hasARider;
     boolean hasADriver;
@@ -38,35 +39,22 @@ public class Trip {
     String endState;
     String endZip;
 
+    //represent distances from driver start location
+    //that the driver is willing to pick up/drop off a rider
+    int driverPickupRadius;
+    int driverDropOffRadius;
+
     public Trip() {
     }
 
-    public Trip(int riderId,
-                int driverId,
-//                Instant scheduledStartDate,
-//                Instant scheduledEndDate,
-//                Instant actualStartDate,
-//                Instant actualEndDate,
-                boolean hasARider,
-                boolean hasADriver,
-                boolean isConfirmed,
-                boolean hasStarted,
-                boolean isCompleted,
-                String startAddress,
-                String startCity,
-                String startState,
-                String startZip,
-                String endAddress,
-                String endCity,
-                String endState,
-                String endZip) {
-
+    //Constructor with all attributes
+    public Trip(int riderId, int driverId, LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, LocalDateTime actualStartDate, LocalDateTime actualEndDate, boolean hasARider, boolean hasADriver, boolean isConfirmed, boolean hasStarted, boolean isCompleted, String startAddress, String startCity, String startState, String startZip, String endAddress, String endCity, String endState, String endZip, int driverPickupRadius, int driverDropOffRadius) {
         RiderId = riderId;
         DriverId = driverId;
-//        this.scheduledStartDate = scheduledStartDate;
-//        this.scheduledEndDate = scheduledEndDate;
-//        this.actualStartDate = actualStartDate;
-//        this.actualEndDate = actualEndDate;
+        this.scheduledStartDate = scheduledStartDate;
+        this.scheduledEndDate = scheduledEndDate;
+        this.actualStartDate = actualStartDate;
+        this.actualEndDate = actualEndDate;
         this.hasARider = hasARider;
         this.hasADriver = hasADriver;
         this.isConfirmed = isConfirmed;
@@ -80,25 +68,15 @@ public class Trip {
         this.endCity = endCity;
         this.endState = endState;
         this.endZip = endZip;
+        this.driverPickupRadius = driverPickupRadius;
+        this.driverDropOffRadius = driverDropOffRadius;
     }
 
     //create trip by Driver
-    public Trip(int driverId,
-//                Instant scheduledStartDate,
-//                Instant scheduledEndDate,
-                boolean hasADriver,
-                String startAddress,
-                String startCity,
-                String startState,
-                String startZip,
-                String endAddress,
-                String endCity,
-                String endState,
-                String endZip) {
-
+    public Trip(int driverId, LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, boolean hasADriver, String startAddress, String startCity, String startState, String startZip, String endAddress, String endCity, String endState, String endZip, int driverPickupRadius, int driverDropOffRadius) {
         DriverId = driverId;
-//        this.scheduledStartDate = scheduledStartDate;
-//        this.scheduledEndDate = scheduledEndDate;
+        this.scheduledStartDate = scheduledStartDate;
+        this.scheduledEndDate = scheduledEndDate;
         this.hasADriver = hasADriver;
         this.startAddress = startAddress;
         this.startCity = startCity;
@@ -108,6 +86,8 @@ public class Trip {
         this.endCity = endCity;
         this.endState = endState;
         this.endZip = endZip;
+        this.driverPickupRadius = driverPickupRadius;
+        this.driverDropOffRadius = driverDropOffRadius;
     }
 
     public int getRiderId() {
@@ -126,37 +106,21 @@ public class Trip {
         DriverId = driverId;
     }
 
-//    public Instant getScheduledStartDate() {
-//        return scheduledStartDate;
-//    }
-//
-//    public void setScheduledStartDate(Instant scheduledStartDate) {
-//        this.scheduledStartDate = scheduledStartDate;
-//    }
-//
-//    public Instant getScheduledEndDate() {
-//        return scheduledEndDate;
-//    }
-//
-//    public void setScheduledEndDate(Instant scheduledEndDate) {
-//        this.scheduledEndDate = scheduledEndDate;
-//    }
-//
-//    public Instant getActualStartDate() {
-//        return actualStartDate;
-//    }
-//
-//    public void setActualStartDate(Instant actualStartDate) {
-//        this.actualStartDate = actualStartDate;
-//    }
-//
-//    public Instant getActualEndDate() {
-//        return actualEndDate;
-//    }
-//
-//    public void setActualEndDate(Instant actualEndDate) {
-//        this.actualEndDate = actualEndDate;
-//    }
+    public LocalDateTime getScheduledStartDate() {return scheduledStartDate;}
+
+    public void setScheduledStartDate(LocalDateTime scheduledStartDate) {this.scheduledStartDate = scheduledStartDate;}
+
+    public LocalDateTime getScheduledEndDate() {return scheduledEndDate;}
+
+    public void setScheduledEndDate(LocalDateTime scheduledEndDate) {this.scheduledEndDate = scheduledEndDate;}
+
+    public LocalDateTime getActualStartDate() {return actualStartDate;}
+
+    public void setActualStartDate(LocalDateTime actualStartDate) {this.actualStartDate = actualStartDate;}
+
+    public LocalDateTime getActualEndDate() {return actualEndDate;}
+
+    public void setActualEndDate(LocalDateTime actualEndDate) {this.actualEndDate = actualEndDate;}
 
     public boolean isHasARider() {
         return hasARider;
@@ -261,4 +225,12 @@ public class Trip {
     public void setEndZip(String endZip) {
         this.endZip = endZip;
     }
+
+    public int getDriverPickupRadius() {return driverPickupRadius;}
+
+    public void setDriverPickupRadius(int driverPickupRadius) {this.driverPickupRadius = driverPickupRadius;}
+
+    public int getDriverDropOffRadius() {return driverDropOffRadius;}
+
+    public void setDriverDropOffRadius(int driverDropOffRadius) {this.driverDropOffRadius = driverDropOffRadius;}
 }
