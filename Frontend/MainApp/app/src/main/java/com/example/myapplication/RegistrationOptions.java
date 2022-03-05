@@ -6,6 +6,9 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.driver.DriverRegistrationPage;
+import com.example.myapplication.rider.RiderRegistrationPage;
+
 public class RegistrationOptions extends AppCompatActivity {
 
     @Override
