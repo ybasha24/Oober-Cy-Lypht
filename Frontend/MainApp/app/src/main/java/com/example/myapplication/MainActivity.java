@@ -26,10 +26,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-/*
-Rider : abc@iastate.edu  pass: abc
-Driver: xyz@iastate.edu pass: xyz
- */
 
     public void signIn(View view) throws JSONException{
         TextView tv = findViewById(R.id.tv);

@@ -16,14 +16,12 @@ import android.widget.TimePicker;
 
 import com.example.myapplication.R;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 public class SelectRideTime extends AppCompatActivity {
 
-    private static String time;
-    private static String date;
+    public static String time;
+    public static String date;
     private static TextView timeTV;
     private static TextView dateTV;
 
@@ -80,16 +78,16 @@ public class SelectRideTime extends AppCompatActivity {
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
-    public void showTime(View v){
-        TextView t = findViewById(R.id.timeTV);
-        String dateTimeString = date + " " + time;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime dateTimeObject = LocalDateTime.parse(dateTimeString, formatter);
-        t.setText(dateTimeObject.toString());
-    }
+//    public void showTime(View v){
+//        TextView t = findViewById(R.id.timeTV);
+//        String dateTimeString = date + " " + time;
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+//        LocalDateTime dateTimeObject = LocalDateTime.parse(dateTimeString, formatter);
+//        t.setText(dateTimeObject.toString());
+//    }
 
     public void selectStartLocation(View v){
-        Intent i = new Intent(this, SelectRideStart.class);
+        Intent i = new Intent(this, SelectRideLocation.class);
         startActivity(i);
     }
 
