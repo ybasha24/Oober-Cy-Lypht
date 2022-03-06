@@ -3,6 +3,7 @@ package _HB_2.Backend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,28 +47,39 @@ public class TripService {
 
     }
 
-    public User editUser(int id, Trip newTripoInfo) {
-
-        User newUser = userRepository.findById(id);
-        newUser.setFirstName(newUserInfo.firstName);
-        newUser.setLastName(newUserInfo.lastName);
-        newUser.setAddress(newUserInfo.address);
-        newUser.setCity(newUserInfo.city);
-        newUser.setState(newUserInfo.state);
-        newUser.setZip(newUserInfo.zip);
-        newUser.setEmail(newUserInfo.email);
-        newUser.setPhoneNumber(newUserInfo.phoneNumber);
-        newUser.setPassword(newUserInfo.password);
-
-        userRepository.save(newUser);
-
-        return getUserById(id);
-    }
-
-
-    public Trip editTripById(int id, Trip t) {
+    public Trip editTripById(int id, Trip newTripInfo) {
 
         Trip newTrip = tripRepository.findById(id);
-        newTrip.
+
+        newTrip.setRiderId(newTripInfo.RiderId);
+        newTrip.setDriverId(newTripInfo.DriverId);
+
+        newTrip.setScheduledStartDate(newTripInfo.scheduledStartDate);
+        newTrip.setScheduledEndDate(newTripInfo.scheduledEndDate);
+
+        newTrip.setActualStartDate(newTripInfo.actualStartDate);
+        newTrip.setActualEndDate(newTripInfo.actualEndDate);
+
+        newTrip.setHasARider(newTripInfo.hasARider);
+        newTrip.setHasADriver(newTripInfo.hasADriver);
+        newTrip.setConfirmed(newTripInfo.isConfirmed);
+        newTrip.setConfirmed(newTripInfo.hasStarted);
+        newTrip.setCompleted(newTripInfo.isConfirmed);
+
+        newTrip.setStartAddress(newTripInfo.startAddress);
+        newTrip.setStartCity(newTripInfo.startCity);
+        newTrip.setStartState(newTripInfo.startState);
+        newTrip.setStartZip(newTripInfo.startZip);
+
+        newTrip.setEndAddress(newTripInfo.endAddress);
+        newTrip.setEndCity(newTripInfo.endCity);
+        newTrip.setEndCity(newTripInfo.endState);
+        newTrip.setEndZip(newTripInfo.endZip);
+
+        newTrip.setRadius(newTripInfo.radius);
+
+        tripRepository.save(newTrip);
+
+        return getTripById(id);
     }
 }
