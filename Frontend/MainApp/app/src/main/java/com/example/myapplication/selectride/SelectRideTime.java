@@ -16,12 +16,15 @@ import android.widget.TimePicker;
 
 import com.example.myapplication.R;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 public class SelectRideTime extends AppCompatActivity {
 
     public static String time;
     public static String date;
+    public static LocalDateTime datettime;
     private static TextView timeTV;
     private static TextView dateTV;
 
@@ -87,6 +90,9 @@ public class SelectRideTime extends AppCompatActivity {
 //    }
 
     public void selectStartLocation(View v){
+//        String dateTimeString = date + " " + time;
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+//        datettime = LocalDateTime.parse(dateTimeString, formatter);
         Intent i = new Intent(this, SelectRideLocation.class);
         startActivity(i);
     }

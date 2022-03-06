@@ -46,4 +46,5 @@ dependencies {
     implementation 'com.google.android.libraries.places:places:2.5.0'
     implementation 'com.google.maps:google-maps-services:2.0.0'
     implementation 'org.slf4j:slf4j-simple:1.7.25'
+    implementation 'com.google.maps.android:android-maps-utils:2.3.0'
 }
