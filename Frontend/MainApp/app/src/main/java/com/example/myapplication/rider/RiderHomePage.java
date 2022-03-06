@@ -15,14 +15,10 @@ import com.example.myapplication.selectride.SelectRideTime;
 
 public class RiderHomePage extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_home_page);
-
-        TextView tv = (TextView) findViewById(R.id.welcomeBackTV);
-        tv.setText("Welcome back!");
     }
 
     public void profileSettings(View view){
@@ -30,15 +26,9 @@ public class RiderHomePage extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void signOut(View view){
+    public void signOut(View view) {
         MainActivity.accountObj = null;
         Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-
-    public void createRide(View view){
-//        Intent intent = new Intent(this, SelectRideLocation.class);
-        Intent intent = new Intent(this, SelectRideTime.class);
         startActivity(intent);
     }
 
