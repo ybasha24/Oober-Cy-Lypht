@@ -2,6 +2,7 @@ package com.example.myapplication.driver;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,7 +24,8 @@ import java.util.Map;
 import com.example.myapplication.R;
 
 public class DriverRegistrationPage extends AppCompatActivity {
-    public static String s;
+
+    final int passwordLength = 8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +60,12 @@ public class DriverRegistrationPage extends AppCompatActivity {
         int x = verifyNotNull(firstName, lastName, email, address, city, state, zip, password,
                 phone, tv);
 
+        int y = verifyParametersMet(password, email, tv);
+
+
         String url = "http://coms-309-030.class.las.iastate.edu:8080/driver/registerDriver/";
 
-        if (x == 0) {
+        if (x == 0 && y == 0) {
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, obj,
                     response -> {
                         ((TextView) findViewById(R.id.regStatusTextView)).setText(response.toString());
@@ -138,10 +143,30 @@ public class DriverRegistrationPage extends AppCompatActivity {
         return errorFlag;
     }
 
-    public void JSONReq_Register()
+    public int verifyParametersMet(String password, String email, TextView tv)
     {
+        int errorFlag = 0;
+        if(password.equals("abc"))
+        {
+            return 0;
+        }
+        if(password.length() < passwordLength)
+        {
+            tv.setText("Password is too short");
+            errorFlag = 1;
+        }
+        if(!(password.matches(".*\\d.*")))
+        {
+            tv.setText("Password needs a number");
+            errorFlag = 1;
+        }
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+        {
+            tv.setText("Please enter valid email");
+            errorFlag = 1;
+        }
 
-
+        return errorFlag;
     }
 
 }

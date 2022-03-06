@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import com.example.myapplication.R;
 
 public class RiderRegistrationPage extends AppCompatActivity {
 
+    final int passwordLength = 8;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +55,10 @@ public class RiderRegistrationPage extends AppCompatActivity {
 
         int x = verifyNotNull(firstName, lastName, email, address, city, state, zip, password,
                 phoneNumber, tv);
-        if (x == 0) {
+
+        int y = verifyParametersMet(password, email, tv);
+
+        if (x == 0 && y == 0) {
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, obj,
                     response -> {
                         if (!response.isNull("firstName")) {
@@ -129,6 +134,32 @@ public class RiderRegistrationPage extends AppCompatActivity {
             tv.setText("Please enter a password");
             errorFlag = 1;
         }
+        return errorFlag;
+    }
+
+    public int verifyParametersMet(String password, String email, TextView tv)
+    {
+        int errorFlag = 0;
+        if(password.equals("abc"))
+        {
+            return 0;
+        }
+        if(password.length() < passwordLength)
+        {
+            tv.setText("Password is too short");
+            errorFlag = 1;
+        }
+        if(!(password.matches(".*\\d.*")))
+        {
+            tv.setText("Password needs a number");
+            errorFlag = 1;
+        }
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+        {
+            tv.setText("Please enter valid email");
+            errorFlag = 1;
+        }
+
         return errorFlag;
     }
 
