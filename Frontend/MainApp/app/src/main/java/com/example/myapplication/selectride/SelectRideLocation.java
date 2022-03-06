@@ -6,12 +6,14 @@ import com.example.myapplication.R;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -122,12 +124,11 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
         String waypoints = "";
         String routeDest = "destination=" + destString;
         String params = routeOrigin + "&" + waypoints + "&"  + routeDest + "&key=" + "AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM";
-
-        String url = "https://maps.googleapis.com/maps/api/directions/json?"
-                + params;
+        String url = "https://maps.googleapis.com/maps/api/directions/json?" + params;
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
             response -> {
+
                 try {
                     JSONArray routeArray = response.getJSONArray("routes");
                     JSONObject routes = routeArray.getJSONObject(0);
@@ -141,7 +142,9 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
                         .color(Color.parseColor("#05b1fb"))//Google maps blue color
                         .geodesic(true)
                     );
+
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin, 10.0f));
+                    calculateRoute();
                 }
                 catch(JSONException e){
                 }
@@ -151,7 +154,31 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
             });
         AppController.getInstance().addToRequestQueue(req, "obj_req");
     }
-    
+
+    public void calculateRoute(){
+
+        String routeOrigin = "origins=" + originString;
+        String routeDest = "destinations=" + destString;
+        String params = routeOrigin + "&"  + routeDest + "&units=imperial" + "&key=" + "AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM";
+        params = params.replaceAll(" ", "%20");
+        String url = "https://maps.googleapis.com/maps/api/distancematrix/json?" + params;
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                response -> {
+                    try {
+                        JSONObject rows0 = response.getJSONArray("rows").getJSONObject(0);
+                        JSONArray elements = (JSONArray) rows0.get("elements");
+                        String distance = elements.getJSONObject(0).getJSONObject("distance").getString("text");
+                        String duration = elements.getJSONObject(0).getJSONObject("duration").getString("text");
+                        Log.e("Error", distance + " " + duration);
+                    }
+                    catch(JSONException e){
+                    }
+                },
+                error -> {});
+        AppController.getInstance().addToRequestQueue(req, "obj_req");
+    }
+
     public void proceed(View v){
         Intent i = new Intent(this, ConfirmRide.class);
         startActivity(i);
