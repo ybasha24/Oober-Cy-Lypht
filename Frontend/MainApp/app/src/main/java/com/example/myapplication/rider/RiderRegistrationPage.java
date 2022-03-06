@@ -144,14 +144,14 @@ public class RiderRegistrationPage extends AppCompatActivity {
         {
             return 0;
         }
-        if(password.length() < passwordLength)
-        {
-            tv.setText("Password is too short");
-            errorFlag = 1;
-        }
         if(!(password.matches(".*\\d.*")))
         {
             tv.setText("Password needs a number");
+            errorFlag = 1;
+        }
+        if(password.length() < passwordLength)
+        {
+            tv.setText("Password is too short");
             errorFlag = 1;
         }
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
