@@ -15,6 +15,7 @@ import com.example.myapplication.app.AppController;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import com.example.myapplication.R;
 
 public class RiderRegistrationPage extends AppCompatActivity {
@@ -50,20 +51,85 @@ public class RiderRegistrationPage extends AppCompatActivity {
         obj.put("password", password);
         obj.put("phoneNumber", phoneNumber);
 
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, obj,
-            response -> {
-                if(!response.isNull("firstName")){
-                    Intent intent = new Intent(this, RiderHomePage.class);
-                    MainActivity.accountObj = response;
-                    startActivity(intent);
-                }
-                else {
-                    tv.setText("Error processing registration.");
-                }
-            },
-            error -> {
-                tv.setText(error.toString());
-            });
-        AppController.getInstance().addToRequestQueue(req, "post_object_tag");
+        int x = verifyNotNull(firstName, lastName, email, address, city, state, zip, password,
+                phoneNumber, tv);
+        if (x == 0) {
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, obj,
+                    response -> {
+                        if (!response.isNull("firstName")) {
+                            Intent intent = new Intent(this, RiderHomePage.class);
+                            MainActivity.accountObj = response;
+                            startActivity(intent);
+                        } else {
+                            tv.setText("Error processing registration.");
+                        }
+                    },
+                    error -> {
+                        tv.setText(error.toString());
+                    });
+            AppController.getInstance().addToRequestQueue(req, "post_object_tag");
+        }
     }
+
+    public int verifyNotNull(String firstName, String lastName, String email, String address,
+                              String city, String state, String zip, String password,
+                              String phoneNumber, TextView tv)
+    {
+        int errorFlag = 0;
+        if(firstName.isEmpty() || (firstName.matches("^\\S*$") == false))
+        {
+            tv.setText("Please enter a first name without white-spaces");
+            errorFlag = 1;
+        }
+
+        if(lastName.isEmpty() || (lastName.matches("^\\S*$") == false))
+        {
+            tv.setText("Please enter a last name without white-spaces");
+            errorFlag = 1;
+        }
+
+        if(email.isEmpty() || (email.matches("^\\S*$") == false))
+        {
+            tv.setText("Please enter an email without white-spaces");
+            errorFlag = 1;
+        }
+
+        if(address.isEmpty())
+        {
+            tv.setText("Please enter a address");
+            errorFlag = 1;
+        }
+
+        if(city.isEmpty())
+        {
+            tv.setText("Please enter a city");
+            errorFlag = 1;
+        }
+
+        if(state.isEmpty())
+        {
+            tv.setText("Please enter a state");
+            errorFlag = 1;
+        }
+
+        if(zip.isEmpty())
+        {
+            tv.setText("Please enter a zip");
+            errorFlag = 1;
+        }
+
+        if(phoneNumber.isEmpty())
+        {
+            tv.setText("Please enter a phone number");
+            errorFlag = 1;
+        }
+
+        if(password.isEmpty())
+        {
+            tv.setText("Please enter a password");
+            errorFlag = 1;
+        }
+        return errorFlag;
+    }
+
 }
