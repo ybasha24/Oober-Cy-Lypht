@@ -30,7 +30,7 @@ maven-test:
 
 
 android-build:
-  image: gjandres/android-ci
+  image: gjandres/android-ci:latest
   stage: androidbuild
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
@@ -46,7 +46,7 @@ android-build:
     - Android_test/app/build/outputs/
 
 android-test:
-  image: gjandres/android-ci
+  image: gjandres/android-ci:latest
   stage: androidtest
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
