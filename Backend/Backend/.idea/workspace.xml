@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6204127e-fd91-498f-a5bb-f7702c2c2300" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/MainApp/app/src/main/java/com/example/myapplication/DriverHomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/MainApp/app/src/main/java/com/example/myapplication/DriverHomePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/MainApp/app/src/main/java/com/example/myapplication/DriverRegistrationPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/MainApp/app/src/main/java/com/example/myapplication/DriverRegistrationPage.java" afterDir="false" />
-    </list>
+    <list default="true" id="6204127e-fd91-498f-a5bb-f7702c2c2300" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,6 +24,9 @@
         <entry key="com.haulmont.jpb.jpaStructure" value="true" />
       </map>
     </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="25OYQNzp3Dsx8aN1tzY3cnp1Hqd" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -50,6 +49,7 @@
       <option name="presentableId" value="Default" />
       <updated>1645399583702</updated>
       <workItem from="1645399584857" duration="21000" />
+      <workItem from="1646542097706" duration="20000" />
     </task>
     <servers />
   </component>
