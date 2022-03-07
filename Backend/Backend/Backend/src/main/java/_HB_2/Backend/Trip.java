@@ -1,10 +1,7 @@
 package _HB_2.Backend;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -38,6 +35,19 @@ public class Trip {
     String endCity;
     String endState;
     String endZip;
+
+    // Mapping the column of this table
+    @ManyToOne
+    //Adding the name
+    @JoinColumn(name = "Driver_ID")
+    Driver tripDriver;
+
+    // Mapping the column of this table
+    @ManyToOne
+    //Adding the name
+    @JoinColumn(name = "Rider_ID")
+    Rider rider;
+
 
     //represent distances from driver start location
     //that the driver is willing to pick up/drop off a rider
@@ -73,6 +83,7 @@ public class Trip {
     //create trip by Driver
     public Trip(int driverId, LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, boolean hasADriver, String startAddress, String startCity, String startState, String startZip, String endAddress, String endCity, String endState, String endZip, int radius) {
         DriverId = driverId;
+//        tripDriver = figure out how to instantiate the driver!
         this.scheduledStartDate = scheduledStartDate;
         this.scheduledEndDate = scheduledEndDate;
         this.hasADriver = hasADriver;
