@@ -81,19 +81,19 @@ public class RiderRegistrationPage extends AppCompatActivity {
                               String phoneNumber, TextView tv)
     {
         boolean errorFlag = true;
-        if(firstName.isEmpty() || (firstName.matches("^\\S*$") == false))
+        if(firstName.isEmpty() || (!firstName.matches("^\\S*$")))
         {
             tv.setText("Please enter a first name without white-spaces");
             errorFlag = false;
         }
 
-        if(lastName.isEmpty() || (lastName.matches("^\\S*$") == false))
+        if(lastName.isEmpty() || (!lastName.matches("^\\S*$")))
         {
             tv.setText("Please enter a last name without white-spaces");
             errorFlag = false;
         }
 
-        if(email.isEmpty() || (email.matches("^\\S*$") == false))
+        if(email.isEmpty() || (!email.matches("^\\S*$")))
         {
             tv.setText("Please enter an email without white-spaces");
             errorFlag = false;
