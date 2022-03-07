@@ -42,7 +42,7 @@ public class DriverRegistrationPage extends AppCompatActivity {
         String phone = ((EditText) findViewById(R.id.editTextPhone)).getText().toString();
         String address = ((EditText) findViewById(R.id.editTextAddress)).getText().toString();
         String state = ((EditText) findViewById(R.id.editTextState)).getText().toString();
-        String city = "Ames";
+        String city = ((EditText) findViewById(R.id.editTextCity)).getText().toString();
         String zip = ((EditText) findViewById(R.id.editTextZip)).getText().toString();
 
 
@@ -57,18 +57,18 @@ public class DriverRegistrationPage extends AppCompatActivity {
         obj.put("phoneNumber", phone);
         obj.put("password", password);
 
-        int x = verifyNotNull(firstName, lastName, email, address, city, state, zip, password,
+        boolean x = verifyNotNull(firstName, lastName, email, address, city, state, zip, password,
                 phone, tv);
 
-        int y = verifyParametersMet(password, email, tv);
+        boolean y = verifyParametersMet(password, email, tv);
 
 
         String url = "http://coms-309-030.class.las.iastate.edu:8080/driver/registerDriver/";
 
-        if (x == 0 && y == 0) {
+        if (x && y) {
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, obj,
                     response -> {
-                        ((TextView) findViewById(R.id.regStatusTextView)).setText(response.toString());
+                        ((TextView) findViewById(R.id.regStatusTextView)).setText("Success");
 
                         try {
                             Intent intent = new Intent(this, DriverHomePage.class);
@@ -89,81 +89,81 @@ public class DriverRegistrationPage extends AppCompatActivity {
         }
     }
 
-    public int verifyNotNull(String firstName, String lastName, String email, String address,
+    public boolean verifyNotNull(String firstName, String lastName, String email, String address,
                               String city, String state, String zip, String password,
                               String phoneNumber, TextView tv)
     {
-        int errorFlag = 0;
+        boolean errorFlag = true;
         if(firstName.isEmpty() || (firstName.matches("^\\S*$") == false))
         {
             tv.setText("Please enter a first name without white-spaces");
-            errorFlag = 1;
+            errorFlag = false;
         }
         if(lastName.isEmpty() || (lastName.matches("^\\S*$") == false))
         {
             tv.setText("Please enter a last name without white-spaces");
-            errorFlag = 1;
+            errorFlag = false;
         }
         if(email.isEmpty() || (email.matches("^\\S*$") == false))
         {
             tv.setText("Please enter an email without white-spaces");
-            errorFlag = 1;
+            errorFlag = false;
         }
         if(address.isEmpty())
         {
             tv.setText("Please enter a address");
-            errorFlag = 1;
+            errorFlag = false;
         }
         if(city.isEmpty())
         {
             tv.setText("Please enter a city");
-            errorFlag = 1;
+            errorFlag = false;
         }
         if(state.isEmpty())
         {
             tv.setText("Please enter a state");
-            errorFlag = 1;
+            errorFlag = false;
         }
         if(zip.isEmpty())
         {
             tv.setText("Please enter a zip");
-            errorFlag = 1;
+            errorFlag = false;
         }
         if(phoneNumber.isEmpty())
         {
             tv.setText("Please enter a phone number");
-            errorFlag = 1;
+            errorFlag = false;
         }
         if(password.isEmpty())
         {
             tv.setText("Please enter a password number");
-            errorFlag = 1;
+            errorFlag = false;
         }
 
         return errorFlag;
     }
 
-    public int verifyParametersMet(String password, String email, TextView tv)
+    public boolean verifyParametersMet(String password, String email, TextView tv)
     {
-        int errorFlag = 0;
+        boolean errorFlag = true;
         if(password.equals("abc"))
         {
-            return 0;
+            return true;
         }
         if(!(password.matches(".*\\d.*")))
         {
             tv.setText("Password needs a number");
-            errorFlag = 1;
+            errorFlag = false;
         }
         if(password.length() < passwordLength)
         {
             tv.setText("Password is too short");
-            errorFlag = 1;
+            errorFlag = false;
         }
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
         {
             tv.setText("Please enter valid email");
-            errorFlag = 1;
+            errorFlag = false;
         }
 
         return errorFlag;

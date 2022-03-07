@@ -61,11 +61,11 @@ public class ProfileSettings extends AppCompatActivity {
         EditText zip = (EditText) findViewById(R.id.editTextZip2);
         EditText email = (EditText) findViewById(R.id.editTextEmail2);
 
-        int x = verifyNotNull(firstName.getText().toString(), lastName.getText().toString(),
+        boolean x = verifyNotNull(firstName.getText().toString(), lastName.getText().toString(),
                 email.getText().toString(), address.getText().toString(), city.getText().toString(),
                 state.getText().toString(), zip.getText().toString(), password.getText().toString(),
                 phoneNumber.getText().toString(), status);
-        int y = verifyParametersMet(password.getText().toString(), email.getText().toString(),
+        boolean y = verifyParametersMet(password.getText().toString(), email.getText().toString(),
                 status);
 
         JSONObject newUserDetails = new JSONObject();
@@ -82,7 +82,7 @@ public class ProfileSettings extends AppCompatActivity {
         } catch (JSONException e) {
         }
 
-        if (x == 0 & y == 0) {
+        if (x && y) {
             String url = "";
 
             try {
@@ -110,81 +110,81 @@ public class ProfileSettings extends AppCompatActivity {
         }
     }
 
-    public int verifyNotNull(String firstName, String lastName, String email, String address,
+    public boolean verifyNotNull(String firstName, String lastName, String email, String address,
                              String city, String state, String zip, String password,
                              String phoneNumber, TextView tv)
     {
-        int errorFlag = 0;
+        boolean errorFlag = true;
         if(firstName.isEmpty() || (firstName.matches("^\\S*$") == false))
         {
             tv.setText("Please enter a first name without white-spaces");
-            errorFlag = 1;
+            errorFlag = false;
         }
         if(lastName.isEmpty() || (lastName.matches("^\\S*$") == false))
         {
             tv.setText("Please enter a last name without white-spaces");
-            errorFlag = 1;
+            errorFlag = false;
         }
         if(email.isEmpty() || (email.matches("^\\S*$") == false))
         {
             tv.setText("Please enter an email without white-spaces");
-            errorFlag = 1;
+            errorFlag = false;
         }
         if(address.isEmpty())
         {
             tv.setText("Please enter a address");
-            errorFlag = 1;
+            errorFlag = false;
         }
         if(city.isEmpty())
         {
             tv.setText("Please enter a city");
-            errorFlag = 1;
+            errorFlag = false;
         }
         if(state.isEmpty())
         {
             tv.setText("Please enter a state");
-            errorFlag = 1;
+            errorFlag = false;
         }
         if(zip.isEmpty())
         {
             tv.setText("Please enter a zip");
-            errorFlag = 1;
+            errorFlag = false;
         }
         if(phoneNumber.isEmpty())
         {
             tv.setText("Please enter a phone number");
-            errorFlag = 1;
+            errorFlag = false;
         }
         if(password.isEmpty())
         {
             tv.setText("Please enter a password number");
-            errorFlag = 1;
+            errorFlag = false;
         }
 
         return errorFlag;
     }
 
-    public int verifyParametersMet(String password, String email, TextView tv)
+    public boolean verifyParametersMet(String password, String email, TextView tv)
     {
-        int errorFlag = 0;
+        boolean errorFlag = true;
         if(password.equals("abc"))
         {
-            return 0;
+            return true;
         }
         if(!(password.matches(".*\\d.*")))
         {
             tv.setText("Password needs a number");
-            errorFlag = 1;
+            errorFlag = false;
         }
         if(password.length() < passwordLength)
         {
             tv.setText("Password is too short");
-            errorFlag = 1;
+            errorFlag = false;
         }
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
         {
             tv.setText("Please enter valid email");
-            errorFlag = 1;
+            errorFlag = false;
         }
 
         return errorFlag;
