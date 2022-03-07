@@ -2,7 +2,8 @@
 stages:
   - mavenbuild
   - maventest
-  - androidtry
+  - androidbuild
+  - androidtest
 
 maven-build:
   stage: mavenbuild
@@ -28,16 +29,33 @@ maven-test:
       - Backend/target/*.jar
 
 
-  
-
-android-build: #this is another job
-  image: javiersantos/android-ci:latest      # this is a directive to DOCKER
-  stage: androidtry
-  tags:
-   - android_tag         #this is LINK to the docker runner on the remote-server        
+android-build:
+  image: javiersantos/android-ci:latest
+  stage: androidbuild
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - chmod +x ./Frontend/gradlew
+  tags:
+   - android_tag
   script:
     - cd Frontend
-    - ./gradlew assemble
+    - cd MainApp
+    - ./gradlew build
+  artifacts:
+    paths:
+    - Android_test/app/build/outputs/
+
+android-test:
+  image: javiersantos/android-ci:latest
+  stage: androidtest
+  before_script:
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+    - chmod +x ./Frontend/gradlew
+  tags:
+   - android_tag
+  script:
+    - cd Frontend
+    - cd MainApp
+    - ./gradlew test
+
+
