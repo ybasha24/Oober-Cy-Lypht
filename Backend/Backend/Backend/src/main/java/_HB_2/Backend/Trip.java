@@ -41,14 +41,13 @@ public class Trip {
 
     //represent distances from driver start location
     //that the driver is willing to pick up/drop off a rider
-    int driverPickupRadius;
-    int driverDropOffRadius;
+    int radius;
 
     public Trip() {
     }
 
     //Constructor with all attributes
-    public Trip(int riderId, int driverId, LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, LocalDateTime actualStartDate, LocalDateTime actualEndDate, boolean hasARider, boolean hasADriver, boolean isConfirmed, boolean hasStarted, boolean isCompleted, String startAddress, String startCity, String startState, String startZip, String endAddress, String endCity, String endState, String endZip, int driverPickupRadius, int driverDropOffRadius) {
+    public Trip(int riderId, int driverId, LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, LocalDateTime actualStartDate, LocalDateTime actualEndDate, boolean hasARider, boolean hasADriver, boolean isConfirmed, boolean hasStarted, boolean isCompleted, String startAddress, String startCity, String startState, String startZip, String endAddress, String endCity, String endState, String endZip, int radius) {
         RiderId = riderId;
         DriverId = driverId;
         this.scheduledStartDate = scheduledStartDate;
@@ -68,12 +67,11 @@ public class Trip {
         this.endCity = endCity;
         this.endState = endState;
         this.endZip = endZip;
-        this.driverPickupRadius = driverPickupRadius;
-        this.driverDropOffRadius = driverDropOffRadius;
+        this.radius = radius;
     }
 
     //create trip by Driver
-    public Trip(int driverId, LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, boolean hasADriver, String startAddress, String startCity, String startState, String startZip, String endAddress, String endCity, String endState, String endZip, int driverPickupRadius, int driverDropOffRadius) {
+    public Trip(int driverId, LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, boolean hasADriver, String startAddress, String startCity, String startState, String startZip, String endAddress, String endCity, String endState, String endZip, int radius) {
         DriverId = driverId;
         this.scheduledStartDate = scheduledStartDate;
         this.scheduledEndDate = scheduledEndDate;
@@ -86,8 +84,7 @@ public class Trip {
         this.endCity = endCity;
         this.endState = endState;
         this.endZip = endZip;
-        this.driverPickupRadius = driverPickupRadius;
-        this.driverDropOffRadius = driverDropOffRadius;
+        this.radius = radius;
     }
 
     public int getRiderId() {
@@ -226,11 +223,11 @@ public class Trip {
         this.endZip = endZip;
     }
 
-    public int getDriverPickupRadius() {return driverPickupRadius;}
+    public int getRadius() {
+        return radius;
+    }
 
-    public void setDriverPickupRadius(int driverPickupRadius) {this.driverPickupRadius = driverPickupRadius;}
-
-    public int getDriverDropOffRadius() {return driverDropOffRadius;}
-
-    public void setDriverDropOffRadius(int driverDropOffRadius) {this.driverDropOffRadius = driverDropOffRadius;}
+    public void setRadius(int radius) {
+        this.radius = radius;
+    }
 }
