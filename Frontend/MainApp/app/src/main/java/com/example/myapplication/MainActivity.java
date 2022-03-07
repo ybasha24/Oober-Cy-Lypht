@@ -9,27 +9,26 @@ import android.view.View;
 import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.myapplication.app.AppController;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.myapplication.app.AppController;
+import com.example.myapplication.driver.DriverHomePage;
+import com.example.myapplication.rider.RiderHomePage;
+
+
 public class MainActivity extends AppCompatActivity {
 
-    static JSONObject accountObj;
+    public static JSONObject accountObj;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
 
-/*
-Rider : abc@iastate.edu  pass: abc
-Driver: xyz@iastate.edu pass: xyz
- */
 
     public void signIn(View view) throws JSONException{
-        TextView tv = (TextView) findViewById(R.id.tv);
-        JSONObject obj = new JSONObject();
+        TextView tv = findViewById(R.id.tv);
         String email = ((EditText) findViewById(R.id.usernameInput)).getText().toString();
         String password = ((EditText) findViewById(R.id.passwordInput)).getText().toString();
 
