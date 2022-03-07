@@ -60,26 +60,31 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
     static public LatLng dest;
     static public String originString;
     static public String destString;
+    static public String originAddress;
+    static public String destAddress;
+
+    static public int distance;
+    static public int durationHours;
+    static public int durationMinutes;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_ride_location);
 
-        origin = null;
-        dest = null;
-
         Places.initialize(getApplicationContext(), "AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM");
 
         autocompleteOriginFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_origin_fragment);
-        autocompleteOriginFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
+        autocompleteOriginFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS));
 
         autocompleteOriginFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
-                Log.d("Maps", "Place: " + place.getName() + ", " + place.getId());
+                Log.d("Maps", "Place: " + place.getName() + ", " + place.getId() + ", " + place.getAddress());
                 origin = place.getLatLng();
                 originString = place.getName();
+                originAddress = place.getAddress();
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(origin.latitude, origin.longitude), 12.0f));
                 mMap.addMarker(new MarkerOptions().position(origin));
             }
@@ -90,13 +95,14 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
         });
 
         autocompleteDestFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_dest_fragment);
-        autocompleteDestFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
+        autocompleteDestFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS));
         autocompleteDestFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
-                Log.d("Maps", "Place: " + place.getName() + ", " + place.getId());
+                Log.d("Maps", "Place: " + place.getName() + ", " + place.getId() + ", " + place.getAddress());
                 dest = place.getLatLng();
                 destString = place.getName();
+                destAddress = place.getAddress();
                 mMap.addMarker(new MarkerOptions().position(dest));
                 if (origin != null && dest != null)
                     drawRoute();
@@ -128,7 +134,6 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
             response -> {
-
                 try {
                     JSONArray routeArray = response.getJSONArray("routes");
                     JSONObject routes = routeArray.getJSONObject(0);
@@ -139,24 +144,21 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
                     mMap.addPolyline(new PolylineOptions()
                         .addAll(list)
                         .width(12)
-                        .color(Color.parseColor("#05b1fb"))//Google maps blue color
+                        .color(Color.parseColor("#05b1fb"))
                         .geodesic(true)
                     );
-
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin, 10.0f));
                     calculateRoute();
                 }
                 catch(JSONException e){
                 }
             },
-            error -> {
-
-            });
+            error -> {}
+        );
         AppController.getInstance().addToRequestQueue(req, "obj_req");
     }
 
     public void calculateRoute(){
-
         String routeOrigin = "origins=" + originString;
         String routeDest = "destinations=" + destString;
         String params = routeOrigin + "&"  + routeDest + "&units=imperial" + "&key=" + "AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM";
@@ -168,9 +170,10 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
                     try {
                         JSONObject rows0 = response.getJSONArray("rows").getJSONObject(0);
                         JSONArray elements = (JSONArray) rows0.get("elements");
-                        String distance = elements.getJSONObject(0).getJSONObject("distance").getString("text");
-                        String duration = elements.getJSONObject(0).getJSONObject("duration").getString("text");
-                        Log.e("Error", distance + " " + duration);
+                        distance = elements.getJSONObject(0).getJSONObject("distance").getInt("value") / 1000; //in meters, so divide to get in km
+                        int durationSeconds = elements.getJSONObject(0).getJSONObject("duration").getInt("value");
+                        durationHours = durationSeconds / 3600;
+                        durationMinutes = (durationSeconds % 3600) / 60;
                     }
                     catch(JSONException e){
                     }
