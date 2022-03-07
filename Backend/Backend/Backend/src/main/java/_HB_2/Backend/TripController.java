@@ -14,8 +14,9 @@ public class TripController {
 
     @PostMapping("/createTripByDriver")
     Trip createTripByDriver(
+            @RequestParam int driverId,
             @RequestBody Trip trip) {
-        Trip t = tripService.createTripByDriver(trip);
+        Trip t = tripService.createTripByDriver(driverId, trip);
 
         return t;
     }
@@ -38,9 +39,11 @@ public class TripController {
 
     @PutMapping("/editTrip")
     Trip getTripById(
-            @RequestParam int id,
+            @RequestParam int tripId,
+            @RequestParam int riderId,
+            @RequestParam int driverId,
             @RequestBody Trip t) {
-        return tripService.editTripById(id, t);
+        return tripService.editTripById(tripId, riderId, driverId, t);
     }
 
 }

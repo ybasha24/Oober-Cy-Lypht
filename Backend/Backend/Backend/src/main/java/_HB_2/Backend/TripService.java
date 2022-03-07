@@ -13,11 +13,18 @@ public class TripService {
     @Autowired
     TripRepository tripRepository;
 
-    public Trip createTripByDriver(Trip trip) {
+    @Autowired
+    DriverRepository driverRepository;
 
+    @Autowired
+    RiderRepository riderRepository;
+
+    public Trip createTripByDriver(int Id, Trip trip) {
+
+        User d = driverRepository.getById(Id);
         //uses driver constructor
         Trip t = new Trip(
-                trip.DriverId,
+                d,
                 trip.scheduledStartDate,
                 trip.scheduledEndDate,
                 //hasADriver
@@ -47,12 +54,14 @@ public class TripService {
 
     }
 
-    public Trip editTripById(int id, Trip newTripInfo) {
+    public Trip editTripById(int tripId, int riderId, int driverId, Trip newTripInfo) {
 
-        Trip newTrip = tripRepository.findById(id);
+        Trip newTrip = tripRepository.findById(tripId);
 
-        newTrip.setRiderId(newTripInfo.RiderId);
-        newTrip.setDriverId(newTripInfo.DriverId);
+        User r = riderRepository.getById(riderId);
+        User d = driverRepository.getById(driverId);
+        newTrip.setRiderId(r);
+        newTrip.setDriverId(d);
 
         newTrip.setScheduledStartDate(newTripInfo.scheduledStartDate);
         newTrip.setScheduledEndDate(newTripInfo.scheduledEndDate);
@@ -80,6 +89,6 @@ public class TripService {
 
         tripRepository.save(newTrip);
 
-        return getTripById(id);
+        return getTripById(tripId);
     }
 }
