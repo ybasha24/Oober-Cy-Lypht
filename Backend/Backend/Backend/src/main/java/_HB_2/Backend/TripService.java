@@ -82,4 +82,10 @@ public class TripService {
 
         return getTripById(id);
     }
+
+    public List<Trip> getAllTrips() {
+        List<Trip> list = new ArrayList<>();
+        list = tripRepository.findAll();
+        return list;
+    }
 }

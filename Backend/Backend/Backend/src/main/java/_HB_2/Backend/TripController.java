@@ -3,6 +3,7 @@ package _HB_2.Backend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -41,6 +42,12 @@ public class TripController {
             @RequestParam int id,
             @RequestBody Trip t) {
         return tripService.editTripById(id, t);
+    }
+
+    @GetMapping("/getAllTrips")
+    List<Trip> getAllTrips() {
+        List<Trip> list = new ArrayList<>();
+        return tripService.getAllTrips();
     }
 
 }
