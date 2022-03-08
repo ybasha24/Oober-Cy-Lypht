@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="driverRegistrationEndPoint" translatable="false">
+        http://coms-309-030.class.las.iastate.edu:8080/driver/registerDriver/
+    </string>
+
+</resources>

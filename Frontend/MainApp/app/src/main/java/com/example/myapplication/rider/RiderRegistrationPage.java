@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.myapplication.R;
+import com.example.myapplication.endpoints.endpoints;
 
 public class RiderRegistrationPage extends AppCompatActivity {
 
@@ -41,7 +42,7 @@ public class RiderRegistrationPage extends AppCompatActivity {
         String state = ((EditText) findViewById(R.id.editTextState)).getText().toString();
         String zip = ((EditText) findViewById(R.id.editTextZip)).getText().toString();
 
-        String url = "http://coms-309-030.class.las.iastate.edu:8080/rider/registerRider/";
+//        String url = "http://coms-309-030.class.las.iastate.edu:8080/rider/registerRider/";
         JSONObject obj = new JSONObject();
         obj.put("firstName", firstName);
         obj.put("lastName", lastName);
@@ -59,7 +60,7 @@ public class RiderRegistrationPage extends AppCompatActivity {
         boolean y = verifyParametersMet(password, email, tv);
 
         if (x && y) {
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, obj,
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, endpoints.RiderReg, obj,
                     response -> {
                         if (!response.isNull("firstName")) {
                             Intent intent = new Intent(this, RiderHomePage.class);
