@@ -50,4 +50,11 @@ public class TripController {
         return tripService.getAllTrips();
     }
 
+    //returns a list of all trips that have not been completed
+    @GetMapping("/getAllActiveTrips")
+    List<Trip> getAllActiveTrips() {
+        List<Trip> list = new ArrayList<>();
+        return tripService.getAllActiveTrips();
+    }
+
 }

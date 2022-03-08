@@ -88,4 +88,19 @@ public class TripService {
         list = tripRepository.findAll();
         return list;
     }
+
+    //returns a list of all trips that have not been completed
+    public List<Trip> getAllActiveTrips() {
+        List<Trip> list = new ArrayList<>();
+        list = tripRepository.findAll();
+
+        List<Trip> activeTrips = new ArrayList<>();
+        for(Trip trip: list) {
+            if (!trip.isCompleted) {
+                activeTrips.add(trip);
+            }
+        }
+
+        return activeTrips;
+    }
 }
