@@ -21,7 +21,7 @@ public class TripService {
 
     public Trip createTripByDriver(int Id, Trip trip) {
 
-        User d = driverRepository.getById(Id);
+        Driver d = (Driver) driverRepository.getById(Id);
         //uses driver constructor
         Trip t = new Trip(
                 d,
@@ -58,8 +58,8 @@ public class TripService {
 
         Trip newTrip = tripRepository.findById(tripId);
 
-        User r = riderRepository.getById(riderId);
-        User d = driverRepository.getById(driverId);
+        Rider r = (Rider) riderRepository.getById(riderId);
+        Driver d = (Driver) driverRepository.getById(driverId);
         newTrip.setRiderId(r);
         newTrip.setDriverId(d);
 

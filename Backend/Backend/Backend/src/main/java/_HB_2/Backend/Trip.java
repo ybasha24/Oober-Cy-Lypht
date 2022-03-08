@@ -39,13 +39,13 @@ public class Trip {
     @ManyToOne
     //Adding the name
     @JoinColumn(name = "Driver_ID")
-    User tripDriver;
+    Driver tripDriver;
 
     // Mapping the column of this table
     @ManyToOne
     //Adding the name
     @JoinColumn(name = "Rider_ID")
-    User tripRider;
+    Rider tripRider;
 
 
     //represent distances from driver start location
@@ -80,7 +80,7 @@ public class Trip {
     }
 
     //create trip by Driver
-    public Trip(User driver, LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, boolean hasADriver, String startAddress, String startCity, String startState, String startZip, String endAddress, String endCity, String endState, String endZip, int radius) {
+    public Trip(Driver driver, LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, boolean hasADriver, String startAddress, String startCity, String startState, String startZip, String endAddress, String endCity, String endState, String endZip, int radius) {
         tripDriver = driver;
         this.scheduledStartDate = scheduledStartDate;
         this.scheduledEndDate = scheduledEndDate;
@@ -100,7 +100,7 @@ public class Trip {
         return tripRider.getId();
     }
 
-    public void setRiderId(User newRider) {
+    public void setRiderId(Rider newRider) {
         tripRider = newRider;
     }
 
@@ -108,7 +108,7 @@ public class Trip {
         return tripDriver.getId();
     }
 
-    public void setDriverId(User newDriver) {
+    public void setDriverId(Driver newDriver) {
         tripDriver = newDriver;
     }
 

@@ -12,10 +12,6 @@ public interface TripRepository extends JpaRepository<Trip, Integer> {
 
     Trip findById(int id);
 
-
-    //Get all uncompleted lists from a driver given their id!
-    List<Trip> getUncompletedTrips(int driverID);
-
     @Transactional
     void deleteById(int id);
 }
