@@ -1,10 +1,6 @@
 package _HB_2.Backend;
 
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,9 +9,6 @@ public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    int RiderId;
-    int DriverId;
 
     LocalDateTime scheduledStartDate;
     LocalDateTime scheduledEndDate;
@@ -39,6 +32,16 @@ public class Trip {
     String endState;
     String endZip;
 
+
+    @ManyToOne
+    @JoinColumn(name = "Driver_ID")
+    User tripDriver;
+
+    @ManyToOne
+    @JoinColumn(name = "Rider_ID", nullable = true)
+    User tripRider;
+
+
     //represent distances from driver start location
     //that the driver is willing to pick up/drop off a rider
     int radius;
@@ -47,9 +50,9 @@ public class Trip {
     }
 
     //Constructor with all attributes
-    public Trip(int riderId, int driverId, LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, LocalDateTime actualStartDate, LocalDateTime actualEndDate, boolean hasARider, boolean hasADriver, boolean isConfirmed, boolean hasStarted, boolean isCompleted, String startAddress, String startCity, String startState, String startZip, String endAddress, String endCity, String endState, String endZip, int radius) {
-        RiderId = riderId;
-        DriverId = driverId;
+    public Trip(User rider, User driver, LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, LocalDateTime actualStartDate, LocalDateTime actualEndDate, boolean hasARider, boolean hasADriver, boolean isConfirmed, boolean hasStarted, boolean isCompleted, String startAddress, String startCity, String startState, String startZip, String endAddress, String endCity, String endState, String endZip, int radius) {
+        tripRider = rider;
+        tripDriver = driver;
         this.scheduledStartDate = scheduledStartDate;
         this.scheduledEndDate = scheduledEndDate;
         this.actualStartDate = actualStartDate;
@@ -71,8 +74,8 @@ public class Trip {
     }
 
     //create trip by Driver
-    public Trip(int driverId, LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, boolean hasADriver, String startAddress, String startCity, String startState, String startZip, String endAddress, String endCity, String endState, String endZip, int radius) {
-        DriverId = driverId;
+    public Trip(User driver, LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, boolean hasADriver, String startAddress, String startCity, String startState, String startZip, String endAddress, String endCity, String endState, String endZip, int radius) {
+        tripDriver = driver;
         this.scheduledStartDate = scheduledStartDate;
         this.scheduledEndDate = scheduledEndDate;
         this.hasADriver = hasADriver;
@@ -88,19 +91,22 @@ public class Trip {
     }
 
     public int getRiderId() {
-        return RiderId;
+        if(tripRider == null){
+            return 0;
+        }
+        return tripRider.getId();
     }
 
-    public void setRiderId(int riderId) {
-        RiderId = riderId;
+    public void setRiderId(User newRider) {
+        tripRider = newRider;
     }
 
     public int getDriverId() {
-        return DriverId;
+        return tripDriver.getId();
     }
 
-    public void setDriverId(int driverId) {
-        DriverId = driverId;
+    public void setDriverId(User newDriver) {
+        tripDriver = newDriver;
     }
 
     public LocalDateTime getScheduledStartDate() {return scheduledStartDate;}

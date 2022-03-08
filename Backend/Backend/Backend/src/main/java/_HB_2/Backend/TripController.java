@@ -13,12 +13,16 @@ public class TripController {
     @Autowired
     private TripService tripService;
 
-    @PostMapping("/createTripByDriver")
-    Trip createTripByDriver(
-            @RequestBody Trip trip) {
-        Trip t = tripService.createTripByDriver(trip);
+    @Autowired
+    private TripRepository tripRepository;
 
-        return t;
+    @PostMapping("/createTripByDriver")
+    String createTripByDriver(
+            @RequestParam int driverId,
+            @RequestBody Trip trip) {
+        Trip t = tripService.createTripByDriver(driverId, trip);
+
+        return "A successful trip with driver id " + t.getDriverId() + "has been stored";
     }
 
 //    @GetMapping("/getDriverTrips")
@@ -39,9 +43,11 @@ public class TripController {
 
     @PutMapping("/editTrip")
     Trip getTripById(
-            @RequestParam int id,
+            @RequestParam int tripId,
+            @RequestParam int riderId,
+            @RequestParam int driverId,
             @RequestBody Trip t) {
-        return tripService.editTripById(id, t);
+        return tripService.editTripById(tripId, riderId, driverId, t);
     }
 
     @GetMapping("/getAllTrips")
