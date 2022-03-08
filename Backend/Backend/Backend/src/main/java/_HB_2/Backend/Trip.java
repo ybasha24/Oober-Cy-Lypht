@@ -92,6 +92,9 @@ public class Trip {
     }
 
     public int getRiderId() {
+        if(tripDriver == null){
+            return 0;
+        }
         return tripRider.getId();
     }
 
