@@ -1,8 +1,5 @@
 package _HB_2.Backend;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -35,17 +32,14 @@ public class Trip {
     String endState;
     String endZip;
 
-    // Mapping the column of this table
-    @ManyToOne
-    //Adding the name
-    @JoinColumn(name = "Driver_ID")
-    Driver tripDriver;
 
-    // Mapping the column of this table
     @ManyToOne
-    //Adding the name
-    @JoinColumn(name = "Rider_ID")
-    Rider tripRider;
+    @JoinColumn(name = "Driver_ID")
+    User tripDriver;
+
+    @ManyToOne
+    @JoinColumn(name = "Rider_ID", nullable = true)
+    User tripRider;
 
 
     //represent distances from driver start location
@@ -56,7 +50,7 @@ public class Trip {
     }
 
     //Constructor with all attributes
-    public Trip(Rider rider, Driver driver, LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, LocalDateTime actualStartDate, LocalDateTime actualEndDate, boolean hasARider, boolean hasADriver, boolean isConfirmed, boolean hasStarted, boolean isCompleted, String startAddress, String startCity, String startState, String startZip, String endAddress, String endCity, String endState, String endZip, int radius) {
+    public Trip(User rider, User driver, LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, LocalDateTime actualStartDate, LocalDateTime actualEndDate, boolean hasARider, boolean hasADriver, boolean isConfirmed, boolean hasStarted, boolean isCompleted, String startAddress, String startCity, String startState, String startZip, String endAddress, String endCity, String endState, String endZip, int radius) {
         tripRider = rider;
         tripDriver = driver;
         this.scheduledStartDate = scheduledStartDate;
@@ -80,8 +74,9 @@ public class Trip {
     }
 
     //create trip by Driver
-    public Trip(Driver driver, LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, boolean hasADriver, String startAddress, String startCity, String startState, String startZip, String endAddress, String endCity, String endState, String endZip, int radius) {
+    public Trip(User driver, LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, boolean hasADriver, String startAddress, String startCity, String startState, String startZip, String endAddress, String endCity, String endState, String endZip, int radius) {
         tripDriver = driver;
+//        tripRider = null;
         this.scheduledStartDate = scheduledStartDate;
         this.scheduledEndDate = scheduledEndDate;
         this.hasADriver = hasADriver;
@@ -100,7 +95,7 @@ public class Trip {
         return tripRider.getId();
     }
 
-    public void setRiderId(Rider newRider) {
+    public void setRiderId(User newRider) {
         tripRider = newRider;
     }
 
@@ -108,7 +103,7 @@ public class Trip {
         return tripDriver.getId();
     }
 
-    public void setDriverId(Driver newDriver) {
+    public void setDriverId(User newDriver) {
         tripDriver = newDriver;
     }
 
