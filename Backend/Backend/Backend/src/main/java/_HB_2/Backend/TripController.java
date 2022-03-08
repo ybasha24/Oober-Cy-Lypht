@@ -22,7 +22,7 @@ public class TripController {
             @RequestBody Trip trip) {
         Trip t = tripService.createTripByDriver(driverId, trip);
 
-        return "A successful trip with driver id" + t.getDriverId() + "has been stored";
+        return "A successful trip with driver id " + t.getDriverId() + "has been stored";
     }
 
 //    @GetMapping("/getDriverTrips")
