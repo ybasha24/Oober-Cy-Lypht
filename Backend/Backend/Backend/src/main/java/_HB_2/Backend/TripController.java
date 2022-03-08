@@ -3,6 +3,7 @@ package _HB_2.Backend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -12,13 +13,16 @@ public class TripController {
     @Autowired
     private TripService tripService;
 
+    @Autowired
+    private TripRepository tripRepository;
+
     @PostMapping("/createTripByDriver")
-    Trip createTripByDriver(
+    String createTripByDriver(
             @RequestParam int driverId,
             @RequestBody Trip trip) {
         Trip t = tripService.createTripByDriver(driverId, trip);
 
-        return t;
+        return "A successful trip with driver id" + t.getDriverId() + "has been stored";
     }
 
 //    @GetMapping("/getDriverTrips")
@@ -45,5 +49,14 @@ public class TripController {
             @RequestBody Trip t) {
         return tripService.editTripById(tripId, riderId, driverId, t);
     }
+
+    //returns a list of all trips that have not been completed
+    @GetMapping("/getAllActiveTripsFromDriverId")
+    List<Trip> getAllActiveTrips(
+            @RequestParam int driverId
+    ) {
+        return tripRepository.getAllUncompletedTripsByDriverId(driverId);
+    }
+
 
 }

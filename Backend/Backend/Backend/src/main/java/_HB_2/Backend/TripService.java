@@ -91,4 +91,21 @@ public class TripService {
 
         return getTripById(tripId);
     }
+
+    public List<Trip> getAllActiveTripsFromDriverId(int driverId) {
+        List<Trip> list = new ArrayList<>();
+        list = tripRepository.findAll();
+
+        List<Trip> activeTrips = new ArrayList<>();
+        for(Trip trip: list) {
+            if (!trip.isCompleted) {
+                if(trip.tripDriver.getId() == driverId){
+                    activeTrips.add(trip);
+                }
+            }
+        }
+
+        return activeTrips;
+    }
+
 }
