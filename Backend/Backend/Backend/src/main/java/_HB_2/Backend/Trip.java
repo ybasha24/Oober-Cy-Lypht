@@ -76,7 +76,6 @@ public class Trip {
     //create trip by Driver
     public Trip(User driver, LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, boolean hasADriver, String startAddress, String startCity, String startState, String startZip, String endAddress, String endCity, String endState, String endZip, int radius) {
         tripDriver = driver;
-//        tripRider = null;
         this.scheduledStartDate = scheduledStartDate;
         this.scheduledEndDate = scheduledEndDate;
         this.hasADriver = hasADriver;
@@ -92,7 +91,7 @@ public class Trip {
     }
 
     public int getRiderId() {
-        if(tripDriver == null){
+        if(tripRider == null){
             return 0;
         }
         return tripRider.getId();
