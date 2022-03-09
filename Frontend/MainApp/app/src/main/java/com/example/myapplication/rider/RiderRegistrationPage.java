@@ -8,6 +8,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -31,7 +32,7 @@ public class RiderRegistrationPage extends AppCompatActivity {
     }
 
     public void register(View view) throws JSONException {
-        TextView tv = ((TextView) findViewById(R.id.regStatusTextView));
+        TextView tv = findViewById(R.id.regStatusTextView);
         String firstName = ((EditText) findViewById(R.id.editTextFirstName)).getText().toString();
         String lastName = ((EditText) findViewById(R.id.editTextLastName)).getText().toString();
         String email = ((EditText) findViewById(R.id.editTextEmail)).getText().toString();
@@ -42,7 +43,6 @@ public class RiderRegistrationPage extends AppCompatActivity {
         String state = ((EditText) findViewById(R.id.editTextState)).getText().toString();
         String zip = ((EditText) findViewById(R.id.editTextZip)).getText().toString();
 
-//        String url = "http://coms-309-030.class.las.iastate.edu:8080/rider/registerRider/";
         JSONObject obj = new JSONObject();
         obj.put("firstName", firstName);
         obj.put("lastName", lastName);
@@ -61,18 +61,16 @@ public class RiderRegistrationPage extends AppCompatActivity {
 
         if (x && y) {
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, endpoints.RiderRegUrl, obj,
-                    response -> {
-                        if (!response.isNull("firstName")) {
-                            Intent intent = new Intent(this, RiderHomePage.class);
-                            MainActivity.accountObj = response;
-                            startActivity(intent);
-                        } else {
-                            tv.setText("Error processing registration.");
-                        }
-                    },
-                    error -> {
-                        tv.setText(error.toString());
-                    });
+                response -> {
+                    if (!response.isNull("firstName")) {
+                        Intent intent = new Intent(this, RiderHomePage.class);
+                        MainActivity.accountObj = response;
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Error processing" + obj, Toast.LENGTH_LONG);
+                    }
+                },
+                error -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG));
             AppController.getInstance().addToRequestQueue(req, "post_object_tag");
         }
     }

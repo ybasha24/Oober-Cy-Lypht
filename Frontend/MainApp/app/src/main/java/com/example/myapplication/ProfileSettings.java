@@ -8,6 +8,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -25,15 +26,15 @@ public class ProfileSettings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_settings);
 
-        EditText firstName = (EditText) findViewById(R.id.editTextFirstName2);
-        EditText lastName = (EditText) findViewById(R.id.editTextLastName2);
-        EditText password = (EditText) findViewById(R.id.editTextPassword2);
-        EditText phoneNumber = (EditText) findViewById(R.id.editTextPhone2);
-        EditText address = (EditText) findViewById(R.id.editTextAddress2);
-        EditText city = (EditText) findViewById(R.id.editTextCity2);
-        EditText state = (EditText) findViewById(R.id.editTextState2);
-        EditText zip = (EditText) findViewById(R.id.editTextZip2);
-        EditText email = (EditText) findViewById(R.id.editTextEmail2);
+        EditText firstName = findViewById(R.id.editTextFirstName2);
+        EditText lastName = findViewById(R.id.editTextLastName2);
+        EditText password = findViewById(R.id.editTextPassword2);
+        EditText phoneNumber = findViewById(R.id.editTextPhone2);
+        EditText address = findViewById(R.id.editTextAddress2);
+        EditText city = findViewById(R.id.editTextCity2);
+        EditText state = findViewById(R.id.editTextState2);
+        EditText zip = findViewById(R.id.editTextZip2);
+        EditText email = findViewById(R.id.editTextEmail2);
 
         try {
             firstName.setText(MainActivity.accountObj.getString("firstName"));
@@ -49,16 +50,16 @@ public class ProfileSettings extends AppCompatActivity {
     }
 
     public void saveChanges(View view) {
-        TextView status = (TextView) findViewById(R.id.statusTV);
-        EditText firstName = (EditText) findViewById(R.id.editTextFirstName2);
-        EditText lastName = (EditText) findViewById(R.id.editTextLastName2);
-        EditText password = (EditText) findViewById(R.id.editTextPassword2);
-        EditText phoneNumber = (EditText) findViewById(R.id.editTextPhone2);
-        EditText address = (EditText) findViewById(R.id.editTextAddress2);
-        EditText city = (EditText) findViewById(R.id.editTextCity2);
-        EditText state = (EditText) findViewById(R.id.editTextState2);
-        EditText zip = (EditText) findViewById(R.id.editTextZip2);
-        EditText email = (EditText) findViewById(R.id.editTextEmail2);
+        TextView status = findViewById(R.id.statusTV);
+        EditText firstName = findViewById(R.id.editTextFirstName2);
+        EditText lastName = findViewById(R.id.editTextLastName2);
+        EditText password = findViewById(R.id.editTextPassword2);
+        EditText phoneNumber = findViewById(R.id.editTextPhone2);
+        EditText address = findViewById(R.id.editTextAddress2);
+        EditText city = findViewById(R.id.editTextCity2);
+        EditText state = findViewById(R.id.editTextState2);
+        EditText zip = findViewById(R.id.editTextZip2);
+        EditText email = findViewById(R.id.editTextEmail2);
 
         boolean x = verifyNotNull(firstName.getText().toString(), lastName.getText().toString(),
                 email.getText().toString(), address.getText().toString(), city.getText().toString(),
@@ -79,6 +80,7 @@ public class ProfileSettings extends AppCompatActivity {
             newUserDetails.put("zip", zip.getText().toString());
             newUserDetails.put("email", email.getText().toString());
         } catch (JSONException e) {
+            Toast.makeText(getApplicationContext(), "JSON Exception: " + e, Toast.LENGTH_LONG);
         }
 
         if (x && y) {
@@ -87,6 +89,7 @@ public class ProfileSettings extends AppCompatActivity {
             try {
                 url = endpoints.EditUserUrl + MainActivity.accountObj.get("id");
             } catch (JSONException e) {
+                Toast.makeText(getApplicationContext(), "JSON Exception: " + e, Toast.LENGTH_LONG);
             }
 
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, url, newUserDetails,
@@ -102,9 +105,7 @@ public class ProfileSettings extends AppCompatActivity {
                             status.setText("Something went wrong...");
                         }
                     },
-                    error -> {
-                        status.setText(error.toString());
-                    });
+                    error -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG));
             AppController.getInstance().addToRequestQueue(req, "post_object_tag");
         }
     }
@@ -185,7 +186,6 @@ public class ProfileSettings extends AppCompatActivity {
             tv.setText("Please enter valid email");
             errorFlag = false;
         }
-
         return errorFlag;
     }
 

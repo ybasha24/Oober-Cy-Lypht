@@ -20,7 +20,6 @@ public class RegistrationOptions extends AppCompatActivity {
     public void riderRegistration(View view){
         Intent intent = new Intent(this, RiderRegistrationPage.class);
         startActivity(intent);
-
     }
 
     public void driverRegistration(View view){

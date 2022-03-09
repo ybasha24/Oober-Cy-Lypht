@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.view.View;
 
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
@@ -27,14 +29,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-
-    public void signIn(View view) throws JSONException{
-        TextView tv = findViewById(R.id.tv);
+    public void signIn(View view) {
         String email = ((EditText) findViewById(R.id.usernameInput)).getText().toString();
         String password = ((EditText) findViewById(R.id.passwordInput)).getText().toString();
-
-        String url = endpoints.LoginUrl + email +
-                "&" + "password=" + password;
+        String url = endpoints.LoginUrl + email + "&password=" + password;
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
@@ -49,16 +47,14 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                         else {
-                            tv.setText("Error processing " + url);
+                            Toast.makeText(getApplicationContext(), "Error processing" + url, Toast.LENGTH_LONG);
                         }
                     }
                     catch(JSONException e){
-                        tv.setText("Error processing " + url);
+                        Toast.makeText(getApplicationContext(), "Exception: " + e, Toast.LENGTH_LONG);
                     }
                 },
-                error -> {
-                    tv.setText("Error processing " + url);
-                });
+                error -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG));
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
     }
 

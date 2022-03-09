@@ -6,11 +6,13 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.app.AppController;
 
 import org.json.JSONException;
@@ -18,6 +20,7 @@ import org.json.JSONObject;
 
 import com.example.myapplication.R;
 import com.example.myapplication.endpoints.endpoints;
+import com.example.myapplication.rider.RiderHomePage;
 
 public class DriverRegistrationPage extends AppCompatActivity {
 
@@ -58,29 +61,18 @@ public class DriverRegistrationPage extends AppCompatActivity {
 
         boolean y = verifyParametersMet(password, email, tv);
 
-
-//        String url = "http://coms-309-030.class.las.iastate.edu:8080/driver/registerDriver/";
-
         if (x && y) {
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, endpoints.DriverRegUrl, obj,
-                    response -> {
-                        ((TextView) findViewById(R.id.regStatusTextView)).setText("Success");
-
-                        try {
-                            Intent intent = new Intent(this, DriverHomePage.class);
-                            int id = Integer.parseInt(response.getString("id"));
-                            if (id != 0) {
-                                intent.putExtra("obj", response.toString());
-                                startActivity(intent);
-                            } else {
-                                ((TextView) findViewById(R.id.regStatusTextView)).setText("Email already exists");
-                            }
-                        } catch (JSONException e) {
-                            ((TextView) findViewById(R.id.regStatusTextView)).setText("JSON Exception Error.");
-                        }
-                    },
-                    error -> ((TextView) findViewById(R.id.regStatusTextView)).setText("Error!")) {
-            };
+                response -> {
+                    if (!response.isNull("firstName")) {
+                        Intent intent = new Intent(this, DriverHomePage.class);
+                        MainActivity.accountObj = response;
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Error processing" + obj, Toast.LENGTH_LONG);
+                    }
+                },
+                error -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG));
             AppController.getInstance().addToRequestQueue(req, "obj_req");
         }
     }

@@ -10,7 +10,6 @@ import com.example.myapplication.driver.DriverHomePage;
 import com.google.android.material.slider.Slider;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
