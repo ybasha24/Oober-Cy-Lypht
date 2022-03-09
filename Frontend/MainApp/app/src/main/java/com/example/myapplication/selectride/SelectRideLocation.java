@@ -1,6 +1,7 @@
 package com.example.myapplication.selectride;
 
 import com.example.myapplication.R;
+import com.example.myapplication.endpoints.endpoints;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -50,7 +51,7 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_ride_location);
 
-        Places.initialize(getApplicationContext(), "AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM");
+        Places.initialize(getApplicationContext(), endpoints.MapAPIKey);
 
         autocompleteOriginFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_origin_fragment);
         autocompleteOriginFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
@@ -102,7 +103,7 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
 
     public void drawRoute(){
         List<LatLng> path = new ArrayList();
-        GeoApiContext context = new GeoApiContext.Builder().apiKey("AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM").build();
+        GeoApiContext context = new GeoApiContext.Builder().apiKey(endpoints.MapAPIKey).build();
         DirectionsApiRequest req = DirectionsApi.getDirections(context,
                 origin.latitude + ", " + origin.longitude,
                 dest.latitude + ", " + dest.longitude);

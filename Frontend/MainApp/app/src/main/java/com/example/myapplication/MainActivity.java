@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.myapplication.endpoints.endpoints;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         String email = ((EditText) findViewById(R.id.usernameInput)).getText().toString();
         String password = ((EditText) findViewById(R.id.passwordInput)).getText().toString();
 
-        String url = "http://coms-309-030.class.las.iastate.edu:8080/user/getUserSignIn?email=" + email +
+        String url = endpoints.LoginUrl + email +
                 "&" + "password=" + password;
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
