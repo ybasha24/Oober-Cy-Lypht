@@ -54,14 +54,24 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        origin = null;
+        dest = null;
+
+        initAutoCompleteFragments();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_ride_location);
 
-        Places.initialize(getApplicationContext(), endpoints.MapAPIKey);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+    }
+
+    public void initAutoCompleteFragments(){
+        Places.initialize(getApplicationContext(), endpoints.GoogleMapsAPIKey);
 
         autocompleteOriginFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_origin_fragment);
-        autocompleteOriginFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS));
-
+        autocompleteOriginFragment.setPlaceFields(Arrays.asList(Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS));
         autocompleteOriginFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
@@ -71,15 +81,15 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
                 originAddress = place.getAddress();
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(origin.latitude, origin.longitude), 12.0f));
                 mMap.addMarker(new MarkerOptions().position(origin));
+                if (origin != null && dest != null)
+                    drawRoute();
             }
             @Override
-            public void onError(@NonNull Status status) {
-                Log.d("Maps", "An error occurred: " + status);
-            }
+            public void onError(@NonNull Status status) { Log.e("Maps error", status.toString()); }
         });
 
         autocompleteDestFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_dest_fragment);
-        autocompleteDestFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS));
+        autocompleteDestFragment.setPlaceFields(Arrays.asList(Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS));
         autocompleteDestFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
@@ -91,16 +101,9 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
                 if (origin != null && dest != null)
                     drawRoute();
             }
-
             @Override
-            public void onError(@NonNull Status status) {
-                Log.d("Maps", "Error: " + status);
-            }
+            public void onError(@NonNull Status status) { Log.e("Maps error", status.toString()); }
         });
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
     }
 
     @Override
@@ -114,8 +117,8 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
         String routeOrigin = "origin=" + originString;
         String waypoints = "";
         String routeDest = "destination=" + destString;
-        String params = routeOrigin + "&" + waypoints + "&"  + routeDest + "&key=" + "AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM";
-        String url = "https://maps.googleapis.com/maps/api/directions/json?" + params;
+        String params = routeOrigin + "&" + waypoints + "&"  + routeDest + "&key=" + endpoints.GoogleMapsAPIKey;
+        String url = endpoints.GoogleMapsDirectionUrl + params;
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
             response -> {
@@ -125,20 +128,13 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
                     JSONObject overviewPolylines = routes.getJSONObject("overview_polyline");
                     String encodedString = overviewPolylines.getString("points");
                     List<LatLng> list = PolyUtil.decode(encodedString);
-
-                    mMap.addPolyline(new PolylineOptions()
-                        .addAll(list)
-                        .width(12)
-                        .color(Color.parseColor("#05b1fb"))
-                        .geodesic(true)
-                    );
+                    mMap.addPolyline(new PolylineOptions().addAll(list).width(12).color(Color.parseColor("#05b1fb")).geodesic(true));
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin, 10.0f));
                     calculateRoute();
                 }
-                catch(JSONException e){
-                }
+                catch(JSONException e){ Log.e("Maps errror", e.toString()); }
             },
-            error -> {}
+            error -> Log.e("Maps error", error.toString())
         );
         AppController.getInstance().addToRequestQueue(req, "obj_req");
     }
@@ -146,9 +142,9 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
     public void calculateRoute(){
         String routeOrigin = "origins=" + originString;
         String routeDest = "destinations=" + destString;
-        String params = routeOrigin + "&"  + routeDest + "&units=imperial" + "&key=" + "AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM";
+        String params = routeOrigin + "&"  + routeDest + "&units=imperial" + "&key=" + endpoints.GoogleMapsAPIKey;
         params = params.replaceAll(" ", "%20");
-        String url = "https://maps.googleapis.com/maps/api/distancematrix/json?" + params;
+        String url = endpoints.GoogleMapsDistanceUrl + params;
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
                 response -> {
@@ -160,10 +156,9 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
                         durationHours = durationSeconds / 3600;
                         durationMinutes = (durationSeconds % 3600) / 60;
                     }
-                    catch(JSONException e){
-                    }
+                    catch(JSONException e){ Log.e("Maps error", e.toString()); }
                 },
-                error -> {});
+                error -> Log.e("Maps error", error.toString()));
         AppController.getInstance().addToRequestQueue(req, "obj_req");
     }
 

@@ -1,33 +1,24 @@
 package com.example.myapplication.selectride;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.app.AppController;
 import com.example.myapplication.driver.DriverHomePage;
 import com.google.android.material.slider.Slider;
-
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
-import java.sql.Driver;
 import java.time.LocalDateTime;
+import com.example.myapplication.endpoints.endpoints;
 
 public class ConfirmRide extends AppCompatActivity {
 
@@ -37,7 +28,6 @@ public class ConfirmRide extends AppCompatActivity {
     String startAddress;
     String endAddress;
     int pickupRadius;
-    int dropoffRadius;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +39,7 @@ public class ConfirmRide extends AppCompatActivity {
 
         pickupRadiusSlider.addOnChangeListener((slider1, value, fromUser) -> {
             pickupRadius = (int) value;
-            pickupRadiusTV.setText("Pickup radius: " + pickupRadius + " miles");
+            pickupRadiusTV.setText("Pickup radius: " + (int) value + " miles");
         });
 
 
@@ -68,8 +58,8 @@ public class ConfirmRide extends AppCompatActivity {
 
         details = findViewById(R.id.tripDetailsTV);
         if(startDate != null && endDate != null && startAddress != null && endAddress != null)
-            details.setText("Start time: " + startDate.toString() + "\n" +
-                            "End time: " + endDate.toString() + "\n" +
+            details.setText("Start time: " + startDate + "\n" +
+                            "End time: " + endDate + "\n" +
                             "Start address: " + startAddress + "\n" +
                             "End address: " + endAddress);
     }
@@ -89,10 +79,8 @@ public class ConfirmRide extends AppCompatActivity {
         obj.put("endZip", "Zip");
         obj.put("pickupRadius", 1);
 
-        String url = "http://coms-309-030.class.las.iastate.edu:8080/trip/createTripByDriver?driverId=" + MainActivity.accountObj.getInt("id");
+        String url = endpoints.DriverCreateTripUrl + MainActivity.accountObj.getInt("id");
 
-        Log.e("Trip", url);
-        Log.e("Trip", obj.toString());
         StringRequest req = new StringRequest(Request.Method.POST, url,
             response -> {
                 Intent intent = new Intent(this, DriverHomePage.class);
@@ -105,7 +93,7 @@ public class ConfirmRide extends AppCompatActivity {
                 toast.show();
             }){
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
                 try {
                     return obj.toString().getBytes("UTF-8");
                 } catch (UnsupportedEncodingException e) { return new byte[0]; }
