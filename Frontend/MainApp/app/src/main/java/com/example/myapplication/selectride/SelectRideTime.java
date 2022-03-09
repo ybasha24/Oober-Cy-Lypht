@@ -82,14 +82,6 @@ public class SelectRideTime extends AppCompatActivity {
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
-//    public void showTime(View v){
-//        TextView t = findViewById(R.id.timeTV);
-//        String dateTimeString = date + " " + time;
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-//        LocalDateTime dateTimeObject = LocalDateTime.parse(dateTimeString, formatter);
-//        t.setText(dateTimeObject.toString());
-//    }
-
     public void selectStartLocation(View v){
         Log.e("Time", "Date: " + date + " Time: " + time);
         if(!date.equals("") && !time.equals("")) {

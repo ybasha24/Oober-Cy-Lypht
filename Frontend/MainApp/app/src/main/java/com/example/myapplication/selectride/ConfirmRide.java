@@ -3,8 +3,10 @@ package com.example.myapplication.selectride;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.app.AppController;
@@ -18,10 +20,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.sql.Driver;
 import java.time.LocalDateTime;
 
 public class ConfirmRide extends AppCompatActivity {
@@ -40,18 +45,13 @@ public class ConfirmRide extends AppCompatActivity {
         setContentView(R.layout.activity_confirm_ride);
 
         Slider pickupRadiusSlider = findViewById(R.id.pickupRadiusSlider);
-        Slider dropoffRadiusSlider = findViewById(R.id.dropoffRadiusSlider);
         TextView pickupRadiusTV = findViewById(R.id.pickupRadiusTV);
-        TextView dropoffRadiusTV = findViewById(R.id.dropoffRadiusTV);
 
         pickupRadiusSlider.addOnChangeListener((slider1, value, fromUser) -> {
             pickupRadius = (int) value;
             pickupRadiusTV.setText("Pickup radius: " + pickupRadius + " miles");
         });
-        dropoffRadiusSlider.addOnChangeListener((slider1, value, fromUser) -> {
-            dropoffRadius = (int) value;
-            dropoffRadiusTV.setText("Dropoff radius: " + dropoffRadius + " miles");
-        });
+
 
         if(SelectRideTime.datettime != null){
             startDate = SelectRideTime.datettime;
@@ -75,33 +75,46 @@ public class ConfirmRide extends AppCompatActivity {
     }
 
     public void confirm(View v) throws JSONException {
-
         JSONObject obj = new JSONObject();
-
-        obj.put("driverId", 29);
+        obj.put("driver", MainActivity.accountObj);
         obj.put("scheduleStartDate", startDate);
         obj.put("scheduledEndDate", startDate);
-        obj.put("hasADriver", true);
-        obj.put("startAddress", "Add");
+        obj.put("startAddress", "Address");
         obj.put("startCity", "City");
         obj.put("startState", "State");
         obj.put("startZip", "Zip");
-        obj.put("endAddress", "Add");
+        obj.put("endAddress", "Address");
         obj.put("endCity", "City");
         obj.put("endState", "State");
         obj.put("endZip", "Zip");
-        obj.put("driverPickupRadius", 1);
-        obj.put("driverDropOffRadius", 1);
+        obj.put("pickupRadius", 1);
 
-        String url = "http://coms-309-030.class.las.iastate.edu:8080/trip/createTripByDriver";
+        String url = "http://coms-309-030.class.las.iastate.edu:8080/trip/createTripByDriver?driverId=" + MainActivity.accountObj.getInt("id");
 
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, obj,
+        Log.e("Trip", url);
+        Log.e("Trip", obj.toString());
+        StringRequest req = new StringRequest(Request.Method.POST, url,
             response -> {
-                Log.e("Trip", response.toString());
+                Intent intent = new Intent(this, DriverHomePage.class);
+                startActivity(intent);
+                Toast toast = Toast.makeText(getApplicationContext(), "Trip successfully created", Toast.LENGTH_LONG);
+                toast.show();
             },
             error -> {
-                Log.e("Trip", error.toString());
-            });
+                Toast toast = Toast.makeText(getApplicationContext(), "Error creating trip", Toast.LENGTH_LONG);
+                toast.show();
+            }){
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return obj.toString().getBytes("UTF-8");
+                } catch (UnsupportedEncodingException e) { return new byte[0]; }
+            }
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
         AppController.getInstance().addToRequestQueue(req, "obj_req");
     }
 }
