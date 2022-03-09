@@ -60,7 +60,7 @@ public class RiderRegistrationPage extends AppCompatActivity {
         boolean y = verifyParametersMet(password, email, tv);
 
         if (x && y) {
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, endpoints.RiderReg, obj,
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, endpoints.RiderRegUrl, obj,
                     response -> {
                         if (!response.isNull("firstName")) {
                             Intent intent = new Intent(this, RiderHomePage.class);

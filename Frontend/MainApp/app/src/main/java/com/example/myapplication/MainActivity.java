@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         String email = ((EditText) findViewById(R.id.usernameInput)).getText().toString();
         String password = ((EditText) findViewById(R.id.passwordInput)).getText().toString();
 
-        String url = endpoints.Login + email +
+        String url = endpoints.LoginUrl + email +
                 "&" + "password=" + password;
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,

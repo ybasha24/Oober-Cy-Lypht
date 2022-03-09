@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import com.example.myapplication.endpoints.endpoints;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -16,7 +15,6 @@ import com.example.myapplication.app.AppController;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 public class ProfileSettings extends AppCompatActivity {
 
@@ -87,7 +85,7 @@ public class ProfileSettings extends AppCompatActivity {
             String url = "";
 
             try {
-                url = endpoints.EditUser + MainActivity.accountObj.get("id");
+                url = endpoints.EditUserUrl + MainActivity.accountObj.get("id");
             } catch (JSONException e) {
             }
 

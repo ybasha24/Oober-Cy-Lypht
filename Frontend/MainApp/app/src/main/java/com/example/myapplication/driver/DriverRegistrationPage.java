@@ -9,18 +9,13 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.app.AppController;
-import com.example.myapplication.driver.DriverHomePage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
 import com.example.myapplication.R;
 import com.example.myapplication.endpoints.endpoints;
 
@@ -67,7 +62,7 @@ public class DriverRegistrationPage extends AppCompatActivity {
 //        String url = "http://coms-309-030.class.las.iastate.edu:8080/driver/registerDriver/";
 
         if (x && y) {
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, endpoints.DriverReg, obj,
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, endpoints.DriverRegUrl, obj,
                     response -> {
                         ((TextView) findViewById(R.id.regStatusTextView)).setText("Success");
 
