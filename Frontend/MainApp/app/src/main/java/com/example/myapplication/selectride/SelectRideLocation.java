@@ -54,22 +54,13 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        origin = null;
-        dest = null;
-
-        initAutoCompleteFragments();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_ride_location);
-
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
+        initAutoCompleteFragments();
     }
 
     public void initAutoCompleteFragments(){
         Places.initialize(getApplicationContext(), endpoints.GoogleMapsAPIKey);
-
         autocompleteOriginFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_origin_fragment);
         autocompleteOriginFragment.setPlaceFields(Arrays.asList(Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS));
         autocompleteOriginFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -81,15 +72,14 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
                 originAddress = place.getAddress();
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(origin.latitude, origin.longitude), 12.0f));
                 mMap.addMarker(new MarkerOptions().position(origin));
-                if (origin != null && dest != null)
-                    drawRoute();
             }
             @Override
             public void onError(@NonNull Status status) { Log.e("Maps error", status.toString()); }
         });
 
+
         autocompleteDestFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_dest_fragment);
-        autocompleteDestFragment.setPlaceFields(Arrays.asList(Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS));
+        autocompleteOriginFragment.setPlaceFields(Arrays.asList(Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS));
         autocompleteDestFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
@@ -104,6 +94,8 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
             @Override
             public void onError(@NonNull Status status) { Log.e("Maps error", status.toString()); }
         });
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
     @Override
