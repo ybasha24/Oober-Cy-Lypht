@@ -3,6 +3,9 @@ package _HB_2.Backend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping( "/user")
 public class UserController {
@@ -57,6 +60,11 @@ public class UserController {
                 return empty;
             }
         }
+    }
+
+    @GetMapping("/getAllUsers")
+    List<User> getAllTrips() {
+        return userService.getAllUsers();
     }
 
 }

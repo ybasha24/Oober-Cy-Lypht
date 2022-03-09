@@ -5,7 +5,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Column;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -47,5 +49,13 @@ public class UserService {
         userRepository.save(newUser);
 
         return getUserById(id);
+    }
+
+
+    public List<User> getAllUsers() {
+        List<User> list = new ArrayList<>();
+        list = userRepository.findAll();
+        return list;
+
     }
 }
