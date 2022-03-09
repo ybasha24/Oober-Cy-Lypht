@@ -1,5 +1,7 @@
 package com.example.myapplication.selectride;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.myapplication.R;
 import com.example.myapplication.endpoints.endpoints;
 import androidx.annotation.NonNull;
@@ -11,10 +13,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.example.myapplication.app.AppController;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -27,24 +29,28 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.maps.DirectionsApi;
-import com.google.maps.DirectionsApiRequest;
-import com.google.maps.GeoApiContext;
-import com.google.maps.model.DirectionsLeg;
-import com.google.maps.model.DirectionsResult;
-import com.google.maps.model.DirectionsRoute;
-import com.google.maps.model.DirectionsStep;
-import com.google.maps.model.EncodedPolyline;
+import com.google.maps.android.PolyUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class SelectRideLocation extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     AutocompleteSupportFragment autocompleteOriginFragment;
     AutocompleteSupportFragment autocompleteDestFragment;
-    LatLng origin;
-    LatLng dest;
+    static public LatLng origin;
+    static public LatLng dest;
     static public String originString;
     static public String destString;
+    static public String originAddress;
+    static public String destAddress;
+
+    static public int distance;
+    static public int durationHours;
+    static public int durationMinutes;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +60,15 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
         Places.initialize(getApplicationContext(), endpoints.MapAPIKey);
 
         autocompleteOriginFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_origin_fragment);
-        autocompleteOriginFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
+        autocompleteOriginFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS));
 
         autocompleteOriginFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
-                Log.d("Maps", "Place: " + place.getName() + ", " + place.getId());
+                Log.d("Maps", "Place: " + place.getName() + ", " + place.getId() + ", " + place.getAddress());
                 origin = place.getLatLng();
                 originString = place.getName();
+                originAddress = place.getAddress();
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(origin.latitude, origin.longitude), 12.0f));
                 mMap.addMarker(new MarkerOptions().position(origin));
             }
@@ -72,13 +79,14 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
         });
 
         autocompleteDestFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_dest_fragment);
-        autocompleteDestFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
+        autocompleteDestFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS));
         autocompleteDestFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
-                Log.d("Maps", "Place: " + place.getName() + ", " + place.getId());
+                Log.d("Maps", "Place: " + place.getName() + ", " + place.getId() + ", " + place.getAddress());
                 dest = place.getLatLng();
                 destString = place.getName();
+                destAddress = place.getAddress();
                 mMap.addMarker(new MarkerOptions().position(dest));
                 if (origin != null && dest != null)
                     drawRoute();
@@ -102,58 +110,61 @@ public class SelectRideLocation extends AppCompatActivity implements OnMapReadyC
     }
 
     public void drawRoute(){
-        List<LatLng> path = new ArrayList();
-        GeoApiContext context = new GeoApiContext.Builder().apiKey(endpoints.MapAPIKey).build();
-        DirectionsApiRequest req = DirectionsApi.getDirections(context,
-                origin.latitude + ", " + origin.longitude,
-                dest.latitude + ", " + dest.longitude);
-        try {
-            DirectionsResult res = req.await();
 
-            if (res.routes != null && res.routes.length > 0) {
-                DirectionsRoute route = res.routes[0];
+        String routeOrigin = "origin=" + originString;
+        String waypoints = "";
+        String routeDest = "destination=" + destString;
+        String params = routeOrigin + "&" + waypoints + "&"  + routeDest + "&key=" + "AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM";
+        String url = "https://maps.googleapis.com/maps/api/directions/json?" + params;
 
-                if (route.legs !=null) {
-                    for(int i=0; i<route.legs.length; i++) {
-                        DirectionsLeg leg = route.legs[i];
-                        if (leg.steps != null) {
-                            for (int j=0; j<leg.steps.length;j++){
-                                DirectionsStep step = leg.steps[j];
-                                if (step.steps != null && step.steps.length >0) {
-                                    for (int k=0; k<step.steps.length;k++){
-                                        DirectionsStep step1 = step.steps[k];
-                                        EncodedPolyline points1 = step1.polyline;
-                                        if (points1 != null) {
-                                            List<com.google.maps.model.LatLng> coords1 = points1.decodePath();
-                                            for (com.google.maps.model.LatLng coord1 : coords1) {
-                                                path.add(new LatLng(coord1.lat, coord1.lng));
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    EncodedPolyline points = step.polyline;
-                                    if (points != null) {
-                                        List<com.google.maps.model.LatLng> coords = points.decodePath();
-                                        for (com.google.maps.model.LatLng coord : coords) {
-                                            path.add(new LatLng(coord.lat, coord.lng));
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+            response -> {
+                try {
+                    JSONArray routeArray = response.getJSONArray("routes");
+                    JSONObject routes = routeArray.getJSONObject(0);
+                    JSONObject overviewPolylines = routes.getJSONObject("overview_polyline");
+                    String encodedString = overviewPolylines.getString("points");
+                    List<LatLng> list = PolyUtil.decode(encodedString);
+
+                    mMap.addPolyline(new PolylineOptions()
+                        .addAll(list)
+                        .width(12)
+                        .color(Color.parseColor("#05b1fb"))
+                        .geodesic(true)
+                    );
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin, 10.0f));
+                    calculateRoute();
                 }
-            }
-        } catch(Exception ex) {
-            Log.e("Maps", ex.getLocalizedMessage());
-        }
+                catch(JSONException e){
+                }
+            },
+            error -> {}
+        );
+        AppController.getInstance().addToRequestQueue(req, "obj_req");
+    }
 
-        if (path.size() > 0) {
-            PolylineOptions opts = new PolylineOptions().addAll(path).color(Color.BLACK).width(6);
-            mMap.addPolyline(opts);
-        }
+    public void calculateRoute(){
+        String routeOrigin = "origins=" + originString;
+        String routeDest = "destinations=" + destString;
+        String params = routeOrigin + "&"  + routeDest + "&units=imperial" + "&key=" + "AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM";
+        params = params.replaceAll(" ", "%20");
+        String url = "https://maps.googleapis.com/maps/api/distancematrix/json?" + params;
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin, 10.0f));
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                response -> {
+                    try {
+                        JSONObject rows0 = response.getJSONArray("rows").getJSONObject(0);
+                        JSONArray elements = (JSONArray) rows0.get("elements");
+                        distance = elements.getJSONObject(0).getJSONObject("distance").getInt("value") / 1000; //in meters, so divide to get in km
+                        int durationSeconds = elements.getJSONObject(0).getJSONObject("duration").getInt("value");
+                        durationHours = durationSeconds / 3600;
+                        durationMinutes = (durationSeconds % 3600) / 60;
+                    }
+                    catch(JSONException e){
+                    }
+                },
+                error -> {});
+        AppController.getInstance().addToRequestQueue(req, "obj_req");
     }
 
     public void proceed(View v){

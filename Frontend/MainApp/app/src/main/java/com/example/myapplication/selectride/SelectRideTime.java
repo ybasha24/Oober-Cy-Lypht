@@ -9,6 +9,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -16,12 +17,15 @@ import android.widget.TimePicker;
 
 import com.example.myapplication.R;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 public class SelectRideTime extends AppCompatActivity {
 
-    public static String time;
-    public static String date;
+    public static String time = "";
+    public static String date = "";
+    public static LocalDateTime datettime;
     private static TextView timeTV;
     private static TextView dateTV;
 
@@ -43,8 +47,8 @@ public class SelectRideTime extends AppCompatActivity {
                     DateFormat.is24HourFormat(getActivity()));
         }
         public void onTimeSet(TimePicker view, int hour, int minute) {
-            String h = hour > 10 ? String.valueOf(hour) : "0" + hour;
-            String m = minute > 10 ? String.valueOf(minute) : "0" + minute;
+            String h = hour >= 10 ? String.valueOf(hour) : "0" + hour;
+            String m = minute >= 10 ? String.valueOf(minute) : "0" + minute;
             SelectRideTime.time = h + ":" + m;
             SelectRideTime.timeTV.setText(SelectRideTime.time);
         }
@@ -61,8 +65,8 @@ public class SelectRideTime extends AppCompatActivity {
             return new DatePickerDialog(getActivity(), this, year, month, day);
         }
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            String m = month > 10 ? String.valueOf(month) : "0" + month;
-            String d = day > 10 ? String.valueOf(day) : "0" + day;
+            String m = month >= 10 ? String.valueOf(month) : "0" + month;
+            String d = day >= 10 ? String.valueOf(day) : "0" + day;
             SelectRideTime.date = year + "-" + m + "-" + d;
             SelectRideTime.dateTV.setText(SelectRideTime.date);
         }
@@ -78,17 +82,16 @@ public class SelectRideTime extends AppCompatActivity {
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
-//    public void showTime(View v){
-//        TextView t = findViewById(R.id.timeTV);
-//        String dateTimeString = date + " " + time;
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-//        LocalDateTime dateTimeObject = LocalDateTime.parse(dateTimeString, formatter);
-//        t.setText(dateTimeObject.toString());
-//    }
-
     public void selectStartLocation(View v){
+        Log.e("Time", "Date: " + date + " Time: " + time);
+        if(!date.equals("") && !time.equals("")) {
+            String dateTimeString = date + " " + time;
+            Log.e("Time", dateTimeString);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            datettime = LocalDateTime.parse(dateTimeString, formatter);
+            Log.e("Time", datettime.toString());
+        }
         Intent i = new Intent(this, SelectRideLocation.class);
         startActivity(i);
     }
-
 }
