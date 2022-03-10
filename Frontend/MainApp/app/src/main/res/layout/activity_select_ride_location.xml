@@ -4,7 +4,7 @@ xmlns:map="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-tools:context=".selectride.SelectRideLocation">
+tools:context=".createride.SelectRidePlace">
 
     <fragment
         android:id="@+id/autocomplete_origin_fragment"
@@ -40,7 +40,7 @@ tools:context=".selectride.SelectRideLocation">
         map:layout_constraintStart_toStartOf="parent"
         map:layout_constraintTop_toTopOf="parent"
         map:layout_constraintVertical_bias="0.732"
-        tools:context=".selectride.SelectRideLocation" />
+        tools:context=".createride.SelectRidePlace" />
 
     <Button
         android:id="@+id/confirmRideLocationButton"

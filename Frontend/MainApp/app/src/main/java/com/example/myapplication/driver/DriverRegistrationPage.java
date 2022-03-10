@@ -20,7 +20,6 @@ import org.json.JSONObject;
 
 import com.example.myapplication.R;
 import com.example.myapplication.endpoints.endpoints;
-import com.example.myapplication.rider.RiderHomePage;
 
 public class DriverRegistrationPage extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.myapplication.selectride;
+package com.example.myapplication.createride;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -91,7 +91,7 @@ public class SelectRideTime extends AppCompatActivity {
             datettime = LocalDateTime.parse(dateTimeString, formatter);
             Log.e("Time", datettime.toString());
         }
-        Intent i = new Intent(this, SelectRideLocation.class);
+        Intent i = new Intent(this, SelectRidePlace.class);
         startActivity(i);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.myapplication.selectride;
+package com.example.myapplication.createride;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -35,7 +35,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SelectRideLocation extends AppCompatActivity implements OnMapReadyCallback {
+public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     AutocompleteSupportFragment autocompleteOriginFragment;

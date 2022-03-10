@@ -16,7 +16,7 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".selectride.ConfirmRide"
+            android:name=".createride.ConfirmRide"
             android:exported="false" />
 
         <meta-data
@@ -24,11 +24,11 @@
             android:value="AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM" />
 
         <activity
-            android:name=".selectride.SelectRideLocation"
+            android:name=".createride.SelectRidePlace"
             android:exported="false"
             android:label="@string/title_activity_select_ride_start" />
         <activity
-            android:name=".selectride.SelectRideTime"
+            android:name=".createride.SelectRideTime"
             android:exported="false" />
         <activity
             android:name=".ProfileSettings"

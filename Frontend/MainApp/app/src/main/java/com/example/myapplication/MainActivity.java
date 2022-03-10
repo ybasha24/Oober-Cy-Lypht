@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.view.View;
 
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -17,7 +16,6 @@ import org.json.JSONObject;
 
 import com.example.myapplication.app.AppController;
 import com.example.myapplication.driver.DriverHomePage;
-import com.example.myapplication.rider.RiderHomePage;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -43,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                             if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver") == true)
                                 intent = new Intent(this, DriverHomePage.class);
                             else if (!accountObj.isNull("arider") && accountObj.getBoolean("arider") == true)
-                                intent = new Intent(this, RiderHomePage.class);
+                                intent = new Intent(this, com.example.myapplication.rider.RiderHomePage.class);
                             startActivity(intent);
                         }
                         else {

@@ -1,4 +1,4 @@
-package com.example.myapplication.selectride;
+package com.example.myapplication.createride;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.Request;
@@ -45,14 +45,14 @@ public class ConfirmRide extends AppCompatActivity {
         if(SelectRideTime.datettime != null){
             startDate = SelectRideTime.datettime;
         }
-        if(SelectRideTime.datettime != null && SelectRideLocation.durationHours != 0 && SelectRideLocation.durationMinutes != 0){
-            endDate = SelectRideTime.datettime.plusHours(SelectRideLocation.durationHours).plusMinutes(SelectRideLocation.durationMinutes);
+        if(SelectRideTime.datettime != null && SelectRidePlace.durationHours != 0 && SelectRidePlace.durationMinutes != 0){
+            endDate = SelectRideTime.datettime.plusHours(SelectRidePlace.durationHours).plusMinutes(SelectRidePlace.durationMinutes);
         }
         if(startAddress != null){
-            startAddress = SelectRideLocation.originAddress;
+            startAddress = SelectRidePlace.originAddress;
         }
         if(endAddress != null){
-            endAddress = SelectRideLocation.destAddress;
+            endAddress = SelectRidePlace.destAddress;
         }
 
         details = findViewById(R.id.tripDetailsTV);
