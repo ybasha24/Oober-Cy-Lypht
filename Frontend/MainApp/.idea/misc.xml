@@ -11,12 +11,13 @@
         <entry key="..\:/Users/gajit/OneDrive/Desktop/ComS/CS309/2_hb_2/Frontend/MainApp/app/src/main/res/layout/activity_rider_registration_page.xml" value="0.17346014492753623" />
         <entry key="app/src/main/res/layout/activity_choose_ride_time.xml" value="0.23505434782608695" />
         <entry key="app/src/main/res/layout/activity_confirm_ride.xml" value="0.3339999655018682" />
-        <entry key="app/src/main/res/layout/activity_driver_home_page.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/activity_driver_created_rides.xml" value="0.23505434782608695" />
+        <entry key="app/src/main/res/layout/activity_driver_home_page.xml" value="0.23568331953408064" />
         <entry key="app/src/main/res/layout/activity_driver_registration_page.xml" value="0.23505434782608695" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3088851928710939" />
         <entry key="app/src/main/res/layout/activity_maps.xml" value="0.23505434782608695" />
         <entry key="app/src/main/res/layout/activity_profile_settings.xml" value="0.23505434782608695" />
-        <entry key="app/src/main/res/layout/activity_rider_home_page.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/activity_rider_home_page.xml" value="0.26426760908486185" />
         <entry key="app/src/main/res/layout/activity_rider_registration_page.xml" value="0.25891111069831285" />
         <entry key="app/src/main/res/layout/activity_select_ride_location.xml" value="0.23505434782608695" />
         <entry key="app/src/main/res/layout/activity_select_ride_start.xml" value="0.22845797331436823" />
