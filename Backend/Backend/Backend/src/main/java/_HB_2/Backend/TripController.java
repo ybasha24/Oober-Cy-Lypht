@@ -60,7 +60,6 @@ public class TripController {
 
     @GetMapping("/getAllTrips")
     List<Trip> getAllTrips() {
-        List<Trip> list = new ArrayList<>();
         return tripService.getAllTrips();
     }
 
