@@ -22,16 +22,9 @@ public class Trip {
     boolean hasStarted;
     boolean isCompleted;
 
-    String startAddress;
-    String startCity;
-    String startState;
-    String startZip;
+    String originAddress;
 
-    String endAddress;
-    String endCity;
-    String endState;
-    String endZip;
-
+    String destAddress;
 
     @ManyToOne
     @JoinColumn(name = "Driver_ID")
@@ -50,9 +43,9 @@ public class Trip {
     }
 
     //Constructor with all attributes
-    public Trip(User rider, User driver, LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, LocalDateTime actualStartDate, LocalDateTime actualEndDate, boolean hasARider, boolean hasADriver, boolean isConfirmed, boolean hasStarted, boolean isCompleted, String startAddress, String startCity, String startState, String startZip, String endAddress, String endCity, String endState, String endZip, int radius) {
-        tripRider = rider;
-        tripDriver = driver;
+
+
+    public Trip(LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, LocalDateTime actualStartDate, LocalDateTime actualEndDate, boolean hasARider, boolean hasADriver, boolean isConfirmed, boolean hasStarted, boolean isCompleted, String originAddress, String destAddress, User tripDriver, User tripRider, int radius) {
         this.scheduledStartDate = scheduledStartDate;
         this.scheduledEndDate = scheduledEndDate;
         this.actualStartDate = actualStartDate;
@@ -62,31 +55,21 @@ public class Trip {
         this.isConfirmed = isConfirmed;
         this.hasStarted = hasStarted;
         this.isCompleted = isCompleted;
-        this.startAddress = startAddress;
-        this.startCity = startCity;
-        this.startState = startState;
-        this.startZip = startZip;
-        this.endAddress = endAddress;
-        this.endCity = endCity;
-        this.endState = endState;
-        this.endZip = endZip;
+        this.originAddress = originAddress;
+        this.destAddress = destAddress;
+        this.tripDriver = tripDriver;
+        this.tripRider = tripRider;
         this.radius = radius;
     }
 
     //create trip by Driver
-    public Trip(User driver, LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, boolean hasADriver, String startAddress, String startCity, String startState, String startZip, String endAddress, String endCity, String endState, String endZip, int radius) {
-        tripDriver = driver;
+    public Trip(LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, boolean hasADriver, String originAddress, String destAddress, User tripDriver, int radius) {
         this.scheduledStartDate = scheduledStartDate;
         this.scheduledEndDate = scheduledEndDate;
         this.hasADriver = hasADriver;
-        this.startAddress = startAddress;
-        this.startCity = startCity;
-        this.startState = startState;
-        this.startZip = startZip;
-        this.endAddress = endAddress;
-        this.endCity = endCity;
-        this.endState = endState;
-        this.endZip = endZip;
+        this.originAddress = originAddress;
+        this.destAddress = destAddress;
+        this.tripDriver = tripDriver;
         this.radius = radius;
     }
 
@@ -165,69 +148,17 @@ public class Trip {
         isCompleted = completed;
     }
 
-    public String getStartAddress() {
-        return startAddress;
-    }
+    public int getId() {return id;}
 
-    public void setStartAddress(String startAddress) {
-        this.startAddress = startAddress;
-    }
+    public void setId(int id) {this.id = id;}
 
-    public String getStartCity() {
-        return startCity;
-    }
+    public String getOriginAddress() {return originAddress;}
 
-    public void setStartCity(String startCity) {
-        this.startCity = startCity;
-    }
+    public void setOriginAddress(String originAddress) {this.originAddress = originAddress;}
 
-    public String getStartState() {
-        return startState;
-    }
+    public String getDestAddress() {return destAddress;}
 
-    public void setStartState(String startState) {
-        this.startState = startState;
-    }
-
-    public String getStartZip() {
-        return startZip;
-    }
-
-    public void setStartZip(String startZip) {
-        this.startZip = startZip;
-    }
-
-    public String getEndAddress() {
-        return endAddress;
-    }
-
-    public void setEndAddress(String endAddress) {
-        this.endAddress = endAddress;
-    }
-
-    public String getEndCity() {
-        return endCity;
-    }
-
-    public void setEndCity(String endCity) {
-        this.endCity = endCity;
-    }
-
-    public String getEndState() {
-        return endState;
-    }
-
-    public void setEndState(String endState) {
-        this.endState = endState;
-    }
-
-    public String getEndZip() {
-        return endZip;
-    }
-
-    public void setEndZip(String endZip) {
-        this.endZip = endZip;
-    }
+    public void setDestAddress(String destAddress) {this.destAddress = destAddress;}
 
     public int getRadius() {
         return radius;

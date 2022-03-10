@@ -17,12 +17,12 @@ public class TripController {
     private TripRepository tripRepository;
 
     @PostMapping("/createTripByDriver")
-    String createTripByDriver(
+    Trip createTripByDriver(
             @RequestParam int driverId,
             @RequestBody Trip trip) {
         Trip t = tripService.createTripByDriver(driverId, trip);
 
-        return "A successful trip with driver id " + t.getDriverId() + "has been stored";
+        return t;
     }
 
 //    @GetMapping("/getDriverTrips")
