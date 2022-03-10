@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".driver.DriverCreatedRides"
+            android:exported="false" />
+        <activity
             android:name=".createride.ConfirmRide"
             android:exported="false" />
 

@@ -25,6 +25,11 @@ public class DriverHomePage extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void viewCreatedRides(View view){
+        Intent intent = new Intent(this, DriverCreatedRides.class);
+        startActivity(intent);
+    }
+
     public void profileSettings(View view){
         Intent intent = new Intent(this, ProfileSettings.class);
         startActivity(intent);
