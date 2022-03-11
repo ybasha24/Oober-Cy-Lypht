@@ -23,21 +23,14 @@ public class TripService {
 
         User d =  driverRepository.getById(Id);
         //uses driver constructor
-        Trip t = new Trip(
-                d,
-                trip.scheduledStartDate,
-                trip.scheduledEndDate,
-                //hasADriver
-                true,
-                trip.startAddress,
-                trip.startCity,
-                trip.startState,
-                trip.startZip,
-                trip.endAddress,
-                trip.endCity,
-                trip.endState,
-                trip.endZip,
-                trip.radius);
+        Trip t = new Trip(trip.scheduledStartDate,
+                        trip.scheduledEndDate,
+                        //has a driver
+                        true,
+                        trip.originAddress,
+                        trip.destAddress,
+                        d,
+                        trip.radius);
 
         tripRepository.save(t);
         return t;
@@ -75,15 +68,8 @@ public class TripService {
         newTrip.setConfirmed(newTripInfo.hasStarted);
         newTrip.setCompleted(newTripInfo.isConfirmed);
 
-        newTrip.setStartAddress(newTripInfo.startAddress);
-        newTrip.setStartCity(newTripInfo.startCity);
-        newTrip.setStartState(newTripInfo.startState);
-        newTrip.setStartZip(newTripInfo.startZip);
-
-        newTrip.setEndAddress(newTripInfo.endAddress);
-        newTrip.setEndCity(newTripInfo.endCity);
-        newTrip.setEndCity(newTripInfo.endState);
-        newTrip.setEndZip(newTripInfo.endZip);
+        newTrip.setOriginAddress(newTripInfo.originAddress);
+        newTrip.setDestAddress(newTripInfo.destAddress);
 
         newTrip.setRadius(newTripInfo.radius);
 
