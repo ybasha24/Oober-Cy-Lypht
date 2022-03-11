@@ -15,10 +15,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listview = findViewById(R.id.listView1);
+        listview = findViewById(R.id.listView);
 
         ArrayList<String> list;
-        list = new ArrayList<>(Arrays.asList("111,222,333,444,555,666".split(",")));
+        list = new ArrayList<>(Arrays.asList("A, B, C, D, E, F".split(",")));
         listview.setAdapter(new CustomAdapter(list, getApplicationContext()) );
     }
 }

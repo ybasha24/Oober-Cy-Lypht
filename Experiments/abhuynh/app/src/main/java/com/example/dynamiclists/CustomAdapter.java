@@ -44,17 +44,13 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
             view = inflater.inflate(R.layout.trip_item, null);
         }
 
-        TextView tvContact= (TextView)view.findViewById(R.id.tvContact);
-        tvContact.setText(list.get(position));
+        TextView tv= view.findViewById(R.id.textView);
+        tv.setText(list.get(position));
 
-        Button callbtn= (Button)view.findViewById(R.id.btn);
+        Button button= view.findViewById(R.id.button);
 
-        callbtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                //do something
+        button.setOnClickListener(v -> {
 
-            }
         });
 
         return view;
