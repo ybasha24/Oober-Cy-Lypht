@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TripService {
@@ -95,16 +97,26 @@ public class TripService {
 
     //we should consider speeding this up by writing a sql query to only retrieve
     //the trips that we want from the database rather than filtering them here.
-    public List<Trip> getTripsForRider(LocalDateTime startDate, LocalDateTime endData) {
+    public List<Trip> getTripsForRider(LocalDateTime startDate, LocalDateTime endDate) {
 
         List<Trip> allTrips = tripRepository.findAll();
+
+        Map<String, LocalDateTime> timeWindows = getTimeWindows(startDate, endDate);
 
         List<Trip> validTrips = new ArrayList<>();
         for(Trip trip: allTrips) {
             //need this check for trips in database with null start and end times.
-            //avoids null pointer exceptions
+            //avoids null pointer exceptions- this check could be deleted if all rows in
+            //database had scheduled start dates and scheduled end dates.
             if (trip.scheduledStartDate != null && trip.scheduledEndDate != null) {
-                if (!trip.hasStarted && trip.scheduledStartDate.equals(startDate) && trip.scheduledEndDate.equals(endData)) {
+                //check to see if the start date and end dates of the trip are the same as our request
+                //currently we ignore the time of day.  If the day is the same the trip is valid.
+                if (    !trip.hasStarted &&
+                        trip.scheduledStartDate.isAfter(timeWindows.get("earliestStartDate")) &&
+                        trip.scheduledStartDate.isBefore(timeWindows.get("latestStartDate")) &&
+                        trip.scheduledEndDate.isAfter(timeWindows.get("earliestEndDate")) &&
+                        trip.scheduledEndDate.isBefore(timeWindows.get("latestEndDate"))) {
+
                     validTrips.add(trip);
                 }
             }
@@ -112,5 +124,36 @@ public class TripService {
 
         return validTrips;
 
+    }
+
+    //returns a map of the windows for the trip we want
+    private Map<String, LocalDateTime> getTimeWindows(LocalDateTime startDate, LocalDateTime endDate) {
+        Map<String, LocalDateTime> timeWindows = new HashMap<>();
+
+        LocalDateTime earliestStartDate = beginningOfDay(startDate);
+        LocalDateTime latestStartDate = endOfDay(startDate);
+        LocalDateTime earliestEndDate = beginningOfDay(endDate);
+        LocalDateTime latestEndDate = endOfDay(endDate);
+
+        timeWindows.put("earliestStartDate", earliestStartDate);
+        timeWindows.put("latestStartDate", latestStartDate);
+        timeWindows.put("earliestEndDate", earliestEndDate);
+        timeWindows.put("latestEndDate", latestEndDate);
+
+        return timeWindows;
+    }
+
+    //edits a LocalDateTime to the beginning of the day
+    private LocalDateTime beginningOfDay(LocalDateTime startDate) {
+        LocalDateTime answer = startDate.withHour(00).withMinute(00).withSecond(00);
+
+        return answer;
+    }
+
+    //edits a LocalDateTime to the end of the day
+    private LocalDateTime endOfDay(LocalDateTime startDate) {
+        LocalDateTime answer = startDate.withHour(23).withMinute(59).withSecond(59);
+
+        return answer;
     }
 }
