@@ -1,8 +1,11 @@
 package _HB_2.Backend;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,14 +27,6 @@ public class TripController {
 
         return t;
     }
-
-//    @GetMapping("/getDriverTrips")
-//    List<Trip> getListOfTripsByDriverId(
-//            @RequestParam int id) {
-//
-//        List list = tripService.getTripsByDriverId(id);
-//        return list;
-//    }
 
     @GetMapping("/getTrip")
     Trip getListOfTripsByDriverId(
@@ -68,6 +63,17 @@ public class TripController {
     List<Trip> getAllActiveTrips() {
         List<Trip> list = new ArrayList<>();
         return tripService.getAllActiveTrips();
+    }
+
+    @GetMapping("/getTripsForRider")
+    List<Trip> getTripsForRider(
+            @RequestParam("scheduledStartDate")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime scheduledStartDate,
+
+            @RequestParam("scheduledEndDate")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime scheduledEndDate) {
+
+        return tripService.getTripsForRider(scheduledStartDate,scheduledEndDate);
     }
 
 }
