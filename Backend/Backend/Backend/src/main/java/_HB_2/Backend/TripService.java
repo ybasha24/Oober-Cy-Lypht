@@ -36,12 +36,6 @@ public class TripService {
         return t;
     }
 
-//    public List getTripsByDriverId(int id) {
-//        List list = new ArrayList<>();
-//
-//        return list;
-//    }
-
     public Trip getTripById(int id) {
         return tripRepository.findById(id);
 
@@ -97,5 +91,22 @@ public class TripService {
         }
 
         return activeTrips;
+    }
+
+    //we should consider speeding this up by writing a sql query to only retrieve
+    //the trips that we want from the database rather than filtering them here.
+    public List<Trip> getTripsForRider(LocalDateTime startDate, LocalDateTime endData) {
+
+        List<Trip> allTrips = tripRepository.findAll();
+
+        List<Trip> validTrips = new ArrayList<>();
+        for(Trip trip: allTrips) {
+            if (!trip.hasStarted && trip.scheduledStartDate == startDate && trip.scheduledEndDate == endData) {
+                validTrips.add(trip);
+            }
+        }
+
+        return validTrips;
+
     }
 }
