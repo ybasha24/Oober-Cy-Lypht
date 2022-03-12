@@ -101,8 +101,12 @@ public class TripService {
 
         List<Trip> validTrips = new ArrayList<>();
         for(Trip trip: allTrips) {
-            if (!trip.hasStarted && trip.scheduledStartDate == startDate && trip.scheduledEndDate == endData) {
-                validTrips.add(trip);
+            //need this check for trips in database with null start and end times.
+            //avoids null pointer exceptions
+            if (trip.scheduledStartDate != null && trip.scheduledEndDate != null) {
+                if (!trip.hasStarted && trip.scheduledStartDate.equals(startDate) && trip.scheduledEndDate.equals(endData)) {
+                    validTrips.add(trip);
+                }
             }
         }
 

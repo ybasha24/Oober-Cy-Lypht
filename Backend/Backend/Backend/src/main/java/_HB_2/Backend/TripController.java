@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,15 +67,12 @@ public class TripController {
 
     @GetMapping("/getTripsForRider")
     List<Trip> getTripsForRider(
-            @RequestParam(value = "scheduledStartDate")
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime scheduledStartDate,
+            @RequestParam("scheduledStartDate")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime scheduledStartDate,
 
-            @RequestParam(value = "scheduledEndDate")
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime scheduledEndDate) {
-//            @RequestParam LocalDateTime scheduledStartDate,
-//            @RequestParam LocalDateTime scheduledEndDate) {
+            @RequestParam("scheduledEndDate")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime scheduledEndDate) {
 
-        List<Trip> list = new ArrayList<>();
         return tripService.getTripsForRider(scheduledStartDate,scheduledEndDate);
     }
 
