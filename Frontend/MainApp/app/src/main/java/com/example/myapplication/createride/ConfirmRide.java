@@ -84,12 +84,10 @@ public class ConfirmRide extends AppCompatActivity {
             response -> {
                 Intent intent = new Intent(this, DriverHomePage.class);
                 startActivity(intent);
-                Toast toast = Toast.makeText(getApplicationContext(), "Trip successfully created", Toast.LENGTH_LONG);
-                toast.show();
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Trip successfully created", Toast.LENGTH_LONG).show());
             },
             error -> {
-                Toast toast = Toast.makeText(getApplicationContext(), "Error creating trip", Toast.LENGTH_LONG);
-                toast.show();
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Error creating trip", Toast.LENGTH_LONG).show());
             }){
             @Override
             public byte[] getBody() {

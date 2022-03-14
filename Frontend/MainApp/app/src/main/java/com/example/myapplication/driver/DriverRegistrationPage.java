@@ -68,10 +68,10 @@ public class DriverRegistrationPage extends AppCompatActivity {
                         MainActivity.accountObj = response;
                         startActivity(intent);
                     } else {
-                        Toast.makeText(getApplicationContext(), "Error processing" + obj, Toast.LENGTH_LONG);
+                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Error processing" + obj, Toast.LENGTH_LONG));
                     }
                 },
-                error -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG));
+                error -> runOnUiThread(()->Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG)));
             AppController.getInstance().addToRequestQueue(req, "obj_req");
         }
     }
