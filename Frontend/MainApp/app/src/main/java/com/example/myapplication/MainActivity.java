@@ -45,14 +45,14 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                         else {
-                            Toast.makeText(getApplicationContext(), "Error processing" + url, Toast.LENGTH_LONG);
+                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Error processing" + url, Toast.LENGTH_LONG).show());
                         }
                     }
                     catch(JSONException e){
-                        Toast.makeText(getApplicationContext(), "Exception: " + e, Toast.LENGTH_LONG);
+                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Exception: " + e, Toast.LENGTH_LONG).show());
                     }
                 },
-                error -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG));
+                error ->  runOnUiThread(()->Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG).show()));
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
     }
 

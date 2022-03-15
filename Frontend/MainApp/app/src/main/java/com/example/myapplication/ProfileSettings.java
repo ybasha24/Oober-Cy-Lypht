@@ -105,7 +105,7 @@ public class ProfileSettings extends AppCompatActivity {
                             status.setText("Something went wrong...");
                         }
                     },
-                    error -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG));
+                    error -> runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG)));
             AppController.getInstance().addToRequestQueue(req, "post_object_tag");
         }
     }
