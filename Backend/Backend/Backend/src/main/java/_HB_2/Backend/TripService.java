@@ -43,6 +43,14 @@ public class TripService {
 
     }
 
+    public Trip addRiderToTrip(int tripId, int riderId){
+        Trip addRiderToThis = tripRepository.findById(tripId);
+        User r = driverRepository.getById(riderId);
+        addRiderToThis.setRiderId(r);
+        addRiderToThis.setHasARider(true);
+        return  addRiderToThis;
+    }
+
     public Trip editTripById(int tripId, int riderId, int driverId, Trip newTripInfo) {
 
         Trip newTrip = tripRepository.findById(tripId);

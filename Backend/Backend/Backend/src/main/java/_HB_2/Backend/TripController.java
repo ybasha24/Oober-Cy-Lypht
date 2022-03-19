@@ -48,7 +48,7 @@ public class TripController {
     @PutMapping("/addRiderToTrip")
     Trip addRiderToTrip(@RequestParam int tripId,
                         @RequestParam int riderId){
-        return new Trip();
+        return tripService.addRiderToTrip(tripId, riderId);
     }
 
     //returns a list of all trips that have not been completed
