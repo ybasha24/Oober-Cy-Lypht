@@ -46,9 +46,10 @@ public class TripController {
     }
 
     @PutMapping("/addRiderToTrip")
-    Trip addRiderToTrip(@RequestParam int tripId,
+    String addRiderToTrip(@RequestParam int tripId,
                         @RequestParam int riderId){
-        return tripService.addRiderToTrip(tripId, riderId);
+        tripService.addRiderToTrip(tripId, riderId);
+        return "Successfully added rider with id " + riderId + " to trip";
     }
 
     //returns a list of all trips that have not been completed
