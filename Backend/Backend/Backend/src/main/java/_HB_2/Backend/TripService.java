@@ -48,6 +48,7 @@ public class TripService {
         User r = driverRepository.getById(riderId);
         addRiderToThis.setRiderId(r);
         addRiderToThis.setHasARider(true);
+        tripRepository.save(addRiderToThis);
         return  addRiderToThis;
     }
 
