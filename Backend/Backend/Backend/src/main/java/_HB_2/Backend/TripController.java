@@ -45,6 +45,12 @@ public class TripController {
         return tripService.editTripById(tripId, riderId, driverId, t);
     }
 
+    @PutMapping("/completeTrip")
+    Trip completeTripById(
+            @RequestParam int id) {
+        return tripService.completeTripById(id);
+    }
+
     //returns a list of all trips that have not been completed
     @GetMapping("/getAllActiveTripsFromDriverId")
     List<Trip> getAllActiveTrips(
