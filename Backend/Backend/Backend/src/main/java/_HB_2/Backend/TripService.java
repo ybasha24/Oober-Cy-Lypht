@@ -156,4 +156,11 @@ public class TripService {
 
         return answer;
     }
+
+    public Trip completeTripById(int tripId) {
+        Trip tripToBeCompleted = tripRepository.findById(tripId);
+        tripToBeCompleted.setCompleted(true);
+        tripRepository.save(tripToBeCompleted);
+        return tripRepository.findById(tripId);
+    }
 }
