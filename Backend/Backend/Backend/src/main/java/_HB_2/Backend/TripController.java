@@ -45,7 +45,14 @@ public class TripController {
         return tripService.editTripById(tripId, riderId, driverId, t);
     }
 
-    @PutMapping("/completeTrip")
+    @PutMapping("/addRiderToTrip")
+    String addRiderToTrip(@RequestParam int tripId,
+                          @RequestParam int riderId) {
+        tripService.addRiderToTrip(tripId, riderId);
+        return "Successfully added rider with id " + riderId + " to trip";
+    }
+
+        @PutMapping("/completeTrip")
     Trip completeTripById(
             @RequestParam int id) {
         return tripService.completeTripById(id);
