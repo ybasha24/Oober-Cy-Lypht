@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.myapplication.createride.SelectRideTime;
 
 import org.json.JSONArray;
@@ -66,12 +68,16 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
         Button deleteTripButton = view.findViewById(R.id.deleteTripButton);
 
         editTripButton.setOnClickListener(v -> {
-            Intent i = new Intent(context, SelectRideTime.class);
+            Intent i = new Intent(this.context, SelectRideTime.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Log.e("trips error", v.getContext().toString());
             try {
                 i.putExtra("editing", true);
                 i.putExtra("tripId", list.getJSONObject(position).getInt("id"));
             } catch(JSONException e) {}
+            this.context.startActivity(i);
         });
+
         deleteTripButton.setOnClickListener(v -> {
 
         });
