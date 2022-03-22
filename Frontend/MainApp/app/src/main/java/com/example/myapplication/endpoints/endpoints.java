@@ -7,6 +7,7 @@ public final class endpoints {
     public static final String LoginUrl = "http://coms-309-030.class.las.iastate.edu:8080/user/getUserSignIn?email=";
     public static final String EditUserUrl = "http://coms-309-030.class.las.iastate.edu:8080/user/editUser?id=";
     public static final String DriverCreateTripUrl = "http://coms-309-030.class.las.iastate.edu:8080/trip/createTripByDriver?driverId=";
+    public static final String EditTripUrl = "http://coms-309-030.class.las.iastate.edu:8080/trip/editTrip";
     public static final String GoogleMapsDirectionUrl = "https://maps.googleapis.com/maps/api/directions/json?";
     public static final String GoogleMapsDistanceUrl = "https://maps.googleapis.com/maps/api/distancematrix/json?";
     public static final String GoogleMapsAPIKey = "AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM";

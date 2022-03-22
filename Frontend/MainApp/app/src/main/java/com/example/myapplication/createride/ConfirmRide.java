@@ -41,7 +41,6 @@ public class ConfirmRide extends AppCompatActivity {
             pickupRadiusTV.setText("Pickup radius: " + (int) value + " miles");
         });
 
-
         if(SelectRideTime.datettime != null){
             startDate = SelectRideTime.datettime;
         }
@@ -78,7 +77,19 @@ public class ConfirmRide extends AppCompatActivity {
         obj.put("endZip", "Zip");
         obj.put("pickupRadius", 1);
 
-        String url = endpoints.DriverCreateTripUrl + MainActivity.accountObj.getInt("id");
+        String url;
+        url = endpoints.DriverCreateTripUrl + MainActivity.accountObj.getInt("id");
+        try {
+            if ((boolean) getIntent().getSerializableExtra("editing")) {
+                url = endpoints.EditTripUrl;
+                url += ("?tripId=" + (int) getIntent().getSerializableExtra("tripId"));
+                url += "?riderId=";
+                url += ("?driverId=" + MainActivity.accountObj.getInt("id"));
+            }
+        } catch(Exception e){}
+
+
+
 
         StringRequest req = new StringRequest(Request.Method.POST, url,
             response -> {

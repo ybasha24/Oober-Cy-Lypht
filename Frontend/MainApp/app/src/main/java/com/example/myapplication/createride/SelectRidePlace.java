@@ -156,6 +156,13 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
 
     public void proceed(View v){
         Intent i = new Intent(this, ConfirmRide.class);
+        try {
+            if ((boolean) getIntent().getSerializableExtra("editing")) {
+                i.putExtra("editing", true);
+                i.putExtra("tripId", (int) getIntent().getSerializableExtra("tripId"));
+            }
+        } catch(Exception e){}
+
         startActivity(i);
     }
 

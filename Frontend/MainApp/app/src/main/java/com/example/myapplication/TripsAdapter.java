@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +11,11 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.example.myapplication.createride.SelectRideTime;
 
-import java.util.Iterator;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class TripsAdapter extends BaseAdapter implements ListAdapter {
     private JSONArray list;
@@ -53,15 +56,23 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
         TextView tv= view.findViewById(R.id.textView);
         try {
             JSONObject json = list.getJSONObject(position);
-
-            tv.setText(json.getString("startAddress") + "->" + json.getString("endAddress") +
-                    "\nFrom: " + json.getString("scheduledStartDate") + "\nTo: " + json.getString("scheduledEndDate"));
+            Log.e("Json logging", json.toString());
+            tv.setText("Place: " + json.getString("originAddress") + "->" + json.getString("destAddress") +
+                    "\nTime: " + json.getString("scheduledStartDate") + "->" + json.getString("scheduledEndDate"));
         }
         catch(Exception e){}
 
-        Button button= view.findViewById(R.id.button);
+        Button editTripButton = view.findViewById(R.id.editTripButton);
+        Button deleteTripButton = view.findViewById(R.id.deleteTripButton);
 
-        button.setOnClickListener(v -> {
+        editTripButton.setOnClickListener(v -> {
+            Intent i = new Intent(context, SelectRideTime.class);
+            try {
+                i.putExtra("editing", true);
+                i.putExtra("tripId", list.getJSONObject(position).getInt("id"));
+            } catch(JSONException e) {}
+        });
+        deleteTripButton.setOnClickListener(v -> {
 
         });
 
