@@ -55,7 +55,7 @@ public class TripController {
     @PutMapping("/removeRiderFromTrip")
     String removeRiderFromTrip(@RequestParam int tripId,
                                @RequestParam int riderId) {
-        //do a tripService call!
+        tripService.removeRiderFromTrip(tripId, riderId);
         return "Successfully removed rider with id " + riderId + " from trip";
     }
 
