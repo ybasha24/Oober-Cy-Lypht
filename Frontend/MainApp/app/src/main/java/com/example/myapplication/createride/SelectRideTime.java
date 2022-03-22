@@ -91,7 +91,15 @@ public class SelectRideTime extends AppCompatActivity {
             datettime = LocalDateTime.parse(dateTimeString, formatter);
             Log.e("Time", datettime.toString());
         }
+
         Intent i = new Intent(this, SelectRidePlace.class);
+        try {
+            if ((boolean) getIntent().getSerializableExtra("editing")) {
+                i.putExtra("editing", true);
+                i.putExtra("tripId", (int) getIntent().getSerializableExtra("tripId"));
+            }
+        } catch(Exception e){}
+
         startActivity(i);
     }
 }
