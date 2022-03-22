@@ -84,6 +84,12 @@ public class Trip {
         tripRider = newRider;
     }
 
+    public void removeRiderId(int riderId){
+        if(tripRider.getId() == riderId){
+            tripRider = null;
+        }
+    }
+
     public int getDriverId() {
         return tripDriver.getId();
     }

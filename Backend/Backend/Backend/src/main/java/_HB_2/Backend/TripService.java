@@ -49,7 +49,17 @@ public class TripService {
         addRiderToThis.setRiderId(r);
         addRiderToThis.setHasARider(true);
         tripRepository.save(addRiderToThis);
-        return  addRiderToThis;
+        return tripRepository.findById(tripId);
+    }
+
+    public Trip removeRiderFromTrip(int tripId, int riderId){
+        Trip removeRiderFromThis = tripRepository.findById(tripId);
+        removeRiderFromThis.removeRiderId(riderId);
+        if(removeRiderFromThis.getRiderId() == 0){
+            removeRiderFromThis.setHasARider(false);
+        }
+        tripRepository.save(removeRiderFromThis);
+        return tripRepository.findById(tripId);
     }
 
     public Trip editTripById(int tripId, int riderId, int driverId, Trip newTripInfo) {

@@ -52,6 +52,13 @@ public class TripController {
         return "Successfully added rider with id " + riderId + " to trip";
     }
 
+    @PutMapping("/removeRiderFromTrip")
+    String removeRiderFromTrip(@RequestParam int tripId,
+                               @RequestParam int riderId) {
+        tripService.removeRiderFromTrip(tripId, riderId);
+        return "Successfully removed rider with id " + riderId + " from trip";
+    }
+
         @PutMapping("/completeTrip")
     Trip completeTripById(
             @RequestParam int id) {
