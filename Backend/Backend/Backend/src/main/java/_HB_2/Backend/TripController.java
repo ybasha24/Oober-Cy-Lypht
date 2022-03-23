@@ -95,4 +95,11 @@ public class TripController {
         return tripService.getTripsForRider(scheduledStartDate,scheduledEndDate);
     }
 
+    @DeleteMapping("/deleteTripById")
+    void deleteTripById(
+            @RequestParam int id) {
+
+        tripService.deleteTripById(id);
+    }
+
 }

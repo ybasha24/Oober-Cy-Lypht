@@ -182,4 +182,8 @@ public class TripService {
         tripRepository.save(tripToBeCompleted);
         return tripRepository.findById(tripId);
     }
+
+    public void deleteTripById(int id) {
+        tripRepository.deleteById(id);
+    }
 }
