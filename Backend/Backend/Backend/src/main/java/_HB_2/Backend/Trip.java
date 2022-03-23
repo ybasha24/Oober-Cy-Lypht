@@ -34,18 +34,21 @@ public class Trip {
     @JoinColumn(name = "Rider_ID", nullable = true)
     User tripRider;
 
+    int numberOfRiders;
+
 
     //represent distances from driver start location
     //that the driver is willing to pick up/drop off a rider
     int radius;
 
+    //Empty Constructor
     public Trip() {
     }
 
     //Constructor with all attributes
 
 
-    public Trip(LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, LocalDateTime actualStartDate, LocalDateTime actualEndDate, boolean hasARider, boolean hasADriver, boolean isConfirmed, boolean hasStarted, boolean isCompleted, String originAddress, String destAddress, User tripDriver, User tripRider, int radius) {
+    public Trip(LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, LocalDateTime actualStartDate, LocalDateTime actualEndDate, boolean hasARider, boolean hasADriver, boolean isConfirmed, boolean hasStarted, boolean isCompleted, String originAddress, String destAddress, User tripDriver, User tripRider, int radius, int numberOfRiders) {
         this.scheduledStartDate = scheduledStartDate;
         this.scheduledEndDate = scheduledEndDate;
         this.actualStartDate = actualStartDate;
@@ -60,10 +63,11 @@ public class Trip {
         this.tripDriver = tripDriver;
         this.tripRider = tripRider;
         this.radius = radius;
+        this.numberOfRiders = numberOfRiders;
     }
 
     //create trip by Driver
-    public Trip(LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, boolean hasADriver, String originAddress, String destAddress, User tripDriver, int radius) {
+    public Trip(LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, boolean hasADriver, String originAddress, String destAddress, User tripDriver, int radius, int numberOfRiders) {
         this.scheduledStartDate = scheduledStartDate;
         this.scheduledEndDate = scheduledEndDate;
         this.hasADriver = hasADriver;
@@ -71,6 +75,7 @@ public class Trip {
         this.destAddress = destAddress;
         this.tripDriver = tripDriver;
         this.radius = radius;
+        this.numberOfRiders = numberOfRiders;
     }
 
     public int getRiderId() {

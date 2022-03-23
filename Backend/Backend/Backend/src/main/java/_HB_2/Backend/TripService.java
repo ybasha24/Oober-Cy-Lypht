@@ -32,7 +32,8 @@ public class TripService {
                         trip.originAddress,
                         trip.destAddress,
                         d,
-                        trip.radius);
+                        trip.radius,
+                        trip.numberOfRiders);
 
         tripRepository.save(t);
         return t;
