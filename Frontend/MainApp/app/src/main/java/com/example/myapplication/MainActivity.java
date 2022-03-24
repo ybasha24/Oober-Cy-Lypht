@@ -45,14 +45,6 @@ public class MainActivity extends AppCompatActivity {
                                     intent = new Intent(this, DriverHomePage.class);
                                 else if (!accountObj.isNull("arider") && accountObj.getBoolean("arider") == true)
                                     intent = new Intent(this, com.example.myapplication.rider.RiderHomePage.class);
-
-                                if(((CheckBox) findViewById(R.id.staySignedInCheckBox)).isChecked()){
-                                    SharedPreferences.Editor editor = getSharedPreferences("name", MODE_PRIVATE).edit();
-                                    editor.putString("email", email);
-                                    editor.putString("password", password);
-                                    editor.putBoolean("isLoggedIn", true);
-                                    editor.apply();
-                                }
                                 startActivity(intent);
                             }
                             else {
