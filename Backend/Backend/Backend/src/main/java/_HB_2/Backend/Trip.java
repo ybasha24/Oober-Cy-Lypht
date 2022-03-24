@@ -2,6 +2,8 @@ package _HB_2.Backend;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Trip {
@@ -31,8 +33,9 @@ public class Trip {
     User tripDriver;
 
     @ManyToOne
-    @JoinColumn(name = "Rider_ID", nullable = true)
-    User tripRider;
+    @JoinColumn(name = "TripRider_ID", nullable = true)
+//    User tripRider;
+    TripRiders tripRiders;
 
     int numberOfRiders;
 
@@ -48,7 +51,7 @@ public class Trip {
     //Constructor with all attributes
 
 
-    public Trip(LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, LocalDateTime actualStartDate, LocalDateTime actualEndDate, boolean hasARider, boolean hasADriver, boolean isConfirmed, boolean hasStarted, boolean isCompleted, String originAddress, String destAddress, User tripDriver, User tripRider, int radius, int numberOfRiders) {
+    public Trip(LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, LocalDateTime actualStartDate, LocalDateTime actualEndDate, boolean hasARider, boolean hasADriver, boolean isConfirmed, boolean hasStarted, boolean isCompleted, String originAddress, String destAddress, User tripDriver, List<Integer> riderIds, int radius, int numberOfRiders) {
         this.scheduledStartDate = scheduledStartDate;
         this.scheduledEndDate = scheduledEndDate;
         this.actualStartDate = actualStartDate;
@@ -61,7 +64,8 @@ public class Trip {
         this.originAddress = originAddress;
         this.destAddress = destAddress;
         this.tripDriver = tripDriver;
-        this.tripRider = tripRider;
+        //here we make a call to make a new tripRider
+        this.tripRiders = new TripRiders(numberOfRiders, riderIds);
         this.radius = radius;
         this.numberOfRiders = numberOfRiders;
     }
@@ -78,21 +82,27 @@ public class Trip {
         this.numberOfRiders = numberOfRiders;
     }
 
-    public int getRiderId() {
-        if(tripRider == null){
-            return 0;
+    public List<Integer> getRiderIds() {
+        List<Integer> riderIds = new ArrayList<>();
+
+        if(tripRiders == null) {
+            riderIds.add(0);
+            return riderIds;
         }
-        return tripRider.getId();
+
+        for (int i = 0; i < numberOfRiders; i++) {
+            List<Integer> riderIds = tripRiders.getRiderIds;
+            return riderIds;
+        }
     }
 
-    public void setRiderId(User newRider) {
-        tripRider = newRider;
+    public void addRiderId(int riderId) {
+        tripRiders.addRiderId(riderId);
     }
 
-    public void removeRiderId(int riderId){
-        if(tripRider.getId() == riderId){
-            tripRider = null;
-        }
+    public void removeRider(int riderId){
+        //Probably need to add try/catch to avoid trying to remove rider from trip that isn't a rider
+        tripRiders.removeRiderId(riderId);
     }
 
     public int getDriverId() {
