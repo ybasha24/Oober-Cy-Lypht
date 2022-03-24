@@ -3,7 +3,9 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.endpoints.endpoints;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.view.View;
 
@@ -24,7 +26,41 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
+
+        SharedPreferences prefs = getSharedPreferences("name", MODE_PRIVATE);
+        boolean isLoggedIn= prefs.getBoolean("isLoggedIn", false);
+
+        if(isLoggedIn){
+            String email = prefs.getString("email", "");
+            String password = prefs.getString("password", "");
+            String url = endpoints.LoginUrl + email + "&password=" + password;
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
+                    response -> {
+                        try {
+                            accountObj = response;
+                            Intent intent = null;
+                            if(!accountObj.isNull("firstName")){
+                                if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver") == true)
+                                    intent = new Intent(this, DriverHomePage.class);
+                                else if (!accountObj.isNull("arider") && accountObj.getBoolean("arider") == true)
+                                    intent = new Intent(this, com.example.myapplication.rider.RiderHomePage.class);
+                                startActivity(intent);
+                            }
+                            else {
+                                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Error processing" + url, Toast.LENGTH_LONG).show());
+                            }
+                        }
+                        catch(JSONException e){
+                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Exception: " + e, Toast.LENGTH_LONG).show());
+                        }
+                    },
+                    error ->  runOnUiThread(()->Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG).show()));
+            AppController.getInstance().addToRequestQueue(req, "post_object_tag");
+        }
+        else{
+            setContentView(R.layout.activity_main);
+        }
     }
 
     public void signIn(View view) {
@@ -32,27 +68,36 @@ public class MainActivity extends AppCompatActivity {
         String password = ((EditText) findViewById(R.id.passwordInput)).getText().toString();
         String url = endpoints.LoginUrl + email + "&password=" + password;
 
+
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
-                response -> {
-                    try {
-                        accountObj = response;
-                        Intent intent = null;
-                        if(!accountObj.isNull("firstName")){
-                            if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver") == true)
-                                intent = new Intent(this, DriverHomePage.class);
-                            else if (!accountObj.isNull("arider") && accountObj.getBoolean("arider") == true)
-                                intent = new Intent(this, com.example.myapplication.rider.RiderHomePage.class);
-                            startActivity(intent);
+            response -> {
+                try {
+                    accountObj = response;
+                    Intent intent = null;
+                    if(!accountObj.isNull("firstName")){
+                        if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver") == true)
+                            intent = new Intent(this, DriverHomePage.class);
+                        else if (!accountObj.isNull("arider") && accountObj.getBoolean("arider") == true)
+                            intent = new Intent(this, com.example.myapplication.rider.RiderHomePage.class);
+
+                        if(((CheckBox) findViewById(R.id.staySignedInCheckBox)).isChecked()){
+                            SharedPreferences.Editor editor = getSharedPreferences("name", MODE_PRIVATE).edit();
+                            editor.putString("email", email);
+                            editor.putString("password", password);
+                            editor.putBoolean("isLoggedIn", true);
+                            editor.apply();
                         }
-                        else {
-                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Error processing" + url, Toast.LENGTH_LONG).show());
-                        }
+                        startActivity(intent);
                     }
-                    catch(JSONException e){
-                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Exception: " + e, Toast.LENGTH_LONG).show());
+                    else {
+                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Error processing" + url, Toast.LENGTH_LONG).show());
                     }
-                },
-                error ->  runOnUiThread(()->Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG).show()));
+                }
+                catch(JSONException e){
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Exception: " + e, Toast.LENGTH_LONG).show());
+                }
+            },
+            error ->  runOnUiThread(()->Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG).show()));
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
     }
 
