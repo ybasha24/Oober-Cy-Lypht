@@ -12,15 +12,28 @@ import java.util.List;
 @Entity
 public class TripRiders {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private int id;
+
+    //would this be the join table class?
+    //that is why we would have two primary keys
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    Integer tripId;
+
+    @Id
+    Integer riderId;
 
     private int numberOfRiders;
 
-    @ManyToOne
-    @JoinColumn(name = "Rider_ID")
-    private Rider rider;
+//    can you represent a list in a database?
+//    @OneToMany
+//    @JoinColumn(name = "Rider_ID")
+//    private List<Rider> riders;
+
+    //do this in the trip service class
+//    @Autowired
+//    RiderRepository riderRepository;
 
 //    List<Integer> riderIds;
 
@@ -33,8 +46,8 @@ public class TripRiders {
 
         for (Integer riderId : listOfRiderIds) {
             RiderRepository riderRepository = null;
-            riderRepository.findById(riderId);
-//            riderIds.add(riderId);
+            Rider rider = riderRepository.findById(riderId);
+            riders.add(rider);
         }
     }
 
@@ -44,5 +57,16 @@ public class TripRiders {
 
     public void setNumberOfRiders(int numberOfRiders) {
         this.numberOfRiders = numberOfRiders;
+    }
+    
+    public List<Integer> getRiderIds() {
+        
+    }
+
+    public void addRiderId(int riderId) {
+        
+    }
+
+    public void removeRiderId(int riderId) {
     }
 }

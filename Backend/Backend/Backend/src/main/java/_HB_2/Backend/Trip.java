@@ -28,11 +28,12 @@ public class Trip {
 
     String destAddress;
 
+    //This is accurate
     @ManyToOne
     @JoinColumn(name = "Driver_ID")
     User tripDriver;
 
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name = "TripRider_ID", nullable = true)
 //    User tripRider;
     TripRiders tripRiders;
@@ -91,7 +92,7 @@ public class Trip {
         }
 
         for (int i = 0; i < numberOfRiders; i++) {
-            List<Integer> riderIds = tripRiders.getRiderIds;
+            riderIds = tripRiders.getRiderIds;
             return riderIds;
         }
     }
