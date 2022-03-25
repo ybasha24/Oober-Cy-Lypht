@@ -1,9 +1,13 @@
 package com.example.myapplication.admin;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 public class AdminHomePage extends AppCompatActivity {
 
@@ -11,5 +15,11 @@ public class AdminHomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_home_page);
+    }
+
+    public void signOut(View view) {
+        MainActivity.accountObj = null;
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
