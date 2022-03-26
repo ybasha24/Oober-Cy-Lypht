@@ -24,28 +24,42 @@ public class TripService {
         User d =  driverRepository.getById(Id);
         //uses trip constructor by driver
         //trip constructor by driver instantiates an empty set of riders
-        Trip t = new Trip(trip.scheduledStartDate,
-                        trip.scheduledEndDate,
-                        //has a rider
-                        false,
-                        //has a driver
-                        true,
-                        //isConfirmed
-                        false,
-                        //hasStarted
-                        false,
-                        //isCompleted
-                        false,
-                        trip.originAddress,
-                        trip.destAddress,
-                        d,
-                        trip.radius,
-                        trip.maxNumberOfRiders,
-                        //number of riders
-                        0);
+                //has a rider
+                trip.hasARider = false;
+                //has a driver
+                trip.hasADriver = true;
+                //isConfirmed
+                trip.isConfirmed = false;
+                //hasStarted
+                trip.hasStarted = false;
+                //isCompleted
+                trip.isCompleted = false;
+                trip.tripDriver = d;
+                //number of riders
+                trip.numberOfRiders = 0;
+                trip.setRiders(new HashSet<>());
+//        Trip t = new Trip(trip.scheduledStartDate,
+//                        trip.scheduledEndDate,
+//                        //has a rider
+//                        false,
+//                        //has a driver
+//                        true,
+//                        //isConfirmed
+//                        false,
+//                        //hasStarted
+//                        false,
+//                        //isCompleted
+//                        false,
+//                        trip.originAddress,
+//                        trip.destAddress,
+//                        d,
+//                        trip.radius,
+//                        trip.maxNumberOfRiders,
+//                        //number of riders
+//                        0);
 
-        tripRepository.save(t);
-        return t;
+        tripRepository.save(trip);
+        return trip;
     }
 
     public Trip getTripById(int id) {
@@ -100,7 +114,7 @@ public class TripService {
 
         newTrip.hasADriver = newTripInfo.hasADriver;
         if (newTripInfo.hasADriver) {
-            newTrip.setDriverId(newTripInfo.tripDriver);
+            newTrip.setTripDriver(newTripInfo.tripDriver);
         }
 
         newTrip.isConfirmed = newTripInfo.isConfirmed;

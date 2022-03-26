@@ -23,7 +23,7 @@ public class RiderService {
         return riderRepository.findByEmail(email);
     }
 
-    public User getRiderbyId(int id) {
+    public User getRiderById(int id) {
         return riderRepository.findById(id);
     }
 

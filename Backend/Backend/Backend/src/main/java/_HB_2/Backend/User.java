@@ -1,6 +1,7 @@
 package _HB_2.Backend;
 
 import javax.persistence.*;
+import java.util.Set;
 //import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 //import com.fasterxml.jackson.annotation.JsonSubTypes;
 //import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -42,6 +43,9 @@ public class User {
     Boolean isADriver;
     Boolean isARider;
     Boolean isAnAdmin;
+
+    @ManyToMany(mappedBy = "riders")
+    Set<Trip> trips;
 
     //no Boolean Values for User-These should be set in the subclass constructors
     public User(String firstName,
@@ -136,9 +140,13 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getPassword() {return password;}
+    public String getPassword() {
+        return password;
+    }
 
-    public void setPassword(String password) {this.password = password;}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Boolean getADriver() {
         return isADriver;
@@ -162,5 +170,13 @@ public class User {
 
     public void setAnAdmin(Boolean anAdmin) {
         isAnAdmin = anAdmin;
+    }
+
+    public Set<Trip> getTrips() {
+        return trips;
+    }
+
+    public void setTrips(Set<Trip> trips) {
+        this.trips = trips;
     }
 }

@@ -1,6 +1,6 @@
 package _HB_2.Backend;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,19 +29,21 @@ public class Trip {
 
     String destAddress;
 
-    //This is accurate
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "Driver_ID")
     User tripDriver;
 
+    @JsonIgnore
     @ManyToMany
-    @JoinTable(name = "Trip_Riders", joinColumns = @JoinColumn(name = "Driver_ID"), inverseJoinColumns = @JoinColumn(name = "Id"))
+    @JoinTable(name = "Trip_Riders",
+                joinColumns = @JoinColumn(name = "trip_id"),
+                inverseJoinColumns = @JoinColumn(name = "rider_id"))
     private Set<User> riders;
 
     int maxNumberOfRiders;
 
     int numberOfRiders;
-
 
     //represent distances from driver start location
     //that the driver is willing to pick up/drop off a rider
@@ -51,44 +53,11 @@ public class Trip {
     public Trip() {
     }
 
-    //NEED TO ADJUST CONSTRUCTORS for maxNumberOfRiders and numberOfRiders
-
-//    //Constructor with all attributes
-//    public Trip(LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, LocalDateTime actualStartDate, LocalDateTime actualEndDate, boolean hasARider, boolean hasADriver, boolean isConfirmed, boolean hasStarted, boolean isCompleted, String originAddress, String destAddress, User tripDriver, Set<User> riders, int radius, int numberOfRiders) {
-//        this.scheduledStartDate = scheduledStartDate;
-//        this.scheduledEndDate = scheduledEndDate;
-//        this.actualStartDate = actualStartDate;
-//        this.actualEndDate = actualEndDate;
-//        this.hasARider = hasARider;
-//        this.hasADriver = hasADriver;
-//        this.isConfirmed = isConfirmed;
-//        this.hasStarted = hasStarted;
-//        this.isCompleted = isCompleted;
-//        this.originAddress = originAddress;
-//        this.destAddress = destAddress;
-//        this.tripDriver = tripDriver;
-//        this.riders = riders;
-//        this.radius = radius;
-//        this.numberOfRiders = numberOfRiders;
-//    }
-
-    //create trip by Driver
-    public Trip(LocalDateTime scheduledStartDate,
-                LocalDateTime scheduledEndDate,
-                boolean hasARider,
-                boolean hasADriver,
-                boolean isConfirmed,
-                boolean hasStarted,
-                boolean isCompleted,
-                String originAddress,
-                String destAddress,
-                User tripDriver,
-                int radius,
-                int maxNumberOfRiders,
-                int numberOfRiders) {
-
+    public Trip(LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, LocalDateTime actualStartDate, LocalDateTime actualEndDate, boolean hasARider, boolean hasADriver, boolean isConfirmed, boolean hasStarted, boolean isCompleted, String originAddress, String destAddress, User tripDriver, Set<User> riders, int maxNumberOfRiders, int numberOfRiders, int radius) {
         this.scheduledStartDate = scheduledStartDate;
         this.scheduledEndDate = scheduledEndDate;
+        this.actualStartDate = actualStartDate;
+        this.actualEndDate = actualEndDate;
         this.hasARider = hasARider;
         this.hasADriver = hasADriver;
         this.isConfirmed = isConfirmed;
@@ -97,12 +66,43 @@ public class Trip {
         this.originAddress = originAddress;
         this.destAddress = destAddress;
         this.tripDriver = tripDriver;
-        this.radius = radius;
-        //we won't set any riders but need to instatiate the set
-        this.riders = new HashSet<User>();
+        this.riders = riders;
         this.maxNumberOfRiders = maxNumberOfRiders;
         this.numberOfRiders = numberOfRiders;
+        this.radius = radius;
     }
+
+//    //create trip by Driver
+//    public Trip(LocalDateTime scheduledStartDate,
+//                LocalDateTime scheduledEndDate,
+//                boolean hasARider,
+//                boolean hasADriver,
+//                boolean isConfirmed,
+//                boolean hasStarted,
+//                boolean isCompleted,
+//                String originAddress,
+//                String destAddress,
+//                User tripDriver,
+//                int radius,
+//                int maxNumberOfRiders,
+//                int numberOfRiders) {
+//
+//        this.scheduledStartDate = scheduledStartDate;
+//        this.scheduledEndDate = scheduledEndDate;
+//        this.hasARider = hasARider;
+//        this.hasADriver = hasADriver;
+//        this.isConfirmed = isConfirmed;
+//        this.hasStarted = hasStarted;
+//        this.isCompleted = isCompleted;
+//        this.originAddress = originAddress;
+//        this.destAddress = destAddress;
+//        this.tripDriver = tripDriver;
+//        this.radius = radius;
+//        //we won't set any riders but need to instatiate the set
+//        this.riders = new HashSet<User>();
+//        this.maxNumberOfRiders = maxNumberOfRiders;
+//        this.numberOfRiders = numberOfRiders;
+//    }
 
     public List<Integer> getRiderIds() {
         List<Integer> riderIds = new ArrayList<>();
@@ -116,9 +116,11 @@ public class Trip {
 
     public void addRiderById(int riderId) {
         //This might need to throw an error
+            //check to see if the rider/user isARider
+            //what if we don't have room for the rider?
         if (numberOfRiders < maxNumberOfRiders) {
-            User user = new UserService().getUserById(riderId);
-            riders.add(user);
+
+            riders.add(RiderService.getRiderById(riderId););
             numberOfRiders++;
             hasARider = true;
         }
@@ -136,29 +138,39 @@ public class Trip {
 
     }
 
-    public int getDriverId() {
-        return tripDriver.getId();
+    public int getId() {return id;}
+
+    public LocalDateTime getScheduledStartDate() {
+        return scheduledStartDate;
     }
 
-    public void setDriverId(User newDriver) {
-        tripDriver = newDriver;
+    public void setScheduledStartDate(LocalDateTime scheduledStartDate) {
+        this.scheduledStartDate = scheduledStartDate;
     }
 
-    public LocalDateTime getScheduledStartDate() {return scheduledStartDate;}
+    public LocalDateTime getScheduledEndDate() {
+        return scheduledEndDate;
+    }
 
-    public void setScheduledStartDate(LocalDateTime scheduledStartDate) {this.scheduledStartDate = scheduledStartDate;}
+    public void setScheduledEndDate(LocalDateTime scheduledEndDate) {
+        this.scheduledEndDate = scheduledEndDate;
+    }
 
-    public LocalDateTime getScheduledEndDate() {return scheduledEndDate;}
+    public LocalDateTime getActualStartDate() {
+        return actualStartDate;
+    }
 
-    public void setScheduledEndDate(LocalDateTime scheduledEndDate) {this.scheduledEndDate = scheduledEndDate;}
+    public void setActualStartDate(LocalDateTime actualStartDate) {
+        this.actualStartDate = actualStartDate;
+    }
 
-    public LocalDateTime getActualStartDate() {return actualStartDate;}
+    public LocalDateTime getActualEndDate() {
+        return actualEndDate;
+    }
 
-    public void setActualStartDate(LocalDateTime actualStartDate) {this.actualStartDate = actualStartDate;}
-
-    public LocalDateTime getActualEndDate() {return actualEndDate;}
-
-    public void setActualEndDate(LocalDateTime actualEndDate) {this.actualEndDate = actualEndDate;}
+    public void setActualEndDate(LocalDateTime actualEndDate) {
+        this.actualEndDate = actualEndDate;
+    }
 
     public boolean isHasARider() {
         return hasARider;
@@ -200,17 +212,53 @@ public class Trip {
         isCompleted = completed;
     }
 
-    public int getId() {return id;}
+    public String getOriginAddress() {
+        return originAddress;
+    }
 
-    public void setId(int id) {this.id = id;}
+    public void setOriginAddress(String originAddress) {
+        this.originAddress = originAddress;
+    }
 
-    public String getOriginAddress() {return originAddress;}
+    public String getDestAddress() {
+        return destAddress;
+    }
 
-    public void setOriginAddress(String originAddress) {this.originAddress = originAddress;}
+    public void setDestAddress(String destAddress) {
+        this.destAddress = destAddress;
+    }
 
-    public String getDestAddress() {return destAddress;}
+    public User getTripDriver() {
+        return tripDriver;
+    }
 
-    public void setDestAddress(String destAddress) {this.destAddress = destAddress;}
+    public void setTripDriver(User tripDriver) {
+        this.tripDriver = tripDriver;
+    }
+
+    public Set<User> getRiders() {
+        return riders;
+    }
+
+    public void setRiders(Set<User> riders) {
+        this.riders = riders;
+    }
+
+    public int getMaxNumberOfRiders() {
+        return maxNumberOfRiders;
+    }
+
+    public void setMaxNumberOfRiders(int maxNumberOfRiders) {
+        this.maxNumberOfRiders = maxNumberOfRiders;
+    }
+
+    public int getNumberOfRiders() {
+        return numberOfRiders;
+    }
+
+    public void setNumberOfRiders(int numberOfRiders) {
+        this.numberOfRiders = numberOfRiders;
+    }
 
     public int getRadius() {
         return radius;
