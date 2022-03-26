@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Trip {
@@ -36,17 +34,9 @@ public class Trip {
     @JoinColumn(name = "Driver_ID")
     User tripDriver;
 
-//    Student class
-//    @ManyToMany
-//    @JoinTable(name = "course_like", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
-//    private Set<Course> likedCourses;
-
-    //Look at tutorial example and
     @ManyToMany
     @JoinTable(name = "Trip_Riders", joinColumns = @JoinColumn(name = "Driver_ID"), inverseJoinColumns = @JoinColumn(name = "Id"))
     private Set<User> riders;
-//    User tripRider;
-//    TripRiders tripRiders;
 
     int maxNumberOfRiders;
 
@@ -56,9 +46,6 @@ public class Trip {
     //represent distances from driver start location
     //that the driver is willing to pick up/drop off a rider
     int radius;
-
-//    @Autowired
-//    UserService userService;
 
     //Empty Constructor
     public Trip() {
@@ -111,7 +98,8 @@ public class Trip {
         this.destAddress = destAddress;
         this.tripDriver = tripDriver;
         this.radius = radius;
-        //we won't set any riders
+        //we won't set any riders but need to instatiate the set
+        this.riders = new HashSet<User>();
         this.maxNumberOfRiders = maxNumberOfRiders;
         this.numberOfRiders = numberOfRiders;
     }
@@ -127,6 +115,7 @@ public class Trip {
     }
 
     public void addRiderById(int riderId) {
+        //This might need to throw an error
         if (numberOfRiders < maxNumberOfRiders) {
             User user = new UserService().getUserById(riderId);
             riders.add(user);
@@ -136,7 +125,7 @@ public class Trip {
     }
 
     public void removeRiderById(int riderId){
-        //Probably need to add try/catch to avoid trying to remove rider from trip that isn't a rider
+        //Probably need to add try/catch to avoid trying to remove rider from trip that doesn't have a rider
         User user = new UserService().getUserById(riderId);
         riders.remove(user);
         numberOfRiders--;

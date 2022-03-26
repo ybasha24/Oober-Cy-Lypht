@@ -23,6 +23,7 @@ public class TripService {
 
         User d =  driverRepository.getById(Id);
         //uses trip constructor by driver
+        //trip constructor by driver instantiates an empty set of riders
         Trip t = new Trip(trip.scheduledStartDate,
                         trip.scheduledEndDate,
                         //has a rider
@@ -56,8 +57,6 @@ public class TripService {
         //need to do a try/catch here
             //what if we try to add a rider but the trip is already full???
         Trip addRiderToThis = tripRepository.findById(tripId);
-//        User r = driverRepository.getById(riderId);
-//        addRiderToThis.add;
         addRiderToThis.addRiderById(riderId);
         addRiderToThis.setHasARider(true);
         tripRepository.save(addRiderToThis);
