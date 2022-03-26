@@ -25,13 +25,23 @@ public class TripService {
         //uses trip constructor by driver
         Trip t = new Trip(trip.scheduledStartDate,
                         trip.scheduledEndDate,
+                        //has a rider
+                        false,
                         //has a driver
                         true,
+                        //isConfirmed
+                        false,
+                        //hasStarted
+                        false,
+                        //isCompleted
+                        false,
                         trip.originAddress,
                         trip.destAddress,
                         d,
                         trip.radius,
-                        trip.numberOfRiders);
+                        trip.maxNumberOfRiders,
+                        //number of riders
+                        0);
 
         tripRepository.save(t);
         return t;
@@ -64,7 +74,7 @@ public class TripService {
         return tripRepository.findById(tripId);
     }
 
-    public Trip editTripById(int tripId, int riderId, int driverId, Trip newTripInfo) {
+    public Trip editTripById(int tripId, Trip newTripInfo) {
 
         Trip newTrip = tripRepository.findById(tripId);
 
@@ -74,22 +84,26 @@ public class TripService {
         newTrip.setActualStartDate(newTripInfo.actualStartDate);
         newTrip.setActualEndDate(newTripInfo.actualEndDate);
 
-        //number numberOfRiders
-        newTrip.numberOfRiders = newTripInfo.numberOfRiders;
+        //need to adjust maxNumberOfRiders before we adjust the riders
+        newTrip.maxNumberOfRiders = newTripInfo.maxNumberOfRiders;
 
+        //Set the numberOfRiders to 0
+        //the addRiderById funtion in the trip class will increment as we add riders below
+        newTrip.numberOfRiders = 0;
+
+        newTrip.hasARider = newTripInfo.hasARider;
         if (newTripInfo.hasARider) {
-            //add the new riders
             List<Integer> newriderIds =  newTripInfo.getRiderIds();
             for ( Integer riderIds : newriderIds) {
                 newTrip.addRiderById(riderIds);
             }
         }
-        newTrip.hasARider = newTripInfo.hasARider;
 
+        newTrip.hasADriver = newTripInfo.hasADriver;
         if (newTripInfo.hasADriver) {
             newTrip.setDriverId(newTripInfo.tripDriver);
         }
-        newTrip.hasADriver = newTripInfo.hasADriver;
+
         newTrip.isConfirmed = newTripInfo.isConfirmed;
         newTrip.hasStarted = newTripInfo.hasStarted;
         newTrip.isCompleted = newTripInfo.isCompleted;

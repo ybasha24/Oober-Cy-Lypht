@@ -66,12 +66,42 @@ public class Trip {
 
     //NEED TO ADJUST CONSTRUCTORS for maxNumberOfRiders and numberOfRiders
 
-    //Constructor with all attributes
-    public Trip(LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, LocalDateTime actualStartDate, LocalDateTime actualEndDate, boolean hasARider, boolean hasADriver, boolean isConfirmed, boolean hasStarted, boolean isCompleted, String originAddress, String destAddress, User tripDriver, Set<User> riders, int radius, int numberOfRiders) {
+//    //Constructor with all attributes
+//    public Trip(LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, LocalDateTime actualStartDate, LocalDateTime actualEndDate, boolean hasARider, boolean hasADriver, boolean isConfirmed, boolean hasStarted, boolean isCompleted, String originAddress, String destAddress, User tripDriver, Set<User> riders, int radius, int numberOfRiders) {
+//        this.scheduledStartDate = scheduledStartDate;
+//        this.scheduledEndDate = scheduledEndDate;
+//        this.actualStartDate = actualStartDate;
+//        this.actualEndDate = actualEndDate;
+//        this.hasARider = hasARider;
+//        this.hasADriver = hasADriver;
+//        this.isConfirmed = isConfirmed;
+//        this.hasStarted = hasStarted;
+//        this.isCompleted = isCompleted;
+//        this.originAddress = originAddress;
+//        this.destAddress = destAddress;
+//        this.tripDriver = tripDriver;
+//        this.riders = riders;
+//        this.radius = radius;
+//        this.numberOfRiders = numberOfRiders;
+//    }
+
+    //create trip by Driver
+    public Trip(LocalDateTime scheduledStartDate,
+                LocalDateTime scheduledEndDate,
+                boolean hasARider,
+                boolean hasADriver,
+                boolean isConfirmed,
+                boolean hasStarted,
+                boolean isCompleted,
+                String originAddress,
+                String destAddress,
+                User tripDriver,
+                int radius,
+                int maxNumberOfRiders,
+                int numberOfRiders) {
+
         this.scheduledStartDate = scheduledStartDate;
         this.scheduledEndDate = scheduledEndDate;
-        this.actualStartDate = actualStartDate;
-        this.actualEndDate = actualEndDate;
         this.hasARider = hasARider;
         this.hasADriver = hasADriver;
         this.isConfirmed = isConfirmed;
@@ -80,20 +110,9 @@ public class Trip {
         this.originAddress = originAddress;
         this.destAddress = destAddress;
         this.tripDriver = tripDriver;
-        this.riders = riders;
         this.radius = radius;
-        this.numberOfRiders = numberOfRiders;
-    }
-
-    //create trip by Driver
-    public Trip(LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, boolean hasADriver, String originAddress, String destAddress, User tripDriver, int radius, int numberOfRiders) {
-        this.scheduledStartDate = scheduledStartDate;
-        this.scheduledEndDate = scheduledEndDate;
-        this.hasADriver = hasADriver;
-        this.originAddress = originAddress;
-        this.destAddress = destAddress;
-        this.tripDriver = tripDriver;
-        this.radius = radius;
+        //we won't set any riders
+        this.maxNumberOfRiders = maxNumberOfRiders;
         this.numberOfRiders = numberOfRiders;
     }
 
