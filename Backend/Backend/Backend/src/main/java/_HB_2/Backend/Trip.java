@@ -1,9 +1,12 @@
 package _HB_2.Backend;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Trip {
@@ -33,10 +36,19 @@ public class Trip {
     @JoinColumn(name = "Driver_ID")
     User tripDriver;
 
-    @OneToMany
-    @JoinColumn(name = "TripRider_ID", nullable = true)
+//    Student class
+//    @ManyToMany
+//    @JoinTable(name = "course_like", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
+//    private Set<Course> likedCourses;
+
+    //Look at tutorial example and
+    @ManyToMany
+    @JoinTable(name = "Trip_Riders", joinColumns = @JoinColumn(name = "Driver_ID"), inverseJoinColumns = @JoinColumn(name = "Id"))
+    private Set<User> riders;
 //    User tripRider;
-    TripRiders tripRiders;
+//    TripRiders tripRiders;
+
+    int maxNumberOfRiders;
 
     int numberOfRiders;
 
@@ -45,14 +57,17 @@ public class Trip {
     //that the driver is willing to pick up/drop off a rider
     int radius;
 
+//    @Autowired
+//    UserService userService;
+
     //Empty Constructor
     public Trip() {
     }
 
+    //NEED TO ADJUST CONSTRUCTORS for maxNumberOfRiders and numberOfRiders
+
     //Constructor with all attributes
-
-
-    public Trip(LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, LocalDateTime actualStartDate, LocalDateTime actualEndDate, boolean hasARider, boolean hasADriver, boolean isConfirmed, boolean hasStarted, boolean isCompleted, String originAddress, String destAddress, User tripDriver, List<Integer> riderIds, int radius, int numberOfRiders) {
+    public Trip(LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, LocalDateTime actualStartDate, LocalDateTime actualEndDate, boolean hasARider, boolean hasADriver, boolean isConfirmed, boolean hasStarted, boolean isCompleted, String originAddress, String destAddress, User tripDriver, Set<User> riders, int radius, int numberOfRiders) {
         this.scheduledStartDate = scheduledStartDate;
         this.scheduledEndDate = scheduledEndDate;
         this.actualStartDate = actualStartDate;
@@ -65,8 +80,7 @@ public class Trip {
         this.originAddress = originAddress;
         this.destAddress = destAddress;
         this.tripDriver = tripDriver;
-        //here we make a call to make a new tripRider
-        this.tripRiders = new TripRiders(numberOfRiders, riderIds);
+        this.riders = riders;
         this.radius = radius;
         this.numberOfRiders = numberOfRiders;
     }
@@ -86,24 +100,32 @@ public class Trip {
     public List<Integer> getRiderIds() {
         List<Integer> riderIds = new ArrayList<>();
 
-        if(tripRiders == null) {
-            riderIds.add(0);
-            return riderIds;
+        for (User user : riders ) {
+            riderIds.add(user.getId());
         }
 
-        for (int i = 0; i < numberOfRiders; i++) {
-            riderIds = tripRiders.getRiderIds;
-            return riderIds;
+        return riderIds;
+    }
+
+    public void addRiderById(int riderId) {
+        if (numberOfRiders < maxNumberOfRiders) {
+            User user = new UserService().getUserById(riderId);
+            riders.add(user);
+            numberOfRiders++;
+            hasARider = true;
         }
     }
 
-    public void addRiderId(int riderId) {
-        tripRiders.addRiderId(riderId);
-    }
-
-    public void removeRider(int riderId){
+    public void removeRiderById(int riderId){
         //Probably need to add try/catch to avoid trying to remove rider from trip that isn't a rider
-        tripRiders.removeRiderId(riderId);
+        User user = new UserService().getUserById(riderId);
+        riders.remove(user);
+        numberOfRiders--;
+
+        if (numberOfRiders == 0) {
+            hasARider = false;
+        }
+
     }
 
     public int getDriverId() {

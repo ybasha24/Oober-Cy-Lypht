@@ -19,6 +19,7 @@ public class TripController {
     @Autowired
     private TripRepository tripRepository;
 
+    //there will be no riders in the initial creation of the trip
     @PostMapping("/createTripByDriver")
     Trip createTripByDriver(
             @RequestParam int driverId,
@@ -46,17 +47,17 @@ public class TripController {
     }
 
     @PutMapping("/addRiderToTrip")
-    String addRiderToTrip(@RequestParam int tripId,
+    Trip addRiderToTrip(@RequestParam int tripId,
                           @RequestParam int riderId) {
-        tripService.addRiderToTrip(tripId, riderId);
-        return "Successfully added rider with id " + riderId + " to trip";
+        return tripService.addRiderToTripById(tripId, riderId);
+//        return "Successfully added rider with id " + riderId + " to trip";
     }
 
     @PutMapping("/removeRiderFromTrip")
-    String removeRiderFromTrip(@RequestParam int tripId,
+    Trip removeRiderFromTripById(@RequestParam int tripId,
                                @RequestParam int riderId) {
-        tripService.removeRiderFromTrip(tripId, riderId);
-        return "Successfully removed rider with id " + riderId + " from trip";
+        return tripService.removeRiderFromTripById(tripId, riderId);
+//        return "Successfully removed rider with id " + riderId + " from trip";
     }
 
         @PutMapping("/completeTrip")
