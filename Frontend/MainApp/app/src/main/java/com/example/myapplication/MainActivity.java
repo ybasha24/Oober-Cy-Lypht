@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.myapplication.admin.AdminHomePage;
 import com.example.myapplication.endpoints.endpoints;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import org.json.JSONObject;
 
 import com.example.myapplication.app.AppController;
 import com.example.myapplication.driver.DriverHomePage;
+import com.example.myapplication.rider.RiderHomePage;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -38,10 +41,12 @@ public class MainActivity extends AppCompatActivity {
                         accountObj = response;
                         Intent intent = null;
                         if(!accountObj.isNull("firstName")){
-                            if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver") == true)
+                            if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver") && !accountObj.getBoolean("anAdmin"))
                                 intent = new Intent(this, DriverHomePage.class);
-                            else if (!accountObj.isNull("arider") && accountObj.getBoolean("arider") == true)
-                                intent = new Intent(this, com.example.myapplication.rider.RiderHomePage.class);
+                            else if (!accountObj.isNull("arider") && accountObj.getBoolean("arider") && !accountObj.getBoolean("anAdmin"))
+                                intent = new Intent(this, RiderHomePage.class);
+                            else if (accountObj.getBoolean("anAdmin"))
+                                intent = new Intent(this, AdminHomePage.class);
                             startActivity(intent);
                         }
                         else {
