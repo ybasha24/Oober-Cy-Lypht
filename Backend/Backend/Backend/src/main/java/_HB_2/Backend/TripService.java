@@ -18,9 +18,6 @@ public class TripService {
     @Autowired
     RiderRepository riderRepository;
 
-    @Autowired
-    UserRepository userRepository;
-
     //there should be no riders in the trip initially
     public Trip createTripByDriver(int Id, Trip trip) {
 
@@ -55,10 +52,8 @@ public class TripService {
 
     public Trip removeRiderFromTripById(int tripId, int riderId){
         Trip removeRiderFromThis = tripRepository.findById(tripId);
-        removeRiderFromThis.removeRiderById(riderId);
-        if(removeRiderFromThis.numberOfRiders == 0){
-            removeRiderFromThis.setHasARider(false);
-        }
+        User rider = riderRepository.findById(riderId);
+        removeRiderFromThis.removeRiderById(rider);
         tripRepository.save(removeRiderFromThis);
         return tripRepository.findById(tripId);
     }
@@ -82,10 +77,9 @@ public class TripService {
 
         newTrip.hasARider = newTripInfo.hasARider;
         if (newTripInfo.hasARider) {
-            List<Integer> newriderIds =  newTripInfo.getRiderIds();
-            for ( Integer riderId : newriderIds) {
-                Rider rider = riderRepository.findById(riderId);
-                newTrip.addRider(rider);
+            Set<User> newRiders = newTripInfo.getRiders();
+            for (User newRider : newRiders) {
+                newTripInfo.addRider(newRider);
             }
         }
 

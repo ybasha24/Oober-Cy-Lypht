@@ -29,6 +29,11 @@ public class Trip {
 
     String destAddress;
 
+    /*
+    Please Do Not remove these @JosonIgnore annotations without checking with Matt first.
+    These might need to be relocated in the future
+    Prevents infinite loop in JSON objects returned.
+     */
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "Driver_ID")
@@ -53,57 +58,6 @@ public class Trip {
     public Trip() {
     }
 
-    public Trip(LocalDateTime scheduledStartDate, LocalDateTime scheduledEndDate, LocalDateTime actualStartDate, LocalDateTime actualEndDate, boolean hasARider, boolean hasADriver, boolean isConfirmed, boolean hasStarted, boolean isCompleted, String originAddress, String destAddress, User tripDriver, Set<User> riders, int maxNumberOfRiders, int numberOfRiders, int radius) {
-        this.scheduledStartDate = scheduledStartDate;
-        this.scheduledEndDate = scheduledEndDate;
-        this.actualStartDate = actualStartDate;
-        this.actualEndDate = actualEndDate;
-        this.hasARider = hasARider;
-        this.hasADriver = hasADriver;
-        this.isConfirmed = isConfirmed;
-        this.hasStarted = hasStarted;
-        this.isCompleted = isCompleted;
-        this.originAddress = originAddress;
-        this.destAddress = destAddress;
-        this.tripDriver = tripDriver;
-        this.riders = riders;
-        this.maxNumberOfRiders = maxNumberOfRiders;
-        this.numberOfRiders = numberOfRiders;
-        this.radius = radius;
-    }
-
-//    //create trip by Driver
-//    public Trip(LocalDateTime scheduledStartDate,
-//                LocalDateTime scheduledEndDate,
-//                boolean hasARider,
-//                boolean hasADriver,
-//                boolean isConfirmed,
-//                boolean hasStarted,
-//                boolean isCompleted,
-//                String originAddress,
-//                String destAddress,
-//                User tripDriver,
-//                int radius,
-//                int maxNumberOfRiders,
-//                int numberOfRiders) {
-//
-//        this.scheduledStartDate = scheduledStartDate;
-//        this.scheduledEndDate = scheduledEndDate;
-//        this.hasARider = hasARider;
-//        this.hasADriver = hasADriver;
-//        this.isConfirmed = isConfirmed;
-//        this.hasStarted = hasStarted;
-//        this.isCompleted = isCompleted;
-//        this.originAddress = originAddress;
-//        this.destAddress = destAddress;
-//        this.tripDriver = tripDriver;
-//        this.radius = radius;
-//        //we won't set any riders but need to instatiate the set
-//        this.riders = new HashSet<User>();
-//        this.maxNumberOfRiders = maxNumberOfRiders;
-//        this.numberOfRiders = numberOfRiders;
-//    }
-
     public List<Integer> getRiderIds() {
         List<Integer> riderIds = new ArrayList<>();
 
@@ -119,17 +73,15 @@ public class Trip {
             //check to see if the rider/user isARider
             //what if we don't have room for the rider?
         if (numberOfRiders < maxNumberOfRiders) {
-
             riders.add(rider);
             numberOfRiders++;
             hasARider = true;
         }
     }
 
-    public void removeRiderById(int riderId){
+    public void removeRiderById(User rider){
         //Probably need to add try/catch to avoid trying to remove rider from trip that doesn't have a rider
-        User user = new UserService().getUserById(riderId);
-        riders.remove(user);
+        riders.remove(rider);
         numberOfRiders--;
 
         if (numberOfRiders == 0) {

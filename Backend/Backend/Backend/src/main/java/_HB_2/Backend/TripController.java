@@ -39,8 +39,6 @@ public class TripController {
     @PutMapping("/editTrip")
     Trip getTripById(
             @RequestParam int tripId,
-//            @RequestParam int riderId,
-//            @RequestParam int driverId,
             @RequestBody Trip t) {
         return tripService.editTripById(tripId, t);
     }
@@ -57,7 +55,7 @@ public class TripController {
         return tripService.removeRiderFromTripById(tripId, riderId);
     }
 
-        @PutMapping("/completeTrip")
+    @PutMapping("/completeTrip")
     Trip completeTripById(
             @RequestParam int id) {
         return tripService.completeTripById(id);
