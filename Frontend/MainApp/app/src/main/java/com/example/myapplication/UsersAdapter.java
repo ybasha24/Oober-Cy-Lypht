@@ -73,6 +73,19 @@ public class UsersAdapter extends BaseAdapter implements ListAdapter {
         }
         catch(Exception e){}
 
+        Button editUserButton = view.findViewById(R.id.editUserButton);
+
+        editUserButton.setOnClickListener(v -> {
+            try {
+//                JSONObject prev = MainActivity.accountObj;
+                MainActivity.accountObj = list.getJSONObject(position);
+                Intent i = new Intent(this.context, ProfileSettings.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                this.context.startActivity(i);
+//                MainActivity.accountObj = prev;
+            } catch(Exception e) {}
+        });
+
         return view;
     }
 }
