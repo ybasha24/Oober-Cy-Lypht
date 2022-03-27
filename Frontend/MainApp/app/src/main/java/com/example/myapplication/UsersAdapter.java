@@ -10,9 +10,14 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.example.myapplication.app.AppController;
 import com.example.myapplication.createride.SelectRideTime;
 
 import org.json.JSONArray;
@@ -77,13 +82,24 @@ public class UsersAdapter extends BaseAdapter implements ListAdapter {
 
         editUserButton.setOnClickListener(v -> {
             try {
-//                JSONObject prev = MainActivity.accountObj;
                 MainActivity.accountObj = list.getJSONObject(position);
                 Intent i = new Intent(this.context, ProfileSettings.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 this.context.startActivity(i);
-//                MainActivity.accountObj = prev;
             } catch(Exception e) {}
+        });
+
+        Button deleteUserButton = view.findViewById(R.id.deleteUserButton);
+        deleteUserButton.setOnClickListener(v -> {
+            try {
+                JSONObject json = list.getJSONObject(position);
+                int id = json.getInt("id");
+                String url = "http://coms-309-030.class.las.iastate.edu:8080/user/deleteUser" + "?id=" + id;
+                StringRequest req = new StringRequest(Request.Method.DELETE, url,
+                        response -> Log.e("Delete user", response),
+                        error -> Toast.makeText(context, "Error: " + error, Toast.LENGTH_LONG));
+                AppController.getInstance().addToRequestQueue(req, "post_object_tag");
+            } catch(Exception e){}
         });
 
         return view;
