@@ -17,6 +17,12 @@ public class AdminHomePage extends AppCompatActivity {
         setContentView(R.layout.activity_admin_home_page);
     }
 
+    public void manageUsers(View view){
+        Intent intent = new Intent(this, UsersList.class);
+        startActivity(intent);
+
+    }
+
     public void signOut(View view) {
         MainActivity.accountObj = null;
         Intent intent = new Intent(this, MainActivity.class);

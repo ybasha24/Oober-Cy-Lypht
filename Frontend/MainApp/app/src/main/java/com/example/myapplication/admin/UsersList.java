@@ -19,7 +19,7 @@ import org.json.JSONArray;
 public class UsersList extends AppCompatActivity {
 
     ListView listView;
-    JSONArray tripsList;
+    JSONArray usersList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -31,8 +31,8 @@ public class UsersList extends AppCompatActivity {
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
                 response -> {
                     Log.e("Trips error", response.toString());
-                    tripsList = response;
-                    listView.setAdapter(new UsersAdapter(tripsList, getApplicationContext()) );
+                    usersList = response;
+                    listView.setAdapter(new UsersAdapter(usersList, getApplicationContext()) );
                 },
                 error -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG));
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");

@@ -24,6 +24,16 @@ public class UsersAdapter extends BaseAdapter implements ListAdapter {
     private Context context;
 
     public UsersAdapter(JSONArray list, Context context) {
+        for(int i = 0; i < list.length(); i++){
+            try {
+                JSONObject user = list.getJSONObject(i);
+                try {
+                    if (user.getBoolean("anAdmin") == true) {
+                        list.remove(i);
+                    }
+                } catch(Exception e1) {}
+            } catch(Exception e2) {}
+        }
         this.list = list;
         this.context = context;
     }
@@ -59,7 +69,7 @@ public class UsersAdapter extends BaseAdapter implements ListAdapter {
         try {
             JSONObject json = list.getJSONObject(position);
             Log.e("Json logging", json.toString());
-            tv.setText("Place: " + json.getString("id") + ": " + json.getString("firstName") + json.getString("lastName"));
+            tv.setText("ID: " + json.getString("id") + ": " + json.getString("firstName") + " " + json.getString("lastName"));
         }
         catch(Exception e){}
 
