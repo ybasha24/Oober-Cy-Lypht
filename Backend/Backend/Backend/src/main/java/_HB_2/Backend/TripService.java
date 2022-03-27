@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class TripService {
@@ -21,21 +18,21 @@ public class TripService {
     @Autowired
     RiderRepository riderRepository;
 
+    //there should be no riders in the trip initially
     public Trip createTripByDriver(int Id, Trip trip) {
 
         User d =  driverRepository.getById(Id);
-        //uses driver constructor
-        Trip t = new Trip(trip.scheduledStartDate,
-                        trip.scheduledEndDate,
-                        //has a driver
-                        true,
-                        trip.originAddress,
-                        trip.destAddress,
-                        d,
-                        trip.radius);
+                trip.hasARider = false;
+                trip.hasADriver = true;
+                trip.isConfirmed = false;
+                trip.hasStarted = false;
+                trip.isCompleted = false;
+                trip.tripDriver = d;
+                trip.numberOfRiders = 0;
+                trip.setRiders(new HashSet<>());
 
-        tripRepository.save(t);
-        return t;
+        tripRepository.save(trip);
+        return trip;
     }
 
     public Trip getTripById(int id) {
@@ -43,33 +40,27 @@ public class TripService {
 
     }
 
-    public Trip addRiderToTrip(int tripId, int riderId){
+    public Trip addRiderToTripById(int tripId, int riderId){
+        //need to do a try/catch here
+            //what if we try to add a rider but the trip is already full???
         Trip addRiderToThis = tripRepository.findById(tripId);
-        User r = driverRepository.getById(riderId);
-        addRiderToThis.setRiderId(r);
-        addRiderToThis.setHasARider(true);
+        User rider = riderRepository.findById(riderId);
+        addRiderToThis.addRider(rider);
         tripRepository.save(addRiderToThis);
         return tripRepository.findById(tripId);
     }
 
-    public Trip removeRiderFromTrip(int tripId, int riderId){
+    public Trip removeRiderFromTripById(int tripId, int riderId){
         Trip removeRiderFromThis = tripRepository.findById(tripId);
-        removeRiderFromThis.removeRiderId(riderId);
-        if(removeRiderFromThis.getRiderId() == 0){
-            removeRiderFromThis.setHasARider(false);
-        }
+        User rider = riderRepository.findById(riderId);
+        removeRiderFromThis.removeRiderById(rider);
         tripRepository.save(removeRiderFromThis);
         return tripRepository.findById(tripId);
     }
 
-    public Trip editTripById(int tripId, int riderId, int driverId, Trip newTripInfo) {
+    public Trip editTripById(int tripId, Trip newTripInfo) {
 
         Trip newTrip = tripRepository.findById(tripId);
-
-        User r =  riderRepository.getById(riderId);
-        User d =  driverRepository.getById(driverId);
-        newTrip.setRiderId(r);
-        newTrip.setDriverId(d);
 
         newTrip.setScheduledStartDate(newTripInfo.scheduledStartDate);
         newTrip.setScheduledEndDate(newTripInfo.scheduledEndDate);
@@ -77,16 +68,34 @@ public class TripService {
         newTrip.setActualStartDate(newTripInfo.actualStartDate);
         newTrip.setActualEndDate(newTripInfo.actualEndDate);
 
-        newTrip.setHasARider(newTripInfo.hasARider);
-        newTrip.setHasADriver(newTripInfo.hasADriver);
-        newTrip.setConfirmed(newTripInfo.isConfirmed);
-        newTrip.setConfirmed(newTripInfo.hasStarted);
-        newTrip.setCompleted(newTripInfo.isConfirmed);
+        //need to adjust maxNumberOfRiders before we adjust the riders
+        newTrip.maxNumberOfRiders = newTripInfo.maxNumberOfRiders;
 
-        newTrip.setOriginAddress(newTripInfo.originAddress);
-        newTrip.setDestAddress(newTripInfo.destAddress);
+        //Set the numberOfRiders to 0
+        //the addRiderById funtion in the trip class will increment as we add riders below
+        newTrip.numberOfRiders = 0;
 
-        newTrip.setRadius(newTripInfo.radius);
+        newTrip.hasARider = newTripInfo.hasARider;
+        if (newTripInfo.hasARider) {
+            Set<User> newRiders = newTripInfo.getRiders();
+            for (User newRider : newRiders) {
+                newTripInfo.addRider(newRider);
+            }
+        }
+
+        newTrip.hasADriver = newTripInfo.hasADriver;
+        if (newTripInfo.hasADriver) {
+            newTrip.setTripDriver(newTripInfo.tripDriver);
+        }
+
+        newTrip.isConfirmed = newTripInfo.isConfirmed;
+        newTrip.hasStarted = newTripInfo.hasStarted;
+        newTrip.isCompleted = newTripInfo.isCompleted;
+
+        newTrip.originAddress = newTripInfo.originAddress;
+        newTrip.destAddress = newTripInfo.destAddress;
+
+        newTrip.radius = newTripInfo.radius;
 
         tripRepository.save(newTrip);
 
@@ -135,8 +144,10 @@ public class TripService {
                         trip.scheduledStartDate.isBefore(timeWindows.get("latestStartDate")) &&
                         trip.scheduledEndDate.isAfter(timeWindows.get("earliestEndDate")) &&
                         trip.scheduledEndDate.isBefore(timeWindows.get("latestEndDate"))) {
-
-                    validTrips.add(trip);
+                    //check to make sure the trip has room for another rider
+                    if (trip.numberOfRiders < trip.maxNumberOfRiders) {
+                        validTrips.add(trip);
+                    }
                 }
             }
         }

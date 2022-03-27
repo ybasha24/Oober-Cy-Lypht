@@ -26,7 +26,7 @@ public class RiderController {
 
     @GetMapping("/getRider")
     User getRiderById(@RequestParam int id) {
-        User u = riderService.getRiderbyId(id);
+        User u = riderService.getRiderById(id);
         return u;
     }
 

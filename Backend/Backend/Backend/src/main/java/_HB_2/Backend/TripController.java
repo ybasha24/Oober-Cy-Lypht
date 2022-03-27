@@ -5,7 +5,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +18,7 @@ public class TripController {
     @Autowired
     private TripRepository tripRepository;
 
+    //there will be no riders in the initial creation of the trip
     @PostMapping("/createTripByDriver")
     Trip createTripByDriver(
             @RequestParam int driverId,
@@ -39,27 +39,23 @@ public class TripController {
     @PutMapping("/editTrip")
     Trip getTripById(
             @RequestParam int tripId,
-            @RequestParam int riderId,
-            @RequestParam int driverId,
             @RequestBody Trip t) {
-        return tripService.editTripById(tripId, riderId, driverId, t);
+        return tripService.editTripById(tripId, t);
     }
 
     @PutMapping("/addRiderToTrip")
-    String addRiderToTrip(@RequestParam int tripId,
+    Trip addRiderToTrip(@RequestParam int tripId,
                           @RequestParam int riderId) {
-        tripService.addRiderToTrip(tripId, riderId);
-        return "Successfully added rider with id " + riderId + " to trip";
+        return tripService.addRiderToTripById(tripId, riderId);
     }
 
     @PutMapping("/removeRiderFromTrip")
-    String removeRiderFromTrip(@RequestParam int tripId,
+    Trip removeRiderFromTripById(@RequestParam int tripId,
                                @RequestParam int riderId) {
-        tripService.removeRiderFromTrip(tripId, riderId);
-        return "Successfully removed rider with id " + riderId + " from trip";
+        return tripService.removeRiderFromTripById(tripId, riderId);
     }
 
-        @PutMapping("/completeTrip")
+    @PutMapping("/completeTrip")
     Trip completeTripById(
             @RequestParam int id) {
         return tripService.completeTripById(id);
@@ -67,8 +63,7 @@ public class TripController {
     //returns a list of all trips that have not been completed
     @GetMapping("/getAllActiveTripsFromDriverId")
     List<Trip> getAllActiveTrips(
-            @RequestParam int driverId
-    ) {
+            @RequestParam int driverId) {
         return tripRepository.getAllUncompletedTripsByDriverId(driverId);
     }
 
