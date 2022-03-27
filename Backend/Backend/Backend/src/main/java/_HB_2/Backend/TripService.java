@@ -18,45 +18,21 @@ public class TripService {
     @Autowired
     RiderRepository riderRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     //there should be no riders in the trip initially
     public Trip createTripByDriver(int Id, Trip trip) {
 
         User d =  driverRepository.getById(Id);
-        //uses trip constructor by driver
-        //trip constructor by driver instantiates an empty set of riders
-                //has a rider
                 trip.hasARider = false;
-                //has a driver
                 trip.hasADriver = true;
-                //isConfirmed
                 trip.isConfirmed = false;
-                //hasStarted
                 trip.hasStarted = false;
-                //isCompleted
                 trip.isCompleted = false;
                 trip.tripDriver = d;
-                //number of riders
                 trip.numberOfRiders = 0;
                 trip.setRiders(new HashSet<>());
-//        Trip t = new Trip(trip.scheduledStartDate,
-//                        trip.scheduledEndDate,
-//                        //has a rider
-//                        false,
-//                        //has a driver
-//                        true,
-//                        //isConfirmed
-//                        false,
-//                        //hasStarted
-//                        false,
-//                        //isCompleted
-//                        false,
-//                        trip.originAddress,
-//                        trip.destAddress,
-//                        d,
-//                        trip.radius,
-//                        trip.maxNumberOfRiders,
-//                        //number of riders
-//                        0);
 
         tripRepository.save(trip);
         return trip;
@@ -71,8 +47,8 @@ public class TripService {
         //need to do a try/catch here
             //what if we try to add a rider but the trip is already full???
         Trip addRiderToThis = tripRepository.findById(tripId);
-        addRiderToThis.addRiderById(riderId);
-        addRiderToThis.setHasARider(true);
+        User rider = riderRepository.findById(riderId);
+        addRiderToThis.addRider(rider);
         tripRepository.save(addRiderToThis);
         return tripRepository.findById(tripId);
     }
@@ -107,8 +83,9 @@ public class TripService {
         newTrip.hasARider = newTripInfo.hasARider;
         if (newTripInfo.hasARider) {
             List<Integer> newriderIds =  newTripInfo.getRiderIds();
-            for ( Integer riderIds : newriderIds) {
-                newTrip.addRiderById(riderIds);
+            for ( Integer riderId : newriderIds) {
+                Rider rider = riderRepository.findById(riderId);
+                newTrip.addRider(rider);
             }
         }
 

@@ -114,13 +114,13 @@ public class Trip {
         return riderIds;
     }
 
-    public void addRiderById(int riderId) {
+    public void addRider(User rider) {
         //This might need to throw an error
             //check to see if the rider/user isARider
             //what if we don't have room for the rider?
         if (numberOfRiders < maxNumberOfRiders) {
 
-            riders.add(RiderService.getRiderById(riderId););
+            riders.add(rider);
             numberOfRiders++;
             hasARider = true;
         }
