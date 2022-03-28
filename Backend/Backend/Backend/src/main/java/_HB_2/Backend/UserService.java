@@ -71,6 +71,32 @@ public class UserService {
         return getUserById(id);
     }
 
+    public User removeAsRider(int id){
+        User newUser = userRepository.findById(id);
+        newUser.setARider(false);
+        if (newUser.isADriver == false & newUser.isAnAdmin == false){
+            userRepository.deleteById(id);
+        }
+        else {
+            userRepository.save(newUser);
+        }
+
+        return getUserById(id);
+    }
+
+    public User removeAsDriver(int id){
+        User newUser = userRepository.findById(id);
+        newUser.setADriver(false);
+        if (newUser.isARider == false & newUser.isAnAdmin == false){
+            userRepository.deleteById(id);
+        }
+        else {
+            userRepository.save(newUser);
+        }
+
+        return getUserById(id);
+    }
+
 
     public List<User> getAllUsers() {
         List<User> list = new ArrayList<>();
