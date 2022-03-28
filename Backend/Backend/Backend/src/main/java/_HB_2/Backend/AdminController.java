@@ -48,6 +48,20 @@ public class AdminController {
                   @RequestBody User u){
         return userService.editUser(id, u);
     }
-    
+
+    @PutMapping("/addUserAsRider")
+    User addUserAsRider(@RequestParam int id,
+                        @RequestParam boolean rider){
+        return userService.addAsRider(id, rider);
+    }
+
+    @PutMapping("/addUserAsDriver")
+    User addUserAsDriver(@RequestParam int id,
+                        @RequestParam boolean driver){
+        return userService.addAsDriver(id, driver);
+    }
+
+
+
 
 }
