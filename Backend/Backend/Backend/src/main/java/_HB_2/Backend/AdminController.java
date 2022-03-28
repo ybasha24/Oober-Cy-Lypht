@@ -11,6 +11,9 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping("/registerAdmin")
     User createAdminWithBody(
             @RequestBody Admin a
@@ -30,20 +33,21 @@ public class AdminController {
     User getAdminById(
             @RequestParam int id
     ) {
-
-//        if (id == null) {
-//            return "no id sent";
-//        }
-//        try{
-//            User u = driverService.getDriverById(id);
-//            return u;
-//        } catch (Exception e) {
-//            //what should i return here?
-//            //return "there was a problem";
-//        }
         User u = adminService.getAdminById(id);
         return u;
     }
 
+    @DeleteMapping("/deleteUser")
+    String deleteUser(@RequestParam int id){
+        userService.deleteUserById(id);
+        return "Successfully deleted user with id " + id;
+    }
+
+    @PutMapping("/editUser")
+    User editUser(@RequestParam int id,
+                  @RequestBody User u){
+        return userService.editUser(id, u);
+    }
+    
 
 }
