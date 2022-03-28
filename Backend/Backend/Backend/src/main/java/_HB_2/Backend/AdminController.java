@@ -45,12 +45,12 @@ public class AdminController {
 
     @PutMapping("removeUserAsRider")
     User removeUserAsRider(@RequestParam int id){
-        return userService.removeAsRider(id);
+        return adminService.removeAsRider(id);
     }
 
     @PutMapping("removeUserAsDriver")
     User removeUserAsDriver(@RequestParam int id){
-        return userService.removeAsDriver(id);
+        return adminService.removeAsDriver(id);
     }
 
     @PutMapping("/editUser")
@@ -60,15 +60,13 @@ public class AdminController {
     }
 
     @PutMapping("/addUserAsRider")
-    User addUserAsRider(@RequestParam int id,
-                        @RequestParam boolean rider){
-        return userService.addAsRider(id, rider);
+    User addUserAsRider(@RequestParam int id){
+        return adminService.addAsRider(id);
     }
 
     @PutMapping("/addUserAsDriver")
-    User addUserAsDriver(@RequestParam int id,
-                        @RequestParam boolean driver){
-        return userService.addAsDriver(id, driver);
+    User addUserAsDriver(@RequestParam int id){
+        return adminService.addAsDriver(id);
     }
 
 
