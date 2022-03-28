@@ -39,9 +39,8 @@ public class AdminController {
 
     //used for deleting a user, regardless if they are a rider, driver or both!
     @DeleteMapping("/deleteUser")
-    String deleteUser(@RequestParam int id){
-        userService.deleteUserById(id);
-        return "Successfully deleted user with id " + id;
+    void deleteUser(@RequestParam int id){
+       userService.deleteUserById(id);
     }
 
     @PutMapping("removeUserAsRider")
