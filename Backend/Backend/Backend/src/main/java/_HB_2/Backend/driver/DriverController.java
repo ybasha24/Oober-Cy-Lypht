@@ -14,7 +14,7 @@ public class DriverController {
     @PostMapping("/registerDriver")
     User createDriverWithBody(
             @RequestBody Driver d) {
-        User u = driverService.getDriverbyEmail(d.email);
+        User u = driverService.getDriverbyEmail(d.getEmail());
 
         //if there is no driver in the database
         if (u == null){

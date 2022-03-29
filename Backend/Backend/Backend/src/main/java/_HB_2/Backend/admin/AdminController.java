@@ -19,7 +19,7 @@ public class AdminController {
     User createAdminWithBody(
             @RequestBody Admin a
     ) {
-        User u = adminService.getAdminbyEmail(a.email);
+        User u = adminService.getAdminbyEmail(a.getEmail());
         if (u == null){
             adminService.createAdmin(a);
             return a;

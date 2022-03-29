@@ -1,5 +1,7 @@
 package _HB_2.Backend.user;
 
+import _HB_2.Backend.trip.Trip;
+
 import javax.persistence.*;
 import java.util.Set;
 //import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

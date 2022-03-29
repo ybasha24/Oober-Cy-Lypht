@@ -14,7 +14,7 @@ public class RiderController {
     @PostMapping("/registerRider")
     User createRiderWithBody(
             @RequestBody Rider r) {
-        User u = riderService.getRiderbyEmail(r.email);
+        User u = riderService.getRiderbyEmail(r.getEmail());
         if (u == null){
             riderService.createRider(r);
             return r;
