@@ -1,9 +1,8 @@
-package _HB_2.Backend;
+package _HB_2.Backend.driver;
 
+import _HB_2.Backend.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
 
 @Service
 public class DriverService {
@@ -14,7 +13,7 @@ public class DriverService {
     public Driver createDriver(Driver driver) {
 
         //set the driver flag
-        driver.isADriver = true;
+        driver.setADriver(true);
         Driver d = driverRepository.save(driver);
         return d;
     }

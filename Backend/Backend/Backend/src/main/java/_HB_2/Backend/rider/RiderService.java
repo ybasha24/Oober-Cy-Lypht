@@ -1,10 +1,8 @@
-package _HB_2.Backend;
+package _HB_2.Backend.rider;
 
+import _HB_2.Backend.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
 
 @Service
 public class RiderService {
@@ -15,7 +13,7 @@ public class RiderService {
     public void createRider(Rider rider) {
 
         //set the rider flag
-        rider.isARider = true;
+        rider.setARider(true);
         riderRepository.save(rider);
     }
 

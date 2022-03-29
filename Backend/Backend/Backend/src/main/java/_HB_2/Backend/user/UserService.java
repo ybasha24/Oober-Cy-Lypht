@@ -1,12 +1,10 @@
-package _HB_2.Backend;
+package _HB_2.Backend.user;
 
+import _HB_2.Backend.driver.DriverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Column;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Service

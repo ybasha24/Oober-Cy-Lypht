@@ -1,9 +1,10 @@
-package _HB_2.Backend;
+package _HB_2.Backend.admin;
 
+import _HB_2.Backend.user.User;
+import _HB_2.Backend.user.UserRepository;
+import _HB_2.Backend.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
 
 @Service
 public class AdminService {
@@ -20,7 +21,7 @@ public class AdminService {
     public Admin createAdmin(Admin admin) {
 
         //set the Admin flag
-        admin.isAnAdmin = true;
+        admin.setAnAdmin(true);
         Admin a = adminRepository.save(admin);
         return a;
     }
@@ -35,7 +36,7 @@ public class AdminService {
 
     public User addAsRider(int id){
         User newUser = userRepository.findById(id);
-        if(newUser.isARider == false){
+        if(newUser.getARider() == false){
             newUser.setARider(true);
         }
         userRepository.save(newUser);
@@ -45,7 +46,7 @@ public class AdminService {
 
     public User addAsDriver(int id){
         User newUser = userRepository.findById(id);
-        if(newUser.isADriver == false){
+        if(newUser.getADriver() == false){
             newUser.setADriver(true);
         }
         userRepository.save(newUser);
@@ -56,7 +57,7 @@ public class AdminService {
     public User removeAsRider(int id){
         User newUser = userRepository.findById(id);
         newUser.setARider(false);
-        if (newUser.isADriver == false & newUser.isAnAdmin == false){
+        if (newUser.getADriver() == false & newUser.getAnAdmin() == false){
             userRepository.deleteById(id);
         }
         else {
@@ -69,7 +70,7 @@ public class AdminService {
     public User removeAsDriver(int id){
         User newUser = userRepository.findById(id);
         newUser.setADriver(false);
-        if (newUser.isARider == false & newUser.isAnAdmin == false){
+        if (newUser.getARider() == false & newUser.getAnAdmin() == false){
             userRepository.deleteById(id);
         }
         else {

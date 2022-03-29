@@ -1,7 +1,8 @@
-package _HB_2.Backend;
+package _HB_2.Backend.admin;
 
+import _HB_2.Backend.user.User;
+import _HB_2.Backend.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

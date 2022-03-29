@@ -1,9 +1,10 @@
-package _HB_2.Backend;
+package _HB_2.Backend.user;
 
+import _HB_2.Backend.driver.Driver;
+import _HB_2.Backend.rider.Rider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
