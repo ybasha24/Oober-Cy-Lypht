@@ -1,5 +1,8 @@
-package _HB_2.Backend;
+package _HB_2.Backend.trip;
 
+import _HB_2.Backend.user.User;
+import _HB_2.Backend.driver.DriverRepository;
+import _HB_2.Backend.rider.RiderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

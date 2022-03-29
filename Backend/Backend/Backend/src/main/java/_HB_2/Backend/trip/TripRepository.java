@@ -1,4 +1,4 @@
-package _HB_2.Backend;
+package _HB_2.Backend.trip;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

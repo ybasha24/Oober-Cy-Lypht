@@ -1,5 +1,6 @@
-package _HB_2.Backend;
+package _HB_2.Backend.rider;
 
+import _HB_2.Backend.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

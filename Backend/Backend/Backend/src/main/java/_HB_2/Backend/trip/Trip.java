@@ -1,4 +1,6 @@
-package _HB_2.Backend;
+package _HB_2.Backend.trip;
+
+import _HB_2.Backend.user.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

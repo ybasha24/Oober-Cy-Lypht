@@ -1,4 +1,4 @@
-package _HB_2.Backend;
+package _HB_2.Backend.user;
 
 import javax.persistence.*;
 import java.util.Set;

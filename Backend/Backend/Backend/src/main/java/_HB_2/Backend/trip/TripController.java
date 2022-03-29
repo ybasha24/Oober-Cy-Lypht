@@ -1,4 +1,4 @@
-package _HB_2.Backend;
+package _HB_2.Backend.trip;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
