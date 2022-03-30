@@ -27,31 +27,31 @@ public class ConfirmRide extends AppCompatActivity {
     LocalDateTime endDate;
     String originAddress;
     String destAddress;
-    int pickupRadius;
+    int radius;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_ride);
 
-        Slider pickupRadiusSlider = findViewById(R.id.pickupRadiusSlider);
-        TextView pickupRadiusTV = findViewById(R.id.pickupRadiusTV);
+        Slider radiusSlider = findViewById(R.id.radiusSlider);
+        TextView radiusTV = findViewById(R.id.radiusTV);
 
-        pickupRadiusSlider.addOnChangeListener((slider1, value, fromUser) -> {
-            pickupRadius = (int) value;
-            pickupRadiusTV.setText("Pickup radius: " + (int) value + " miles");
+        radiusSlider.addOnChangeListener((slider1, value, fromUser) -> {
+            radius = (int) value;
+            radiusTV.setText("Pickup radius: " + (int) value + " miles");
         });
 
         if(SelectRideTime.datettime != null){
             startDate = SelectRideTime.datettime;
         }
-        if(SelectRideTime.datettime != null && SelectRidePlace.durationHours != 0 && SelectRidePlace.durationMinutes != 0){
+        if(startDate != null && (SelectRidePlace.durationHours != 0 || SelectRidePlace.durationMinutes != 0)){
             endDate = SelectRideTime.datettime.plusHours(SelectRidePlace.durationHours).plusMinutes(SelectRidePlace.durationMinutes);
         }
-        if(originAddress != null){
+        if(SelectRidePlace.originAddress != null){
             originAddress = SelectRidePlace.originAddress;
         }
-        if(destAddress != null){
+        if(SelectRidePlace.destAddress != null){
             destAddress = SelectRidePlace.destAddress;
         }
 
@@ -65,16 +65,17 @@ public class ConfirmRide extends AppCompatActivity {
 
     public void confirm(View v) throws JSONException {
         JSONObject obj = new JSONObject();
-        obj.put("driver", MainActivity.accountObj);
-        obj.put("scheduleStartDate", startDate);
-        obj.put("scheduledEndDate", startDate);
+        obj.put("scheduledStartDate", startDate);
+        obj.put("scheduledEndDate", endDate);
         obj.put("originAddress", originAddress);
         obj.put("destAddress", destAddress);
-//        obj.put("pickupRadius", 1);
+        obj.put("radius", radius);
 
-        String url;
+        Log.e("trips error", startDate + " " + endDate + " " + originAddress + " " + destAddress);
+
+        String url = endpoints.DriverCreateTripUrl + MainActivity.accountObj.getInt("id");
         int verb = Request.Method.POST;
-        url = endpoints.DriverCreateTripUrl + MainActivity.accountObj.getInt("id");
+
         try {
             if ((boolean) getIntent().getSerializableExtra("editing")) {
                 url = endpoints.EditTripUrl;
@@ -100,6 +101,7 @@ public class ConfirmRide extends AppCompatActivity {
                 } catch(Exception e) {}
             },
             error -> {
+                Log.e("trips error", error.toString());
                 Toast toast = Toast.makeText(getApplicationContext(), "Error creating trip", Toast.LENGTH_LONG);
                 toast.show();
             }){
