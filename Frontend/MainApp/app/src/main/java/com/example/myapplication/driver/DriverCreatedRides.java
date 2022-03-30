@@ -16,6 +16,7 @@ import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.TripsAdapter;
 import com.example.myapplication.app.AppController;
+import com.example.myapplication.endpoints.endpoints;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +36,7 @@ public class DriverCreatedRides extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         String url = "";
         try {
-            url = "http://coms-309-030.class.las.iastate.edu:8080/trip/getAllActiveTripsFromDriverId?driverId=" + MainActivity.accountObj.getInt("id");
+            url = endpoints.AllDriverTripsUrl + MainActivity.accountObj.getInt("id");
         } catch(JSONException e){}
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
             response -> {
