@@ -87,19 +87,27 @@ public class ConfirmRide extends AppCompatActivity {
             }
         } catch(Exception e){}
 
+
+
+        try {
+            if ((boolean) getIntent().getSerializableExtra("editing")) {
+                url = endpoints.EditTripUrl;
+                url += ("?tripId=" + (int) getIntent().getSerializableExtra("tripId"));
+                Log.e("trips error", url);
+                verb = Request.Method.PUT;
+            }
+        } catch(Exception e){}
+
         StringRequest req = new StringRequest(verb, url,
             response -> {
                 Intent intent = new Intent(this, DriverHomePage.class);
                 startActivity(intent);
-                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Trip successfully created", Toast.LENGTH_LONG).show());
                 try{
                     if ((boolean) getIntent().getSerializableExtra("editing")) {
-                        Toast toast = Toast.makeText(getApplicationContext(), "Trip successfully edited", Toast.LENGTH_LONG);
-                        toast.show();
+                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Trip successfully edited", Toast.LENGTH_LONG).show());
                     }
                     else{
-                        Toast toast = Toast.makeText(getApplicationContext(), "Trip successfully created", Toast.LENGTH_LONG);
-                        toast.show();
+                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Trip successfully created", Toast.LENGTH_LONG).show());
                     }
                 } catch(Exception e) {}
             },
