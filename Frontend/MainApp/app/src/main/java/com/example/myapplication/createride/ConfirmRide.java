@@ -80,6 +80,8 @@ public class ConfirmRide extends AppCompatActivity {
             if ((boolean) getIntent().getSerializableExtra("editing")) {
                 url = endpoints.EditTripUrl;
                 url += ("?tripId=" + (int) getIntent().getSerializableExtra("tripId"));
+                url += "&riderId=";
+                url += ("&driverId=" + MainActivity.accountObj.getInt("id"));
                 Log.e("trips error", url);
                 verb = Request.Method.PUT;
             }
@@ -89,9 +91,7 @@ public class ConfirmRide extends AppCompatActivity {
             response -> {
                 Intent intent = new Intent(this, DriverHomePage.class);
                 startActivity(intent);
-<<<<<<< HEAD
                 runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Trip successfully created", Toast.LENGTH_LONG).show());
-=======
                 try{
                     if ((boolean) getIntent().getSerializableExtra("editing")) {
                         Toast toast = Toast.makeText(getApplicationContext(), "Trip successfully edited", Toast.LENGTH_LONG);
@@ -102,16 +102,10 @@ public class ConfirmRide extends AppCompatActivity {
                         toast.show();
                     }
                 } catch(Exception e) {}
->>>>>>> e59f7d4 (Need to communicate with backend regarding editTripById endpoint)
             },
             error -> {
-<<<<<<< HEAD
                 runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Error creating trip", Toast.LENGTH_LONG).show());
-=======
                 Log.e("trips error", error.toString());
-                Toast toast = Toast.makeText(getApplicationContext(), "Error creating trip", Toast.LENGTH_LONG);
-                toast.show();
->>>>>>> 4e1abae (Further refactoring of trip creation for drivers)
             }){
             @Override
             public byte[] getBody() {
