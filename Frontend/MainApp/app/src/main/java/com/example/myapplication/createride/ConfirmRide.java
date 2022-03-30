@@ -10,6 +10,7 @@ import com.example.myapplication.driver.DriverHomePage;
 import com.google.android.material.slider.Slider;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,24 +79,37 @@ public class ConfirmRide extends AppCompatActivity {
         obj.put("pickupRadius", 1);
 
         String url;
+        int verb = Request.Method.POST;
         url = endpoints.DriverCreateTripUrl + MainActivity.accountObj.getInt("id");
         try {
             if ((boolean) getIntent().getSerializableExtra("editing")) {
                 url = endpoints.EditTripUrl;
                 url += ("?tripId=" + (int) getIntent().getSerializableExtra("tripId"));
-                url += "?riderId=";
-                url += ("?driverId=" + MainActivity.accountObj.getInt("id"));
+                url += "&riderId=";
+                url += ("&driverId=" + MainActivity.accountObj.getInt("id"));
+                Log.e("trips error", url);
+                verb = Request.Method.PUT;
             }
         } catch(Exception e){}
 
-
-
-
-        StringRequest req = new StringRequest(Request.Method.POST, url,
+        StringRequest req = new StringRequest(verb, url,
             response -> {
                 Intent intent = new Intent(this, DriverHomePage.class);
                 startActivity(intent);
+<<<<<<< HEAD
                 runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Trip successfully created", Toast.LENGTH_LONG).show());
+=======
+                try{
+                    if ((boolean) getIntent().getSerializableExtra("editing")) {
+                        Toast toast = Toast.makeText(getApplicationContext(), "Trip successfully edited", Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                    else{
+                        Toast toast = Toast.makeText(getApplicationContext(), "Trip successfully created", Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                } catch(Exception e) {}
+>>>>>>> e59f7d4 (Need to communicate with backend regarding editTripById endpoint)
             },
             error -> {
                 runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Error creating trip", Toast.LENGTH_LONG).show());
