@@ -116,6 +116,6 @@ public class ConfirmRide extends AppCompatActivity {
                 return "application/json";
             }
         };
-        AppController.getInstance().addToRequestQueue(req, "obj_req");
+        AppController.getInstance().addToRequestQueue(req, "string_req");
     }
 }

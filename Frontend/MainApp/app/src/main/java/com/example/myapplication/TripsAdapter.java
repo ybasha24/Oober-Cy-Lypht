@@ -10,14 +10,23 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.StringRequest;
+import com.example.myapplication.app.AppController;
 import com.example.myapplication.createride.SelectRideTime;
+import com.example.myapplication.driver.DriverCreatedRides;
+import com.example.myapplication.driver.DriverHomePage;
+import com.example.myapplication.endpoints.endpoints;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 public class TripsAdapter extends BaseAdapter implements ListAdapter {
     private JSONArray list;
@@ -59,29 +68,51 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
         try {
             JSONObject json = list.getJSONObject(position);
             Log.e("Json logging", json.toString());
-            tv.setText("Place: " + json.getString("originAddress") + "->" + json.getString("destAddress") +
-                    "\nTime: " + json.getString("scheduledStartDate") + "->" + json.getString("scheduledEndDate"));
+            tv.setText("From: " + json.getString("originAddress") + "\nTo: " + json.getString("destAddress") +
+                    "\nTime: " + json.getString("scheduledStartDate") + "\n->" + json.getString("scheduledEndDate"));
         }
         catch(Exception e){}
 
         Button editTripButton = view.findViewById(R.id.editTripButton);
         Button deleteTripButton = view.findViewById(R.id.deleteTripButton);
 
-        editTripButton.setOnClickListener(v -> {
-            Intent i = new Intent(this.context, SelectRideTime.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            Log.e("trips error", v.getContext().toString());
-            try {
-                i.putExtra("editing", true);
-                i.putExtra("tripId", list.getJSONObject(position).getInt("id"));
-            } catch(JSONException e) {}
-            this.context.startActivity(i);
-        });
+        editTripButton.setOnClickListener(v -> editTrip(position));
 
-        deleteTripButton.setOnClickListener(v -> {
-
-        });
+        deleteTripButton.setOnClickListener(v -> deleteTrip(position));
 
         return view;
+    }
+
+    public void editTrip(int position){
+        Intent i = new Intent(this.context, SelectRideTime.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Log.e("trips error", v.getContext().toString());
+        try {
+            i.putExtra("editing", true);
+            i.putExtra("tripId", list.getJSONObject(position).getInt("id"));
+        }
+        catch(JSONException e) {}
+        this.context.startActivity(i);
+    }
+
+    public void deleteTrip(int position){
+
+        try {
+            StringRequest req = new StringRequest(Request.Method.DELETE, endpoints.DeleteTripUrl + "?id=" + list.getJSONObject(position).getInt("id"),
+                    response -> {
+                        Intent i = new Intent(this.context, DriverCreatedRides.class);
+                        this.context.startActivity(i);
+                        Toast toast = Toast.makeText(this.context, "Successfully deleted trip", Toast.LENGTH_LONG);
+                        toast.show();
+                    },
+                    error -> {
+                        Log.e("trips error", error.toString());
+                        Toast toast = Toast.makeText(this.context, "Error deleting trip", Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+            );
+            AppController.getInstance().addToRequestQueue(req, "string_req");
+        }
+        catch(Exception e){}
     }
 }
