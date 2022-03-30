@@ -86,7 +86,6 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
     public void editTrip(int position){
         Intent i = new Intent(this.context, SelectRideTime.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Log.e("trips error", v.getContext().toString());
         try {
             i.putExtra("editing", true);
             i.putExtra("tripId", list.getJSONObject(position).getInt("id"));
