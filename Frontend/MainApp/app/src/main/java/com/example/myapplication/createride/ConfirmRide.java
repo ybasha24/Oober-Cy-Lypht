@@ -25,8 +25,8 @@ public class ConfirmRide extends AppCompatActivity {
     public TextView details;
     LocalDateTime startDate;
     LocalDateTime endDate;
-    String startAddress;
-    String endAddress;
+    String originAddress;
+    String destAddress;
     int pickupRadius;
 
     @Override
@@ -48,19 +48,19 @@ public class ConfirmRide extends AppCompatActivity {
         if(SelectRideTime.datettime != null && SelectRidePlace.durationHours != 0 && SelectRidePlace.durationMinutes != 0){
             endDate = SelectRideTime.datettime.plusHours(SelectRidePlace.durationHours).plusMinutes(SelectRidePlace.durationMinutes);
         }
-        if(startAddress != null){
-            startAddress = SelectRidePlace.originAddress;
+        if(originAddress != null){
+            originAddress = SelectRidePlace.originAddress;
         }
-        if(endAddress != null){
-            endAddress = SelectRidePlace.destAddress;
+        if(destAddress != null){
+            destAddress = SelectRidePlace.destAddress;
         }
 
         details = findViewById(R.id.tripDetailsTV);
-        if(startDate != null && endDate != null && startAddress != null && endAddress != null)
+        if(startDate != null && endDate != null && originAddress != null && destAddress != null)
             details.setText("Start time: " + startDate + "\n" +
                             "End time: " + endDate + "\n" +
-                            "Start address: " + startAddress + "\n" +
-                            "End address: " + endAddress);
+                            "Start address: " + originAddress + "\n" +
+                            "End address: " + destAddress);
     }
 
     public void confirm(View v) throws JSONException {
@@ -68,15 +68,9 @@ public class ConfirmRide extends AppCompatActivity {
         obj.put("driver", MainActivity.accountObj);
         obj.put("scheduleStartDate", startDate);
         obj.put("scheduledEndDate", startDate);
-        obj.put("startAddress", "Address");
-        obj.put("startCity", "City");
-        obj.put("startState", "State");
-        obj.put("startZip", "Zip");
-        obj.put("endAddress", "Address");
-        obj.put("endCity", "City");
-        obj.put("endState", "State");
-        obj.put("endZip", "Zip");
-        obj.put("pickupRadius", 1);
+        obj.put("originAddress", originAddress);
+        obj.put("destAddress", destAddress);
+//        obj.put("pickupRadius", 1);
 
         String url;
         int verb = Request.Method.POST;
@@ -85,8 +79,6 @@ public class ConfirmRide extends AppCompatActivity {
             if ((boolean) getIntent().getSerializableExtra("editing")) {
                 url = endpoints.EditTripUrl;
                 url += ("?tripId=" + (int) getIntent().getSerializableExtra("tripId"));
-                url += "&riderId=";
-                url += ("&driverId=" + MainActivity.accountObj.getInt("id"));
                 Log.e("trips error", url);
                 verb = Request.Method.PUT;
             }
