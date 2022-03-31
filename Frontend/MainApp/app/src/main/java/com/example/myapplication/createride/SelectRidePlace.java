@@ -58,6 +58,9 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        origin = null;
+        dest = null;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_ride_location);
         initAutoCompleteFragments();
@@ -77,9 +80,14 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
                 originAddress = place.getAddress();
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(origin, 12.0f));
 
+
                 if(originMarker != null)
                     originMarker.remove();
                 originMarker = mMap.addMarker(new MarkerOptions().position(origin));
+
+                if (origin != null && dest != null) {
+                    clearMapAndDraw();
+                }
             }
             @Override
             public void onError(@NonNull Status status) { Log.e("Maps error", status.toString()); }
@@ -99,9 +107,11 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
                 if(destMarker != null)
                     destMarker.remove();
                 destMarker = mMap.addMarker(new MarkerOptions().position(dest));
-                
-                if (origin != null && dest != null)
-                    drawRoute();
+
+                if (origin != null && dest != null){
+                    clearMapAndDraw();
+                }
+
             }
             @Override
             public void onError(@NonNull Status status) { Log.e("Maps error", status.toString()); }
@@ -176,6 +186,13 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
         } catch(Exception e){}
 
         startActivity(i);
+    }
+
+    public void clearMapAndDraw(){
+        mMap.clear();
+        originMarker = mMap.addMarker(new MarkerOptions().position(origin));
+        destMarker = mMap.addMarker(new MarkerOptions().position(origin));
+        drawRoute();
     }
 
 }
