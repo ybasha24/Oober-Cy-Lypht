@@ -28,14 +28,18 @@ public class ConfirmRide extends AppCompatActivity {
     String originAddress;
     String destAddress;
     int radius;
+    Slider radiusSlider;
+    TextView radiusTV;
+    int durationHours;
+    int durationMinutes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_ride);
 
-        Slider radiusSlider = findViewById(R.id.radiusSlider);
-        TextView radiusTV = findViewById(R.id.radiusTV);
+        radiusSlider = findViewById(R.id.radiusSlider);
+        radiusTV = findViewById(R.id.radiusTV);
 
         radiusSlider.addOnChangeListener((slider1, value, fromUser) -> {
             radius = (int) value;
@@ -46,7 +50,9 @@ public class ConfirmRide extends AppCompatActivity {
             startDate = SelectRideTime.datettime;
         }
         if(startDate != null && (SelectRidePlace.durationHours != 0 || SelectRidePlace.durationMinutes != 0)){
-            endDate = SelectRideTime.datettime.plusHours(SelectRidePlace.durationHours).plusMinutes(SelectRidePlace.durationMinutes);
+            durationHours = SelectRidePlace.durationHours;
+            durationMinutes = SelectRidePlace.durationMinutes;
+            endDate = SelectRideTime.datettime.plusHours(durationHours).plusMinutes(durationMinutes);
         }
         if(SelectRidePlace.originAddress != null){
             originAddress = SelectRidePlace.originAddress;
@@ -57,10 +63,11 @@ public class ConfirmRide extends AppCompatActivity {
 
         details = findViewById(R.id.tripDetailsTV);
         if(startDate != null && endDate != null && originAddress != null && destAddress != null)
-            details.setText("Start time: " + startDate + "\n" +
-                            "End time: " + endDate + "\n" +
-                            "Start address: " + originAddress + "\n" +
-                            "End address: " + destAddress);
+            details.setText("Start time: " + prettyHoursAndMinutes(startDate.getHour(), startDate.getMinute()) + "\n" +
+                            "End time: " + prettyHoursAndMinutes(endDate.getHour(), endDate.getMinute()) + "\n" +
+                            "Duration: " + prettyDistance(durationHours, durationMinutes) + "\n" +
+                            "Origin: " + originAddress + "\n" +
+                            "Destination: " + destAddress);
     }
 
     public void confirm(View v) throws JSONException {
@@ -80,18 +87,6 @@ public class ConfirmRide extends AppCompatActivity {
             if ((boolean) getIntent().getSerializableExtra("editing")) {
                 url = endpoints.EditTripUrl;
                 url += ("?tripId=" + (int) getIntent().getSerializableExtra("tripId"));
-                url += "&riderId=";
-                url += ("&driverId=" + MainActivity.accountObj.getInt("id"));
-                Log.e("trips error", url);
-                verb = Request.Method.PUT;
-            }
-        } catch(Exception e){}
-
-        try {
-            if ((boolean) getIntent().getSerializableExtra("editing")) {
-                url = endpoints.EditTripUrl;
-                url += ("?tripId=" + (int) getIntent().getSerializableExtra("tripId"));
-                Log.e("trips error", url);
                 verb = Request.Method.PUT;
             }
         } catch(Exception e){}
@@ -125,5 +120,48 @@ public class ConfirmRide extends AppCompatActivity {
             }
         };
         AppController.getInstance().addToRequestQueue(req, "string_req");
+    }
+
+    public static String prettyHoursAndMinutes(int hour, int minute){
+        if(hour > 12){
+            if(minute >= 10) {
+                return (hour - 12) + ":" + minute + " PM";
+            }
+            else{
+                return (hour - 12) + ":0" + minute + " PM";
+            }
+        }
+        else{
+            if(minute >= 10) {
+                return (hour) + ":" + minute + " PM";
+            }
+            else{
+                return (hour) + ":0" + minute + " PM";
+            }
+        }
+    }
+
+    public static String prettyDistance(int durationHours, int durationMinutes){
+        String s = "";
+        if(durationHours == 1){
+            s += durationHours + " hour";
+        }
+        else if(durationHours > 1){
+            s += durationHours + " hours";
+        }
+        if(durationMinutes == 1){
+            if(durationHours >= 1)
+                s += ", " + durationMinutes + " minute";
+            else
+                s += durationMinutes + " minute";
+        }
+        else if(durationMinutes >= 1){
+            if(durationHours >= 1)
+                s += ", " + durationMinutes + " minutes";
+            else
+                s += durationMinutes + " minutes";
+        }
+
+        return s;
     }
 }
