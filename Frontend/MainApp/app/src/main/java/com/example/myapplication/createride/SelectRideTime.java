@@ -50,7 +50,7 @@ public class SelectRideTime extends AppCompatActivity {
             String h = hour >= 10 ? String.valueOf(hour) : "0" + hour;
             String m = minute >= 10 ? String.valueOf(minute) : "0" + minute;
             SelectRideTime.time = h + ":" + m;
-            SelectRideTime.timeTV.setText(SelectRideTime.time);
+            SelectRideTime.timeTV.setText(prettyHoursAndMinutes(hour, minute));
         }
     }
 
@@ -68,7 +68,12 @@ public class SelectRideTime extends AppCompatActivity {
             String m = month >= 10 ? String.valueOf(month) : "0" + month;
             String d = day >= 10 ? String.valueOf(day) : "0" + day;
             SelectRideTime.date = year + "-" + m + "-" + d;
-            SelectRideTime.dateTV.setText(SelectRideTime.date);
+
+            String dateTimeString = date + " " + time;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            datettime = LocalDateTime.parse(dateTimeString, formatter);
+
+            SelectRideTime.dateTV.setText(SelectRideTime.date + "(" + datettime.getDayOfWeek() + ")");
         }
     }
 
@@ -83,13 +88,10 @@ public class SelectRideTime extends AppCompatActivity {
     }
 
     public void selectStartLocation(View v){
-        Log.e("Time", "Date: " + date + " Time: " + time);
         if(!date.equals("") && !time.equals("")) {
             String dateTimeString = date + " " + time;
-            Log.e("Time", dateTimeString);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             datettime = LocalDateTime.parse(dateTimeString, formatter);
-            Log.e("Time", datettime.toString());
         }
 
         Intent i = new Intent(this, SelectRidePlace.class);
@@ -101,5 +103,24 @@ public class SelectRideTime extends AppCompatActivity {
         } catch(Exception e){}
 
         startActivity(i);
+    }
+
+    public static String prettyHoursAndMinutes(int hour, int minute){
+        if(hour > 12){
+            if(minute >= 10) {
+                return (hour - 12) + ":" + minute + " PM";
+            }
+            else{
+                return (hour - 12) + ":0" + minute + " PM";
+            }
+        }
+        else{
+            if(minute >= 10) {
+                return (hour) + ":" + minute + " PM";
+            }
+            else{
+                return (hour) + ":0" + minute + " PM";
+            }
+        }
     }
 }

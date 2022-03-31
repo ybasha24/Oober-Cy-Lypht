@@ -69,6 +69,7 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
     public void initAutoCompleteFragments(){
 
         Places.initialize(getApplicationContext(), endpoints.GoogleMapsAPIKey);
+
         autocompleteOriginFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_origin_fragment);
         autocompleteOriginFragment.setPlaceFields(Arrays.asList(Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS));
         autocompleteOriginFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -191,7 +192,7 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
     public void clearMapAndDraw(){
         mMap.clear();
         originMarker = mMap.addMarker(new MarkerOptions().position(origin));
-        destMarker = mMap.addMarker(new MarkerOptions().position(origin));
+        destMarker = mMap.addMarker(new MarkerOptions().position(dest));
         drawRoute();
     }
 
