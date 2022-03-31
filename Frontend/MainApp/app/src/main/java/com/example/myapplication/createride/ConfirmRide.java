@@ -87,8 +87,6 @@ public class ConfirmRide extends AppCompatActivity {
             }
         } catch(Exception e){}
 
-
-
         try {
             if ((boolean) getIntent().getSerializableExtra("editing")) {
                 url = endpoints.EditTripUrl;

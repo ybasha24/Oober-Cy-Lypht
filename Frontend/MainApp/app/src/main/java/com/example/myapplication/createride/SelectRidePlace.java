@@ -22,6 +22,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
@@ -51,6 +52,9 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
     static public int durationHours;
     static public int durationMinutes;
 
+    static public Marker originMarker;
+    static public Marker destMarker;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,7 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
     }
 
     public void initAutoCompleteFragments(){
+
         Places.initialize(getApplicationContext(), endpoints.GoogleMapsAPIKey);
         autocompleteOriginFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_origin_fragment);
         autocompleteOriginFragment.setPlaceFields(Arrays.asList(Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS));
@@ -70,8 +75,11 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
                 origin = place.getLatLng();
                 originString = place.getName();
                 originAddress = place.getAddress();
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(origin.latitude, origin.longitude), 12.0f));
-                mMap.addMarker(new MarkerOptions().position(origin));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(origin, 12.0f));
+
+                if(originMarker != null)
+                    originMarker.remove();
+                originMarker = mMap.addMarker(new MarkerOptions().position(origin));
             }
             @Override
             public void onError(@NonNull Status status) { Log.e("Maps error", status.toString()); }
@@ -87,7 +95,11 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
                 dest = place.getLatLng();
                 destString = place.getName();
                 destAddress = place.getAddress();
-                mMap.addMarker(new MarkerOptions().position(dest));
+
+                if(destMarker != null)
+                    destMarker.remove();
+                destMarker = mMap.addMarker(new MarkerOptions().position(dest));
+                
                 if (origin != null && dest != null)
                     drawRoute();
             }
@@ -106,9 +118,9 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
 
     public void drawRoute(){
 
-        String routeOrigin = "origin=" + originString;
+        String routeOrigin = "origin=" + origin.latitude + "," + origin.longitude;
         String waypoints = "";
-        String routeDest = "destination=" + destString;
+        String routeDest = "destination=" + dest.latitude + "," + dest.longitude;
         String params = routeOrigin + "&" + waypoints + "&"  + routeDest + "&key=" + endpoints.GoogleMapsAPIKey;
         String url = endpoints.GoogleMapsDirectionUrl + params;
 
@@ -124,7 +136,7 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin, 10.0f));
                     calculateRoute();
                 }
-                catch(JSONException e){ Log.e("Maps errror", e.toString()); }
+                catch(JSONException e){ Log.e("Maps error", e.toString()); }
             },
             error -> Log.e("Maps error", error.toString())
         );
@@ -132,8 +144,8 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
     }
 
     public void calculateRoute(){
-        String routeOrigin = "origins=" + originString;
-        String routeDest = "destinations=" + destString;
+        String routeOrigin = "origins=" + origin.latitude + "," + origin.longitude;
+        String routeDest = "destinations=" + dest.latitude + "," + dest.longitude;
         String params = routeOrigin + "&"  + routeDest + "&units=imperial" + "&key=" + endpoints.GoogleMapsAPIKey;
         params = params.replaceAll(" ", "%20");
         String url = endpoints.GoogleMapsDistanceUrl + params;
