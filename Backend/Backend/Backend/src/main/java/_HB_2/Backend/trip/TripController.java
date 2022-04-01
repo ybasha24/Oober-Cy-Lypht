@@ -91,10 +91,10 @@ public class TripController {
     }
 
     @DeleteMapping("/deleteTripById")
-    void deleteTripById(
+    String deleteTripById(
             @RequestParam int id) {
-
         tripService.deleteTripById(id);
+        return "You have deleted trip " + id;
     }
 
 }
