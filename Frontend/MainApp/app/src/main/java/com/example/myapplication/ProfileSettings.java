@@ -4,10 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.endpoints.endpoints;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -16,10 +14,10 @@ import com.example.myapplication.app.AppController;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import com.example.myapplication.HelperFunctions;
 
 public class ProfileSettings extends AppCompatActivity {
 
-    final int minPasswordLength = 8;
     EditText firstName;
     EditText lastName;
     EditText password;
@@ -50,11 +48,11 @@ public class ProfileSettings extends AppCompatActivity {
     }
 
     public void saveChanges(View view) {
-        boolean x = verifyNotNull(firstName.getText().toString(), lastName.getText().toString(),
+        boolean x = HelperFunctions.verifyNotNull(firstName.getText().toString(), lastName.getText().toString(),
                 email.getText().toString(), address.getText().toString(), city.getText().toString(),
                 state.getText().toString(), zip.getText().toString(), password.getText().toString(),
                 phoneNumber.getText().toString(), findViewById(R.id.statusTV));
-        boolean y = verifyParametersMet(password.getText().toString(), email.getText().toString(),
+        boolean y = HelperFunctions.verifyParametersMet(password.getText().toString(), email.getText().toString(),
                 findViewById(R.id.statusTV));
 
         if (x && y) {
@@ -102,83 +100,6 @@ public class ProfileSettings extends AppCompatActivity {
             runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Encountered exception " + e, Toast.LENGTH_LONG).show());
         }
         return newUserDetails;
-    }
-
-    public boolean verifyNotNull(String firstName, String lastName, String email, String address,
-                             String city, String state, String zip, String password,
-                             String phoneNumber, TextView tv)
-    {
-        if(firstName.isEmpty() || (firstName.matches("^\\S*$") == false))
-        {
-            tv.setText("Please enter a first name without white-spaces");
-            return false;
-        }
-        if(lastName.isEmpty() || (lastName.matches("^\\S*$") == false))
-        {
-            tv.setText("Please enter a last name without white-spaces");
-            return false;
-        }
-        if(email.isEmpty() || (email.matches("^\\S*$") == false))
-        {
-            tv.setText("Please enter an email without white-spaces");
-            return false;
-        }
-        if(address.isEmpty())
-        {
-            tv.setText("Please enter a address");
-            return false;
-        }
-        if(city.isEmpty())
-        {
-            tv.setText("Please enter a city");
-            return false;
-        }
-        if(state.isEmpty())
-        {
-            tv.setText("Please enter a state");
-            return false;
-        }
-        if(zip.isEmpty())
-        {
-            tv.setText("Please enter a zip");
-            return false;
-        }
-        if(phoneNumber.isEmpty())
-        {
-            tv.setText("Please enter a phone number");
-            return false;
-        }
-        if(password.isEmpty())
-        {
-            tv.setText("Please enter a password number");
-            return false;
-        }
-        return true;
-    }
-
-    public boolean verifyParametersMet(String password, String email, TextView tv)
-    {
-        boolean errorFlag = true;
-        if(password.equals("abc"))
-        {
-            return true;
-        }
-        if(!(password.matches(".*\\d.*")))
-        {
-            tv.setText("Password needs a number");
-            errorFlag = false;
-        }
-        if(password.length() < minPasswordLength)
-        {
-            tv.setText("Password is too short");
-            errorFlag = false;
-        }
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
-        {
-            tv.setText("Please enter valid email");
-            errorFlag = false;
-        }
-        return errorFlag;
     }
 
     public void changeProfileRequest(JSONObject newUserDetails){

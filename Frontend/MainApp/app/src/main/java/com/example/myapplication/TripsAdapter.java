@@ -64,7 +64,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
             view = inflater.inflate(R.layout.trip_item, null);
         }
 
-        TextView tv= view.findViewById(R.id.textView);
+        TextView tv = view.findViewById(R.id.textView);
         try {
             JSONObject json = list.getJSONObject(position);
             Log.e("Json logging", json.toString());
@@ -95,20 +95,19 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
     }
 
     public void deleteTrip(int position){
-
         try {
             StringRequest req = new StringRequest(Request.Method.DELETE, endpoints.DeleteTripUrl + "?id=" + list.getJSONObject(position).getInt("id"),
-                    response -> {
-                        Intent i = new Intent(this.context, DriverCreatedRides.class);
-                        this.context.startActivity(i);
-                        Toast toast = Toast.makeText(this.context, "Successfully deleted trip", Toast.LENGTH_LONG);
-                        toast.show();
-                    },
-                    error -> {
-                        Log.e("trips error", error.toString());
-                        Toast toast = Toast.makeText(this.context, "Error deleting trip", Toast.LENGTH_LONG);
-                        toast.show();
-                    }
+                response -> {
+                    Intent i = new Intent(this.context, DriverCreatedRides.class);
+                    this.context.startActivity(i);
+                    Toast toast = Toast.makeText(this.context, "Successfully deleted trip", Toast.LENGTH_LONG);
+                    toast.show();
+                },
+                error -> {
+                    Log.e("trips error", error.toString());
+                    Toast toast = Toast.makeText(this.context, "Error deleting trip", Toast.LENGTH_LONG);
+                    toast.show();
+                }
             );
             AppController.getInstance().addToRequestQueue(req, "string_req");
         }

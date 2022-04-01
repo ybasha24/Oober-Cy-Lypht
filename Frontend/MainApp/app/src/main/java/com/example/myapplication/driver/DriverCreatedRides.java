@@ -29,6 +29,10 @@ public class DriverCreatedRides extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_created_rides);
+        listAllTrips();
+    }
+
+    public void listAllTrips(){
         try {
             listView = findViewById(R.id.listView);
             String url = endpoints.AllDriverTripsUrl + MainActivity.accountObj.getInt("id");
@@ -40,6 +44,5 @@ public class DriverCreatedRides extends AppCompatActivity {
                     error -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG));
             AppController.getInstance().addToRequestQueue(req, "array_req");
         } catch(JSONException e){}
-
     }
 }
