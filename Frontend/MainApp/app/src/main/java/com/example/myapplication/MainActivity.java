@@ -18,45 +18,25 @@ import org.json.JSONObject;
 
 import com.example.myapplication.app.AppController;
 import com.example.myapplication.driver.DriverHomePage;
+import com.example.myapplication.rider.RiderHomePage;
 
 
 public class MainActivity extends AppCompatActivity {
 
     public static JSONObject accountObj;
+    SharedPreferences prefs;
+    boolean isLoggedIn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
 
-        SharedPreferences prefs = getSharedPreferences("name", MODE_PRIVATE);
-        boolean isLoggedIn= prefs.getBoolean("isLoggedIn", false);
+        prefs = getSharedPreferences("name", MODE_PRIVATE);
+        isLoggedIn = prefs.getBoolean("isLoggedIn", false);
 
         if(isLoggedIn){
             String email = prefs.getString("email", "");
             String password = prefs.getString("password", "");
-            String url = endpoints.LoginUrl + email + "&password=" + password;
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
-                    response -> {
-                        try {
-                            accountObj = response;
-                            Intent intent = null;
-                            if(!accountObj.isNull("firstName")){
-                                if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver") == true)
-                                    intent = new Intent(this, DriverHomePage.class);
-                                else if (!accountObj.isNull("arider") && accountObj.getBoolean("arider") == true)
-                                    intent = new Intent(this, com.example.myapplication.rider.RiderHomePage.class);
-                                startActivity(intent);
-                            }
-                            else {
-                                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Error processing" + url, Toast.LENGTH_LONG).show());
-                            }
-                        }
-                        catch(JSONException e){
-                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Exception: " + e, Toast.LENGTH_LONG).show());
-                        }
-                    },
-                    error ->  runOnUiThread(()->Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG).show()));
-            AppController.getInstance().addToRequestQueue(req, "post_object_tag");
+            signInRequest(email, password);
         }
         else{
             setContentView(R.layout.activity_main);
@@ -66,8 +46,16 @@ public class MainActivity extends AppCompatActivity {
     public void signIn(View view) {
         String email = ((EditText) findViewById(R.id.usernameInput)).getText().toString();
         String password = ((EditText) findViewById(R.id.passwordInput)).getText().toString();
-        String url = endpoints.LoginUrl + email + "&password=" + password;
+        signInRequest(email, password);
+    }
 
+    public void register(View view){
+        Intent intent = new Intent(this, RegistrationOptions.class);
+        startActivity(intent);
+    }
+
+    public void signInRequest(String email, String password){
+        String url = endpoints.LoginUrl + email + "&password=" + password;
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
             response -> {
@@ -78,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                         if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver") == true)
                             intent = new Intent(this, DriverHomePage.class);
                         else if (!accountObj.isNull("arider") && accountObj.getBoolean("arider") == true)
-                            intent = new Intent(this, com.example.myapplication.rider.RiderHomePage.class);
+                            intent = new Intent(this, RiderHomePage.class);
 
                         if(((CheckBox) findViewById(R.id.staySignedInCheckBox)).isChecked()){
                             SharedPreferences.Editor editor = getSharedPreferences("name", MODE_PRIVATE).edit();
@@ -99,10 +87,5 @@ public class MainActivity extends AppCompatActivity {
             },
             error ->  runOnUiThread(()->Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG).show()));
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
-    }
-
-    public void register(View view){
-        Intent intent = new Intent(this, RegistrationOptions.class);
-        startActivity(intent);
     }
 }
