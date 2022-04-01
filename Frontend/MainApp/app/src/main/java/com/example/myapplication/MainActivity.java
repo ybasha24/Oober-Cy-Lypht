@@ -5,6 +5,7 @@ import com.example.myapplication.endpoints.endpoints;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.view.View;
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences("name", MODE_PRIVATE);
         isLoggedIn = prefs.getBoolean("isLoggedIn", false);
+
+        setContentView(R.layout.activity_main);
 
         if(isLoggedIn){
             String email = prefs.getString("email", "");
