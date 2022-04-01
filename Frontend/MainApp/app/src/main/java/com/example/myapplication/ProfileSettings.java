@@ -19,23 +19,50 @@ import org.json.JSONObject;
 
 public class ProfileSettings extends AppCompatActivity {
 
-    final int passwordLength = 8;
+    final int minPasswordLength = 8;
+    EditText firstName;
+    EditText lastName;
+    EditText password;
+    EditText phoneNumber;
+    EditText address;
+    EditText city;
+    EditText state;
+    EditText zip;
+    EditText email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_settings);
 
-        EditText firstName = findViewById(R.id.editTextFirstName2);
-        EditText lastName = findViewById(R.id.editTextLastName2);
-        EditText password = findViewById(R.id.editTextPassword2);
-        EditText phoneNumber = findViewById(R.id.editTextPhone2);
-        EditText address = findViewById(R.id.editTextAddress2);
-        EditText city = findViewById(R.id.editTextCity2);
-        EditText state = findViewById(R.id.editTextState2);
-        EditText zip = findViewById(R.id.editTextZip2);
-        EditText email = findViewById(R.id.editTextEmail2);
+        firstName = findViewById(R.id.editTextFirstName2);
+        lastName = findViewById(R.id.editTextLastName2);
+        password = findViewById(R.id.editTextPassword2);
+        phoneNumber = findViewById(R.id.editTextPhone2);
+        address = findViewById(R.id.editTextAddress2);
+        city = findViewById(R.id.editTextCity2);
+        state = findViewById(R.id.editTextState2);
+        zip = findViewById(R.id.editTextZip2);
+        email = findViewById(R.id.editTextEmail2);
 
+        setPreviousDetails();
+
+    }
+
+    public void saveChanges(View view) {
+        boolean x = verifyNotNull(firstName.getText().toString(), lastName.getText().toString(),
+                email.getText().toString(), address.getText().toString(), city.getText().toString(),
+                state.getText().toString(), zip.getText().toString(), password.getText().toString(),
+                phoneNumber.getText().toString(), findViewById(R.id.statusTV));
+        boolean y = verifyParametersMet(password.getText().toString(), email.getText().toString(),
+                findViewById(R.id.statusTV));
+
+        if (x && y) {
+            changeProfileRequest(getDetails());
+        }
+    }
+
+    public void setPreviousDetails(){
         try {
             firstName.setText(MainActivity.accountObj.getString("firstName"));
             lastName.setText(MainActivity.accountObj.getString("lastName"));
@@ -49,8 +76,7 @@ public class ProfileSettings extends AppCompatActivity {
         } catch(JSONException e){}
     }
 
-    public void saveChanges(View view) {
-        TextView status = findViewById(R.id.statusTV);
+    public JSONObject getDetails(){
         EditText firstName = findViewById(R.id.editTextFirstName2);
         EditText lastName = findViewById(R.id.editTextLastName2);
         EditText password = findViewById(R.id.editTextPassword2);
@@ -60,13 +86,6 @@ public class ProfileSettings extends AppCompatActivity {
         EditText state = findViewById(R.id.editTextState2);
         EditText zip = findViewById(R.id.editTextZip2);
         EditText email = findViewById(R.id.editTextEmail2);
-
-        boolean x = verifyNotNull(firstName.getText().toString(), lastName.getText().toString(),
-                email.getText().toString(), address.getText().toString(), city.getText().toString(),
-                state.getText().toString(), zip.getText().toString(), password.getText().toString(),
-                phoneNumber.getText().toString(), status);
-        boolean y = verifyParametersMet(password.getText().toString(), email.getText().toString(),
-                status);
 
         JSONObject newUserDetails = new JSONObject();
         try {
@@ -79,89 +98,62 @@ public class ProfileSettings extends AppCompatActivity {
             newUserDetails.put("state", state.getText().toString());
             newUserDetails.put("zip", zip.getText().toString());
             newUserDetails.put("email", email.getText().toString());
-        } catch (JSONException e) {
-            Toast.makeText(getApplicationContext(), "JSON Exception: " + e, Toast.LENGTH_LONG);
+        } catch (Exception e) {
+            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Encountered exception " + e, Toast.LENGTH_LONG).show());
         }
-
-        if (x && y) {
-            String url = "";
-
-            try {
-                url = endpoints.EditUserUrl + MainActivity.accountObj.get("id");
-            } catch (JSONException e) {
-                Toast.makeText(getApplicationContext(), "JSON Exception: " + e, Toast.LENGTH_LONG);
-            }
-
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, url, newUserDetails,
-                    response -> {
-                        try {
-                            if (!response.isNull("firstName")) {
-                                MainActivity.accountObj = response;
-                                status.setText("Success!");
-                            } else {
-                                status.setText("Failed here");
-                            }
-                        } catch (Exception e) {
-                            status.setText("Something went wrong...");
-                        }
-                    },
-                    error -> runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG)));
-            AppController.getInstance().addToRequestQueue(req, "post_object_tag");
-        }
+        return newUserDetails;
     }
 
     public boolean verifyNotNull(String firstName, String lastName, String email, String address,
                              String city, String state, String zip, String password,
                              String phoneNumber, TextView tv)
     {
-        boolean errorFlag = true;
         if(firstName.isEmpty() || (firstName.matches("^\\S*$") == false))
         {
             tv.setText("Please enter a first name without white-spaces");
-            errorFlag = false;
+            return false;
         }
         if(lastName.isEmpty() || (lastName.matches("^\\S*$") == false))
         {
             tv.setText("Please enter a last name without white-spaces");
-            errorFlag = false;
+            return false;
         }
         if(email.isEmpty() || (email.matches("^\\S*$") == false))
         {
             tv.setText("Please enter an email without white-spaces");
-            errorFlag = false;
+            return false;
         }
         if(address.isEmpty())
         {
             tv.setText("Please enter a address");
-            errorFlag = false;
+            return false;
         }
         if(city.isEmpty())
         {
             tv.setText("Please enter a city");
-            errorFlag = false;
+            return false;
         }
         if(state.isEmpty())
         {
             tv.setText("Please enter a state");
-            errorFlag = false;
+            return false;
         }
         if(zip.isEmpty())
         {
             tv.setText("Please enter a zip");
-            errorFlag = false;
+            return false;
         }
         if(phoneNumber.isEmpty())
         {
             tv.setText("Please enter a phone number");
-            errorFlag = false;
+            return false;
         }
         if(password.isEmpty())
         {
             tv.setText("Please enter a password number");
-            errorFlag = false;
+            return false;
         }
-
-        return errorFlag;
+        return true;
     }
 
     public boolean verifyParametersMet(String password, String email, TextView tv)
@@ -176,7 +168,7 @@ public class ProfileSettings extends AppCompatActivity {
             tv.setText("Password needs a number");
             errorFlag = false;
         }
-        if(password.length() < passwordLength)
+        if(password.length() < minPasswordLength)
         {
             tv.setText("Password is too short");
             errorFlag = false;
@@ -187,6 +179,25 @@ public class ProfileSettings extends AppCompatActivity {
             errorFlag = false;
         }
         return errorFlag;
+    }
+
+    public void changeProfileRequest(JSONObject newUserDetails){
+        try {
+            String url = endpoints.EditUserUrl + MainActivity.accountObj.get("id");
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, url, newUserDetails,
+                response -> {
+                    try {
+                        if (!response.isNull("firstName")) {
+                            MainActivity.accountObj = response;
+                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_LONG).show());
+                        }
+                    } catch (Exception e) {
+                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Encountered exception " + e, Toast.LENGTH_LONG).show());
+                    }
+                },
+                error -> runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Encountered error " + error, Toast.LENGTH_LONG).show()));
+            AppController.getInstance().addToRequestQueue(req, "post_object_tag");
+        } catch(JSONException e) {}
     }
 
 }
