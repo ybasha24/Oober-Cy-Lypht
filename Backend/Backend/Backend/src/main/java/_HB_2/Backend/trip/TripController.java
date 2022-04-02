@@ -32,7 +32,9 @@ public class TripController {
     Trip createTripByRider(
             @RequestParam int riderId,
             @RequestBody Trip trip){
-        
+        Trip t = tripService.createTripByRider(riderId, trip);
+
+        return t;
     }
 
     @GetMapping("/getTrip")
