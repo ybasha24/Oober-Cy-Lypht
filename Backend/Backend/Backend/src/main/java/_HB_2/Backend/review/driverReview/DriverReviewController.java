@@ -18,8 +18,14 @@ public class DriverReviewController {
         return driverReviewService.addDriverReview(driverId, riderId, review);
     }
 
-    @GetMapping("/getDriverReview")
+    @GetMapping("/getDriverReviewByReviewId")
     DriverReview getDriverReview(@RequestParam int reviewId) {
         return driverReviewService.getReview(reviewId);
+    }
+
+    @DeleteMapping("/deleteDriverReviewByReviewId")
+    String deleteDriverReview(@RequestParam int reviewId) {
+        driverReviewService.deleteReview(reviewId);
+        return "You have deleted driver review " + reviewId;
     }
 }

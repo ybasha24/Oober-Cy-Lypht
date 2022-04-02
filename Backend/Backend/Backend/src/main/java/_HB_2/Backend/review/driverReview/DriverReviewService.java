@@ -29,4 +29,8 @@ public class DriverReviewService {
     public DriverReview getReview(int reviewId) {
         return driverReviewRepository.findById(reviewId);
     }
+
+    public void deleteReview(int reviewId) {
+        driverReviewRepository.deleteById(reviewId);
+    }
 }
