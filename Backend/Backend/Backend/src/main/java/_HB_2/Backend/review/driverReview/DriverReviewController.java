@@ -4,17 +4,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping( "/review")
+@RequestMapping( "/driverReview")
 public class DriverReviewController {
 
     @Autowired
     DriverReviewService driverReviewService;
 
-    @PostMapping("/driverReview")
+    @PostMapping("/postDriverReview")
     DriverReview createDriverReview(
             @RequestParam int driverId, int riderId,
             @RequestBody DriverReview review) {
 
         return driverReviewService.addDriverReview(driverId, riderId, review);
+    }
+
+    @GetMapping("/getDriverReview")
+    DriverReview getDriverReview(@RequestParam int reviewId) {
+        return driverReviewService.getReview(reviewId);
     }
 }

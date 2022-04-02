@@ -25,4 +25,8 @@ public class DriverReviewService {
 
         return review;
     }
+
+    public DriverReview getReview(int reviewId) {
+        return driverReviewRepository.findById(reviewId);
+    }
 }
