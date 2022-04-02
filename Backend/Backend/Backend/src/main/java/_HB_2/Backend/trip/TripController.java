@@ -28,6 +28,13 @@ public class TripController {
         return t;
     }
 
+    @PostMapping("/createTripByRider")
+    Trip createTripByRider(
+            @RequestParam int riderId,
+            @RequestBody Trip trip){
+        
+    }
+
     @GetMapping("/getTrip")
     Trip getListOfTripsByDriverId(
             @RequestParam int id) {
