@@ -1,4 +1,4 @@
-package _HB_2.Backend.Review;
+package _HB_2.Backend.review.driverReview;
 
 import _HB_2.Backend.user.User;
 
