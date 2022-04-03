@@ -28,9 +28,10 @@ public class UserController {
     }
 
     @DeleteMapping("/deleteUser")
-    void deleteUserById(
+    String deleteUserById(
             @RequestParam int id) {
         userService.deleteUserById(id);
+        return "You have deleted User " + id;
     }
 
     //Not sure why this doesn't work
