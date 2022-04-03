@@ -1,7 +1,10 @@
 package _HB_2.Backend.review.riderReview;
 
+import _HB_2.Backend.review.driverReview.DriverReview;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping( "/riderReview")
@@ -27,6 +30,11 @@ public class RiderReviewController {
     String deleteRiderReview(@RequestParam int reviewId) {
         riderReviewService.deleteReview(reviewId);
         return "You have deleted rider review " + reviewId;
+    }
+
+    @GetMapping("getAllRiderReviewsByRiderId")
+    List<RiderReview> getAllRiderReviewsByRiderid(@RequestParam int riderId) {
+        return riderReviewService.getAllReviewsByRiderid(riderId);
     }
 }
 
