@@ -38,6 +38,22 @@ public class TripService {
         return trip;
     }
 
+    public Trip createTripByRider(int id, Trip trip){
+        User r = riderRepository.getById(id);
+        Set<User> riders = new HashSet<>();
+        riders.add(r);
+        trip.hasARider = true;
+        trip.hasADriver = false;
+        trip.isConfirmed = false;
+        trip.hasStarted = false;
+        trip.isCompleted = false;
+        trip.setRiders(riders);
+        trip.numberOfRiders = 1;
+
+        tripRepository.save(trip);
+        return trip;
+    }
+
     public Trip getTripById(int id) {
         return tripRepository.findById(id);
 
