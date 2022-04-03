@@ -5,6 +5,9 @@ import _HB_2.Backend.rider.RiderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class DriverReviewService {
 
@@ -32,5 +35,21 @@ public class DriverReviewService {
 
     public void deleteReview(int reviewId) {
         driverReviewRepository.deleteById(reviewId);
+    }
+
+    //We can probably speed this up by writing a sql query to make it run faster
+    //rather than sorting through them on this end.
+    public List<DriverReview> getAllReviewsByDriverid(int driverId) {
+
+        List<DriverReview> driverReviews = new ArrayList<>();
+        List<DriverReview> allDriverReviews = driverReviewRepository.findAll();
+
+        for(DriverReview driverReview : allDriverReviews) {
+            if ( driverReview.getReviewDriver().getId() == driverId) {
+                driverReviews.add(driverReview);
+            }
+        }
+
+        return driverReviews;
     }
 }
