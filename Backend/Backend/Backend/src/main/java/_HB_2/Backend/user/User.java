@@ -51,6 +51,7 @@ public class User {
     @ManyToMany(mappedBy = "riders")
     Set<Trip> trips;
 
+    //I don't think we need this.  Talk to Yaaseen
     @JsonIgnore
     @OneToMany(mappedBy = "rating")
     Set<Rating> ratings;
@@ -188,19 +189,5 @@ public class User {
         this.trips = trips;
     }
 
-    public long getRating() {
-        long average = 0;
-        int sum = 0;
-
-        for (Rating rate : ratings) {
-            sum = sum + rate.getRating();
-        }
-
-        average = sum / (ratings.size());
-        //round
-        average = Math.round(average*10)/10;
-
-        return average;
-    }
 
 }

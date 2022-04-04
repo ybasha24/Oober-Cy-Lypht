@@ -16,4 +16,9 @@ public class RatingController {
                         @RequestBody Rating rating) {
         return ratingService.createRating(raterId, ratedId, rating);
     }
+
+    @GetMapping("/getUserRating")
+    Float getUserRating(@RequestParam int userId) {
+        return ratingService.getUserRating(userId);
+    }
 }
