@@ -36,6 +36,5 @@ public class UsersList extends AppCompatActivity {
                 },
                 error -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG));
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
-
     }
 }

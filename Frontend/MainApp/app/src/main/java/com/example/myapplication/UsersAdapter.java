@@ -17,12 +17,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.myapplication.admin.UsersList;
 import com.example.myapplication.app.AppController;
 import com.example.myapplication.createride.SelectRideTime;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import com.example.myapplication.endpoints.endpoints;
 
 public class UsersAdapter extends BaseAdapter implements ListAdapter {
     private JSONArray list;
@@ -94,10 +96,14 @@ public class UsersAdapter extends BaseAdapter implements ListAdapter {
             try {
                 JSONObject json = list.getJSONObject(position);
                 int id = json.getInt("id");
-                String url = "http://coms-309-030.class.las.iastate.edu:8080/user/deleteUser" + "?id=" + id;
+                String url = endpoints.DeleteUserUrl + id;
                 StringRequest req = new StringRequest(Request.Method.DELETE, url,
-                        response -> Log.e("Delete user", response),
-                        error -> Toast.makeText(context, "Error: " + error, Toast.LENGTH_LONG));
+                        response -> {
+                            Intent i = new Intent(this.context, UsersList.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            this.context.startActivity(i);
+                        },
+                        error -> Log.e("deleting user", error.toString()));
                 AppController.getInstance().addToRequestQueue(req, "post_object_tag");
             } catch(Exception e){}
         });
