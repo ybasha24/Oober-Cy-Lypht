@@ -10,7 +10,6 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.myapplication.R;
-import com.example.myapplication.AdminTripsAdapter;
 import com.example.myapplication.app.AppController;
 
 import org.json.JSONArray;
@@ -31,7 +30,7 @@ public class TripsList extends AppCompatActivity {
             response -> {
                 Log.e("Trips list error", response.toString());
                 tripsList = response;
-                listView.setAdapter(new AdminTripsAdapter(tripsList, getApplicationContext()) );
+                listView.setAdapter(new TripsAdapter(tripsList, getApplicationContext()) );
             },
             error -> {
                 Log.e("trips list error", error.toString());

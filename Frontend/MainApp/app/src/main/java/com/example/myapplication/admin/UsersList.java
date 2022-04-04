@@ -10,7 +10,6 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.myapplication.R;
-import com.example.myapplication.UsersAdapter;
 import com.example.myapplication.app.AppController;
 
 import org.json.JSONArray;
