@@ -28,10 +28,19 @@ public class ConfirmRide extends AppCompatActivity {
     String originAddress;
     String destAddress;
     int radius;
-    Slider radiusSlider;
-    TextView radiusTV;
+    int maxRiders;
+    double rate;
     int durationHours;
     int durationMinutes;
+
+    TextView radiusTV;
+    Slider radiusSlider;
+
+    TextView maxRidersTV;
+    Slider maxRidersSlider;
+
+    TextView rateTV;
+    Slider rateSlider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +50,26 @@ public class ConfirmRide extends AppCompatActivity {
         radiusSlider = findViewById(R.id.radiusSlider);
         radiusTV = findViewById(R.id.radiusTV);
 
+        maxRidersTV = findViewById(R.id.maxRidersTV);
+        maxRidersSlider = findViewById(R.id.maxRidersSlider);
+
+        rateTV = findViewById(R.id.rateTV);
+        rateSlider = findViewById(R.id.rateSlider);
+
+
         radiusSlider.addOnChangeListener((slider1, value, fromUser) -> {
             radius = (int) value;
             radiusTV.setText("Pickup radius: " + (int) value + " miles");
+        });
+
+        maxRidersSlider.addOnChangeListener((slider1, value, fromUser) -> {
+            maxRiders = (int) value;
+            maxRidersTV.setText("Max riders: " + (int) value);
+        });
+
+        rateSlider.addOnChangeListener((slider1, value, fromUser) -> {
+            rate = (double) value;
+            rateTV.setText("$" + (double) value + " per mile");
         });
 
         if(SelectRideTime.datettime != null){

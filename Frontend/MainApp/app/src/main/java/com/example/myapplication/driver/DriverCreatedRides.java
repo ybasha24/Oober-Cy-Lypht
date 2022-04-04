@@ -37,11 +37,11 @@ public class DriverCreatedRides extends AppCompatActivity {
             listView = findViewById(R.id.listView);
             String url = endpoints.AllDriverTripsUrl + MainActivity.accountObj.getInt("id");
             JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
-                    response -> {
-                        tripsList = response;
-                        listView.setAdapter(new TripsAdapter(tripsList, getApplicationContext()));
-                    },
-                    error -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG));
+                response -> {
+                    tripsList = response;
+                    listView.setAdapter(new TripsAdapter(tripsList, getApplicationContext()));
+                },
+                error -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG));
             AppController.getInstance().addToRequestQueue(req, "array_req");
         } catch(JSONException e){}
     }
