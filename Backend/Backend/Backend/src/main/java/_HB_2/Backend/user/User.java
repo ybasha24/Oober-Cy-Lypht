@@ -1,5 +1,6 @@
 package _HB_2.Backend.user;
 
+import _HB_2.Backend.rating.Rating;
 import _HB_2.Backend.trip.Trip;
 
 import javax.persistence.*;
@@ -48,6 +49,9 @@ public class User {
 
     @ManyToMany(mappedBy = "riders")
     Set<Trip> trips;
+
+    @OneToMany(mappedBy = "rating")
+    Set<Rating> ratings;
 
     //no Boolean Values for User-These should be set in the subclass constructors
     public User(String firstName,
@@ -180,5 +184,20 @@ public class User {
 
     public void setTrips(Set<Trip> trips) {
         this.trips = trips;
+    }
+
+    public long getRating() {
+        long average = 0;
+        int sum = 0;
+
+        for (Rating rate : ratings) {
+            sum = sum + rate.getRating();
+        }
+
+        average = sum / (ratings.size());
+        //round
+        average = Math.round(average*10)/10;
+
+        return average;
     }
 }

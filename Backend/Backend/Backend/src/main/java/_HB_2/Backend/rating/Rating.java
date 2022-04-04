@@ -1,8 +1,10 @@
 package _HB_2.Backend.rating;
 
 import _HB_2.Backend.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Rating {
