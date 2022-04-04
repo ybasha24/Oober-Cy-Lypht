@@ -65,14 +65,13 @@ public class SelectRideTime extends AppCompatActivity {
             return new DatePickerDialog(getActivity(), this, year, month, day);
         }
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            String m = month >= 10 ? String.valueOf(month) : "0" + month;
+            String m = (month + 1) >= 10 ? String.valueOf(month + 1) : "0" + (month + 1);
             String d = day >= 10 ? String.valueOf(day) : "0" + day;
             SelectRideTime.date = year + "-" + m + "-" + d;
 
             String dateTimeString = date + " " + time;
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             datettime = LocalDateTime.parse(dateTimeString, formatter);
-
             SelectRideTime.dateTV.setText(SelectRideTime.date + "(" + datettime.getDayOfWeek() + ")");
         }
     }
