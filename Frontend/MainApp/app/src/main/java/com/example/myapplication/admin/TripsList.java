@@ -23,7 +23,7 @@ public class TripsList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trips_list);
+        setContentView(R.layout.activity_admin_trips_list);
         listView = findViewById(R.id.listView);
         String url = "";
         url = "http://coms-309-030.class.las.iastate.edu:8080/trip/getAllTrips";
@@ -33,7 +33,10 @@ public class TripsList extends AppCompatActivity {
                 tripsList = response;
                 listView.setAdapter(new AdminTripsAdapter(tripsList, getApplicationContext()) );
             },
-            error -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG));
+            error -> {
+                Log.e("trips list error", error.toString());
+                Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG);
+            });
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
 
     }

@@ -19,6 +19,9 @@
             android:name=".admin.UsersList"
             android:exported="false" />
         <activity
+            android:name=".admin.TripsList"
+            android:exported="false" />
+        <activity
             android:name=".admin.AdminHomePage"
             android:exported="false" />
         <activity

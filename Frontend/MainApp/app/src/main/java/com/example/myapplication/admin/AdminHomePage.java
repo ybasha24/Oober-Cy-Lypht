@@ -27,7 +27,6 @@ public class AdminHomePage extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     public void signOut(View view) {
         MainActivity.accountObj = null;
         Intent intent = new Intent(this, MainActivity.class);

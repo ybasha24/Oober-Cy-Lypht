@@ -83,19 +83,25 @@ public class AdminTripsAdapter extends BaseAdapter implements ListAdapter {
         });
 
         deleteTripButton.setOnClickListener(v -> {
+            Log.e("trips error", "trying to delete trip");
             try {
+                Log.e("trips error", endpoints.DeleteTripUrl + "?id=" + list.getJSONObject(position).getInt("id"));
+
                 StringRequest req = new StringRequest(Request.Method.DELETE, endpoints.DeleteTripUrl + "?id=" + list.getJSONObject(position).getInt("id"),
-                        response -> {
-                            Intent i = new Intent(this.context, TripsList.class);
-                            this.context.startActivity(i);
-                            Toast toast = Toast.makeText(this.context, "Successfully deleted trip", Toast.LENGTH_LONG);
-                            toast.show();
-                        },
-                        error -> {
-                            Log.e("trips error", error.toString());
-                            Toast toast = Toast.makeText(this.context, "Error deleting trip", Toast.LENGTH_LONG);
-                            toast.show();
-                        }
+                    response -> {
+                        Toast toast = Toast.makeText(this.context, "Successfully deleted trip", Toast.LENGTH_LONG);
+                        toast.show();
+                        Log.e("trips error", response);
+                        Intent i = new Intent(this.context, TripsList.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        this.context.startActivity(i);
+
+                    },
+                    error -> {
+                        Log.e("trips error", error.toString());
+                        Toast toast = Toast.makeText(this.context, "Error deleting trip", Toast.LENGTH_LONG);
+                        toast.show();
+                    }
                 );
                 AppController.getInstance().addToRequestQueue(req, "string_req");
             }
