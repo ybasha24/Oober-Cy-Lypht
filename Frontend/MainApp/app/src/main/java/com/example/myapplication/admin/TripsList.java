@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.myapplication.R;
-import com.example.myapplication.TripsAdapter;
+import com.example.myapplication.AdminTripsAdapter;
 import com.example.myapplication.app.AppController;
 
 import org.json.JSONArray;
@@ -29,9 +29,9 @@ public class TripsList extends AppCompatActivity {
         url = "http://coms-309-030.class.las.iastate.edu:8080/trip/getAllTrips";
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
             response -> {
-                Log.e("Trips error", response.toString());
+                Log.e("Trips list error", response.toString());
                 tripsList = response;
-                listView.setAdapter(new TripsAdapter(tripsList, getApplicationContext()) );
+                listView.setAdapter(new AdminTripsAdapter(tripsList, getApplicationContext()) );
             },
             error -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG));
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");

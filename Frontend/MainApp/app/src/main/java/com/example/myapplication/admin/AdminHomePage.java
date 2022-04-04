@@ -20,8 +20,13 @@ public class AdminHomePage extends AppCompatActivity {
     public void manageUsers(View view){
         Intent intent = new Intent(this, UsersList.class);
         startActivity(intent);
-
     }
+
+    public void manageTrips(View view){
+        Intent intent = new Intent(this, TripsList.class);
+        startActivity(intent);
+    }
+
 
     public void signOut(View view) {
         MainActivity.accountObj = null;
