@@ -13,10 +13,12 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "Rater_id")
     User rater;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "Rated_id")
     User rated;
@@ -39,7 +41,7 @@ public class Rating {
         return rater;
     }
 
-    public void setRatee(User rated) {
+    public void setRated(User rated) {
         this.rated = rated;
     }
 

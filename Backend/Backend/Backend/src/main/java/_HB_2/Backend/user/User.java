@@ -2,6 +2,7 @@ package _HB_2.Backend.user;
 
 import _HB_2.Backend.rating.Rating;
 import _HB_2.Backend.trip.Trip;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -50,6 +51,7 @@ public class User {
     @ManyToMany(mappedBy = "riders")
     Set<Trip> trips;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "rating")
     Set<Rating> ratings;
 
@@ -200,4 +202,5 @@ public class User {
 
         return average;
     }
+
 }
