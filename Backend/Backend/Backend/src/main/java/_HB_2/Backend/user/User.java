@@ -1,6 +1,8 @@
 package _HB_2.Backend.user;
 
+import _HB_2.Backend.rating.Rating;
 import _HB_2.Backend.trip.Trip;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -48,6 +50,11 @@ public class User {
 
     @ManyToMany(mappedBy = "riders")
     Set<Trip> trips;
+
+    //I don't think we need this.  Talk to Yaaseen
+    @JsonIgnore
+    @OneToMany(mappedBy = "rating")
+    Set<Rating> ratings;
 
     //no Boolean Values for User-These should be set in the subclass constructors
     public User(String firstName,
@@ -181,4 +188,6 @@ public class User {
     public void setTrips(Set<Trip> trips) {
         this.trips = trips;
     }
+
+
 }
