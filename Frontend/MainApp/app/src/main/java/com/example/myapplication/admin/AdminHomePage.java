@@ -34,7 +34,7 @@ public class AdminHomePage extends AppCompatActivity {
         editor.putString("password", "");
         editor.putBoolean("isLoggedIn", false);
         editor.apply();
-        
+
         MainActivity.accountObj = null;
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
