@@ -18,7 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.example.myapplication.app.AppController;
-import com.example.myapplication.searchride.RiderSearchRide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -189,7 +188,7 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
 
     public void proceed(View v) {
         Intent i;
-        if (!otherConstants.SearchTrip) {
+
             i = new Intent(this, ConfirmRide.class);
             try {
                 if ((boolean) getIntent().getSerializableExtra("editing")) {
@@ -198,11 +197,7 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
                 }
             } catch (Exception e) {
             }
-        }
-        else
-        {
-            i = new Intent(this, RiderSearchRide.class);
-        }
+
         startActivity(i);
     }
     public void clearMapAndDraw(){
