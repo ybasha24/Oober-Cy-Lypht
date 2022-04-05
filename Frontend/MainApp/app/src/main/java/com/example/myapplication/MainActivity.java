@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.myapplication.admin.AdminHomePage;
 import com.example.myapplication.endpoints.endpoints;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -61,16 +63,17 @@ public class MainActivity extends AppCompatActivity {
         String url = endpoints.LoginUrl + email + "&password=" + password;
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
-            response -> {
+                response -> {
                 try {
                     accountObj = response;
                     Intent intent = null;
                     if(!accountObj.isNull("firstName")){
-                        if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver") == true)
+                        if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver") && !accountObj.getBoolean("anAdmin"))
                             intent = new Intent(this, DriverHomePage.class);
-                        else if (!accountObj.isNull("arider") && accountObj.getBoolean("arider") == true)
+                        else if (!accountObj.isNull("arider") && accountObj.getBoolean("arider") && !accountObj.getBoolean("anAdmin"))
                             intent = new Intent(this, RiderHomePage.class);
-
+                        else if (accountObj.getBoolean("anAdmin"))
+                            intent = new Intent(this, AdminHomePage.class);
                         if(((CheckBox) findViewById(R.id.staySignedInCheckBox)).isChecked()){
                             SharedPreferences.Editor editor = getSharedPreferences("name", MODE_PRIVATE).edit();
                             editor.putString("email", email);
