@@ -106,7 +106,7 @@ public class RiderSearchRide extends AppCompatActivity {
         JSONArray list = new JSONArray();
         for(int i = 0; i < arr.length(); i++)
         {
-            if(originAddress.equals(arr.getJSONObject(i).get("originAddress")))
+            if(originAddress.equals(arr.getJSONObject(i).get("originAddress")) && destAddress.equals(arr.getJSONObject(i).get("destAddress")))
             {
                 list.put(arr.getJSONObject(i));
             }
