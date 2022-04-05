@@ -57,7 +57,7 @@ public class DriverRegistrationPage extends AppCompatActivity {
         boolean x = HelperFunctions.verifyNotNull(firstName, lastName, email, address, city, state, zip, password,
                 phone, tv);
 
-        boolean y = HelperFunctions.verifyParametersMet(password, email, tv);
+        boolean y = HelperFunctions.verifyParametersMet(password, email, phone, tv);
 
         if (x && y) {
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, endpoints.DriverRegUrl, obj,

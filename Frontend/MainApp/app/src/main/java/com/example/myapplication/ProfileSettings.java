@@ -53,7 +53,7 @@ public class ProfileSettings extends AppCompatActivity {
                 state.getText().toString(), zip.getText().toString(), password.getText().toString(),
                 phoneNumber.getText().toString(), findViewById(R.id.statusTV));
         boolean y = HelperFunctions.verifyParametersMet(password.getText().toString(), email.getText().toString(),
-                findViewById(R.id.statusTV));
+                phoneNumber.getText().toString(), findViewById(R.id.statusTV));
 
         if (x && y) {
             changeProfileRequest(getDetails());

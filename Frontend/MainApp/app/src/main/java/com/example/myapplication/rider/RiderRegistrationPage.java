@@ -57,7 +57,7 @@ public class RiderRegistrationPage extends AppCompatActivity {
         boolean x = HelperFunctions.verifyNotNull(firstName, lastName, email, address, city, state, zip, password,
                 phoneNumber, tv);
 
-        boolean y = HelperFunctions.verifyParametersMet(password, email, tv);
+        boolean y = HelperFunctions.verifyParametersMet(password, email, phoneNumber, tv);
 
         if (x && y) {
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, endpoints.RiderRegUrl, obj,
