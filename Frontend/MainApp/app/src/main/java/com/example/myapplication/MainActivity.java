@@ -29,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
     public static JSONObject accountObj;
     SharedPreferences prefs;
     boolean isLoggedIn;
+    EditText emailInput;
+    EditText passwordInput;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +40,13 @@ public class MainActivity extends AppCompatActivity {
         isLoggedIn = prefs.getBoolean("isLoggedIn", false);
 
         setContentView(R.layout.activity_main);
+        emailInput = findViewById(R.id.emailInput);
+        passwordInput = findViewById(R.id.passwordInput);
 
         if(isLoggedIn){
             String email = prefs.getString("email", "");
             String password = prefs.getString("password", "");
+            Log.e("logging in", email + " " + password);
             signInRequest(email, password);
         }
         else{
@@ -49,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void signIn(View view) {
-        String email = ((EditText) findViewById(R.id.usernameInput)).getText().toString();
+        String email = ((EditText) findViewById(R.id.emailInput)).getText().toString();
         String password = ((EditText) findViewById(R.id.passwordInput)).getText().toString();
         signInRequest(email, password);
     }
@@ -63,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         String url = endpoints.LoginUrl + email + "&password=" + password;
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
-                response -> {
+            response -> {
                 try {
                     accountObj = response;
                     Intent intent = null;
@@ -93,5 +99,9 @@ public class MainActivity extends AppCompatActivity {
             },
             error ->  runOnUiThread(()->Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG).show()));
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
+
+        emailInput.setText(email);
+        passwordInput.setText(password);
+
     }
 }

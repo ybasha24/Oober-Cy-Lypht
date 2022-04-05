@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -20,6 +21,8 @@ public class TripsList extends AppCompatActivity {
 
     ListView listView;
     JSONArray tripsList;
+    EditText emailInput;
+    EditText passwordInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
