@@ -110,13 +110,13 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
                     Intent i = new Intent(this.context, DriverCreatedRides.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     this.context.startActivity(i);
-//                    Toast toast = Toast.makeText(this.context, "Successfully deleted trip", Toast.LENGTH_LONG);
-//                    toast.show();
+                    Toast toast = Toast.makeText(this.context, "Successfully deleted trip", Toast.LENGTH_LONG);
+                    toast.show();
                 },
                 error -> {
                     Log.e("trips error", error.toString());
-//                    Toast toast = Toast.makeText(this.context, "Error deleting trip", Toast.LENGTH_LONG);
-//                    toast.show();
+                    Toast toast = Toast.makeText(this.context, "Error deleting trip", Toast.LENGTH_LONG);
+                    toast.show();
                 }
             );
             AppController.getInstance().addToRequestQueue(req, "string_req");
