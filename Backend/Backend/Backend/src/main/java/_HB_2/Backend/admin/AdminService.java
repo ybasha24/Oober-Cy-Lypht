@@ -36,7 +36,7 @@ public class AdminService {
 
     public User addAsRider(int id){
         User newUser = userRepository.findById(id);
-        if(newUser.getARider() == false){
+        if(newUser.getARider() == null || newUser.getARider() == false){
             newUser.setARider(true);
         }
         userRepository.save(newUser);
@@ -46,7 +46,7 @@ public class AdminService {
 
     public User addAsDriver(int id){
         User newUser = userRepository.findById(id);
-        if(newUser.getADriver() == false){
+        if(newUser.getADriver() == null || newUser.getADriver() == false){
             newUser.setADriver(true);
         }
         userRepository.save(newUser);
@@ -57,7 +57,7 @@ public class AdminService {
     public User removeAsRider(int id){
         User newUser = userRepository.findById(id);
         newUser.setARider(false);
-        if (newUser.getADriver() == false & newUser.getAnAdmin() == false){
+        if ((newUser.getADriver() == null || newUser.getADriver() == false) & (newUser.getAnAdmin() == null || newUser.getAnAdmin() == false)){
             userRepository.deleteById(id);
         }
         else {
@@ -70,7 +70,7 @@ public class AdminService {
     public User removeAsDriver(int id){
         User newUser = userRepository.findById(id);
         newUser.setADriver(false);
-        if (newUser.getARider() == false & newUser.getAnAdmin() == false){
+        if ((newUser.getARider() == null || newUser.getARider() == false) & (newUser.getAnAdmin() == null || newUser.getAnAdmin() ==false)){
             userRepository.deleteById(id);
         }
         else {
