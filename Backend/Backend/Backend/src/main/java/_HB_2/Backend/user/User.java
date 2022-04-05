@@ -1,6 +1,8 @@
 package _HB_2.Backend.user;
 
 import _HB_2.Backend.rating.Rating;
+import _HB_2.Backend.review.driverReview.DriverReview;
+import _HB_2.Backend.review.riderReview.RiderReview;
 import _HB_2.Backend.trip.Trip;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -48,13 +50,29 @@ public class User {
     Boolean isARider;
     Boolean isAnAdmin;
 
-    @ManyToMany(mappedBy = "riders")
+    @ManyToMany(mappedBy = "riders", cascade = CascadeType.MERGE)
     Set<Trip> trips;
 
-    //I don't think we need this.  Talk to Yaaseen
+    //We need the orphanRemoval = true here so we can delete whatever the user is related to when deleting the user
     @JsonIgnore
-    @OneToMany(mappedBy = "rating")
+    @OneToMany(mappedBy = "rater", orphanRemoval = true)
     Set<Rating> ratings;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "rated", orphanRemoval = true)
+    Set<Rating> rating;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "tripDriver", orphanRemoval = true)
+    private Set<Trip> trip;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "reviewDriver", orphanRemoval = true)
+    private Set<DriverReview> driverReviews;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "reviewRider", orphanRemoval = true)
+    private Set<RiderReview> riderReviews;
 
     //no Boolean Values for User-These should be set in the subclass constructors
     public User(String firstName,

@@ -49,6 +49,7 @@ public class TripService {
         trip.isCompleted = false;
         trip.setRiders(riders);
         trip.numberOfRiders = 1;
+        trip.setRatePerMin(0);
 
         tripRepository.save(trip);
         return trip;

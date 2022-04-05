@@ -56,6 +56,8 @@ public class Trip {
     //that the driver is willing to pick up/drop off a rider
     int radius;
 
+    double ratePerMin;
+
     //Empty Constructor
     public Trip() {
     }
@@ -220,5 +222,11 @@ public class Trip {
 
     public void setRadius(int radius) {
         this.radius = radius;
+    }
+
+    public double getRatePerMin() { return ratePerMin; }
+
+    public void setRatePerMin(double ratePerMin) {
+        this.ratePerMin = ratePerMin;
     }
 }
