@@ -10,6 +10,8 @@ import android.view.View;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.ProfileSettings;
 import com.example.myapplication.R;
+import com.example.myapplication.createride.SelectRideTime;
+import com.example.myapplication.endpoints.otherConstants;
 
 
 public class RiderHomePage extends AppCompatActivity {
@@ -34,6 +36,12 @@ public class RiderHomePage extends AppCompatActivity {
 
         MainActivity.accountObj = null;
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+    public void searchRides(View view)
+    {
+        Intent intent = new Intent(this, SelectRideTime.class);
+        otherConstants.SearchTrip = true;
         startActivity(intent);
     }
 

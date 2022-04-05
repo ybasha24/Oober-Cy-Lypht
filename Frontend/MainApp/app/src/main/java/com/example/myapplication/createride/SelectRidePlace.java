@@ -3,6 +3,7 @@ package com.example.myapplication.createride;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.myapplication.R;
+import com.example.myapplication.endpoints.otherConstants;
 import com.example.myapplication.endpoints.endpoints;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.example.myapplication.app.AppController;
+import com.example.myapplication.searchride.RiderSearchRide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -66,7 +68,7 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
         initAutoCompleteFragments();
     }
 
-    public void initAutoCompleteFragments(){
+    public void initAutoCompleteFragments() {
 
         Places.initialize(getApplicationContext(), endpoints.GoogleMapsAPIKey);
 
@@ -82,7 +84,7 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(origin, 12.0f));
 
 
-                if(originMarker != null)
+                if (originMarker != null)
                     originMarker.remove();
                 originMarker = mMap.addMarker(new MarkerOptions().position(origin));
 
@@ -90,8 +92,11 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
                     clearMapAndDraw();
                 }
             }
+
             @Override
-            public void onError(@NonNull Status status) { Log.e("Maps error", status.toString()); }
+            public void onError(@NonNull Status status) {
+                Log.e("Maps error", status.toString());
+            }
         });
 
 
@@ -105,17 +110,20 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
                 destString = place.getName();
                 destAddress = place.getAddress();
 
-                if(destMarker != null)
+                if (destMarker != null)
                     destMarker.remove();
                 destMarker = mMap.addMarker(new MarkerOptions().position(dest));
 
-                if (origin != null && dest != null){
+                if (origin != null && dest != null) {
                     clearMapAndDraw();
                 }
 
             }
+
             @Override
-            public void onError(@NonNull Status status) { Log.e("Maps error", status.toString()); }
+            public void onError(@NonNull Status status) {
+                Log.e("Maps error", status.toString());
+            }
         });
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -127,37 +135,38 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
         mMap.getUiSettings().setZoomControlsEnabled(true);
     }
 
-    public void drawRoute(){
+    public void drawRoute() {
 
         String routeOrigin = "origin=" + origin.latitude + "," + origin.longitude;
         String waypoints = "";
         String routeDest = "destination=" + dest.latitude + "," + dest.longitude;
-        String params = routeOrigin + "&" + waypoints + "&"  + routeDest + "&key=" + endpoints.GoogleMapsAPIKey;
+        String params = routeOrigin + "&" + waypoints + "&" + routeDest + "&key=" + endpoints.GoogleMapsAPIKey;
         String url = endpoints.GoogleMapsDirectionUrl + params;
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
-            response -> {
-                try {
-                    JSONArray routeArray = response.getJSONArray("routes");
-                    JSONObject routes = routeArray.getJSONObject(0);
-                    JSONObject overviewPolylines = routes.getJSONObject("overview_polyline");
-                    String encodedString = overviewPolylines.getString("points");
-                    List<LatLng> list = PolyUtil.decode(encodedString);
-                    mMap.addPolyline(new PolylineOptions().addAll(list).width(12).color(Color.parseColor("#05b1fb")).geodesic(true));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin, 10.0f));
-                    calculateRoute();
-                }
-                catch(JSONException e){ Log.e("Maps error", e.toString()); }
-            },
-            error -> Log.e("Maps error", error.toString())
+                response -> {
+                    try {
+                        JSONArray routeArray = response.getJSONArray("routes");
+                        JSONObject routes = routeArray.getJSONObject(0);
+                        JSONObject overviewPolylines = routes.getJSONObject("overview_polyline");
+                        String encodedString = overviewPolylines.getString("points");
+                        List<LatLng> list = PolyUtil.decode(encodedString);
+                        mMap.addPolyline(new PolylineOptions().addAll(list).width(12).color(Color.parseColor("#05b1fb")).geodesic(true));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin, 10.0f));
+                        calculateRoute();
+                    } catch (JSONException e) {
+                        Log.e("Maps error", e.toString());
+                    }
+                },
+                error -> Log.e("Maps error", error.toString())
         );
         AppController.getInstance().addToRequestQueue(req, "obj_req");
     }
 
-    public void calculateRoute(){
+    public void calculateRoute() {
         String routeOrigin = "origins=" + origin.latitude + "," + origin.longitude;
         String routeDest = "destinations=" + dest.latitude + "," + dest.longitude;
-        String params = routeOrigin + "&"  + routeDest + "&units=imperial" + "&key=" + endpoints.GoogleMapsAPIKey;
+        String params = routeOrigin + "&" + routeDest + "&units=imperial" + "&key=" + endpoints.GoogleMapsAPIKey;
         params = params.replaceAll(" ", "%20");
         String url = endpoints.GoogleMapsDistanceUrl + params;
 
@@ -170,25 +179,32 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
                         int durationSeconds = elements.getJSONObject(0).getJSONObject("duration").getInt("value");
                         durationHours = durationSeconds / 3600;
                         durationMinutes = (durationSeconds % 3600) / 60;
+                    } catch (JSONException e) {
+                        Log.e("Maps error", e.toString());
                     }
-                    catch(JSONException e){ Log.e("Maps error", e.toString()); }
                 },
                 error -> Log.e("Maps error", error.toString()));
         AppController.getInstance().addToRequestQueue(req, "obj_req");
     }
 
-    public void proceed(View v){
-        Intent i = new Intent(this, ConfirmRide.class);
-        try {
-            if ((boolean) getIntent().getSerializableExtra("editing")) {
-                i.putExtra("editing", true);
-                i.putExtra("tripId", (int) getIntent().getSerializableExtra("tripId"));
+    public void proceed(View v) {
+        Intent i;
+        if (!otherConstants.SearchTrip) {
+            i = new Intent(this, ConfirmRide.class);
+            try {
+                if ((boolean) getIntent().getSerializableExtra("editing")) {
+                    i.putExtra("editing", true);
+                    i.putExtra("tripId", (int) getIntent().getSerializableExtra("tripId"));
+                }
+            } catch (Exception e) {
             }
-        } catch(Exception e){}
-
+        }
+        else
+        {
+            i = new Intent(this, RiderSearchRide.class);
+        }
         startActivity(i);
     }
-
     public void clearMapAndDraw(){
         mMap.clear();
         originMarker = mMap.addMarker(new MarkerOptions().position(origin));

@@ -17,6 +17,9 @@
 
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".searchride.RiderSearchRide"
+            android:exported="false" />
+        <activity
             android:name=".driver.DriverCreatedRides"
             android:exported="false" />
         <activity

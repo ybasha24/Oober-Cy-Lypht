@@ -11,6 +11,7 @@ import com.example.myapplication.MainActivity;
 import com.example.myapplication.ProfileSettings;
 import com.example.myapplication.R;
 import com.example.myapplication.createride.SelectRideTime;
+import com.example.myapplication.endpoints.otherConstants;
 
 public class DriverHomePage extends AppCompatActivity {
 
@@ -22,11 +23,13 @@ public class DriverHomePage extends AppCompatActivity {
 
     public void createRide(View view){
         Intent intent = new Intent(this, SelectRideTime.class);
+        otherConstants.SearchTrip = false;
         startActivity(intent);
     }
 
     public void viewCreatedRides(View view){
         Intent intent = new Intent(this, DriverCreatedRides.class);
+        otherConstants.SearchTrip = false;
         startActivity(intent);
     }
 
