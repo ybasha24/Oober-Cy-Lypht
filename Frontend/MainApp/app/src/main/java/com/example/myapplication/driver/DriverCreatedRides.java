@@ -48,4 +48,12 @@ public class DriverCreatedRides extends AppCompatActivity {
             AppController.getInstance().addToRequestQueue(req, "array_req");
         } catch(JSONException e){}
     }
+
+    public void onBackPressed() {
+        Intent i = new Intent(this, DriverHomePage.class);
+        this.startActivity(i);
+        super.onBackPressed();
+    }
+
+
 }
