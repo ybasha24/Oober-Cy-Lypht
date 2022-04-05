@@ -59,7 +59,7 @@ public class HelperFunctions {
         return errorFlag;
     }
 
-    public static boolean verifyParametersMet(String password, String email, TextView tv)
+    public static boolean verifyParametersMet(String password, String email, String phone, TextView tv)
     {
         boolean errorFlag = true;
         if(password.equals("abc"))
@@ -79,6 +79,11 @@ public class HelperFunctions {
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
         {
             tv.setText("Please enter valid email");
+            errorFlag = false;
+        }
+        if(!Patterns.PHONE.matcher(phone).matches())
+        {
+            tv.setText("Enter valid phone number");
             errorFlag = false;
         }
 
