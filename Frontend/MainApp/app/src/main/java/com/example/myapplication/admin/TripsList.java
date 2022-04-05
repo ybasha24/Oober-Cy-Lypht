@@ -2,6 +2,7 @@ package com.example.myapplication.admin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
@@ -11,6 +12,7 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.myapplication.R;
 import com.example.myapplication.app.AppController;
+import com.example.myapplication.driver.DriverHomePage;
 
 import org.json.JSONArray;
 
@@ -30,13 +32,18 @@ public class TripsList extends AppCompatActivity {
             response -> {
                 Log.e("Trips list error", response.toString());
                 tripsList = response;
-                listView.setAdapter(new TripsAdapter(tripsList, getApplicationContext()) );
+                listView.setAdapter(new AdminTripsAdapter(tripsList, getApplicationContext()) );
             },
             error -> {
                 Log.e("trips list error", error.toString());
                 Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG);
             });
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
+    }
 
+    public void onBackPressed() {
+        Intent i = new Intent(this, AdminHomePage.class);
+        this.startActivity(i);
+        super.onBackPressed();
     }
 }

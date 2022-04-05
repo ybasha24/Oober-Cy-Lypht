@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.driver;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
+import com.example.myapplication.R;
 import com.example.myapplication.app.AppController;
 import com.example.myapplication.createride.SelectRideTime;
 import com.example.myapplication.driver.DriverCreatedRides;
@@ -28,11 +29,11 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
-public class TripsAdapter extends BaseAdapter implements ListAdapter {
+public class DriverTripsAdapter extends BaseAdapter implements ListAdapter {
     private JSONArray list;
     private Context context;
 
-    public TripsAdapter(JSONArray list, Context context) {
+    public DriverTripsAdapter(JSONArray list, Context context) {
         if(list == null){
             this.list = null;
         }

@@ -4,16 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.TripsAdapter;
 import com.example.myapplication.app.AppController;
 import com.example.myapplication.endpoints.endpoints;
 
@@ -41,7 +38,7 @@ public class DriverCreatedRides extends AppCompatActivity {
                     Log.e("response", response.toString());
                     if(response != null) {
                         tripsList = response;
-                        listView.setAdapter(new TripsAdapter(tripsList, getApplicationContext()));
+                        listView.setAdapter(new DriverTripsAdapter(tripsList, getApplicationContext()));
                     }
                 },
                 error -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG));

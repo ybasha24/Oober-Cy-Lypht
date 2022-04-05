@@ -24,14 +24,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import com.example.myapplication.endpoints.endpoints;
 
-public class UsersAdapter extends BaseAdapter implements ListAdapter {
+public class AdminUsersAdapter extends BaseAdapter implements ListAdapter {
     private JSONArray list;
     private Context context;
     Button editUserButton;
     Button deleteUserButton;
     TextView tv;
 
-    public UsersAdapter(JSONArray list, Context context) {
+    public AdminUsersAdapter(JSONArray list, Context context) {
         for(int i = 0; i < list.length(); i++){
             try {
                 JSONObject user = list.getJSONObject(i);

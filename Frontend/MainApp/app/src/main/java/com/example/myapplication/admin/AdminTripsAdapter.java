@@ -24,14 +24,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class TripsAdapter extends BaseAdapter implements ListAdapter {
+public class AdminTripsAdapter extends BaseAdapter implements ListAdapter {
     private JSONArray list;
     private Context context;
     Button editTripButton;
     Button deleteTripButton;
     TextView tv;
 
-    public TripsAdapter(JSONArray list, Context context) {
+    public AdminTripsAdapter(JSONArray list, Context context) {
         this.list = list;
         this.context = context;
     }
