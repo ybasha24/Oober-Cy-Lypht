@@ -102,9 +102,12 @@ public class ConfirmRide extends AppCompatActivity {
         obj.put("scheduledEndDate", endDate);
         obj.put("originAddress", originAddress);
         obj.put("destAddress", destAddress);
+        obj.put("maxNumberOfRiders", 3);
         obj.put("radius", radius);
         obj.put("maxNumberOfRiders", maxRiders);
-        obj.put("ratePerMin", rate);
+        obj.put("ratePerMin", 1);
+
+
 
         Log.e("trips error", startDate + " " + endDate + " " + originAddress + " " + destAddress);
 

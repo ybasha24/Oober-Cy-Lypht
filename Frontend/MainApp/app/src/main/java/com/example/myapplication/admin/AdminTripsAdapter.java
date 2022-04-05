@@ -18,7 +18,13 @@ import com.example.myapplication.R;
 import com.example.myapplication.admin.TripsList;
 import com.example.myapplication.app.AppController;
 import com.example.myapplication.createride.SelectRideTime;
+<<<<<<< HEAD:Frontend/MainApp/app/src/main/java/com/example/myapplication/admin/AdminTripsAdapter.java
 import com.example.myapplication.endpoints.endpoints;
+=======
+import com.example.myapplication.driver.DriverCreatedRides;
+import com.example.myapplication.driver.DriverHomePage;
+import com.example.myapplication.endpoints.*;
+>>>>>>> fe-82:Frontend/MainApp/app/src/main/java/com/example/myapplication/TripsAdapter.java
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,6 +64,7 @@ public class AdminTripsAdapter extends BaseAdapter implements ListAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         View view = convertView;
+<<<<<<< HEAD:Frontend/MainApp/app/src/main/java/com/example/myapplication/admin/AdminTripsAdapter.java
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.admin_trip_item, null);
@@ -78,9 +85,50 @@ public class AdminTripsAdapter extends BaseAdapter implements ListAdapter {
 
         editTripButton.setOnClickListener(v -> editTrip(position));
         deleteTripButton.setOnClickListener(v -> deleteTrip(position));
+=======
+        if (!otherConstants.SearchTrip) {
+            if (view == null) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = inflater.inflate(R.layout.trip_item, null);
+            }
 
+
+            TextView tv = view.findViewById(R.id.textView);
+            try {
+                JSONObject json = list.getJSONObject(position);
+                Log.e("Json logging", json.toString());
+                tv.setText("From: " + json.getString("originAddress") + "\nTo: " + json.getString("destAddress") +
+                        "\nTime: " + json.getString("scheduledStartDate") + "\n->" + json.getString("scheduledEndDate"));
+            } catch (Exception e) {
+            }
+
+            Button editTripButton = view.findViewById(R.id.editTripButton);
+            Button deleteTripButton = view.findViewById(R.id.deleteTripButton);
+
+            editTripButton.setOnClickListener(v -> editTrip(position));
+>>>>>>> fe-82:Frontend/MainApp/app/src/main/java/com/example/myapplication/TripsAdapter.java
+
+            deleteTripButton.setOnClickListener(v -> deleteTrip(position));
+
+            return view;
+        }
+        else{
+            if (view == null) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = inflater.inflate(R.layout.trip_item2, null);
+            }
+            TextView tv = view.findViewById(R.id.riderSearchText);
+            try {
+                JSONObject json = list.getJSONObject(position);
+                Log.e("Json logging", json.toString());
+                tv.setText("From: " + json.getString("originAddress") + "\nTo: " + json.getString("destAddress") +
+                        "\nTime: " + json.getString("scheduledStartDate") + "\n->" + json.getString("scheduledEndDate"));
+            } catch (Exception e) {
+            }
+        }
         return view;
     }
+
 
     public void editTrip(int position){
         try {
