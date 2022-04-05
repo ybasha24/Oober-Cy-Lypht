@@ -27,9 +27,9 @@ public class ConfirmRide extends AppCompatActivity {
     LocalDateTime endDate;
     String originAddress;
     String destAddress;
-    int radius;
-    int maxRiders;
-    double rate;
+    int radius = 0;
+    int maxRiders = 0;
+    double rate = 0;
     int durationHours;
     int durationMinutes;
 
@@ -69,7 +69,7 @@ public class ConfirmRide extends AppCompatActivity {
 
         rateSlider.addOnChangeListener((slider1, value, fromUser) -> {
             rate = (double) value;
-            rateTV.setText("$" + (double) value + " per mile");
+            rateTV.setText("$" + (double) value + " per minute");
         });
 
         if(SelectRideTime.datettime != null){
@@ -103,6 +103,8 @@ public class ConfirmRide extends AppCompatActivity {
         obj.put("originAddress", originAddress);
         obj.put("destAddress", destAddress);
         obj.put("radius", radius);
+        obj.put("maxNumberOfRiders", maxRiders);
+        obj.put("ratePerMin", rate);
 
         Log.e("trips error", startDate + " " + endDate + " " + originAddress + " " + destAddress);
 

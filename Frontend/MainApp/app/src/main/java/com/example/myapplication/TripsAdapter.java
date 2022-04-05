@@ -33,7 +33,12 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
     private Context context;
 
     public TripsAdapter(JSONArray list, Context context) {
-        this.list = list;
+        if(list == null){
+            this.list = null;
+        }
+        else {
+            this.list = list;
+        }
         this.context = context;
     }
 
@@ -58,29 +63,33 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        View view = convertView;
-        if (view == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.trip_item, null);
+        if(list != null) {
+            View view = convertView;
+            if (view == null) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = inflater.inflate(R.layout.trip_item, null);
+            }
+
+            TextView tv = view.findViewById(R.id.textView);
+            try {
+                JSONObject json = list.getJSONObject(position);
+                Log.e("Json logging", json.toString());
+
+                tv.setText("From: " + json.getString("originAddress") + "\nTo: " + json.getString("destAddress") +
+                        "\nTime: " + json.getString("scheduledStartDate") + "\n->" + json.getString("scheduledEndDate"));
+            } catch (Exception e) {
+            }
+
+            Button editTripButton = view.findViewById(R.id.editTripButton);
+            Button deleteTripButton = view.findViewById(R.id.deleteTripButton);
+
+            editTripButton.setOnClickListener(v -> editTrip(position));
+
+            deleteTripButton.setOnClickListener(v -> deleteTrip(position));
+
+            return view;
         }
-
-        TextView tv = view.findViewById(R.id.textView);
-        try {
-            JSONObject json = list.getJSONObject(position);
-            Log.e("Json logging", json.toString());
-            tv.setText("From: " + json.getString("originAddress") + "\nTo: " + json.getString("destAddress") +
-                    "\nTime: " + json.getString("scheduledStartDate") + "\n->" + json.getString("scheduledEndDate"));
-        }
-        catch(Exception e){}
-
-        Button editTripButton = view.findViewById(R.id.editTripButton);
-        Button deleteTripButton = view.findViewById(R.id.deleteTripButton);
-
-        editTripButton.setOnClickListener(v -> editTrip(position));
-
-        deleteTripButton.setOnClickListener(v -> deleteTrip(position));
-
-        return view;
+        return null;
     }
 
     public void editTrip(int position){
@@ -99,14 +108,15 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
             StringRequest req = new StringRequest(Request.Method.DELETE, endpoints.DeleteTripUrl + "?id=" + list.getJSONObject(position).getInt("id"),
                 response -> {
                     Intent i = new Intent(this.context, DriverCreatedRides.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     this.context.startActivity(i);
-                    Toast toast = Toast.makeText(this.context, "Successfully deleted trip", Toast.LENGTH_LONG);
-                    toast.show();
+//                    Toast toast = Toast.makeText(this.context, "Successfully deleted trip", Toast.LENGTH_LONG);
+//                    toast.show();
                 },
                 error -> {
                     Log.e("trips error", error.toString());
-                    Toast toast = Toast.makeText(this.context, "Error deleting trip", Toast.LENGTH_LONG);
-                    toast.show();
+//                    Toast toast = Toast.makeText(this.context, "Error deleting trip", Toast.LENGTH_LONG);
+//                    toast.show();
                 }
             );
             AppController.getInstance().addToRequestQueue(req, "string_req");
