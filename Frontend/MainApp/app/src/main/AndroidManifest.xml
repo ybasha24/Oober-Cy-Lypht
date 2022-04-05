@@ -19,10 +19,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM" />
-
-        <activity
-            android:name=".searchride.RiderSearchRide"
-            android:exported="false" />
+        
         <activity
             android:name=".admin.UsersList"
             android:exported="false" />
