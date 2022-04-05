@@ -7,6 +7,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.TripsAdapter;
 import com.example.myapplication.app.AppController;
 import com.example.myapplication.createride.SelectRidePlace;
 import com.example.myapplication.createride.SelectRideTime;
@@ -85,6 +86,7 @@ public class RiderSearchRide extends AppCompatActivity {
                     response -> {
                         try{
                             arr = response;
+                            //listWidget.setAdapter(new TripsAdapter(arr, getApplicationContext()));
                             Log.d("Success! ","Success for ArrayReq");
                             sortResults();
                         }
@@ -100,9 +102,17 @@ public class RiderSearchRide extends AppCompatActivity {
         }
     }
 
-    void sortResults()
-    {
-    int x = 1;
+    void sortResults() throws JSONException {
+        JSONArray list = new JSONArray();
+        for(int i = 0; i < arr.length(); i++)
+        {
+            if(originAddress.equals(arr.getJSONObject(i).get("originAddress")))
+            {
+                list.put(arr.getJSONObject(i));
+            }
+        }
+        listWidget.setAdapter(new TripsAdapter(list, getApplicationContext()));
+
     }
 
 
