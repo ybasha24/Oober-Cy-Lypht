@@ -37,6 +37,8 @@ public class RiderSearchRide extends AppCompatActivity {
     LocalDateTime endDate;
     String originAddress;
     String destAddress;
+    int durationHours;
+    int durationMinutes;
 
     public static JSONArray arr;
 
@@ -66,23 +68,25 @@ public class RiderSearchRide extends AppCompatActivity {
             if(SelectRideTime.datettime != null){
                 startDate = SelectRideTime.datettime;
             }
-            if(SelectRideTime.datettime != null && SelectRidePlace.durationHours != 0 && SelectRidePlace.durationMinutes != 0){
-                endDate = SelectRideTime.datettime.plusHours(SelectRidePlace.durationHours).plusMinutes(SelectRidePlace.durationMinutes);
+            if(startDate != null && (SelectRidePlace.durationHours != 0 || SelectRidePlace.durationMinutes != 0)){
+                durationHours = SelectRidePlace.durationHours;
+                durationMinutes = SelectRidePlace.durationMinutes;
+                endDate = SelectRideTime.datettime.plusHours(durationHours).plusMinutes(durationMinutes);
             }
-            if(originAddress != null){
+            if(SelectRidePlace.originAddress != null){
                 originAddress = SelectRidePlace.originAddress;
             }
-            if(destAddress != null){
+            if(SelectRidePlace.destAddress != null){
                 destAddress = SelectRidePlace.destAddress;
             }
 
-            String url = endpoints.RiderSearchTripUrl + startDate + "&scheduledEndDate=" + startDate;
+            String url = endpoints.RiderSearchTripUrl + startDate + "&scheduledEndDate=" + endDate;
             JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
                     response -> {
                         try{
                             arr = response;
                             Log.d("Success! ","Success for ArrayReq");
-                            //sortResults();
+                            sortResults();
                         }
                         catch (Exception e)
                         {
@@ -98,7 +102,7 @@ public class RiderSearchRide extends AppCompatActivity {
 
     void sortResults()
     {
-
+    int x = 1;
     }
 
 

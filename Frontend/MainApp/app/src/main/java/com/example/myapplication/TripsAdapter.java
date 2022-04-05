@@ -20,7 +20,7 @@ import com.example.myapplication.app.AppController;
 import com.example.myapplication.createride.SelectRideTime;
 import com.example.myapplication.driver.DriverCreatedRides;
 import com.example.myapplication.driver.DriverHomePage;
-import com.example.myapplication.endpoints.endpoints;
+import com.example.myapplication.endpoints.*;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,29 +59,48 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         View view = convertView;
-        if (view == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.trip_item, null);
+        if (!otherConstants.SearchTrip) {
+            if (view == null) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = inflater.inflate(R.layout.trip_item, null);
+            }
+
+
+            TextView tv = view.findViewById(R.id.textView);
+            try {
+                JSONObject json = list.getJSONObject(position);
+                Log.e("Json logging", json.toString());
+                tv.setText("From: " + json.getString("originAddress") + "\nTo: " + json.getString("destAddress") +
+                        "\nTime: " + json.getString("scheduledStartDate") + "\n->" + json.getString("scheduledEndDate"));
+            } catch (Exception e) {
+            }
+
+            Button editTripButton = view.findViewById(R.id.editTripButton);
+            Button deleteTripButton = view.findViewById(R.id.deleteTripButton);
+
+            editTripButton.setOnClickListener(v -> editTrip(position));
+
+            deleteTripButton.setOnClickListener(v -> deleteTrip(position));
+
+            return view;
         }
-
-        TextView tv = view.findViewById(R.id.textView);
-        try {
-            JSONObject json = list.getJSONObject(position);
-            Log.e("Json logging", json.toString());
-            tv.setText("From: " + json.getString("originAddress") + "\nTo: " + json.getString("destAddress") +
-                    "\nTime: " + json.getString("scheduledStartDate") + "\n->" + json.getString("scheduledEndDate"));
+        else{
+            if (view == null) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = inflater.inflate(R.layout.trip_item2, null);
+            }
+            TextView tv = view.findViewById(R.id.riderSearchText);
+            try {
+                JSONObject json = list.getJSONObject(position);
+                Log.e("Json logging", json.toString());
+                tv.setText("From: " + json.getString("originAddress") + "\nTo: " + json.getString("destAddress") +
+                        "\nTime: " + json.getString("scheduledStartDate") + "\n->" + json.getString("scheduledEndDate"));
+            } catch (Exception e) {
+            }
         }
-        catch(Exception e){}
-
-        Button editTripButton = view.findViewById(R.id.editTripButton);
-        Button deleteTripButton = view.findViewById(R.id.deleteTripButton);
-
-        editTripButton.setOnClickListener(v -> editTrip(position));
-
-        deleteTripButton.setOnClickListener(v -> deleteTrip(position));
-
         return view;
     }
+
 
     public void editTrip(int position){
         Intent i = new Intent(this.context, SelectRideTime.class);
