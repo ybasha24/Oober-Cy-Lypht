@@ -6,6 +6,7 @@ import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -28,6 +29,12 @@ public class AdminHomePage extends AppCompatActivity {
     }
 
     public void signOut(View view) {
+        SharedPreferences.Editor editor = getSharedPreferences("name", MODE_PRIVATE).edit();
+        editor.putString("email", "");
+        editor.putString("password", "");
+        editor.putBoolean("isLoggedIn", false);
+        editor.apply();
+        
         MainActivity.accountObj = null;
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
