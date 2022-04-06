@@ -22,10 +22,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 public class SelectRideTime extends AppCompatActivity {
-
-    public static String time = "";
-    public static String date = "";
-    public static LocalDateTime datettime;
+    private static String time = "";
+    private static String date = "";
+    public static LocalDateTime startDate;
     private static TextView timeTV;
     private static TextView dateTV;
 
@@ -37,6 +36,9 @@ public class SelectRideTime extends AppCompatActivity {
         timeTV = findViewById(R.id.timeSelectedTV);
     }
 
+    /**
+     *  Class that is a fragment that allows choosing of time in hour and minutes
+     */
     public static class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -46,6 +48,12 @@ public class SelectRideTime extends AppCompatActivity {
             return new TimePickerDialog(getActivity(), this, hour, minute,
                     DateFormat.is24HourFormat(getActivity()));
         }
+
+        /**
+         * @param view      the activity that is referencing this method
+         * @param hour      start hour of trip
+         * @param minute    start minute of trip
+         */
         public void onTimeSet(TimePicker view, int hour, int minute) {
             String h = hour >= 10 ? String.valueOf(hour) : "0" + hour;
             String m = minute >= 10 ? String.valueOf(minute) : "0" + minute;
@@ -54,8 +62,10 @@ public class SelectRideTime extends AppCompatActivity {
         }
     }
 
+    /**
+     * Class that is a fragment that allows choosing of date in terms of day, month, and year
+     */
     public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final Calendar c = Calendar.getInstance();
@@ -64,6 +74,13 @@ public class SelectRideTime extends AppCompatActivity {
             int day = c.get(Calendar.DAY_OF_MONTH);
             return new DatePickerDialog(getActivity(), this, year, month, day);
         }
+
+        /**
+         * @param view  the activity that is referencing this method
+         * @param year  start year of trip
+         * @param month start month of trip
+         * @param day   start day of trip
+         */
         public void onDateSet(DatePicker view, int year, int month, int day) {
             String m = (month + 1) >= 10 ? String.valueOf(month + 1) : "0" + (month + 1);
             String d = day >= 10 ? String.valueOf(day) : "0" + day;
@@ -71,40 +88,12 @@ public class SelectRideTime extends AppCompatActivity {
 
             String dateTimeString = date + " " + time;
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            datettime = LocalDateTime.parse(dateTimeString, formatter);
-            SelectRideTime.dateTV.setText(SelectRideTime.date + "(" + datettime.getDayOfWeek() + ")");
+            startDate = LocalDateTime.parse(dateTimeString, formatter);
+            SelectRideTime.dateTV.setText(SelectRideTime.date + "(" + startDate.getDayOfWeek() + ")");
         }
     }
 
-    public void showTimePickerDialog(View v) {
-        DialogFragment newFragment = new TimePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "timePicker");
-    }
-
-    public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
-    }
-
-    public void selectStartLocation(View v){
-        if(!date.equals("") && !time.equals("")) {
-            String dateTimeString = date + " " + time;
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            datettime = LocalDateTime.parse(dateTimeString, formatter);
-        }
-
-        Intent i = new Intent(this, SelectRidePlace.class);
-        try {
-            if ((boolean) getIntent().getSerializableExtra("editing")) {
-                i.putExtra("editing", true);
-                i.putExtra("tripId", (int) getIntent().getSerializableExtra("tripId"));
-            }
-        } catch(Exception e){}
-
-        startActivity(i);
-    }
-
-    public static String prettyHoursAndMinutes(int hour, int minute){
+    private static String prettyHoursAndMinutes(int hour, int minute){
         if(hour > 12){
             if(minute >= 10) {
                 return (hour - 12) + ":" + minute + " PM";
@@ -121,5 +110,46 @@ public class SelectRideTime extends AppCompatActivity {
                 return (hour) + ":0" + minute + " PM";
             }
         }
+    }
+
+    /**
+     * Opens a fragment that allows for the start time of the trip to be chosen
+     * @param v the activity that is referencing this method
+     */
+    public void showTimePickerDialog(View v) {
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "timePicker");
+    }
+
+    /**
+     * Opens a fragment that allows for the start date of the trip to be chosen
+     * @param v the activity that is referencing this method
+     */
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    /**
+     * Proceeds to the activity that allows for choosing the start and end location for a trip.
+     * If editing, then we pass that boolean to the intent as well
+     * @param v the activity that is referencing this method
+     */
+    public void selectStartLocation(View v){
+        if(!date.equals("") && !time.equals("")) {
+            String dateTimeString = date + " " + time;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            startDate = LocalDateTime.parse(dateTimeString, formatter);
+        }
+        Intent i = new Intent(this, SelectRidePlace.class);
+        try {
+            if ((boolean) getIntent().getSerializableExtra("editing")) {
+                i.putExtra("editing", true);
+                i.putExtra("tripId", (int) getIntent().getSerializableExtra("tripId"));
+            }
+        } catch(Exception e){
+            Log.e("error", e.toString());
+        }
+        startActivity(i);
     }
 }

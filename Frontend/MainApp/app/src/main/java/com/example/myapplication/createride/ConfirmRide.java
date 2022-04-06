@@ -22,25 +22,25 @@ import com.example.myapplication.endpoints.endpoints;
 
 public class ConfirmRide extends AppCompatActivity {
 
-    public TextView details;
-    LocalDateTime startDate;
-    LocalDateTime endDate;
-    String originAddress;
-    String destAddress;
-    int radius = 0;
-    int maxRiders = 0;
-    double rate = 0;
-    int durationHours;
-    int durationMinutes;
+    private TextView details;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    private String originAddress;
+    private String destAddress;
+    private int radius = 0;
+    private int maxRiders = 0;
+    private double rate = 0;
+    private int durationHours;
+    private int durationMinutes;
 
-    TextView radiusTV;
-    Slider radiusSlider;
+    private TextView radiusTV;
+    private Slider radiusSlider;
 
-    TextView maxRidersTV;
-    Slider maxRidersSlider;
+    private TextView maxRidersTV;
+    private Slider maxRidersSlider;
 
-    TextView rateTV;
-    Slider rateSlider;
+    private TextView rateTV;
+    private Slider rateSlider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +72,13 @@ public class ConfirmRide extends AppCompatActivity {
             rateTV.setText("$" + (double) value + " per minute");
         });
 
-        if(SelectRideTime.datettime != null){
-            startDate = SelectRideTime.datettime;
+        if(SelectRideTime.startDate != null){
+            startDate = SelectRideTime.startDate;
         }
         if(startDate != null && (SelectRidePlace.durationHours != 0 || SelectRidePlace.durationMinutes != 0)){
             durationHours = SelectRidePlace.durationHours;
             durationMinutes = SelectRidePlace.durationMinutes;
-            endDate = SelectRideTime.datettime.plusHours(durationHours).plusMinutes(durationMinutes);
+            endDate = SelectRideTime.startDate.plusHours(durationHours).plusMinutes(durationMinutes);
         }
         if(SelectRidePlace.originAddress != null){
             originAddress = SelectRidePlace.originAddress;
@@ -93,21 +93,24 @@ public class ConfirmRide extends AppCompatActivity {
                             "End time: " + prettyHoursAndMinutes(endDate.getHour(), endDate.getMinute()) + "\n" +
                             "Duration: " + prettyDistance(durationHours, durationMinutes) + "\n" +
                             "Origin: " + originAddress + "\n" +
-                            "Destination: " + destAddress);
+                            "Destination: " + destAddress + "\n" +
+                            "Distance: " + SelectRidePlace.distance + " km");
     }
 
+    /**
+     * Confirms ride details and creates ride through the remote server
+     * @param v the activity that is referencing this method
+     * @throws JSONException
+     */
     public void confirm(View v) throws JSONException {
         JSONObject obj = new JSONObject();
         obj.put("scheduledStartDate", startDate);
         obj.put("scheduledEndDate", endDate);
         obj.put("originAddress", originAddress);
         obj.put("destAddress", destAddress);
-        obj.put("maxNumberOfRiders", 3);
         obj.put("radius", radius);
         obj.put("maxNumberOfRiders", maxRiders);
-        obj.put("ratePerMin", 1);
-
-
+        obj.put("ratePerMin", rate);
 
         Log.e("trips error", startDate + " " + endDate + " " + originAddress + " " + destAddress);
 
@@ -154,7 +157,7 @@ public class ConfirmRide extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(req, "string_req");
     }
 
-    public static String prettyHoursAndMinutes(int hour, int minute){
+    private static String prettyHoursAndMinutes(int hour, int minute){
         if(hour > 12){
             if(minute >= 10) {
                 return (hour - 12) + ":" + minute + " PM";
@@ -173,7 +176,7 @@ public class ConfirmRide extends AppCompatActivity {
         }
     }
 
-    public static String prettyDistance(int durationHours, int durationMinutes){
+    private static String prettyDistance(int durationHours, int durationMinutes){
         String s = "";
         if(durationHours == 1){
             s += durationHours + " hour";
@@ -193,7 +196,6 @@ public class ConfirmRide extends AppCompatActivity {
             else
                 s += durationMinutes + " minutes";
         }
-
         return s;
     }
 }

@@ -3,7 +3,6 @@ package com.example.myapplication.createride;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.myapplication.R;
-import com.example.myapplication.endpoints.otherConstants;
 import com.example.myapplication.endpoints.endpoints;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,26 +39,23 @@ import org.json.JSONObject;
 public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    AutocompleteSupportFragment autocompleteOriginFragment;
-    AutocompleteSupportFragment autocompleteDestFragment;
-    static public LatLng origin;
-    static public LatLng dest;
-    static public String originString;
-    static public String destString;
+    private AutocompleteSupportFragment autocompleteOriginFragment;
+    private AutocompleteSupportFragment autocompleteDestFragment;
+    static private LatLng origin;
+    static private LatLng dest;
     static public String originAddress;
     static public String destAddress;
 
-    static public int distance;
+    static public double distance;
     static public int durationHours;
     static public int durationMinutes;
 
-    static public Marker originMarker;
-    static public Marker destMarker;
+    static private Marker originMarker;
+    static private Marker destMarker;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         origin = null;
         dest = null;
         super.onCreate(savedInstanceState);
@@ -67,8 +63,7 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
         initAutoCompleteFragments();
     }
 
-    public void initAutoCompleteFragments() {
-
+    private void initAutoCompleteFragments(){
         Places.initialize(getApplicationContext(), endpoints.GoogleMapsAPIKey);
 
         autocompleteOriginFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_origin_fragment);
@@ -78,12 +73,11 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
             public void onPlaceSelected(@NonNull Place place) {
                 Log.d("Maps", "Place: " + place.getName() + ", " + place.getId() + ", " + place.getAddress());
                 origin = place.getLatLng();
-                originString = place.getName();
                 originAddress = place.getAddress();
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(origin, 12.0f));
 
 
-                if (originMarker != null)
+                if(originMarker != null)
                     originMarker.remove();
                 originMarker = mMap.addMarker(new MarkerOptions().position(origin));
 
@@ -91,13 +85,9 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
                     clearMapAndDraw();
                 }
             }
-
             @Override
-            public void onError(@NonNull Status status) {
-                Log.e("Maps error", status.toString());
-            }
+            public void onError(@NonNull Status status) { Log.e("Maps error", status.toString()); }
         });
-
 
         autocompleteDestFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_dest_fragment);
         autocompleteDestFragment.setPlaceFields(Arrays.asList(Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS));
@@ -106,101 +96,103 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
             public void onPlaceSelected(@NonNull Place place) {
                 Log.d("Maps", "Place: " + place.getName() + ", " + place.getId() + ", " + place.getAddress());
                 dest = place.getLatLng();
-                destString = place.getName();
                 destAddress = place.getAddress();
 
-                if (destMarker != null)
+                if(destMarker != null)
                     destMarker.remove();
                 destMarker = mMap.addMarker(new MarkerOptions().position(dest));
 
-                if (origin != null && dest != null) {
+                if (origin != null && dest != null){
                     clearMapAndDraw();
                 }
 
             }
-
             @Override
-            public void onError(@NonNull Status status) {
-                Log.e("Maps error", status.toString());
-            }
+            public void onError(@NonNull Status status) { Log.e("Maps error", status.toString()); }
         });
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
+    /**
+     * Initializes google maps object
+     * @param googleMap Google Maps object
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
     }
 
-    public void drawRoute() {
 
+    private void drawRoute(){
         String routeOrigin = "origin=" + origin.latitude + "," + origin.longitude;
         String waypoints = "";
         String routeDest = "destination=" + dest.latitude + "," + dest.longitude;
-        String params = routeOrigin + "&" + waypoints + "&" + routeDest + "&key=" + endpoints.GoogleMapsAPIKey;
+        String params = routeOrigin + "&" + waypoints + "&"  + routeDest + "&key=" + endpoints.GoogleMapsAPIKey;
         String url = endpoints.GoogleMapsDirectionUrl + params;
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
-                response -> {
-                    try {
-                        JSONArray routeArray = response.getJSONArray("routes");
-                        JSONObject routes = routeArray.getJSONObject(0);
-                        JSONObject overviewPolylines = routes.getJSONObject("overview_polyline");
-                        String encodedString = overviewPolylines.getString("points");
-                        List<LatLng> list = PolyUtil.decode(encodedString);
-                        mMap.addPolyline(new PolylineOptions().addAll(list).width(12).color(Color.parseColor("#05b1fb")).geodesic(true));
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin, 10.0f));
-                        calculateRoute();
-                    } catch (JSONException e) {
-                        Log.e("Maps error", e.toString());
-                    }
-                },
-                error -> Log.e("Maps error", error.toString())
+            response -> {
+                try {
+                    JSONArray routeArray = response.getJSONArray("routes");
+                    JSONObject routes = routeArray.getJSONObject(0);
+                    JSONObject overviewPolylines = routes.getJSONObject("overview_polyline");
+                    String encodedString = overviewPolylines.getString("points");
+                    List<LatLng> list = PolyUtil.decode(encodedString);
+                    mMap.addPolyline(new PolylineOptions().addAll(list).width(12).color(Color.parseColor("#05b1fb")).geodesic(true));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin, 10.0f));
+                    calculateRoute();
+                }
+                catch(JSONException e){ Log.e("Maps error", e.toString()); }
+            },
+            error -> Log.e("Maps error", error.toString())
         );
         AppController.getInstance().addToRequestQueue(req, "obj_req");
     }
 
-    public void calculateRoute() {
+    private void calculateRoute(){
         String routeOrigin = "origins=" + origin.latitude + "," + origin.longitude;
         String routeDest = "destinations=" + dest.latitude + "," + dest.longitude;
-        String params = routeOrigin + "&" + routeDest + "&units=imperial" + "&key=" + endpoints.GoogleMapsAPIKey;
+        String params = routeOrigin + "&"  + routeDest + "&units=imperial" + "&key=" + endpoints.GoogleMapsAPIKey;
         params = params.replaceAll(" ", "%20");
         String url = endpoints.GoogleMapsDistanceUrl + params;
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
-                response -> {
-                    try {
-                        JSONObject rows0 = response.getJSONArray("rows").getJSONObject(0);
-                        JSONArray elements = (JSONArray) rows0.get("elements");
-                        distance = elements.getJSONObject(0).getJSONObject("distance").getInt("value") / 1000; //in meters, so divide to get in km
-                        int durationSeconds = elements.getJSONObject(0).getJSONObject("duration").getInt("value");
-                        durationHours = durationSeconds / 3600;
-                        durationMinutes = (durationSeconds % 3600) / 60;
-                    } catch (JSONException e) {
-                        Log.e("Maps error", e.toString());
-                    }
-                },
-                error -> Log.e("Maps error", error.toString()));
+            response -> {
+                try {
+                    JSONObject rows0 = response.getJSONArray("rows").getJSONObject(0);
+                    JSONArray elements = (JSONArray) rows0.get("elements");
+                    distance = elements.getJSONObject(0).getJSONObject("distance").getInt("value") / 1000.0; //in meters, so divide to get in km
+                    int durationSeconds = elements.getJSONObject(0).getJSONObject("duration").getInt("value");
+                    durationHours = durationSeconds / 3600;
+                    durationMinutes = (durationSeconds % 3600) / 60;
+                }
+                catch(JSONException e){ Log.e("Maps error", e.toString()); }
+            },
+            error -> Log.e("Maps error", error.toString()));
         AppController.getInstance().addToRequestQueue(req, "obj_req");
     }
 
-    public void proceed(View v) {
-        Intent i;
-
-            i = new Intent(this, ConfirmRide.class);
-            try {
-                if ((boolean) getIntent().getSerializableExtra("editing")) {
-                    i.putExtra("editing", true);
-                    i.putExtra("tripId", (int) getIntent().getSerializableExtra("tripId"));
-                }
-            } catch (Exception e) {
+    /**
+     * Proceeds to the activity that shows final trip details and allows for selecting radius, max riders, and rate per minute
+     * If editing, then we pass that boolean to the intent as well
+     * @param v the activity that is referencing this method
+     */
+    public void proceed(View v){
+        Intent i = new Intent(this, ConfirmRide.class);
+        try {
+            if ((boolean) getIntent().getSerializableExtra("editing")) {
+                i.putExtra("editing", true);
+                i.putExtra("tripId", (int) getIntent().getSerializableExtra("tripId"));
             }
-
+        } catch(Exception e){
+            Log.e("error", e.toString());
+        }
         startActivity(i);
     }
-    public void clearMapAndDraw(){
+
+    private void clearMapAndDraw(){
         mMap.clear();
         originMarker = mMap.addMarker(new MarkerOptions().position(origin));
         destMarker = mMap.addMarker(new MarkerOptions().position(dest));
