@@ -14,12 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
-
         android:usesCleartextTraffic="true">
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM" />
-        
+
         <activity
             android:name=".admin.UsersList"
             android:exported="false" />
@@ -29,14 +29,12 @@
         <activity
             android:name=".admin.AdminHomePage"
             android:exported="false" />
-
         <activity
             android:name=".driver.DriverCreatedRides"
             android:exported="false" />
         <activity
             android:name=".driver.DriverHomePage"
             android:exported="false" />
-
         <activity
             android:name=".createride.ConfirmRide"
             android:exported="false" />
@@ -47,16 +45,11 @@
         <activity
             android:name=".createride.SelectRideTime"
             android:exported="false" />
-
         <activity
             android:name=".ProfileSettings"
             android:exported="false" />
-
         <activity
             android:name=".rider.RiderRegistrationPage"
-            android:exported="false" />
-        <activity
-            android:name=".driver.DriverRegistrationPage"
             android:exported="false" />
         <activity
             android:name=".rider.RiderHomePage"

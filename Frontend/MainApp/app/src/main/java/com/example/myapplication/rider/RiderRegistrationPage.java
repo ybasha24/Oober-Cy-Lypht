@@ -1,23 +1,18 @@
 package com.example.myapplication.rider;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.app.AppController;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import com.example.myapplication.R;
 import com.example.myapplication.endpoints.endpoints;
 import com.example.myapplication.HelperFunctions;
