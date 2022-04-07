@@ -24,13 +24,22 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import com.example.myapplication.endpoints.endpoints;
 
+/**
+ * adapter class that shows all non-admin users
+ */
 public class AdminUsersAdapter extends BaseAdapter implements ListAdapter {
+
     private JSONArray list;
     private Context context;
-    Button editUserButton;
-    Button deleteUserButton;
-    TextView tv;
+    private Button editUserButton;
+    private Button deleteUserButton;
+    private TextView tv;
 
+    /**
+     * creates an AdminUsersAdapter object
+     * @param list list of users
+     * @param context context to put the list on
+     */
     public AdminUsersAdapter(JSONArray list, Context context) {
         for(int i = 0; i < list.length(); i++){
             try {
@@ -46,11 +55,20 @@ public class AdminUsersAdapter extends BaseAdapter implements ListAdapter {
         this.context = context;
     }
 
+    /**
+     * get size of list
+     * @return size of list
+     */
     @Override
     public int getCount() {
         return list.length();
     }
 
+    /**
+     * gets Object in list at specificed position
+     * @param pos position of object
+     * @return object as position pos
+     */
     @Override
     public Object getItem(int pos) {
         try {
@@ -59,11 +77,23 @@ public class AdminUsersAdapter extends BaseAdapter implements ListAdapter {
         catch(Exception e){ return new Object(); }
     }
 
+    /**
+     * returns 0
+     * @param pos unused variable
+     * @return 0
+     */
     @Override
     public long getItemId(int pos) {
         return 0;
     }
 
+    /**
+     * describes how the list elements are displayed
+     * @param position position in list
+     * @param convertView convertView object
+     * @param parent parent for this view
+     * @return the created View object
+     */
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -91,6 +121,10 @@ public class AdminUsersAdapter extends BaseAdapter implements ListAdapter {
         return view;
     }
 
+    /**
+     * edits a user
+     * @param position position of the trip in the list
+     */
     public void editUser(int position){
         try {
             MainActivity.accountObj = list.getJSONObject(position);
@@ -102,6 +136,10 @@ public class AdminUsersAdapter extends BaseAdapter implements ListAdapter {
         }
     }
 
+    /**
+     * deletes a user
+     * @param position position of the user in the list
+     */
     public void deleteUser(int position){
         try {
             JSONObject json = list.getJSONObject(position);

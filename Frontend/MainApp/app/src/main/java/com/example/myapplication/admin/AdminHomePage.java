@@ -10,6 +10,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
+/**
+ * home page for admin users
+ */
 public class AdminHomePage extends AppCompatActivity {
 
     @Override
@@ -18,16 +21,28 @@ public class AdminHomePage extends AppCompatActivity {
         setContentView(R.layout.activity_admin_home_page);
     }
 
+    /**
+     * views all users and further options to interact with them
+     * @param view activity that is referencing this method
+     */
     public void manageUsers(View view){
         Intent intent = new Intent(this, UsersList.class);
         startActivity(intent);
     }
 
+    /**
+     * views all the trips ever made
+     * @param view activity that is referencing this method
+     */
     public void manageTrips(View view){
         Intent intent = new Intent(this, TripsList.class);
         startActivity(intent);
     }
 
+    /**
+     * signs the admin out and resets local parameters
+     * @param view activity that is referencing this method
+     */
     public void signOut(View view) {
         SharedPreferences.Editor editor = getSharedPreferences("name", MODE_PRIVATE).edit();
         editor.putString("email", "");

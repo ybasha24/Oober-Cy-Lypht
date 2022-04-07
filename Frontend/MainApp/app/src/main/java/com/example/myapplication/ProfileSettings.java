@@ -16,17 +16,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import com.example.myapplication.HelperFunctions;
 
+/**
+ * allows for users to change the settings of their account
+ */
 public class ProfileSettings extends AppCompatActivity {
 
-    EditText firstName;
-    EditText lastName;
-    EditText password;
-    EditText phoneNumber;
-    EditText address;
-    EditText city;
-    EditText state;
-    EditText zip;
-    EditText email;
+    private EditText firstName;
+    private EditText lastName;
+    private EditText password;
+    private EditText phoneNumber;
+    private EditText address;
+    private EditText city;
+    private EditText state;
+    private EditText zip;
+    private EditText email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,10 @@ public class ProfileSettings extends AppCompatActivity {
 
     }
 
+    /**
+     * applies the changes to the account and saves them to the database
+     * @param view activity that is referencing this method
+     */
     public void saveChanges(View view) {
         boolean x = HelperFunctions.verifyNotNull(firstName.getText().toString(), lastName.getText().toString(),
                 email.getText().toString(), address.getText().toString(), city.getText().toString(),
@@ -60,7 +67,7 @@ public class ProfileSettings extends AppCompatActivity {
         }
     }
 
-    public void setPreviousDetails(){
+    private void setPreviousDetails(){
         try {
             firstName.setText(MainActivity.accountObj.getString("firstName"));
             lastName.setText(MainActivity.accountObj.getString("lastName"));
@@ -74,7 +81,7 @@ public class ProfileSettings extends AppCompatActivity {
         } catch(JSONException e){}
     }
 
-    public JSONObject getDetails(){
+    private JSONObject getDetails(){
         EditText firstName = findViewById(R.id.editTextFirstName2);
         EditText lastName = findViewById(R.id.editTextLastName2);
         EditText password = findViewById(R.id.editTextPassword2);
@@ -102,7 +109,7 @@ public class ProfileSettings extends AppCompatActivity {
         return newUserDetails;
     }
 
-    public void changeProfileRequest(JSONObject newUserDetails){
+    private void changeProfileRequest(JSONObject newUserDetails){
         try {
             String url = endpoints.EditUserUrl + MainActivity.accountObj.get("id");
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, url, newUserDetails,

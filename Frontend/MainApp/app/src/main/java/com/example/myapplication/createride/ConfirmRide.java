@@ -20,6 +20,9 @@ import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import com.example.myapplication.endpoints.endpoints;
 
+/**
+ * creates the official ride from the driver's point of view in the database
+ */
 public class ConfirmRide extends AppCompatActivity {
 
     private TextView details;
@@ -55,7 +58,6 @@ public class ConfirmRide extends AppCompatActivity {
 
         rateTV = findViewById(R.id.rateTV);
         rateSlider = findViewById(R.id.rateSlider);
-
 
         radiusSlider.addOnChangeListener((slider1, value, fromUser) -> {
             radius = (int) value;

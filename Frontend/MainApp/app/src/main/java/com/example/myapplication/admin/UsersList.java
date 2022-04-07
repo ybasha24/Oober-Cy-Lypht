@@ -16,10 +16,13 @@ import com.example.myapplication.driver.DriverHomePage;
 
 import org.json.JSONArray;
 
+/**
+ * page that shows all the users using the AdminUsersAdapter class
+ */
 public class UsersList extends AppCompatActivity {
 
-    ListView listView;
-    JSONArray usersList;
+    private ListView listView;
+    private JSONArray usersList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -38,6 +41,9 @@ public class UsersList extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
     }
 
+    /**
+     * goes back to the admin home page
+     */
     public void onBackPressed() {
         Intent i = new Intent(this, AdminHomePage.class);
         this.startActivity(i);

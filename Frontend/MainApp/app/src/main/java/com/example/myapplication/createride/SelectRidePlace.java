@@ -36,6 +36,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * allows drivers to choose origin and destination of their trip
+ */
 public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -43,11 +46,26 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
     private AutocompleteSupportFragment autocompleteDestFragment;
     static private LatLng origin;
     static private LatLng dest;
+    /**
+     * origin of the trip as a string
+     */
     static public String originAddress;
+    /**
+     * destination of the trip as a string
+     */
     static public String destAddress;
 
+    /**
+     * distance of the trip in kilometers
+     */
     static public double distance;
+    /**
+     * duration of the trip's hours
+     */
     static public int durationHours;
+    /**
+     * duration of the trips's minutes
+     */
     static public int durationMinutes;
 
     static private Marker originMarker;

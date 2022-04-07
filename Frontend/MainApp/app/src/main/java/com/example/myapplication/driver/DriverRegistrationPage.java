@@ -17,6 +17,9 @@ import com.example.myapplication.*;
 import com.example.myapplication.endpoints.endpoints;
 import com.example.myapplication.HelperFunctions;
 
+/**
+ * where the driver registers for an accout
+ */
 public class DriverRegistrationPage extends AppCompatActivity {
 
     @Override
@@ -26,6 +29,11 @@ public class DriverRegistrationPage extends AppCompatActivity {
         setContentView(R.layout.activity_driver_registration_page);
     }
 
+    /**
+     * takes the fields provided and creates a driver from them if valid
+     * @param view the activity that is referencing this method
+     * @throws JSONException
+     */
     public void register(View view) throws JSONException {
         TextView tv = findViewById(R.id.regStatusTextView);
         String firstName = ((EditText) findViewById(R.id.editTextFirstName)).getText().toString();

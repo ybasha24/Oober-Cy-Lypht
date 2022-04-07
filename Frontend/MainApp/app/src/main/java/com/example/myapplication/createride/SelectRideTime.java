@@ -21,9 +21,15 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
+/**
+ * allows drivers to choose the time of their trip
+ */
 public class SelectRideTime extends AppCompatActivity {
     private static String time = "";
     private static String date = "";
+    /**
+     * start date of the trip as a LocalDateTime object
+     */
     public static LocalDateTime startDate;
     private static TextView timeTV;
     private static TextView dateTV;
@@ -37,7 +43,7 @@ public class SelectRideTime extends AppCompatActivity {
     }
 
     /**
-     *  Class that is a fragment that allows choosing of time in hour and minutes
+     *  fragment that allows choosing of time in hour and minutes
      */
     public static class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
         @Override
@@ -63,7 +69,7 @@ public class SelectRideTime extends AppCompatActivity {
     }
 
     /**
-     * Class that is a fragment that allows choosing of date in terms of day, month, and year
+     * fragment that allows choosing of date in terms of day, month, and year
      */
     public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
         @Override

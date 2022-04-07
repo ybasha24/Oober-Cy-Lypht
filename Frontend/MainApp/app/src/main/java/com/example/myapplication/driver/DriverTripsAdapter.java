@@ -12,27 +12,29 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
 import com.example.myapplication.createride.SelectRideTime;
-import com.example.myapplication.driver.DriverCreatedRides;
-import com.example.myapplication.driver.DriverHomePage;
 import com.example.myapplication.endpoints.endpoints;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-
+/**
+ * adapter class that shows all the trips of a driver
+ */
 public class DriverTripsAdapter extends BaseAdapter implements ListAdapter {
     private JSONArray list;
     private Context context;
 
+    /**
+     * creates a DriverTripsAdapter object
+     * @param list list of trips
+     * @param context context to put the list on
+     */
     public DriverTripsAdapter(JSONArray list, Context context) {
         if(list == null){
             this.list = null;
@@ -43,11 +45,20 @@ public class DriverTripsAdapter extends BaseAdapter implements ListAdapter {
         this.context = context;
     }
 
+    /**
+     * get size of list
+     * @return size of list
+     */
     @Override
     public int getCount() {
         return list.length();
     }
 
+    /**
+     * gets Object in list at specificed position
+     * @param pos position of object
+     * @return object as position pos
+     */
     @Override
     public Object getItem(int pos) {
         try {
@@ -56,11 +67,23 @@ public class DriverTripsAdapter extends BaseAdapter implements ListAdapter {
         catch(Exception e){ return new Object(); }
     }
 
+    /**
+     * returns 0
+     * @param pos unused variable
+     * @return 0
+     */
     @Override
     public long getItemId(int pos) {
         return 0;
     }
 
+    /**
+     * describes how the list elements are displayed
+     * @param position position in list
+     * @param convertView convertView object
+     * @param parent parent for this view
+     * @return the created View object
+     */
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -93,6 +116,10 @@ public class DriverTripsAdapter extends BaseAdapter implements ListAdapter {
         return null;
     }
 
+    /**
+     * edits a trip
+     * @param position position of the trip in the list
+     */
     public void editTrip(int position){
         Intent i = new Intent(this.context, SelectRideTime.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -104,6 +131,10 @@ public class DriverTripsAdapter extends BaseAdapter implements ListAdapter {
         this.context.startActivity(i);
     }
 
+    /**
+     * deletes a trip
+     * @param position position of the trip in the list
+     */
     public void deleteTrip(int position){
         try {
             StringRequest req = new StringRequest(Request.Method.DELETE, endpoints.DeleteTripUrl + "?id=" + list.getJSONObject(position).getInt("id"),

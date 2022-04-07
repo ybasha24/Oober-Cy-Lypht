@@ -12,14 +12,16 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
-import com.example.myapplication.driver.DriverHomePage;
 
 import org.json.JSONArray;
 
+/**
+ * page that shows all the trips using the AdminTripsAdapter class
+ */
 public class TripsList extends AppCompatActivity {
 
-    ListView listView;
-    JSONArray tripsList;
+    private ListView listView;
+    private JSONArray tripsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -41,6 +43,9 @@ public class TripsList extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
     }
 
+    /**
+     * goes back to the admin home page
+     */
     public void onBackPressed() {
         Intent i = new Intent(this, AdminHomePage.class);
         this.startActivity(i);

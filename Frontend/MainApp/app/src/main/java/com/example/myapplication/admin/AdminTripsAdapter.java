@@ -24,23 +24,40 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * adapter class that shows all the trips ever made
+ */
 public class AdminTripsAdapter extends BaseAdapter implements ListAdapter {
     private JSONArray list;
     private Context context;
-    Button editTripButton;
-    Button deleteTripButton;
-    TextView tv;
+    private Button editTripButton;
+    private Button deleteTripButton;
+    private TextView tv;
 
+    /**
+     * creates an AdminTripsAdapter object
+     * @param list list of trips
+     * @param context context to put the list on
+     */
     public AdminTripsAdapter(JSONArray list, Context context) {
         this.list = list;
         this.context = context;
     }
 
+    /**
+     * get size of list
+     * @return size of list
+     */
     @Override
     public int getCount() {
         return list.length();
     }
 
+    /**
+     * gets Object in list at specificed position
+     * @param pos position of object
+     * @return object as position pos
+     */
     @Override
     public Object getItem(int pos) {
         try {
@@ -49,11 +66,23 @@ public class AdminTripsAdapter extends BaseAdapter implements ListAdapter {
         catch(Exception e){ return new Object(); }
     }
 
+    /**
+     * returns 0
+     * @param pos unused variable
+     * @return 0
+     */
     @Override
     public long getItemId(int pos) {
         return 0;
     }
 
+    /**
+     * describes how the list elements are displayed
+     * @param position position in list
+     * @param convertView convertView object
+     * @param parent parent for this view
+     * @return the created View object
+     */
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -82,6 +111,10 @@ public class AdminTripsAdapter extends BaseAdapter implements ListAdapter {
         return view;
     }
 
+    /**
+     * edits a trip
+     * @param position position of the trip in the list
+     */
     public void editTrip(int position){
         try {
             Intent i = new Intent(this.context, SelectRideTime.class);
@@ -95,6 +128,10 @@ public class AdminTripsAdapter extends BaseAdapter implements ListAdapter {
         }
     }
 
+    /**
+     * deletes a trip
+     * @param position position of the trip in the list
+     */
     public void deleteTrip(int position){
         try {
             Log.e("trips error", endpoints.DeleteTripUrl + "?id=" + list.getJSONObject(position).getInt("id"));

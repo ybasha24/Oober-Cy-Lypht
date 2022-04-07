@@ -23,12 +23,24 @@ import com.example.myapplication.app.AppController;
 import com.example.myapplication.driver.DriverHomePage;
 import com.example.myapplication.rider.RiderHomePage;
 
-
+/**
+ * start page of the app; allows for signing in or for registering of an account
+ */
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * if signed in, this holds all the information about the user as an object
+     */
     public static JSONObject accountObj;
-    SharedPreferences prefs;
-    boolean isLoggedIn;
+    /**
+     * holds the username and password of the account locally if "keep signed in" was checked upon log in
+     */
+    public SharedPreferences prefs;
+    /**
+     * used for checking if the user clicked "keep signed in" when they last logged in
+     */
+    public boolean isLoggedIn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,12 +60,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * the user signs in using their email and password
+     * @param view activity that is referencing this method
+     */
     public void signIn(View view) {
         String email = ((EditText) findViewById(R.id.usernameInput)).getText().toString();
         String password = ((EditText) findViewById(R.id.passwordInput)).getText().toString();
         signInRequest(email, password);
     }
 
+    /**
+     * the user makes an account, either a driver or a rider
+     * @param view acitivty that is referencing this method
+     */
     public void register(View view){
         Intent intent = new Intent(this, RegistrationOptions.class);
         startActivity(intent);
