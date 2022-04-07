@@ -1,9 +1,10 @@
-package com.example.myapplication.createride;
+package com.example.myapplication.driver.createtrip;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.myapplication.*;
-import com.example.myapplication.endpoints.endpoints;
+import com.example.myapplication.endpoints.Endpoints;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.example.myapplication.app.AppController;
+import com.example.myapplication.endpoints.OtherConstants;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -39,7 +41,7 @@ import org.json.JSONObject;
 /**
  * allows drivers to choose origin and destination of their trip
  */
-public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCallback {
+public class SelectTripPlace extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private AutocompleteSupportFragment autocompleteOriginFragment;
@@ -82,7 +84,7 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
     }
 
     private void initAutoCompleteFragments(){
-        Places.initialize(getApplicationContext(), endpoints.GoogleMapsAPIKey);
+        Places.initialize(getApplicationContext(), OtherConstants.GoogleMapsAPIKey);
 
         autocompleteOriginFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_origin_fragment);
         autocompleteOriginFragment.setPlaceFields(Arrays.asList(Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS));
@@ -147,8 +149,8 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
         String routeOrigin = "origin=" + origin.latitude + "," + origin.longitude;
         String waypoints = "";
         String routeDest = "destination=" + dest.latitude + "," + dest.longitude;
-        String params = routeOrigin + "&" + waypoints + "&"  + routeDest + "&key=" + endpoints.GoogleMapsAPIKey;
-        String url = endpoints.GoogleMapsDirectionUrl + params;
+        String params = routeOrigin + "&" + waypoints + "&"  + routeDest + "&key=" + OtherConstants.GoogleMapsAPIKey;
+        String url = Endpoints.GoogleMapsDirectionUrl + params;
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
             response -> {
@@ -172,9 +174,9 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
     private void calculateRoute(){
         String routeOrigin = "origins=" + origin.latitude + "," + origin.longitude;
         String routeDest = "destinations=" + dest.latitude + "," + dest.longitude;
-        String params = routeOrigin + "&"  + routeDest + "&units=imperial" + "&key=" + endpoints.GoogleMapsAPIKey;
+        String params = routeOrigin + "&"  + routeDest + "&units=imperial" + "&key=" + OtherConstants.GoogleMapsAPIKey;
         params = params.replaceAll(" ", "%20");
-        String url = endpoints.GoogleMapsDistanceUrl + params;
+        String url = Endpoints.GoogleMapsDistanceUrl + params;
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
             response -> {
@@ -198,7 +200,7 @@ public class SelectRidePlace extends AppCompatActivity implements OnMapReadyCall
      * @param v the activity that is referencing this method
      */
     public void proceed(View v){
-        Intent i = new Intent(this, ConfirmRide.class);
+        Intent i = new Intent(this, ConfirmTrip.class);
         try {
             if ((boolean) getIntent().getSerializableExtra("editing")) {
                 i.putExtra("editing", true);

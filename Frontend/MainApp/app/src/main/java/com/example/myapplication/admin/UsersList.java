@@ -12,12 +12,11 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
-import com.example.myapplication.driver.DriverHomePage;
 
 import org.json.JSONArray;
 
 /**
- * page that shows all the users using the AdminUsersAdapter class
+ * page that shows all the users using the UsersAdapter class
  */
 public class UsersList extends AppCompatActivity {
 
@@ -35,7 +34,7 @@ public class UsersList extends AppCompatActivity {
             response -> {
                 Log.e("Users list error", response.toString());
                 usersList = response;
-                listView.setAdapter(new AdminUsersAdapter(usersList, getApplicationContext()) );
+                listView.setAdapter(new UsersAdapter(usersList, getApplicationContext()) );
             },
             error -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG));
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
@@ -45,7 +44,7 @@ public class UsersList extends AppCompatActivity {
      * goes back to the admin home page
      */
     public void onBackPressed() {
-        Intent i = new Intent(this, AdminHomePage.class);
+        Intent i = new Intent(this, HomePage.class);
         this.startActivity(i);
         super.onBackPressed();
     }

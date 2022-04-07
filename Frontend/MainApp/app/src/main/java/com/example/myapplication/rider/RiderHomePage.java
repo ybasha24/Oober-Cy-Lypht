@@ -10,8 +10,8 @@ import android.view.View;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.ProfileSettings;
 import com.example.myapplication.*;
-import com.example.myapplication.createride.SelectRideTime;
-import com.example.myapplication.endpoints.otherConstants;
+import com.example.myapplication.driver.createtrip.SelectTripTime;
+import com.example.myapplication.endpoints.OtherConstants;
 
 
 public class RiderHomePage extends AppCompatActivity {
@@ -40,8 +40,8 @@ public class RiderHomePage extends AppCompatActivity {
     }
     public void searchRides(View view)
     {
-        Intent intent = new Intent(this, SelectRideTime.class);
-        otherConstants.SearchTrip = true;
+        Intent intent = new Intent(this, SelectTripTime.class);
+        OtherConstants.SearchTrip = true;
         startActivity(intent);
     }
 

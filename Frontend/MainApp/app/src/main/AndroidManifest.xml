@@ -27,23 +27,23 @@
             android:name=".admin.TripsList"
             android:exported="false" />
         <activity
-            android:name=".admin.AdminHomePage"
+            android:name=".admin.HomePage"
             android:exported="false" />
         <activity
-            android:name=".driver.DriverCreatedRides"
+            android:name=".driver.TripsList"
             android:exported="false" />
         <activity
-            android:name=".driver.DriverHomePage"
+            android:name=".driver.HomePage"
             android:exported="false" />
         <activity
-            android:name=".createride.ConfirmRide"
+            android:name=".driver.createtrip.ConfirmTrip"
             android:exported="false" />
         <activity
-            android:name=".createride.SelectRidePlace"
+            android:name=".driver.createtrip.SelectTripPlace"
             android:exported="false"
             android:label="@string/title_activity_select_ride_start" />
         <activity
-            android:name=".createride.SelectRideTime"
+            android:name=".driver.createtrip.SelectTripTime"
             android:exported="false" />
         <activity
             android:name=".ProfileSettings"

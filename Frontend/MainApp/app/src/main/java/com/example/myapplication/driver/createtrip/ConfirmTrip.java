@@ -1,4 +1,4 @@
-package com.example.myapplication.createride;
+package com.example.myapplication.driver.createtrip;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.Request;
@@ -6,7 +6,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
-import com.example.myapplication.driver.DriverHomePage;
+import com.example.myapplication.driver.HomePage;
+import com.example.myapplication.endpoints.Endpoints;
 import com.google.android.material.slider.Slider;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,12 +19,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
-import com.example.myapplication.endpoints.endpoints;
 
 /**
  * creates the official ride from the driver's point of view in the database
  */
-public class ConfirmRide extends AppCompatActivity {
+public class ConfirmTrip extends AppCompatActivity {
 
     private TextView details;
     private LocalDateTime startDate;
@@ -74,19 +74,19 @@ public class ConfirmRide extends AppCompatActivity {
             rateTV.setText("$" + (double) value + " per minute");
         });
 
-        if(SelectRideTime.startDate != null){
-            startDate = SelectRideTime.startDate;
+        if(SelectTripTime.startDate != null){
+            startDate = SelectTripTime.startDate;
         }
-        if(startDate != null && (SelectRidePlace.durationHours != 0 || SelectRidePlace.durationMinutes != 0)){
-            durationHours = SelectRidePlace.durationHours;
-            durationMinutes = SelectRidePlace.durationMinutes;
-            endDate = SelectRideTime.startDate.plusHours(durationHours).plusMinutes(durationMinutes);
+        if(startDate != null && (SelectTripPlace.durationHours != 0 || SelectTripPlace.durationMinutes != 0)){
+            durationHours = SelectTripPlace.durationHours;
+            durationMinutes = SelectTripPlace.durationMinutes;
+            endDate = SelectTripTime.startDate.plusHours(durationHours).plusMinutes(durationMinutes);
         }
-        if(SelectRidePlace.originAddress != null){
-            originAddress = SelectRidePlace.originAddress;
+        if(SelectTripPlace.originAddress != null){
+            originAddress = SelectTripPlace.originAddress;
         }
-        if(SelectRidePlace.destAddress != null){
-            destAddress = SelectRidePlace.destAddress;
+        if(SelectTripPlace.destAddress != null){
+            destAddress = SelectTripPlace.destAddress;
         }
 
         details = findViewById(R.id.tripDetailsTV);
@@ -96,7 +96,7 @@ public class ConfirmRide extends AppCompatActivity {
                             "Duration: " + prettyDistance(durationHours, durationMinutes) + "\n" +
                             "Origin: " + originAddress + "\n" +
                             "Destination: " + destAddress + "\n" +
-                            "Distance: " + SelectRidePlace.distance + " km");
+                            "Distance: " + SelectTripPlace.distance + " km");
     }
 
     /**
@@ -116,12 +116,12 @@ public class ConfirmRide extends AppCompatActivity {
 
         Log.e("trips error", startDate + " " + endDate + " " + originAddress + " " + destAddress);
 
-        String url = endpoints.DriverCreateTripUrl + MainActivity.accountObj.getInt("id");
+        String url = Endpoints.DriverCreateTripUrl + MainActivity.accountObj.getInt("id");
         int verb = Request.Method.POST;
 
         try {
             if ((boolean) getIntent().getSerializableExtra("editing")) {
-                url = endpoints.EditTripUrl;
+                url = Endpoints.EditTripUrl;
                 url += ("?tripId=" + (int) getIntent().getSerializableExtra("tripId"));
                 verb = Request.Method.PUT;
             }
@@ -129,7 +129,7 @@ public class ConfirmRide extends AppCompatActivity {
 
         StringRequest req = new StringRequest(verb, url,
             response -> {
-                Intent intent = new Intent(this, DriverHomePage.class);
+                Intent intent = new Intent(this, HomePage.class);
                 this.startActivity(intent);
                 String toastText = "Successfully created trip";
                 try{

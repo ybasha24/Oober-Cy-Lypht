@@ -16,7 +16,7 @@ import com.example.myapplication.app.AppController;
 import org.json.JSONArray;
 
 /**
- * page that shows all the trips using the AdminTripsAdapter class
+ * page that shows all the trips using the TripsAdapter class
  */
 public class TripsList extends AppCompatActivity {
 
@@ -34,7 +34,7 @@ public class TripsList extends AppCompatActivity {
             response -> {
                 Log.e("Trips list error", response.toString());
                 tripsList = response;
-                listView.setAdapter(new AdminTripsAdapter(tripsList, getApplicationContext()) );
+                listView.setAdapter(new TripsAdapter(tripsList, getApplicationContext()) );
             },
             error -> {
                 Log.e("trips list error", error.toString());
@@ -47,7 +47,7 @@ public class TripsList extends AppCompatActivity {
      * goes back to the admin home page
      */
     public void onBackPressed() {
-        Intent i = new Intent(this, AdminHomePage.class);
+        Intent i = new Intent(this, HomePage.class);
         this.startActivity(i);
         super.onBackPressed();
     }

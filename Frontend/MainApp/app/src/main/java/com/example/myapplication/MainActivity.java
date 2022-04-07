@@ -2,12 +2,11 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.admin.AdminHomePage;
-import com.example.myapplication.endpoints.endpoints;
+import com.example.myapplication.endpoints.Endpoints;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.view.View;
@@ -20,7 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.myapplication.app.AppController;
-import com.example.myapplication.driver.DriverHomePage;
+import com.example.myapplication.driver.HomePage;
 import com.example.myapplication.rider.RiderHomePage;
 
 /**
@@ -80,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void signInRequest(String email, String password){
-        String url = endpoints.LoginUrl + email + "&password=" + password;
+        String url = Endpoints.LoginUrl + email + "&password=" + password;
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
@@ -89,11 +88,11 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = null;
                     if(!accountObj.isNull("firstName")){
                         if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver"))
-                            intent = new Intent(this, DriverHomePage.class);
+                            intent = new Intent(this, HomePage.class);
                         else if (!accountObj.isNull("arider") && accountObj.getBoolean("arider"))
                             intent = new Intent(this, RiderHomePage.class);
                         else if (!(accountObj.isNull("anAdmin")) && accountObj.getBoolean("anAdmin"))
-                            intent = new Intent(this, AdminHomePage.class);
+                            intent = new Intent(this, com.example.myapplication.admin.HomePage.class);
                         if(((CheckBox) findViewById(R.id.staySignedInCheckBox)).isChecked()){
                             SharedPreferences.Editor editor = getSharedPreferences("name", MODE_PRIVATE).edit();
                             editor.putString("email", email);

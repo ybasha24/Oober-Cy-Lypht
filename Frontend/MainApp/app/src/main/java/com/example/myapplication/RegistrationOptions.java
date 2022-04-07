@@ -6,7 +6,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.driver.DriverRegistrationPage;
+import com.example.myapplication.driver.RegistrationPage;
 import com.example.myapplication.rider.RiderRegistrationPage;
 
 /**
@@ -34,7 +34,7 @@ public class RegistrationOptions extends AppCompatActivity {
      * @param view activity that is referencing this method
      */
     public void driverRegistration(View view){
-        Intent intent = new Intent(this, DriverRegistrationPage.class);
+        Intent intent = new Intent(this, RegistrationPage.class);
         startActivity(intent);
     }
 }

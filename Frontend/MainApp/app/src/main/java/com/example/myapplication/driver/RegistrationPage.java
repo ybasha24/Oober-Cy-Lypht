@@ -14,13 +14,13 @@ import com.example.myapplication.app.AppController;
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.example.myapplication.*;
-import com.example.myapplication.endpoints.endpoints;
+import com.example.myapplication.endpoints.Endpoints;
 import com.example.myapplication.HelperFunctions;
 
 /**
  * where the driver registers for an accout
  */
-public class DriverRegistrationPage extends AppCompatActivity {
+public class RegistrationPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +63,10 @@ public class DriverRegistrationPage extends AppCompatActivity {
         boolean y = HelperFunctions.verifyParametersMet(password, email, phoneNumber, tv);
 
         if (x && y) {
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, endpoints.DriverRegUrl, obj,
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, Endpoints.DriverRegUrl, obj,
                     response -> {
                         if (!response.isNull("firstName")) {
-                            Intent intent = new Intent(this, DriverHomePage.class);
+                            Intent intent = new Intent(this, HomePage.class);
                             MainActivity.accountObj = response;
                             startActivity(intent);
                         } else {

@@ -14,32 +14,43 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
+import com.example.myapplication.MainActivity;
+import com.example.myapplication.ProfileSettings;
 import com.example.myapplication.*;
-import com.example.myapplication.admin.TripsList;
 import com.example.myapplication.app.AppController;
-import com.example.myapplication.createride.SelectRideTime;
-import com.example.myapplication.endpoints.endpoints;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.myapplication.endpoints.Endpoints;
+
 /**
- * adapter class that shows all the trips ever made
+ * adapter class that shows all non-admin users
  */
-public class AdminTripsAdapter extends BaseAdapter implements ListAdapter {
+public class UsersAdapter extends BaseAdapter implements ListAdapter {
+
     private JSONArray list;
     private Context context;
-    private Button editTripButton;
-    private Button deleteTripButton;
+    private Button editUserButton;
+    private Button deleteUserButton;
     private TextView tv;
 
     /**
-     * creates an AdminTripsAdapter object
-     * @param list list of trips
+     * creates an UsersAdapter object
+     * @param list list of users
      * @param context context to put the list on
      */
-    public AdminTripsAdapter(JSONArray list, Context context) {
+    public UsersAdapter(JSONArray list, Context context) {
+        for(int i = 0; i < list.length(); i++){
+            try {
+                JSONObject user = list.getJSONObject(i);
+                try {
+                    if (user.getBoolean("anAdmin") == true) {
+                        list.remove(i);
+                    }
+                } catch(Exception e1) {}
+            } catch(Exception e2) {}
+        }
         this.list = list;
         this.context = context;
     }
@@ -89,69 +100,66 @@ public class AdminTripsAdapter extends BaseAdapter implements ListAdapter {
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.admin_trip_item, null);
-            editTripButton = view.findViewById(R.id.editTripButton);
-            deleteTripButton = view.findViewById(R.id.deleteTripButton);
+            view = inflater.inflate(R.layout.admin_user_item, null);
+            editUserButton = view.findViewById(R.id.editUserButton);
+            deleteUserButton = view.findViewById(R.id.deleteUserButton);
             tv = view.findViewById(R.id.textView);
         }
 
         try {
             JSONObject json = list.getJSONObject(position);
             Log.d("json", json.toString());
-            tv.setText("From: " + json.getString("originAddress") + "\nTo: " + json.getString("destAddress") +
-                    "\nTime: " + json.getString("scheduledStartDate") + "\n->" + json.getString("scheduledEndDate"));
+            tv.setText("ID: " + json.getString("id") + ": " + json.getString("firstName") + " " + json.getString("lastName"));
         }
         catch(Exception e){
             Log.e("error", e.toString());
         }
 
-        editTripButton.setOnClickListener(v -> editTrip(position));
-        deleteTripButton.setOnClickListener(v -> deleteTrip(position));
+        editUserButton.setOnClickListener(v -> editUser(position));
+        deleteUserButton.setOnClickListener(v -> deleteUser(position));
 
         return view;
     }
 
     /**
-     * edits a trip
+     * edits a user
      * @param position position of the trip in the list
      */
-    public void editTrip(int position){
+    public void editUser(int position){
         try {
-            Intent i = new Intent(this.context, SelectRideTime.class);
+            MainActivity.accountObj = list.getJSONObject(position);
+            Intent i = new Intent(this.context, ProfileSettings.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            i.putExtra("editing", true);
-            i.putExtra("tripId", list.getJSONObject(position).getInt("id"));
             this.context.startActivity(i);
-        }
-        catch(JSONException e) {
+        } catch(Exception e) {
             Log.e("error", e.toString());
         }
     }
 
     /**
-     * deletes a trip
-     * @param position position of the trip in the list
+     * deletes a user
+     * @param position position of the user in the list
      */
-    public void deleteTrip(int position){
+    public void deleteUser(int position){
         try {
-            Log.e("trips error", endpoints.DeleteTripUrl + "?id=" + list.getJSONObject(position).getInt("id"));
-
-            StringRequest req = new StringRequest(Request.Method.DELETE, endpoints.DeleteTripUrl + "?id=" + list.getJSONObject(position).getInt("id"),
-                    response -> {
-                        Toast toast = Toast.makeText(this.context, "Successfully deleted trip", Toast.LENGTH_LONG);
-                        toast.show();
-                        Log.d("success", response);
-                        Intent i = new Intent(this.context, TripsList.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        this.context.startActivity(i);
-                    },
-                    error -> {
-                        Log.e("error", error.toString());
-                        Toast toast = Toast.makeText(this.context, "Error deleting trip", Toast.LENGTH_LONG);
-                        toast.show();
-                    }
+            JSONObject json = list.getJSONObject(position);
+            int id = json.getInt("id");
+            String url = Endpoints.DeleteUserUrl + id;
+            StringRequest req = new StringRequest(Request.Method.DELETE, url,
+                response -> {
+                    Toast toast = Toast.makeText(this.context, "Successfully deleted user", Toast.LENGTH_LONG);
+                    toast.show();
+                    Intent i = new Intent(this.context, UsersList.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    this.context.startActivity(i);
+                },
+                error -> {
+                    Log.e("error", error.toString());
+                    Toast toast = Toast.makeText(this.context, "Error deleting user", Toast.LENGTH_LONG);
+                    toast.show();
+                }
             );
-            AppController.getInstance().addToRequestQueue(req, "string_req");
+            AppController.getInstance().addToRequestQueue(req, "post_object_tag");
         }
         catch(Exception e){
             Log.e("error", e.toString());

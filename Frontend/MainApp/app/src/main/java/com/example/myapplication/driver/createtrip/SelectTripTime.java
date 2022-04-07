@@ -1,4 +1,4 @@
-package com.example.myapplication.createride;
+package com.example.myapplication.driver.createtrip;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -24,7 +24,7 @@ import java.util.Calendar;
 /**
  * allows drivers to choose the time of their trip
  */
-public class SelectRideTime extends AppCompatActivity {
+public class SelectTripTime extends AppCompatActivity {
     private static String time = "";
     private static String date = "";
     /**
@@ -63,8 +63,8 @@ public class SelectRideTime extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hour, int minute) {
             String h = hour >= 10 ? String.valueOf(hour) : "0" + hour;
             String m = minute >= 10 ? String.valueOf(minute) : "0" + minute;
-            SelectRideTime.time = h + ":" + m;
-            SelectRideTime.timeTV.setText(prettyHoursAndMinutes(hour, minute));
+            SelectTripTime.time = h + ":" + m;
+            SelectTripTime.timeTV.setText(prettyHoursAndMinutes(hour, minute));
         }
     }
 
@@ -90,12 +90,12 @@ public class SelectRideTime extends AppCompatActivity {
         public void onDateSet(DatePicker view, int year, int month, int day) {
             String m = (month + 1) >= 10 ? String.valueOf(month + 1) : "0" + (month + 1);
             String d = day >= 10 ? String.valueOf(day) : "0" + day;
-            SelectRideTime.date = year + "-" + m + "-" + d;
+            SelectTripTime.date = year + "-" + m + "-" + d;
 
             String dateTimeString = date + " " + time;
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             startDate = LocalDateTime.parse(dateTimeString, formatter);
-            SelectRideTime.dateTV.setText(SelectRideTime.date + "(" + startDate.getDayOfWeek() + ")");
+            SelectTripTime.dateTV.setText(SelectTripTime.date + "(" + startDate.getDayOfWeek() + ")");
         }
     }
 
@@ -147,7 +147,7 @@ public class SelectRideTime extends AppCompatActivity {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             startDate = LocalDateTime.parse(dateTimeString, formatter);
         }
-        Intent i = new Intent(this, SelectRidePlace.class);
+        Intent i = new Intent(this, SelectTripPlace.class);
         try {
             if ((boolean) getIntent().getSerializableExtra("editing")) {
                 i.putExtra("editing", true);

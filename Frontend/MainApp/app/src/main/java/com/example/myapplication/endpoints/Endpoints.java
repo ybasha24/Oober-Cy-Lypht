@@ -1,9 +1,9 @@
 package com.example.myapplication.endpoints;
 
 /**
- * commonly used endpoints in the app
+ * commonly used Endpoints in the app
  */
-public final class endpoints {
+public final class Endpoints {
 
     /**
      * where drivers register an account

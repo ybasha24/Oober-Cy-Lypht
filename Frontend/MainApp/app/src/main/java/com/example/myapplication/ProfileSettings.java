@@ -2,7 +2,8 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.endpoints.endpoints;
+import com.example.myapplication.endpoints.Endpoints;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -14,7 +15,6 @@ import com.example.myapplication.app.AppController;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.example.myapplication.HelperFunctions;
 
 /**
  * allows for users to change the settings of their account
@@ -47,7 +47,6 @@ public class ProfileSettings extends AppCompatActivity {
         email = findViewById(R.id.editTextEmail2);
 
         setPreviousDetails();
-
     }
 
     /**
@@ -111,7 +110,7 @@ public class ProfileSettings extends AppCompatActivity {
 
     private void changeProfileRequest(JSONObject newUserDetails){
         try {
-            String url = endpoints.EditUserUrl + MainActivity.accountObj.get("id");
+            String url = Endpoints.EditUserUrl + MainActivity.accountObj.get("id");
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, url, newUserDetails,
                 response -> {
                     try {

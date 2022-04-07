@@ -16,8 +16,8 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
-import com.example.myapplication.createride.SelectRideTime;
-import com.example.myapplication.endpoints.endpoints;
+import com.example.myapplication.driver.createtrip.SelectTripTime;
+import com.example.myapplication.endpoints.Endpoints;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,16 +26,16 @@ import org.json.JSONObject;
 /**
  * adapter class that shows all the trips of a driver
  */
-public class DriverTripsAdapter extends BaseAdapter implements ListAdapter {
+public class TripsAdapter extends BaseAdapter implements ListAdapter {
     private JSONArray list;
     private Context context;
 
     /**
-     * creates a DriverTripsAdapter object
+     * creates a TripsAdapter object
      * @param list list of trips
      * @param context context to put the list on
      */
-    public DriverTripsAdapter(JSONArray list, Context context) {
+    public TripsAdapter(JSONArray list, Context context) {
         if(list == null){
             this.list = null;
         }
@@ -121,7 +121,7 @@ public class DriverTripsAdapter extends BaseAdapter implements ListAdapter {
      * @param position position of the trip in the list
      */
     public void editTrip(int position){
-        Intent i = new Intent(this.context, SelectRideTime.class);
+        Intent i = new Intent(this.context, SelectTripTime.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         try {
             i.putExtra("editing", true);
@@ -137,9 +137,9 @@ public class DriverTripsAdapter extends BaseAdapter implements ListAdapter {
      */
     public void deleteTrip(int position){
         try {
-            StringRequest req = new StringRequest(Request.Method.DELETE, endpoints.DeleteTripUrl + "?id=" + list.getJSONObject(position).getInt("id"),
+            StringRequest req = new StringRequest(Request.Method.DELETE, Endpoints.DeleteTripUrl + "?id=" + list.getJSONObject(position).getInt("id"),
                 response -> {
-                    Intent i = new Intent(this.context, DriverCreatedRides.class);
+                    Intent i = new Intent(this.context, TripsList.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     this.context.startActivity(i);
                     Toast toast = Toast.makeText(this.context, "Successfully deleted trip", Toast.LENGTH_LONG);

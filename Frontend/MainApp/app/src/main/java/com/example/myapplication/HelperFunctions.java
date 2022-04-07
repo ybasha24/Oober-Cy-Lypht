@@ -3,6 +3,9 @@ package com.example.myapplication;
 import android.util.Patterns;
 import android.widget.TextView;
 
+/**
+ * helper functions used throughout the class
+ */
 public class HelperFunctions {
 
     private final static int minPasswordLength = 8;

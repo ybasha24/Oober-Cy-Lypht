@@ -13,7 +13,7 @@ import android.view.View;
 /**
  * home page for admin users
  */
-public class AdminHomePage extends AppCompatActivity {
+public class HomePage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

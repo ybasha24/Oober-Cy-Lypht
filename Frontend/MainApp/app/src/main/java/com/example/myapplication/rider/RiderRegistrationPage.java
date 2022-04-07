@@ -14,7 +14,7 @@ import com.example.myapplication.app.AppController;
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.example.myapplication.*;
-import com.example.myapplication.endpoints.endpoints;
+import com.example.myapplication.endpoints.Endpoints;
 import com.example.myapplication.HelperFunctions;
 
 public class RiderRegistrationPage extends AppCompatActivity {
@@ -55,7 +55,7 @@ public class RiderRegistrationPage extends AppCompatActivity {
         boolean y = HelperFunctions.verifyParametersMet(password, email, phoneNumber, tv);
 
         if (x && y) {
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, endpoints.RiderRegUrl, obj,
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, Endpoints.RiderRegUrl, obj,
                 response -> {
                     if (!response.isNull("firstName")) {
                         Intent intent = new Intent(this, RiderHomePage.class);
