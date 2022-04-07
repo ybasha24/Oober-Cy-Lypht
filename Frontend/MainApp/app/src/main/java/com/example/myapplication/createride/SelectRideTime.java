@@ -15,7 +15,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.example.myapplication.R;
+import com.example.myapplication.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

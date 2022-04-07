@@ -3,7 +3,7 @@ package com.example.myapplication.admin;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.MainActivity;
-import com.example.myapplication.R;
+import com.example.myapplication.*;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
