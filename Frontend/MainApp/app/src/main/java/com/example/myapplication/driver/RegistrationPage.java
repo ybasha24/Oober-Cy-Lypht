@@ -13,10 +13,10 @@ import com.example.myapplication.MainActivity;
 import com.example.myapplication.app.AppController;
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.example.myapplication.*;
+//import com.example.myapplication.*;
 import com.example.myapplication.endpoints.Endpoints;
 import com.example.myapplication.HelperFunctions;
-
+import com.example.myapplication.*;
 /**
  * where the driver registers for an accout
  */
