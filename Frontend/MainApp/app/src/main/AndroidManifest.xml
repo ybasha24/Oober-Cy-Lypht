@@ -46,6 +46,13 @@
             android:name=".driver.createtrip.SelectTripTime"
             android:exported="false" />
         <activity
+            android:name=".rider.searchtrip.SearchTripPlace"
+            android:exported="false"
+            android:label="@string/title_activity_search_ride_start" />
+        <activity
+            android:name=".rider.searchtrip.SearchTripTime"
+            android:exported="false" />
+        <activity
             android:name=".ProfileSettings"
             android:exported="false" />
         <activity
