@@ -39,7 +39,7 @@ public class Trip {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "Driver_ID")
-    User tripDriver;
+    private User tripDriver;
 
     @JsonIgnore
     @ManyToMany

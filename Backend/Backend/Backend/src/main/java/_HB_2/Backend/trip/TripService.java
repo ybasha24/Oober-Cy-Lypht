@@ -30,7 +30,7 @@ public class TripService {
                 trip.setConfirmed(false);
                 trip.setHasStarted(false);
                 trip.setCompleted(false);
-                trip.tripDriver = d;
+                trip.setTripDriver(d);
                 trip.setNumberOfRiders(0);
                 trip.setRiders(new HashSet<>());
 
@@ -105,7 +105,7 @@ public class TripService {
 
         newTrip.setHasADriver(newTripInfo.isHasADriver());
         if (newTripInfo.isHasADriver()) {
-            newTrip.setTripDriver(newTripInfo.tripDriver);
+            newTrip.setTripDriver(newTripInfo.getTripDriver());
         }
 
         newTrip.setConfirmed(newTripInfo.isConfirmed());

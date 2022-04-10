@@ -52,16 +52,16 @@ public class User {
     private Boolean isAnAdmin;
 
     @ManyToMany(mappedBy = "riders", cascade = CascadeType.MERGE)
-    Set<Trip> trips;
+    private Set<Trip> trips;
 
     //We need the orphanRemoval = true here so we can delete whatever the user is related to when deleting the user
     @JsonIgnore
     @OneToMany(mappedBy = "rater", orphanRemoval = true)
-    Set<Rating> ratings;
+    private Set<Rating> ratings;
 
     @JsonIgnore
     @OneToMany(mappedBy = "rated", orphanRemoval = true)
-    Set<Rating> rating;
+    private Set<Rating> rating;
 
     @JsonIgnore
     @OneToMany(mappedBy = "reporter", orphanRemoval = true)
