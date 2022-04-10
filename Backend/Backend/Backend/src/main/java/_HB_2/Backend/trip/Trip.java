@@ -15,21 +15,21 @@ public class Trip {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    LocalDateTime scheduledStartDate;
-    LocalDateTime scheduledEndDate;
+    private LocalDateTime scheduledStartDate;
+    private LocalDateTime scheduledEndDate;
 
-    LocalDateTime actualStartDate;
-    LocalDateTime actualEndDate;
+    private LocalDateTime actualStartDate;
+    private LocalDateTime actualEndDate;
 
-    boolean hasARider;
-    boolean hasADriver;
-    boolean isConfirmed;
-    boolean hasStarted;
-    boolean isCompleted;
+    private boolean hasARider;
+    private boolean hasADriver;
+    private boolean isConfirmed;
+    private boolean hasStarted;
+    private boolean isCompleted;
 
-    String originAddress;
+    private String originAddress;
 
-    String destAddress;
+    private String destAddress;
 
     /*
     Please Do Not remove these @JosonIgnore annotations without checking with Matt first.
@@ -48,15 +48,15 @@ public class Trip {
                 inverseJoinColumns = @JoinColumn(name = "rider_id"))
     private Set<User> riders;
 
-    int maxNumberOfRiders;
+    private int maxNumberOfRiders;
 
-    int numberOfRiders;
+    private int numberOfRiders;
 
     //represent distances from driver start location
     //that the driver is willing to pick up/drop off a rider
-    int radius;
+    private int radius;
 
-    double ratePerMin;
+    private double ratePerMin;
 
     //Empty Constructor
     public Trip() {
