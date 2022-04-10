@@ -54,7 +54,7 @@ public class UserController {
             return empty;
         }
         else{
-            if(u.password.equals(password)){
+            if(u.getPassword().equals(password)){
                 return u;
             }
             else{

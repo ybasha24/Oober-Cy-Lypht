@@ -37,19 +37,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    String firstName;
-    String lastName;
-    String address;
-    String city;
-    String state;
-    String zip;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String city;
+    private String state;
+    private String zip;
     @Column(unique = true, nullable = false)
-    String email;
-    String phoneNumber;
-    String password;
-    Boolean isADriver;
-    Boolean isARider;
-    Boolean isAnAdmin;
+    private String email;
+    private String phoneNumber;
+    private String password;
+    private Boolean isADriver;
+    private Boolean isARider;
+    private Boolean isAnAdmin;
 
     @ManyToMany(mappedBy = "riders", cascade = CascadeType.MERGE)
     Set<Trip> trips;
