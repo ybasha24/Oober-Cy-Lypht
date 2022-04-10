@@ -5,6 +5,9 @@ import _HB_2.Backend.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class ReportsService {
 
@@ -23,5 +26,10 @@ public class ReportsService {
 
         reportsRepository.save(reports);
         return reports;
+    }
+
+    public List<Reports> getUserReports(int userId){
+        User reported = userRepository.findById(userId);
+        return reportsRepository.getAllReportsOfUser(reported);
     }
 }
