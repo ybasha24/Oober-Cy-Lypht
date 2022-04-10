@@ -1,6 +1,7 @@
 package _HB_2.Backend.user;
 
 import _HB_2.Backend.rating.Rating;
+import _HB_2.Backend.reports.Reports;
 import _HB_2.Backend.review.driverReview.DriverReview;
 import _HB_2.Backend.review.riderReview.RiderReview;
 import _HB_2.Backend.trip.Trip;
@@ -61,6 +62,14 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "rated", orphanRemoval = true)
     Set<Rating> rating;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "reporter", orphanRemoval = true)
+    Set<Reports> reports;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "reported", orphanRemoval = true)
+    Set<Reports> report;
 
     @JsonIgnore
     @OneToMany(mappedBy = "tripDriver", orphanRemoval = true)
