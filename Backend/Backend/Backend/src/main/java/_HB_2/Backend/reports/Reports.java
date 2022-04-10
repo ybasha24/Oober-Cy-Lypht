@@ -14,12 +14,12 @@ public class Reports {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "Reporter_id")
-    User reporter;
+    private User reporter;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "Reported_id")
-    User reported;
+    private User reported;
 
     private String reportMessage;
 
