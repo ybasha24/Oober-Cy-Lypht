@@ -1,6 +1,5 @@
 package _HB_2.Backend.review.driverReview;
 
-import _HB_2.Backend.driver.Driver;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
