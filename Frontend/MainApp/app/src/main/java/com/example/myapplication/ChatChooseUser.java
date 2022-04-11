@@ -26,10 +26,11 @@ public class ChatChooseUser extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.activity_chat_choose_user);
+        listAllChattableUsers();
     }
 
-    private void listAllTrips(){
+    private void listAllChattableUsers(){
         try {
             listView = findViewById(R.id.listView);
             String url = Endpoints.AllDriverTripsUrl + MainActivity.accountObj.getInt("id");
@@ -40,14 +41,16 @@ public class ChatChooseUser extends AppCompatActivity {
                         try {
                             usersList = response.getJSONArray("riders");
                             listView.setAdapter(new TripsAdapter(usersList, getApplicationContext()));
-                        } catch(Exception e){
+                        }
+                        catch(Exception e){
                             Log.e("error", e.toString());
                         }
                     }
                 },
                 error -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG));
-            AppController.getInstance().addToRequestQueue(req, "array_req");
-        } catch(JSONException e){
+            AppController.getInstance().addToRequestQueue(req, "obj_req");
+        }
+        catch(JSONException e){
             Log.e("error", e.toString());
         }
     }

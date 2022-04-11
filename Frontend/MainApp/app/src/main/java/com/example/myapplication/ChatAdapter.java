@@ -86,8 +86,7 @@ public class ChatAdapter extends BaseAdapter implements ListAdapter {
         try {
             JSONObject json = list.getJSONObject(position);
             Log.d("json", json.toString());
-            tv.setText("From: " + json.getString("originAddress") + "\nTo: " + json.getString("destAddress") +
-                    "\nTime: " + json.getString("scheduledStartDate") + "\n->" + json.getString("scheduledEndDate"));
+            tv.setText(json.getString("firstName") + " " + json.getString("lastName"));
         }
         catch(Exception e){
             Log.e("error", e.toString());

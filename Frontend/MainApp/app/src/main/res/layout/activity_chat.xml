@@ -25,13 +25,13 @@
         android:layout_width="match_parent"
         android:hint="message"
         android:textSize="20dp"
-        android:id="@+id/et2"
+        android:id="@+id/messageEditText"
         />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Send"
-        android:id="@+id/bt2" />
+        android:id="@+id/sendMessageButton" />
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
