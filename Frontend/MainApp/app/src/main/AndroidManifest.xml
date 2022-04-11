@@ -16,7 +16,7 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Chat"
+            android:name=".ChatChooseUser"
             android:exported="false" />
 
         <meta-data

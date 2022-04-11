@@ -10,17 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.toolbox.StringRequest;
-import com.example.myapplication.*;
-import com.example.myapplication.app.AppController;
-import com.example.myapplication.driver.createtrip.SelectTripTime;
-import com.example.myapplication.endpoints.Endpoints;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -33,8 +24,8 @@ public class ChatAdapter extends BaseAdapter implements ListAdapter {
     private TextView tv;
 
     /**
-     * creates an TripsAdapter object
-     * @param list list of trips
+     * creates a ChatAdapter object
+     * @param list list of users to chat with
      * @param context context to put the list on
      */
     public ChatAdapter(JSONArray list, Context context) {
@@ -112,6 +103,10 @@ public class ChatAdapter extends BaseAdapter implements ListAdapter {
      * @param position position of the trip in the list
      */
     public void chat(int position){
+        Intent i = new Intent(this.context, ChatChooseUser.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.context.startActivity(i);
+
 //        try {
 //            Log.e("trips error", Endpoints.DeleteTripUrl + "?id=" + list.getJSONObject(position).getInt("id"));
 //

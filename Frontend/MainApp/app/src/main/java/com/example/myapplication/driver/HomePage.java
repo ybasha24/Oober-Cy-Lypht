@@ -54,7 +54,7 @@ public class HomePage extends AppCompatActivity {
     }
 
     public void chat(View view){
-        Intent i = new Intent(this, Chat.class);
+        Intent i = new Intent(this, ChatChooseUser.class);
         startActivity(i);
     }
 
