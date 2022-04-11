@@ -1,8 +1,11 @@
 package _HB_2.Backend.rating;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@Api(value = "RatingController", description = "REST APIs related to Rating Class")
 @RestController
 @RequestMapping( "/rating")
 public class RatingController {
@@ -10,6 +13,7 @@ public class RatingController {
     @Autowired
     private RatingService ratingService;
 
+    @ApiOperation(value = "Submit a rating for a user ", response = Iterable.class, tags = "createRating")
     @PostMapping("/createRating")
     Rating createRating(@RequestParam int raterId,
                         @RequestParam int ratedId,
@@ -17,6 +21,7 @@ public class RatingController {
         return ratingService.createRating(raterId, ratedId, rating);
     }
 
+    @ApiOperation(value = "Get average rating of a user", response = Iterable.class, tags = "getUserRating")
     @GetMapping("/getUserRating")
     Float getUserRating(@RequestParam int userId) {
         return ratingService.getUserRating(userId);
