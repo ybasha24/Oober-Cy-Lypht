@@ -51,7 +51,7 @@ public class User {
     private Boolean isARider;
     private Boolean isAnAdmin;
 
-    @ManyToMany(mappedBy = "riders", cascade = CascadeType.MERGE)
+    @ManyToMany(mappedBy = "riders", cascade = CascadeType.REMOVE)
     private Set<Trip> trips;
 
     //We need the orphanRemoval = true here so we can delete whatever the user is related to when deleting the user
