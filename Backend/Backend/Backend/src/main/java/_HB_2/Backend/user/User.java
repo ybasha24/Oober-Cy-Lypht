@@ -65,11 +65,11 @@ public class User {
 
     @JsonIgnore
     @OneToMany(mappedBy = "reporter", orphanRemoval = true)
-    Set<Reports> reports;
+    private Set<Reports> reports;
 
     @JsonIgnore
     @OneToMany(mappedBy = "reported", orphanRemoval = true)
-    Set<Reports> report;
+    private Set<Reports> report;
 
     @JsonIgnore
     @OneToMany(mappedBy = "tripDriver", orphanRemoval = true)
