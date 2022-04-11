@@ -37,31 +37,31 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    String firstName;
-    String lastName;
-    String address;
-    String city;
-    String state;
-    String zip;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String city;
+    private String state;
+    private String zip;
     @Column(unique = true, nullable = false)
-    String email;
-    String phoneNumber;
-    String password;
-    Boolean isADriver;
-    Boolean isARider;
-    Boolean isAnAdmin;
+    private String email;
+    private String phoneNumber;
+    private String password;
+    private Boolean isADriver;
+    private Boolean isARider;
+    private Boolean isAnAdmin;
 
     @ManyToMany(mappedBy = "riders", cascade = CascadeType.MERGE)
-    Set<Trip> trips;
+    private Set<Trip> trips;
 
     //We need the orphanRemoval = true here so we can delete whatever the user is related to when deleting the user
     @JsonIgnore
     @OneToMany(mappedBy = "rater", orphanRemoval = true)
-    Set<Rating> ratings;
+    private Set<Rating> ratings;
 
     @JsonIgnore
     @OneToMany(mappedBy = "rated", orphanRemoval = true)
-    Set<Rating> rating;
+    private Set<Rating> rating;
 
     @JsonIgnore
     @OneToMany(mappedBy = "reporter", orphanRemoval = true)

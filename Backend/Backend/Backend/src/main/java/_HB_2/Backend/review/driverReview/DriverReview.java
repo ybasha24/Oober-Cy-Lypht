@@ -19,7 +19,7 @@ public class DriverReview {
     //this will be the driver that is reviewed
     @ManyToOne
     @JoinColumn(name = "Driver_ID")
-    User reviewDriver;
+    private User reviewDriver;
 
     public DriverReview() {
     }

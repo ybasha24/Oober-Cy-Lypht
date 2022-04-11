@@ -34,15 +34,15 @@ public class UserService {
     public User editUser(int id, User newUserInfo) {
 
         User newUser = userRepository.findById(id);
-        newUser.setFirstName(newUserInfo.firstName);
-        newUser.setLastName(newUserInfo.lastName);
-        newUser.setAddress(newUserInfo.address);
-        newUser.setCity(newUserInfo.city);
-        newUser.setState(newUserInfo.state);
-        newUser.setZip(newUserInfo.zip);
-        newUser.setEmail(newUserInfo.email);
-        newUser.setPhoneNumber(newUserInfo.phoneNumber);
-        newUser.setPassword(newUserInfo.password);
+        newUser.setFirstName(newUserInfo.getFirstName());
+        newUser.setLastName(newUserInfo.getLastName());
+        newUser.setAddress(newUserInfo.getAddress());
+        newUser.setCity(newUserInfo.getCity());
+        newUser.setState(newUserInfo.getState());
+        newUser.setZip(newUserInfo.getZip());
+        newUser.setEmail(newUserInfo.getEmail());
+        newUser.setPhoneNumber(newUserInfo.getPhoneNumber());
+        newUser.setPassword(newUserInfo.getPassword());
 
         userRepository.save(newUser);
 

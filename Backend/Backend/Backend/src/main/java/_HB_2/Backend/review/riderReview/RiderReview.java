@@ -19,7 +19,7 @@ public class RiderReview {
     //this will be the rider that is reviewed
     @ManyToOne
     @JoinColumn(name = "Rider_ID")
-    User reviewRider;
+    private User reviewRider;
 
     public RiderReview() {
     }
