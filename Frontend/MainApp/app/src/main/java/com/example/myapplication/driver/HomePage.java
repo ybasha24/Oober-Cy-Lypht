@@ -39,9 +39,9 @@ public class HomePage extends AppCompatActivity {
      * @param view the activity that is referencing this method
      */
     public void viewCreatedRides(View view){
-        Intent intent = new Intent(this, TripsList.class);
+        Intent i = new Intent(this, TripsList.class);
         OtherConstants.SearchTrip = false;
-        startActivity(intent);
+        startActivity(i);
     }
 
     /**
@@ -49,8 +49,13 @@ public class HomePage extends AppCompatActivity {
      * @param view the activity that is referencing this method
      */
     public void profileSettings(View view){
-        Intent intent = new Intent(this, ProfileSettings.class);
-        startActivity(intent);
+        Intent i = new Intent(this, ProfileSettings.class);
+        startActivity(i);
+    }
+
+    public void chat(View view){
+        Intent i = new Intent(this, Chat.class);
+        startActivity(i);
     }
 
     /**
