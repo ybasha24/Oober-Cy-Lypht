@@ -121,7 +121,7 @@ public class SearchTripTime extends AppCompatActivity {
      * @param v the activity that is referencing this method
      */
     public void showTimePickerDialog(View v) {
-        DialogFragment newFragment = new com.example.myapplication.driver.createtrip.SelectTripTime.TimePickerFragment();
+        DialogFragment newFragment = new com.example.myapplication.rider.searchtrip.SearchTripTime.TimePickerFragment();
         newFragment.show(getSupportFragmentManager(), "timePicker");
     }
 
@@ -130,7 +130,7 @@ public class SearchTripTime extends AppCompatActivity {
      * @param v the activity that is referencing this method
      */
     public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new com.example.myapplication.driver.createtrip.SelectTripTime.DatePickerFragment();
+        DialogFragment newFragment = new com.example.myapplication.rider.searchtrip.SearchTripTime.DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
