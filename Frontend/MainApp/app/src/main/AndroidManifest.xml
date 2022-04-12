@@ -19,7 +19,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM" />
-
+        <activity
+            android:name=".rider.searchtrip.SearchPage"
+            android:exported="false" />
         <activity
             android:name=".admin.UsersList"
             android:exported="false" />
@@ -46,13 +48,23 @@
             android:name=".driver.createtrip.SelectTripTime"
             android:exported="false" />
         <activity
+            android:name=".rider.searchtrip.SearchTripPlace"
+            android:exported="false"
+            android:label="@string/title_activity_search_ride_start" />
+        <activity
+            android:name=".rider.searchtrip.SearchTripTime"
+            android:exported="false" />
+        <activity
             android:name=".ProfileSettings"
             android:exported="false" />
         <activity
-            android:name=".rider.RiderRegistrationPage"
+            android:name=".rider.RegistrationPage"
             android:exported="false" />
         <activity
-            android:name=".rider.RiderHomePage"
+            android:name=".driver.RegistrationPage"
+            android:exported="false" />
+        <activity
+            android:name=".rider.HomePage"
             android:exported="false" />
         <activity
             android:name=".RegistrationOptions"

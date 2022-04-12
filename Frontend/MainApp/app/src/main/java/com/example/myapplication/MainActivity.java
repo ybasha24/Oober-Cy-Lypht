@@ -19,8 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.myapplication.app.AppController;
-import com.example.myapplication.driver.HomePage;
-import com.example.myapplication.rider.RiderHomePage;
+import com.example.myapplication.rider.HomePage;
 
 /**
  * start page of the app; allows for signing in or for registering of an account
@@ -88,9 +87,9 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = null;
                     if(!accountObj.isNull("firstName")){
                         if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver"))
-                            intent = new Intent(this, HomePage.class);
+                            intent = new Intent(this, com.example.myapplication.driver.HomePage.class);
                         else if (!accountObj.isNull("arider") && accountObj.getBoolean("arider"))
-                            intent = new Intent(this, RiderHomePage.class);
+                            intent = new Intent(this, HomePage.class);
                         else if (!(accountObj.isNull("anAdmin")) && accountObj.getBoolean("anAdmin"))
                             intent = new Intent(this, com.example.myapplication.admin.HomePage.class);
                         if(((CheckBox) findViewById(R.id.staySignedInCheckBox)).isChecked()){

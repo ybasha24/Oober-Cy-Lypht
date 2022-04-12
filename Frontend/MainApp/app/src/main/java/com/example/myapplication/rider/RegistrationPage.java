@@ -17,7 +17,7 @@ import com.example.myapplication.*;
 import com.example.myapplication.endpoints.Endpoints;
 import com.example.myapplication.HelperFunctions;
 
-public class RiderRegistrationPage extends AppCompatActivity {
+public class RegistrationPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,11 @@ public class RiderRegistrationPage extends AppCompatActivity {
         setContentView(R.layout.activity_rider_registration_page);
     }
 
+    /**
+     * Takes the user input and registers a new rider
+     * @param view the activity that is referencing this method
+     * @throws JSONException throws JSON Exception
+     */
     public void register(View view) throws JSONException {
         TextView tv = findViewById(R.id.regStatusTextView);
         String firstName = ((EditText) findViewById(R.id.editTextFirstName)).getText().toString();
@@ -58,7 +63,7 @@ public class RiderRegistrationPage extends AppCompatActivity {
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, Endpoints.RiderRegUrl, obj,
                 response -> {
                     if (!response.isNull("firstName")) {
-                        Intent intent = new Intent(this, RiderHomePage.class);
+                        Intent intent = new Intent(this, HomePage.class);
                         MainActivity.accountObj = response;
                         startActivity(intent);
                     } else {

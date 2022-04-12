@@ -9,12 +9,14 @@ import android.view.View;
 
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.ProfileSettings;
+import com.example.myapplication.rider.searchtrip.SearchTripTime;
 import com.example.myapplication.*;
-import com.example.myapplication.driver.createtrip.SelectTripTime;
-import com.example.myapplication.endpoints.OtherConstants;
 
+/**
+ * Home page of the rider
+ */
 
-public class RiderHomePage extends AppCompatActivity {
+public class HomePage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -22,11 +24,19 @@ public class RiderHomePage extends AppCompatActivity {
         setContentView(R.layout.activity_rider_home_page);
     }
 
+    /**
+     * allows the rider to change their account settings
+     * @param view the activity that is referencing this method
+     */
     public void profileSettings(View view){
         Intent intent = new Intent(this, ProfileSettings.class);
         startActivity(intent);
     }
 
+    /**
+     * signs the rider out and resets local parameters; goes to login screen
+     * @param view the activity that is referencing this method
+     */
     public void signOut(View view) {
         SharedPreferences.Editor editor = getSharedPreferences("name", MODE_PRIVATE).edit();
         editor.putString("email", "");
@@ -38,10 +48,14 @@ public class RiderHomePage extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
+    /**
+     * allows for a ride to be searched
+     * @param view the activity that is referencing this method
+     */
     public void searchRides(View view)
     {
-        Intent intent = new Intent(this, SelectTripTime.class);
-        OtherConstants.SearchTrip = true;
+        Intent intent = new Intent(this, SearchTripTime.class);
         startActivity(intent);
     }
 

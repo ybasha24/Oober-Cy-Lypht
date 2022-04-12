@@ -30,7 +30,6 @@ public class HomePage extends AppCompatActivity {
      */
     public void createRide(View view){
         Intent intent = new Intent(this, SelectTripTime.class);
-        OtherConstants.SearchTrip = false;
         startActivity(intent);
     }
 
@@ -40,7 +39,6 @@ public class HomePage extends AppCompatActivity {
      */
     public void viewCreatedRides(View view){
         Intent intent = new Intent(this, TripsList.class);
-        OtherConstants.SearchTrip = false;
         startActivity(intent);
     }
 

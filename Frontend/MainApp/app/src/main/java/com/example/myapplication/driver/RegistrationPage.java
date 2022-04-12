@@ -13,7 +13,6 @@ import com.example.myapplication.MainActivity;
 import com.example.myapplication.app.AppController;
 import org.json.JSONException;
 import org.json.JSONObject;
-//import com.example.myapplication.*;
 import com.example.myapplication.endpoints.Endpoints;
 import com.example.myapplication.HelperFunctions;
 import com.example.myapplication.*;
@@ -32,7 +31,7 @@ public class RegistrationPage extends AppCompatActivity {
     /**
      * takes the fields provided and creates a driver from them if valid
      * @param view the activity that is referencing this method
-     * @throws JSONException
+     * @throws JSONException throws JSON Exception
      */
     public void register(View view) throws JSONException {
         TextView tv = findViewById(R.id.regStatusTextView);
