@@ -26,9 +26,9 @@ import java.time.LocalDateTime;
 
 public class SearchPage extends AppCompatActivity {
 
-    ListView listView;
-    Slider radiusSlider;
-    JSONArray tripsList;
+    private ListView listView;
+    private Slider radiusSlider;
+    private JSONArray tripsList;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private String originAddress;
@@ -58,6 +58,11 @@ public class SearchPage extends AppCompatActivity {
         }
     }
 
+    /**
+     * With fields filled out, searches all available trips implementing
+     * details provided
+     * @param view the activity that is referencing this method
+     */
     public void searchTrips(View view)
     {
         listView = findViewById(R.id.listView);

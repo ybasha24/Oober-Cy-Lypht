@@ -15,7 +15,7 @@ import android.widget.TimePicker;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.myapplication.R;
+import com.example.myapplication.*;
 import com.example.myapplication.rider.searchtrip.SearchTripPlace;
 
 import java.time.LocalDateTime;
@@ -136,7 +136,6 @@ public class SearchTripTime extends AppCompatActivity {
 
     /**
      * Proceeds to the activity that allows for choosing the start and end location for a trip.
-     * If editing, then we pass that boolean to the intent as well
      * @param v the activity that is referencing this method
      */
     public void selectStartLocation(View v){

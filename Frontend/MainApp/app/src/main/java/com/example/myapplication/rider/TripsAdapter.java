@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import com.example.myapplication.R;
+import com.example.myapplication.*;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

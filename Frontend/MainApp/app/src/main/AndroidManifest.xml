@@ -58,7 +58,7 @@
             android:name=".ProfileSettings"
             android:exported="false" />
         <activity
-            android:name=".rider.RiderRegistrationPage"
+            android:name=".rider.RegistrationPage"
             android:exported="false" />
         <activity
             android:name=".driver.RegistrationPage"

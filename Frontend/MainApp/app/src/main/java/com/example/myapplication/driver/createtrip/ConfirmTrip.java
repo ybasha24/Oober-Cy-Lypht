@@ -102,7 +102,7 @@ public class ConfirmTrip extends AppCompatActivity {
     /**
      * Confirms ride details and creates ride through the remote server
      * @param v the activity that is referencing this method
-     * @throws JSONException
+     * @throws JSONException throws JSON Exception
      */
     public void confirm(View v) throws JSONException {
         JSONObject obj = new JSONObject();
