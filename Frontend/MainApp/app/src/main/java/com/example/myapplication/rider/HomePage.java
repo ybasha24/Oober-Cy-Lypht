@@ -9,13 +9,11 @@ import android.view.View;
 
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.ProfileSettings;
-import com.example.myapplication.*;
-import com.example.myapplication.driver.createtrip.SelectTripTime;
-import com.example.myapplication.endpoints.OtherConstants;
 import com.example.myapplication.rider.searchtrip.SearchTripTime;
+import com.example.myapplication.*;
 
 
-public class RiderHomePage extends AppCompatActivity {
+public class HomePage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState){

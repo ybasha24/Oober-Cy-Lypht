@@ -58,7 +58,7 @@ public class RiderRegistrationPage extends AppCompatActivity {
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, Endpoints.RiderRegUrl, obj,
                 response -> {
                     if (!response.isNull("firstName")) {
-                        Intent intent = new Intent(this, RiderHomePage.class);
+                        Intent intent = new Intent(this, HomePage.class);
                         MainActivity.accountObj = response;
                         startActivity(intent);
                     } else {

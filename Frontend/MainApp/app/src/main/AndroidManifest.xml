@@ -64,7 +64,7 @@
             android:name=".driver.RegistrationPage"
             android:exported="false" />
         <activity
-            android:name=".rider.RiderHomePage"
+            android:name=".rider.HomePage"
             android:exported="false" />
         <activity
             android:name=".RegistrationOptions"
