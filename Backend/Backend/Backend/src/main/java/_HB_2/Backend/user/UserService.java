@@ -55,4 +55,10 @@ public class UserService {
         return list;
 
     }
+
+    public String setProfilePicture(int userId, String path) {
+        userRepository.findById(userId).setProfilePicture(path);
+        String picturePath = userRepository.findById(userId).getProfilePicture();
+        return picturePath;
+    }
 }

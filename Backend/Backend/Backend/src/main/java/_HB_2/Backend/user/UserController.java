@@ -78,4 +78,9 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @PutMapping("/setProfilePicture")
+    String setProfilePicture(@RequestParam int userId, String path) {
+        return userService.setProfilePicture(userId, path);
+    }
+
 }

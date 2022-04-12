@@ -83,6 +83,9 @@ public class User {
     @OneToMany(mappedBy = "reviewRider", orphanRemoval = true)
     private Set<RiderReview> riderReviews;
 
+    private String profilePicture;
+
+    //Can this constructor be deleted?  Where is it used?
     //no Boolean Values for User-These should be set in the subclass constructors
     public User(String firstName,
                 String lastName,
@@ -216,5 +219,7 @@ public class User {
         this.trips = trips;
     }
 
+    public String getProfilePicture() {return profilePicture;}
 
+    public void setProfilePicture(String profilePicture) {this.profilePicture = profilePicture;}
 }
