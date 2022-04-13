@@ -48,6 +48,7 @@ public class ProfileSettings extends AppCompatActivity {
     private EditText zip;
     private EditText email;
     ImageView profilePic;
+
     String uriString;
     private static int RESULT_LOAD_IMAGE = 1;
 
@@ -65,11 +66,11 @@ public class ProfileSettings extends AppCompatActivity {
         state = findViewById(R.id.editTextState2);
         zip = findViewById(R.id.editTextZip2);
         email = findViewById(R.id.editTextEmail2);
-        profilePic = (ImageView) findViewById(R.id.profilePic);;
-        Uri uri = Uri.parse("content://com.android.providers.media.documents/document/image%3A53");
-        profilePic.setImageURI(uri);
-        setPreviousDetails();
+        profilePic = (ImageView) findViewById(R.id.profilePic);
 
+        uriString = getProfilePic();
+        profilePic.setImageURI(Uri.parse(uriString));
+        setPreviousDetails();
     }
 
     @Override
@@ -161,18 +162,25 @@ public class ProfileSettings extends AppCompatActivity {
 
     public void changeProfilePicRequest(){
         try {
-            String url = Endpoints.EditUserUrl + MainActivity.accountObj.get("id") + "&path=" + uriString;
+            String url = Endpoints.SetProfilePictureUrl + MainActivity.accountObj.get("id") + "&path=" + uriString;
             StringRequest req = new StringRequest(Request.Method.PUT, url,
                     response -> Log.d("success", "changed profile picture"),
-                    error -> Log.d("success", "changed profile picture"));
-            AppController.getInstance().addToRequestQueue(req, "post_object_tag");
+                    error -> Log.d("success", "failed to changed profile picture"));
+            Log.e("error", url);
+            AppController.getInstance().addToRequestQueue(req, "string_req");
         }
         catch(Exception e){
             Log.e("error", e.toString());
         }
     }
 
-//    public String getProfilePic(){
-//        MainActivity.accountObj.getString("")
-//    }
+    public String getProfilePic() {
+        try {
+            return MainActivity.accountObj.getString("profilePicture");
+        } catch (Exception e) {
+            Log.e("error", e.toString());
+        }
+        return "";
+    }
+
 }
