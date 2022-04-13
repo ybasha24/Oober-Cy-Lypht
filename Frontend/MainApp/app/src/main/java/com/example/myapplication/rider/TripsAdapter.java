@@ -1,6 +1,7 @@
 package com.example.myapplication.rider;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +10,14 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.*;
+import com.example.myapplication.app.AppController;
+import com.example.myapplication.driver.TripsList;
+import com.example.myapplication.endpoints.Endpoints;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -104,19 +111,33 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
 
             Button addToTripButton = view.findViewById(R.id.add_trip);
             addToTripButton.setOnClickListener(v -> {
-                try {
-                    addToTrip(position);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                addToTrip(position);
             });
             return view;
         }
         return null;
     }
 
-    public void addToTrip(int position) throws JSONException {
-        MainActivity.accountObj.getInt("id");
+    public void addToTrip(int position) {
+       try{
+           String url = Endpoints.AddRiderToTripUrl+list.getJSONObject(position).getInt("id")+
+                   "&riderID="+MainActivity.accountObj.getInt("id");
+           StringRequest req = new StringRequest(Request.Method.PUT, url,
+                   response -> {
+                       Intent i = new Intent(this.context, HomePage.class);
+                       this.context.startActivity(i);
+                       Toast toast = Toast.makeText(this.context, "Successfully added to trip", Toast.LENGTH_LONG);
+                       toast.show();
+                   },
+                   error -> {
+                       Log.e("trips error", error.toString());
+                       Toast toast = Toast.makeText(this.context, "Error adding trip", Toast.LENGTH_LONG);
+                       toast.show();
+                   }
+           );
+           AppController.getInstance().addToRequestQueue(req, "string_req");
+       }
+       catch (Exception e){}
     }
 
 }
