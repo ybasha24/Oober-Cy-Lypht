@@ -57,15 +57,19 @@ public class UserService {
     }
 
     public String setProfilePicture(int userId, String path) {
-        userRepository.findById(userId).setProfilePicture(path);
-        String picturePath = userRepository.findById(userId).getProfilePicture();
-        return picturePath;
+        User u =userRepository.findById(userId);
+        u.setProfilePicture(path);
+        userRepository.save(u);
+        return userRepository.findById(userId).getProfilePicture();
     }
 
     public String deleteProfilePicture(int userId) {
-        userRepository.findById(userId).setProfilePicture(null);
+        User u = userRepository.findById(userId);
+        u.setProfilePicture(null);
+        userRepository.save(u);
+
         String picturePath = userRepository.findById(userId).getProfilePicture();
-        if (picturePath.equals(null)) {
+        if (picturePath == null) {
             return "You have successfully removed the profile picture for user# " + userId;
         } else {
             return "There was a problem removing the profile picture for user# " + userId;
