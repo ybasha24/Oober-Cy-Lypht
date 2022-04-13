@@ -58,4 +58,10 @@ public final class Endpoints {
      */
     public static final String GoogleMapsAPIKey = "AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM";
 
+    /**
+     * where users change their profile picture
+     */
+    public static final String SetProfilePictureUrl = "http://coms-309-030.class.las.iastate.edu:8080/user/userId?id=";
+
+
 }

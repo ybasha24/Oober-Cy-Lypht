@@ -6,7 +6,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
+import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.endpoints.Endpoints;
 
 import android.content.Intent;
@@ -48,6 +48,7 @@ public class ProfileSettings extends AppCompatActivity {
     private EditText zip;
     private EditText email;
     ImageView profilePic;
+    String uriString;
     private static int RESULT_LOAD_IMAGE = 1;
 
     @Override
@@ -77,7 +78,9 @@ public class ProfileSettings extends AppCompatActivity {
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             Uri uri = data.getData();
             getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            profilePic.setImageURI(uri);
+            uriString = uri.toString();
+            profilePic.setImageURI(Uri.parse(uriString));
+//            profilePic.setImageURI(uri);
         }
     }
 
@@ -95,6 +98,7 @@ public class ProfileSettings extends AppCompatActivity {
 
         if (x && y) {
             changeProfileRequest(getDetails());
+            changeProfilePicRequest();
         }
     }
 
@@ -113,16 +117,6 @@ public class ProfileSettings extends AppCompatActivity {
     }
 
     private JSONObject getDetails(){
-        EditText firstName = findViewById(R.id.editTextFirstName2);
-        EditText lastName = findViewById(R.id.editTextLastName2);
-        EditText password = findViewById(R.id.editTextPassword2);
-        EditText phoneNumber = findViewById(R.id.editTextPhone2);
-        EditText address = findViewById(R.id.editTextAddress2);
-        EditText city = findViewById(R.id.editTextCity2);
-        EditText state = findViewById(R.id.editTextState2);
-        EditText zip = findViewById(R.id.editTextZip2);
-        EditText email = findViewById(R.id.editTextEmail2);
-
         JSONObject newUserDetails = new JSONObject();
         try {
             newUserDetails.put("firstName", firstName.getText().toString());
@@ -165,5 +159,20 @@ public class ProfileSettings extends AppCompatActivity {
         startActivityForResult(i, RESULT_LOAD_IMAGE);
     }
 
+    public void changeProfilePicRequest(){
+        try {
+            String url = Endpoints.EditUserUrl + MainActivity.accountObj.get("id") + "&path=" + uriString;
+            StringRequest req = new StringRequest(Request.Method.PUT, url,
+                    response -> Log.d("success", "changed profile picture"),
+                    error -> Log.d("success", "changed profile picture"));
+            AppController.getInstance().addToRequestQueue(req, "post_object_tag");
+        }
+        catch(Exception e){
+            Log.e("error", e.toString());
+        }
+    }
 
+//    public String getProfilePic(){
+//        MainActivity.accountObj.getString("")
+//    }
 }
