@@ -11,6 +11,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.view.View;
 
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -39,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
      */
     public boolean isLoggedIn;
 
+    EditText usernameField;
+    EditText passwordField;
+    CheckBox checkbox;
+    ProgressBar signInLoader;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,13 +55,21 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        usernameField = (EditText) findViewById(R.id.usernameInput);
+        passwordField = (EditText) findViewById(R.id.passwordInput);
+        checkbox = (CheckBox) findViewById(R.id.staySignedInCheckBox);
+        signInLoader = (ProgressBar) findViewById(R.id.signInLoader);
+        signInLoader.setVisibility(View.INVISIBLE);
+
+
         if(isLoggedIn){
             String email = prefs.getString("email", "");
             String password = prefs.getString("password", "");
+            usernameField.setText(email);
+            passwordField.setText(password);
+            checkbox.setChecked(true);
+            signInLoader.setVisibility(View.VISIBLE);
             signInRequest(email, password);
-        }
-        else{
-            setContentView(R.layout.activity_main);
         }
     }
 

@@ -68,7 +68,7 @@ public class ProfileSettings extends AppCompatActivity {
         email = findViewById(R.id.editTextEmail2);
         profilePic = (ImageView) findViewById(R.id.profilePic);
 
-        uriString = getProfilePic();
+        uriString = HelperFunctions.getProfilePic();
         profilePic.setImageURI(Uri.parse(uriString));
         setPreviousDetails();
     }
@@ -81,7 +81,6 @@ public class ProfileSettings extends AppCompatActivity {
             getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
             uriString = uri.toString();
             profilePic.setImageURI(Uri.parse(uriString));
-//            profilePic.setImageURI(uri);
         }
     }
 
@@ -172,15 +171,6 @@ public class ProfileSettings extends AppCompatActivity {
         catch(Exception e){
             Log.e("error", e.toString());
         }
-    }
-
-    public String getProfilePic() {
-        try {
-            return MainActivity.accountObj.getString("profilePicture");
-        } catch (Exception e) {
-            Log.e("error", e.toString());
-        }
-        return "";
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.TextView;
 
@@ -91,5 +92,14 @@ public class HelperFunctions {
         }
 
         return errorFlag;
+    }
+
+    public static String getProfilePic() {
+        try {
+            return MainActivity.accountObj.getString("profilePicture");
+        } catch (Exception e) {
+            Log.e("error", e.toString());
+        }
+        return "";
     }
 }
