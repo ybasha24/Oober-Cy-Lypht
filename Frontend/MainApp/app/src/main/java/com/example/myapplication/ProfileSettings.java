@@ -17,6 +17,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ import com.example.myapplication.app.AppController;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.time.Instant;
 
 /**
@@ -63,7 +65,8 @@ public class ProfileSettings extends AppCompatActivity {
         zip = findViewById(R.id.editTextZip2);
         email = findViewById(R.id.editTextEmail2);
         profilePic = (ImageView) findViewById(R.id.profilePic);;
-
+        Uri uri = Uri.parse("content://com.android.providers.media.documents/document/image%3A53");
+        profilePic.setImageURI(uri);
         setPreviousDetails();
 
     }
@@ -72,16 +75,9 @@ public class ProfileSettings extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-//            Glide.with(this).load(picturePath).into(profilePic);
-//            profilePic.setImageURI(picturePath);
+            Uri uri = data.getData();
+            getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            profilePic.setImageURI(uri);
         }
     }
 
@@ -164,10 +160,8 @@ public class ProfileSettings extends AppCompatActivity {
     }
 
     public void setProfilePicture(View view){
-//        Glide.with(this).load("http://i.imgur.com/DvpvklR.png").into(profilePic);
-
         Intent i = new Intent(
-                Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent.ACTION_OPEN_DOCUMENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, RESULT_LOAD_IMAGE);
     }
 
