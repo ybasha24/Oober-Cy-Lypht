@@ -1,12 +1,22 @@
 package com.example.myapplication;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.endpoints.Endpoints;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -15,6 +25,8 @@ import com.example.myapplication.app.AppController;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.time.Instant;
 
 /**
  * allows for users to change the settings of their account
@@ -30,6 +42,8 @@ public class ProfileSettings extends AppCompatActivity {
     private EditText state;
     private EditText zip;
     private EditText email;
+    private ImageView profilePic;
+    private static int RESULT_LOAD_IMAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +59,26 @@ public class ProfileSettings extends AppCompatActivity {
         state = findViewById(R.id.editTextState2);
         zip = findViewById(R.id.editTextZip2);
         email = findViewById(R.id.editTextEmail2);
+        profilePic = findViewById(R.id.profilePicture);
 
         setPreviousDetails();
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+            profilePic.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+        }
     }
 
     /**
@@ -125,6 +157,12 @@ public class ProfileSettings extends AppCompatActivity {
                 error -> runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Encountered error " + error, Toast.LENGTH_LONG).show()));
             AppController.getInstance().addToRequestQueue(req, "post_object_tag");
         } catch(JSONException e) {}
+    }
+
+    public void setProfilePicture(View view){
+        Intent i = new Intent(
+                Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, RESULT_LOAD_IMAGE);
     }
 
 }
