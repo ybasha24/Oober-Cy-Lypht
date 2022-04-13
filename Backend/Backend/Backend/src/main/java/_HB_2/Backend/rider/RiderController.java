@@ -14,7 +14,7 @@ public class RiderController {
     @Autowired
     private RiderService riderService;
 
-    @ApiOperation(value = "Register a rider", response = Iterable.class, tags = "registerRider")
+    @ApiOperation(value = "Register a rider", response = User.class)
     @PostMapping("/registerRider")
     User createRiderWithBody(@RequestBody Rider r) {
         User u = riderService.getRiderbyEmail(r.getEmail());
@@ -28,14 +28,14 @@ public class RiderController {
         }
     }
 
-    @ApiOperation(value = "Get a rider by id", response = Iterable.class, tags = "getRider")
+    @ApiOperation(value = "Get a rider by id", response = User.class)
     @GetMapping("/getRider")
     User getRiderById(@RequestParam int id) {
         User u = riderService.getRiderById(id);
         return u;
     }
 
-    @ApiOperation(value = "Get a rider by email", response = Iterable.class, tags = "getRiderByEmail")
+    @ApiOperation(value = "Get a rider by email", response = User.class)
     @GetMapping("/getRiderByEmail")
     User getRiderByEmail(@RequestParam String email) {
         User u = riderService.getRiderbyEmail(email);
