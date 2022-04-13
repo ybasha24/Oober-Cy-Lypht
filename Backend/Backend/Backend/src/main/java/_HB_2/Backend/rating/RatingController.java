@@ -13,7 +13,7 @@ public class RatingController {
     @Autowired
     private RatingService ratingService;
 
-    @ApiOperation(value = "Submit a rating for a user ", response = Iterable.class, tags = "createRating")
+    @ApiOperation(value = "Submit a rating for a user ", response = Rating.class)
     @PostMapping("/createRating")
     Rating createRating(@RequestParam int raterId,
                         @RequestParam int ratedId,
@@ -21,7 +21,7 @@ public class RatingController {
         return ratingService.createRating(raterId, ratedId, rating);
     }
 
-    @ApiOperation(value = "Get average rating of a user", response = Iterable.class, tags = "getUserRating")
+    @ApiOperation(value = "Get average rating of a user", response = Float.class)
     @GetMapping("/getUserRating")
     Float getUserRating(@RequestParam int userId) {
         return ratingService.getUserRating(userId);
