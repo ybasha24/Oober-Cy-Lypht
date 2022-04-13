@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.myapplication.*;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -88,10 +89,10 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
             View view = convertView;
             if (view == null) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.trip_item, null);
+                view = inflater.inflate(R.layout.trip_item2, null);
             }
 
-            TextView tv = view.findViewById(R.id.textView);
+            TextView tv = view.findViewById(R.id.riderSearchText);
             try {
                 JSONObject json = list.getJSONObject(position);
                 Log.e("Json logging", json.toString());
@@ -100,9 +101,22 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
                         "\nTime: " + json.getString("scheduledStartDate") + "\n->" + json.getString("scheduledEndDate"));
             } catch (Exception e) {
             }
+
+            Button addToTripButton = view.findViewById(R.id.add_trip);
+            addToTripButton.setOnClickListener(v -> {
+                try {
+                    addToTrip(position);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            });
             return view;
         }
         return null;
+    }
+
+    public void addToTrip(int position) throws JSONException {
+        MainActivity.accountObj.getInt("id");
     }
 
 }
