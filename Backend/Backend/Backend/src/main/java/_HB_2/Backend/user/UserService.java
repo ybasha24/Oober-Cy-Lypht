@@ -55,4 +55,20 @@ public class UserService {
         return list;
 
     }
+
+    public String setProfilePicture(int userId, String path) {
+        userRepository.findById(userId).setProfilePicture(path);
+        String picturePath = userRepository.findById(userId).getProfilePicture();
+        return picturePath;
+    }
+
+    public String deleteProfilePicture(int userId) {
+        userRepository.findById(userId).setProfilePicture(null);
+        String picturePath = userRepository.findById(userId).getProfilePicture();
+        if (picturePath.equals(null)) {
+            return "You have successfully removed the profile picture for user# " + userId;
+        } else {
+            return "There was a problem removing the profile picture for user# " + userId;
+        }
+    }
 }
