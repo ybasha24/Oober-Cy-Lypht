@@ -15,7 +15,7 @@ public class RiderReviewController {
     @Autowired
     RiderReviewService riderReviewService;
 
-    @ApiOperation(value = "Enter a new Rider Review", response = Iterable.class, tags = "postRiderReview")
+    @ApiOperation(value = "Enter a new Rider Review", response = RiderReview.class)
     @PostMapping("/postRiderReview")
     RiderReview createRiderReview(
             @RequestParam int driverId, int riderId,
@@ -24,20 +24,20 @@ public class RiderReviewController {
         return riderReviewService.addRiderReview(driverId, riderId, review);
     }
 
-    @ApiOperation(value = "Get a particular rider review", response = Iterable.class, tags = "getRiderReviewByReviewId")
+    @ApiOperation(value = "Get a particular rider review", response = RiderReview.class)
     @GetMapping("/getRiderReviewByReviewId")
     RiderReview getRiderReview(@RequestParam int reviewId) {
         return riderReviewService.getReview(reviewId);
     }
 
-    @ApiOperation(value = "Delete a rider review", response = Iterable.class, tags = "deleteRiderReviewByReviewId")
+    @ApiOperation(value = "Delete a rider review", response = String.class)
     @DeleteMapping("/deleteRiderReviewByReviewId")
     String deleteRiderReview(@RequestParam int reviewId) {
         riderReviewService.deleteReview(reviewId);
         return "You have deleted rider review " + reviewId;
     }
 
-    @ApiOperation(value = "Get list of all rider reviews for a driver", response = Iterable.class, tags = "getAllRiderReviewByDriverId")
+    @ApiOperation(value = "Get list of all rider reviews for a driver", response = Iterable.class)
     @GetMapping("getAllRiderReviewsByRiderId")
     List<RiderReview> getAllRiderReviewsByRiderid(@RequestParam int riderId) {
         return riderReviewService.getAllReviewsByRiderid(riderId);
