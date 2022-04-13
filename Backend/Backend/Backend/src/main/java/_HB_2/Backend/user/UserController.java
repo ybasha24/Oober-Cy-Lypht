@@ -83,4 +83,9 @@ public class UserController {
         return userService.setProfilePicture(userId, path);
     }
 
+    @PutMapping("deleteProfilePicture")
+    String deleteProfilePicture(@RequestParam int userId) {
+        return userService.deleteProfilePicture(userId);
+    }
+
 }
