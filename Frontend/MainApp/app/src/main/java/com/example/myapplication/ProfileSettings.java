@@ -6,10 +6,13 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.endpoints.Endpoints;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,7 +45,7 @@ public class ProfileSettings extends AppCompatActivity {
     private EditText state;
     private EditText zip;
     private EditText email;
-    private ImageView profilePic;
+    ImageView profilePic;
     private static int RESULT_LOAD_IMAGE = 1;
 
     @Override
@@ -59,7 +62,7 @@ public class ProfileSettings extends AppCompatActivity {
         state = findViewById(R.id.editTextState2);
         zip = findViewById(R.id.editTextZip2);
         email = findViewById(R.id.editTextEmail2);
-        profilePic = findViewById(R.id.profilePicture);
+        profilePic = (ImageView) findViewById(R.id.profilePic);;
 
         setPreviousDetails();
 
@@ -77,7 +80,8 @@ public class ProfileSettings extends AppCompatActivity {
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
-            profilePic.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+//            Glide.with(this).load(picturePath).into(profilePic);
+//            profilePic.setImageURI(picturePath);
         }
     }
 
@@ -160,9 +164,12 @@ public class ProfileSettings extends AppCompatActivity {
     }
 
     public void setProfilePicture(View view){
+//        Glide.with(this).load("http://i.imgur.com/DvpvklR.png").into(profilePic);
+
         Intent i = new Intent(
                 Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, RESULT_LOAD_IMAGE);
     }
+
 
 }
