@@ -90,7 +90,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.admin_trip_item, null);
             editTripButton = view.findViewById(R.id.editTripButton);
-            deleteTripButton = view.findViewById(R.id.deleteTripButton);
+            deleteTripButton = view.findViewById(R.id.viewTripButton);
             tv = view.findViewById(R.id.textView);
         }
 
