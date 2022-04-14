@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -15,8 +16,11 @@ import com.example.myapplication.app.AppController;
 import com.example.myapplication.driver.createtrip.SelectTripTime;
 import com.example.myapplication.endpoints.Endpoints;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Arrays;
 
 public class TripDetail extends AppCompatActivity {
 
@@ -26,6 +30,31 @@ public class TripDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_detail);
         trip = TripsAdapter.currentJson;
+        setDetails();
+    }
+
+    private void setDetails(){
+        TextView origin = (TextView) findViewById(R.id.originTV);
+        TextView dest = (TextView) findViewById(R.id.destTV);
+        TextView start = (TextView) findViewById(R.id.starttimeTV);
+        TextView end = (TextView) findViewById(R.id.endTimeTV);
+        TextView riders = (TextView) findViewById(R.id.ridersTV);
+
+        try {
+            origin.setText(trip.getString("originAddress"));
+            dest.setText(trip.getString("destAddress"));
+            start.setText(trip.getString("scheduledStartDate"));
+            end.setText(trip.getString("scheduledEndDate"));
+            JSONArray riderIdsArray = trip.getJSONArray("riderIds");
+            int[] riderIds = new int[riderIdsArray.length()];
+            for(int i = 0; i < riderIdsArray.length(); i++){
+                riderIds[i] = riderIdsArray.getInt(i);
+            }
+            riders.setText(Arrays.toString(riderIds));
+        }
+        catch(Exception e){
+            Log.e("error", e.toString());
+        }
     }
 
     public void editTrip(View v){
