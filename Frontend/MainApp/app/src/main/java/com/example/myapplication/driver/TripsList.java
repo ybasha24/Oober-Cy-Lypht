@@ -28,7 +28,7 @@ public class TripsList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_driver_created_rides);
+        setContentView(R.layout.activity_driver_trips_list);
         listAllTrips();
     }
 

@@ -48,7 +48,7 @@ public class ConfirmTrip extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_confirm_ride);
+        setContentView(R.layout.activity_driver_confirm_trip);
 
         radiusSlider = findViewById(R.id.radiusSlider);
         radiusTV = findViewById(R.id.radiusTV);
