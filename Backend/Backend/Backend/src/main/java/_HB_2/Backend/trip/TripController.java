@@ -89,6 +89,13 @@ public class TripController {
         return tripRepository.getAllUncompletedTripsByDriverId(driverId);
     }
 
+    @ApiOperation(value = "Retrieve a list of uncompleted trips of a rider", response = Iterable.class)
+    @GetMapping("/getAllActiveTripsFromRiderId")
+    List<Trip> getAllActiveTrips2(
+            @RequestParam int riderId) {
+
+    }
+
     @ApiOperation(value = "Retrieve a list of all trips", response = Iterable.class)
     @GetMapping("/getAllTrips")
     List<Trip> getAllTrips() {
