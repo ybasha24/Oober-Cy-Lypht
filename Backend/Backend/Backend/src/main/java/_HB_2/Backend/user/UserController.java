@@ -18,21 +18,21 @@ public class UserController {
     private UserService userService;
 
 
-    @ApiOperation(value = "Get a user by id", response = Iterable.class, tags = "getUser")
+    @ApiOperation(value = "Get a user by id", response = User.class)
     @GetMapping("/getUser")
     User getUserById(@RequestParam int id) {
         User u = userService.getUserById(id);
         return u;
     }
 
-    @ApiOperation(value = "Get a user by email", response = Iterable.class, tags = "getUserByEmail")
+    @ApiOperation(value = "Get a user by email", response = User.class)
     @GetMapping("/getUserByEmail")
     User getUserByEmail(@RequestParam String email) {
         User u = userService.getUserByEmail(email);
         return u;
     }
 
-    @ApiOperation(value = "Delete a user by Id", response = Iterable.class, tags = "deleteUser")
+    @ApiOperation(value = "Delete a user by Id", response = String.class)
     @DeleteMapping("/deleteUser")
     String deleteUserById(
             @RequestParam int id) {
@@ -43,7 +43,7 @@ public class UserController {
     //Not sure why this doesn't work
     //Either delete this delete the function in the UserService, and create matching enpoints for Rider and Admin
     //Or fix and delete endpoint in DriverController and function in UserService
-    @ApiOperation(value = "Edit a user", response = Iterable.class, tags = "editUser")
+    @ApiOperation(value = "Edit a user", response = User.class)
     @PutMapping("/editUser")
     User editUser(
             @RequestParam int id,
@@ -53,7 +53,7 @@ public class UserController {
 
     //SIGN IN CHECKPOINT!!!
 
-    @ApiOperation(value = "Get a user by sign in info", response = Iterable.class, tags = "getUserSignIn")
+    @ApiOperation(value = "Get a user by sign in info", response = User.class)
     @GetMapping("/getUserSignIn")
     User getUserBySignIn(@RequestParam String email, String password) {
         User u = userService.getUserByEmail(email);
@@ -72,18 +72,20 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "Get a list of all users", response = Iterable.class, tags = "getAllUsers")
+    @ApiOperation(value = "Get a list of all users", response = Iterable.class)
     @GetMapping("/getAllUsers")
     List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
+    @ApiOperation(value = "Set user's profile picture", response = String.class)
     @PutMapping("/setProfilePicture")
     String setProfilePicture(@RequestParam int userId, String path) {
         return userService.setProfilePicture(userId, path);
     }
 
-    @PutMapping("/deleteProfilePicture")
+    @ApiOperation(value = "Delete a user's profile picture", response = String.class)
+    @PutMapping("deleteProfilePicture")
     String deleteProfilePicture(@RequestParam int userId) {
         return userService.deleteProfilePicture(userId);
     }
