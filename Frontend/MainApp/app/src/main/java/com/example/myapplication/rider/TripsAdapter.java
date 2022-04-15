@@ -18,6 +18,7 @@ import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
 import com.example.myapplication.driver.TripsList;
 import com.example.myapplication.endpoints.Endpoints;
+import com.example.myapplication.rider.searchtrip.SearchPage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -103,7 +104,6 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
             try {
                 JSONObject json = list.getJSONObject(position);
                 Log.e("Json logging", json.toString());
-
                 tv.setText("From: " + json.getString("originAddress") + "\nTo: " + json.getString("destAddress") +
                         "\nTime: " + json.getString("scheduledStartDate") + "\n->" + json.getString("scheduledEndDate"));
             } catch (Exception e) {
@@ -118,13 +118,18 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
         return null;
     }
 
+    /**
+     * Adds a rider to a trip based off requirements radius and location requirements
+     * @param position
+     */
     public void addToTrip(int position) {
        try{
            String url = Endpoints.AddRiderToTripUrl+list.getJSONObject(position).getInt("id")+
-                   "&riderID="+MainActivity.accountObj.getInt("id");
+                   "&riderId="+MainActivity.accountObj.getInt("id");
            StringRequest req = new StringRequest(Request.Method.PUT, url,
                    response -> {
                        Intent i = new Intent(this.context, HomePage.class);
+                       i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                        this.context.startActivity(i);
                        Toast toast = Toast.makeText(this.context, "Successfully added to trip", Toast.LENGTH_LONG);
                        toast.show();
