@@ -89,4 +89,9 @@ public class UserService {
         userRepository.save(u);
         return u.isBanned();
     }
+
+    public boolean getBannedStatusById(int userId) {
+        User u = userRepository.findById(userId);
+        return u.isBanned();
+    }
 }

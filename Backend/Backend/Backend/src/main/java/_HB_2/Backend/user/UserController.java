@@ -100,4 +100,9 @@ public class UserController {
         return userService.unBanUserById(userId);
     }
 
+    @GetMapping("getBannedStatusById")
+    boolean getBannedStatusById(@RequestParam int userId) {
+        return userService.getBannedStatusById(userId);
+    }
+
 }
