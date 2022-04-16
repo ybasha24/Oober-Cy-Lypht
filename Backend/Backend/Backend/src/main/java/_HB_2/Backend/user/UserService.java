@@ -82,4 +82,11 @@ public class UserService {
         userRepository.save(u);
         return u.isBanned();
     }
+
+    public boolean unBanUserById(int userId) {
+        User u = userRepository.findById(userId);
+        u.setBanned(false);
+        userRepository.save(u);
+        return u.isBanned();
+    }
 }
