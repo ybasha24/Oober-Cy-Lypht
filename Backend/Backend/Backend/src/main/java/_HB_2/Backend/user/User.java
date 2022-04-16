@@ -85,6 +85,8 @@ public class User {
 
     private String profilePicture;
 
+    private boolean isBanned;
+
     //Can this constructor be deleted?  Where is it used?
     //no Boolean Values for User-These should be set in the subclass constructors
     public User(String firstName,
@@ -222,4 +224,8 @@ public class User {
     public String getProfilePicture() {return profilePicture;}
 
     public void setProfilePicture(String profilePicture) {this.profilePicture = profilePicture;}
+
+    public boolean isBanned() {return isBanned;}
+
+    public void setBanned(boolean banned) {isBanned = banned;}
 }

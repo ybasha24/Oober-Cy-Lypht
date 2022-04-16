@@ -90,4 +90,22 @@ public class UserController {
         return userService.deleteProfilePicture(userId);
     }
 
+    @ApiOperation(value = "Ban a user by user id", response = boolean.class)
+    @PutMapping("banUserById")
+    boolean banUserById(@RequestParam int userId) {
+        return userService.banUserById(userId);
+    }
+
+    @ApiOperation(value = "Unban a user by user id", response = boolean.class)
+    @PutMapping("unBanUserById")
+    boolean unBanUserById(@RequestParam int userId) {
+        return userService.unBanUserById(userId);
+    }
+
+    @ApiOperation(value = "Get the banned status of user by user id", response = boolean.class)
+    @GetMapping("getBannedStatusById")
+    boolean getBannedStatusById(@RequestParam int userId) {
+        return userService.getBannedStatusById(userId);
+    }
+
 }
