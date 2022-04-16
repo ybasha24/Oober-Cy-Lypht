@@ -75,4 +75,11 @@ public class UserService {
             return "There was a problem removing the profile picture for user# " + userId;
         }
     }
+
+    public boolean banUserById(int userId) {
+        User u = userRepository.findById(userId);
+        u.setBanned(true);
+        userRepository.save(u);
+        return u.isBanned();
+    }
 }

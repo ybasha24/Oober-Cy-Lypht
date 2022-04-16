@@ -90,4 +90,9 @@ public class UserController {
         return userService.deleteProfilePicture(userId);
     }
 
+    @PutMapping("banUser")
+    boolean banUserById(@RequestParam int userId) {
+        return userService.banUserById(userId);
+    }
+
 }
