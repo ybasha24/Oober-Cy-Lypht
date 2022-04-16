@@ -93,6 +93,7 @@ public class TripController {
     @GetMapping("/getAllActiveTripsFromRiderId")
     List<Trip> getAllActiveTrips2(
             @RequestParam int riderId) {
+        return tripRepository.getAllUncompletedTripsByRiderId(riderId);
 
     }
 
