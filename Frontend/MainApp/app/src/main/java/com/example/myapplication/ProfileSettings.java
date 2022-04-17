@@ -1,12 +1,26 @@
 package com.example.myapplication;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.endpoints.Endpoints;
 
+import android.content.Intent;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -15,6 +29,9 @@ import com.example.myapplication.app.AppController;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.time.Instant;
 
 /**
  * allows for users to change the settings of their account
@@ -30,6 +47,10 @@ public class ProfileSettings extends AppCompatActivity {
     private EditText state;
     private EditText zip;
     private EditText email;
+    ImageView profilePic;
+
+    private String uriString;
+    private static int RESULT_LOAD_IMAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +66,22 @@ public class ProfileSettings extends AppCompatActivity {
         state = findViewById(R.id.editTextState2);
         zip = findViewById(R.id.editTextZip2);
         email = findViewById(R.id.editTextEmail2);
+        profilePic = (ImageView) findViewById(R.id.profilePic);
 
+        uriString = HelperFunctions.getProfilePic();
+        profilePic.setImageURI(Uri.parse(uriString));
         setPreviousDetails();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri uri = data.getData();
+            getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            uriString = uri.toString();
+            profilePic.setImageURI(Uri.parse(uriString));
+        }
     }
 
     /**
@@ -63,6 +98,7 @@ public class ProfileSettings extends AppCompatActivity {
 
         if (x && y) {
             changeProfileRequest(getDetails());
+            changeProfilePicRequest();
         }
     }
 
@@ -81,16 +117,6 @@ public class ProfileSettings extends AppCompatActivity {
     }
 
     private JSONObject getDetails(){
-        EditText firstName = findViewById(R.id.editTextFirstName2);
-        EditText lastName = findViewById(R.id.editTextLastName2);
-        EditText password = findViewById(R.id.editTextPassword2);
-        EditText phoneNumber = findViewById(R.id.editTextPhone2);
-        EditText address = findViewById(R.id.editTextAddress2);
-        EditText city = findViewById(R.id.editTextCity2);
-        EditText state = findViewById(R.id.editTextState2);
-        EditText zip = findViewById(R.id.editTextZip2);
-        EditText email = findViewById(R.id.editTextEmail2);
-
         JSONObject newUserDetails = new JSONObject();
         try {
             newUserDetails.put("firstName", firstName.getText().toString());
@@ -125,6 +151,30 @@ public class ProfileSettings extends AppCompatActivity {
                 error -> runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Encountered error " + error, Toast.LENGTH_LONG).show()));
             AppController.getInstance().addToRequestQueue(req, "post_object_tag");
         } catch(JSONException e) {}
+    }
+
+    /**
+     * sets profile picture
+     * @param view view that is referencing this method
+     */
+    public void setProfilePicture(View view){
+        Intent i = new Intent(
+                Intent.ACTION_OPEN_DOCUMENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, RESULT_LOAD_IMAGE);
+    }
+
+    private void changeProfilePicRequest(){
+        try {
+            String url = Endpoints.SetProfilePictureUrl + MainActivity.accountObj.get("id") + "&path=" + uriString;
+            StringRequest req = new StringRequest(Request.Method.PUT, url,
+                    response -> Log.d("success", "changed profile picture"),
+                    error -> Log.d("success", "failed to changed profile picture"));
+            Log.e("error", url);
+            AppController.getInstance().addToRequestQueue(req, "string_req");
+        }
+        catch(Exception e){
+            Log.e("error", e.toString());
+        }
     }
 
 }
