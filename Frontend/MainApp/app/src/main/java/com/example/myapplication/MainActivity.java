@@ -86,8 +86,9 @@ public class MainActivity extends AppCompatActivity {
                     accountObj = response;
                     Intent intent = null;
                     if(!accountObj.isNull("firstName")){
-                        if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver"))
+                        if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver")) {
                             intent = new Intent(this, com.example.myapplication.driver.HomePage.class);
+                        }
                         else if (!accountObj.isNull("arider") && accountObj.getBoolean("arider"))
                             intent = new Intent(this, HomePage.class);
                         else if (!(accountObj.isNull("anAdmin")) && accountObj.getBoolean("anAdmin"))
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
                             editor.putBoolean("isLoggedIn", true);
                             editor.apply();
                         }
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         startActivity(intent);
                     }
                     else {

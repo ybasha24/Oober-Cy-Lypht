@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.endpoints.Endpoints;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -69,9 +70,13 @@ public class ProfileSettings extends AppCompatActivity {
         email = findViewById(R.id.editTextEmail2);
         profilePic = (ImageView) findViewById(R.id.profilePic);
 
-        uriString = HelperFunctions.getProfilePic();
-        profilePic.setImageURI(Uri.parse(uriString));
-        setPreviousDetails();
+        try {
+            uriString = HelperFunctions.getProfilePic();
+            profilePic.setImageURI(Uri.parse(uriString));
+            setPreviousDetails();
+        }catch(Exception e){
+            Log.e("error", e.toString());
+        }
     }
 
     /**
@@ -149,11 +154,7 @@ public class ProfileSettings extends AppCompatActivity {
      */
     public void setProfilePicture(View view){
         Intent openDocumentIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        openDocumentIntent.addCategory(Intent.CATEGORY_OPENABLE);
         openDocumentIntent.setType("image/*");
-        openDocumentIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
-                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-                | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
         startActivityForResult(openDocumentIntent, RESULT_LOAD_IMAGE);
     }
 
@@ -164,7 +165,6 @@ public class ProfileSettings extends AppCompatActivity {
             Uri uri = data.getData();
             getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
             uriString = uri.toString();
-            Log.e("error", uriString);
             profilePic.setImageURI(Uri.parse(uriString));
         }
     }
