@@ -46,6 +46,10 @@ public final class Endpoints {
      */
     public static final String RiderSearchTripUrl = "http://coms-309-030.class.las.iastate.edu:8080/trip/getTripsForRider?scheduledStartDate=";
     /**
+     * where a rider is added to a trip
+     */
+    public static final String AddRiderToTripUrl = "http://coms-309-030.class.las.iastate.edu:8080/trip/addRiderToTrip?tripId=";
+    /**
      * where directions from place A to place B are generated
      */
     public static final String GoogleMapsDirectionUrl = "https://maps.googleapis.com/maps/api/directions/json?";
