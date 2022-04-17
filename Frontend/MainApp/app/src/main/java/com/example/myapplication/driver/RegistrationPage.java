@@ -17,7 +17,7 @@ import com.example.myapplication.endpoints.Endpoints;
 import com.example.myapplication.HelperFunctions;
 import com.example.myapplication.*;
 /**
- * where the driver registers for an accout
+ * where the driver registers for an account
  */
 public class RegistrationPage extends AppCompatActivity {
 

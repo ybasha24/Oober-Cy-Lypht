@@ -41,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
      */
     public boolean isLoggedIn;
 
-    EditText usernameField;
-    EditText passwordField;
-    CheckBox checkbox;
-    ProgressBar signInLoader;
+    private EditText usernameField;
+    private EditText passwordField;
+    private CheckBox checkbox;
+    private ProgressBar signInLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,14 +85,14 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * the user makes an account, either a driver or a rider
-     * @param view acitivty that is referencing this method
+     * @param view activity that is referencing this method
      */
     public void register(View view){
         Intent intent = new Intent(this, RegistrationOptions.class);
         startActivity(intent);
     }
 
-    public void signInRequest(String email, String password){
+    private void signInRequest(String email, String password){
         String url = Endpoints.LoginUrl + email + "&password=" + password;
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,

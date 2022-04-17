@@ -20,8 +20,8 @@ import com.example.myapplication.endpoints.OtherConstants;
  */
 public class HomePage extends AppCompatActivity {
 
-    ImageView profilePic;
-    String uriString;
+    private ImageView profilePic;
+    private String uriString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

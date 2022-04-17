@@ -103,7 +103,6 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
         catch(Exception e){
             Log.e("error", e.toString());
         }
-
         editTripButton.setOnClickListener(v -> editTrip(position));
         deleteTripButton.setOnClickListener(v -> deleteTrip(position));
 

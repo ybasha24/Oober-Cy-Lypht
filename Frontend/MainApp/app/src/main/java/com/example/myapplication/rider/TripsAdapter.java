@@ -16,12 +16,9 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
-import com.example.myapplication.driver.TripsList;
 import com.example.myapplication.endpoints.Endpoints;
-import com.example.myapplication.rider.searchtrip.SearchPage;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**

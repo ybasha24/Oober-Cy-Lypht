@@ -17,6 +17,9 @@ import com.example.myapplication.*;
 import com.example.myapplication.endpoints.Endpoints;
 import com.example.myapplication.HelperFunctions;
 
+/**
+ * where users can register for a rider-type account
+ */
 public class RegistrationPage extends AppCompatActivity {
 
     @Override

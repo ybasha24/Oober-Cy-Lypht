@@ -49,7 +49,7 @@ public class ProfileSettings extends AppCompatActivity {
     private EditText email;
     ImageView profilePic;
 
-    String uriString;
+    private String uriString;
     private static int RESULT_LOAD_IMAGE = 1;
 
     @Override
@@ -153,13 +153,17 @@ public class ProfileSettings extends AppCompatActivity {
         } catch(JSONException e) {}
     }
 
+    /**
+     * sets profile picture
+     * @param view view that is referencing this method
+     */
     public void setProfilePicture(View view){
         Intent i = new Intent(
                 Intent.ACTION_OPEN_DOCUMENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, RESULT_LOAD_IMAGE);
     }
 
-    public void changeProfilePicRequest(){
+    private void changeProfilePicRequest(){
         try {
             String url = Endpoints.SetProfilePictureUrl + MainActivity.accountObj.get("id") + "&path=" + uriString;
             StringRequest req = new StringRequest(Request.Method.PUT, url,

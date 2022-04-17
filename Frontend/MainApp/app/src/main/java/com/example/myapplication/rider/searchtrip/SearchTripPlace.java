@@ -37,6 +37,9 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * where riders can search for the destination and origin of their trip
+ */
 public class SearchTripPlace extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;

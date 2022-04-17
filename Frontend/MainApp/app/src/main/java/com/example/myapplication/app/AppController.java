@@ -18,6 +18,9 @@ public class AppController extends Application {
     private RequestQueue mRequestQueue;
     private static AppController mInstance;
 
+    /**
+     * instantiates Volley instance
+     */
     @Override
     public void onCreate() {
         super.onCreate();

@@ -24,6 +24,9 @@ import org.json.JSONException;
 
 import java.time.LocalDateTime;
 
+/**
+ * where riders can search for a trip
+ */
 public class SearchPage extends AppCompatActivity {
 
     private ListView listView;
@@ -80,7 +83,7 @@ public class SearchPage extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(req, "array_req");
     }
 
-    public void sortList()
+    private void sortList()
     {
         for(int i = 0; i < tripsList.length(); i++)
         {

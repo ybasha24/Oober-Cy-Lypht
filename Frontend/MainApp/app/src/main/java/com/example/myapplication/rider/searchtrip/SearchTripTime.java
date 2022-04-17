@@ -22,6 +22,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
+/**
+ * where rider sets the time component of their trip
+ */
 public class SearchTripTime extends AppCompatActivity {
     private static String time = "";
     private static String date = "";
