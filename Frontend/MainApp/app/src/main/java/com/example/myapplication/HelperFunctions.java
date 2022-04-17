@@ -92,4 +92,12 @@ public class HelperFunctions {
 
         return errorFlag;
     }
+
+    public static String getProfilePic(){
+        try {
+            return MainActivity.accountObj.getString("profilePicture");
+        }
+        catch(Exception e){ }
+        return "";
+    }
 }

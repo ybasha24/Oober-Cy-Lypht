@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -29,7 +32,13 @@ public class HomePage extends AppCompatActivity {
 
         profilePic = (ImageView) findViewById(R.id.riderProfilePic);
         uriString = HelperFunctions.getProfilePic();
-        profilePic.setImageURI(Uri.parse(uriString));
+        Uri uri = Uri.parse(uriString);
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            profilePic.setImageBitmap(bitmap);
+        } catch(Exception e){
+            Log.e("error", e.toString());
+        }
     }
 
     /**

@@ -15,6 +15,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -71,17 +72,6 @@ public class ProfileSettings extends AppCompatActivity {
         uriString = HelperFunctions.getProfilePic();
         profilePic.setImageURI(Uri.parse(uriString));
         setPreviousDetails();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri uri = data.getData();
-            getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            uriString = uri.toString();
-            profilePic.setImageURI(Uri.parse(uriString));
-        }
     }
 
     /**
@@ -158,9 +148,25 @@ public class ProfileSettings extends AppCompatActivity {
      * @param view view that is referencing this method
      */
     public void setProfilePicture(View view){
-        Intent i = new Intent(
-                Intent.ACTION_OPEN_DOCUMENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(i, RESULT_LOAD_IMAGE);
+        Intent openDocumentIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        openDocumentIntent.addCategory(Intent.CATEGORY_OPENABLE);
+        openDocumentIntent.setType("image/*");
+        openDocumentIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+        startActivityForResult(openDocumentIntent, RESULT_LOAD_IMAGE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
+            Uri uri = data.getData();
+            getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            uriString = uri.toString();
+            Log.e("error", uriString);
+            profilePic.setImageURI(Uri.parse(uriString));
+        }
     }
 
     private void changeProfilePicRequest(){
@@ -169,12 +175,12 @@ public class ProfileSettings extends AppCompatActivity {
             StringRequest req = new StringRequest(Request.Method.PUT, url,
                     response -> Log.d("success", "changed profile picture"),
                     error -> Log.d("success", "failed to changed profile picture"));
-            Log.e("error", url);
             AppController.getInstance().addToRequestQueue(req, "string_req");
         }
         catch(Exception e){
             Log.e("error", e.toString());
         }
     }
+
 
 }
