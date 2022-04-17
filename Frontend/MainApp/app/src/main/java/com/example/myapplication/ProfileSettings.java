@@ -47,10 +47,6 @@ public class ProfileSettings extends AppCompatActivity {
     private EditText state;
     private EditText zip;
     private EditText email;
-    ImageView profilePic;
-
-    private String uriString;
-    private static int RESULT_LOAD_IMAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,22 +62,8 @@ public class ProfileSettings extends AppCompatActivity {
         state = findViewById(R.id.editTextState2);
         zip = findViewById(R.id.editTextZip2);
         email = findViewById(R.id.editTextEmail2);
-        profilePic = (ImageView) findViewById(R.id.profilePic);
 
-        uriString = HelperFunctions.getProfilePic();
-        profilePic.setImageURI(Uri.parse(uriString));
         setPreviousDetails();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri uri = data.getData();
-            getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            uriString = uri.toString();
-            profilePic.setImageURI(Uri.parse(uriString));
-        }
     }
 
     /**
@@ -98,7 +80,6 @@ public class ProfileSettings extends AppCompatActivity {
 
         if (x && y) {
             changeProfileRequest(getDetails());
-            changeProfilePicRequest();
         }
     }
 
@@ -151,30 +132,6 @@ public class ProfileSettings extends AppCompatActivity {
                 error -> runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Encountered error " + error, Toast.LENGTH_LONG).show()));
             AppController.getInstance().addToRequestQueue(req, "post_object_tag");
         } catch(JSONException e) {}
-    }
-
-    /**
-     * sets profile picture
-     * @param view view that is referencing this method
-     */
-    public void setProfilePicture(View view){
-        Intent i = new Intent(
-                Intent.ACTION_OPEN_DOCUMENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(i, RESULT_LOAD_IMAGE);
-    }
-
-    private void changeProfilePicRequest(){
-        try {
-            String url = Endpoints.SetProfilePictureUrl + MainActivity.accountObj.get("id") + "&path=" + uriString;
-            StringRequest req = new StringRequest(Request.Method.PUT, url,
-                    response -> Log.d("success", "changed profile picture"),
-                    error -> Log.d("success", "failed to changed profile picture"));
-            Log.e("error", url);
-            AppController.getInstance().addToRequestQueue(req, "string_req");
-        }
-        catch(Exception e){
-            Log.e("error", e.toString());
-        }
     }
 
 }

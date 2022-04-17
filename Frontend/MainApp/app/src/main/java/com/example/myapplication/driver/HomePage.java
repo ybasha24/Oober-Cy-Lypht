@@ -20,17 +20,10 @@ import com.example.myapplication.endpoints.OtherConstants;
  */
 public class HomePage extends AppCompatActivity {
 
-    private ImageView profilePic;
-    private String uriString;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_home_page);
-
-        profilePic = (ImageView) findViewById(R.id.driverProfilePic);
-        uriString = HelperFunctions.getProfilePic();
-        profilePic.setImageURI(Uri.parse(uriString));
     }
 
     /**
