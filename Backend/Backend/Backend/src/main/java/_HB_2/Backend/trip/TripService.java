@@ -215,9 +215,9 @@ public class TripService {
     }
 
     public Trip startTripById(int tripId) {
-        Trip tripToBeCompleted = tripRepository.findById(tripId);
-        tripToBeCompleted.setHasStarted(true);
-        tripRepository.save(tripToBeCompleted);
+        Trip tripToBeStarted = tripRepository.findById(tripId);
+        tripToBeStarted.setHasStarted(true);
+        tripRepository.save(tripToBeStarted);
         return tripRepository.findById(tripId);
     }
 
