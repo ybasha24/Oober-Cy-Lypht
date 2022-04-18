@@ -4,21 +4,28 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.endpoints.Endpoints;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -33,6 +40,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.time.Instant;
 
 /**
@@ -148,27 +159,6 @@ public class ProfileSettings extends AppCompatActivity {
         } catch(JSONException e) {}
     }
 
-    /**
-     * sets profile picture
-     * @param view view that is referencing this method
-     */
-    public void setProfilePicture(View view){
-        Intent openDocumentIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        openDocumentIntent.setType("image/*");
-        startActivityForResult(openDocumentIntent, RESULT_LOAD_IMAGE);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
-            Uri uri = data.getData();
-            getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            uriString = uri.toString();
-            profilePic.setImageURI(Uri.parse(uriString));
-        }
-    }
-
     private void changeProfilePicRequest(){
         try {
             String url = Endpoints.SetProfilePictureUrl + MainActivity.accountObj.get("id") + "&path=" + uriString;
@@ -179,6 +169,34 @@ public class ProfileSettings extends AppCompatActivity {
         }
         catch(Exception e){
             Log.e("error", e.toString());
+        }
+    }
+
+    /**
+     * sets profile picture
+     * @param view view that is referencing this method
+     */
+    public void setProfilePicture(View view) {
+        Intent getIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        getIntent.setType("image/*");
+        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {getIntent});
+        startActivityForResult(chooserIntent, 1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                try {
+                    Uri uri = data.getData();
+                    profilePic.setImageURI(uri);
+                    uriString = uri.toString();
+                } catch (Exception e) {
+                    Log.e("error", e.toString());
+                }
+            }
         }
     }
 
