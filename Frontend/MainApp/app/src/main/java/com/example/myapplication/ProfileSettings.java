@@ -152,25 +152,21 @@ public class ProfileSettings extends AppCompatActivity {
      * @param view view that is referencing this method
      */
     public void tempSetProfilePicture(View view) {
-        Intent getIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        getIntent.setType("image/*");
-        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {getIntent});
-        startActivityForResult(chooserIntent, 1);
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent, 1);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            if (data != null) {
-                try {
-                    Uri uri = data.getData();
-                    profilePic.setImageURI(uri);
-                    uriString = uri.toString();
-                } catch (Exception e) {
-                    Log.e("error", e.toString());
-                }
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
+            try {
+                Uri uri = data.getData();
+                profilePic.setImageURI(uri);
+                uriString = uri.toString();
+            } catch (Exception e) {
+                Log.e("error", e.toString());
             }
         }
     }
