@@ -85,7 +85,7 @@ public class TripController {
     @PutMapping("/setTripStarted")
     String startTripById(
             @RequestParam int tripId) {
-        tripService.completeTripById(tripId);
+        tripService.startTripById(tripId);
         return "Started trip with id " + tripId;
     }
 
