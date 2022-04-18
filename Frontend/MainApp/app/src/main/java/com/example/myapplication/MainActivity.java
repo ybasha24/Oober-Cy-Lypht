@@ -6,7 +6,11 @@ import com.example.myapplication.endpoints.Endpoints;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.view.View;
@@ -94,15 +98,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void signInRequest(String email, String password){
         String url = Endpoints.LoginUrl + email + "&password=" + password;
-
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
-                response -> {
+            response -> {
                 try {
                     accountObj = response;
                     Intent intent = null;
                     if(!accountObj.isNull("firstName")){
-                        if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver"))
+                        if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver")) {
                             intent = new Intent(this, com.example.myapplication.driver.HomePage.class);
+                        }
                         else if (!accountObj.isNull("arider") && accountObj.getBoolean("arider"))
                             intent = new Intent(this, HomePage.class);
                         else if (!(accountObj.isNull("anAdmin")) && accountObj.getBoolean("anAdmin"))
@@ -127,4 +131,5 @@ public class MainActivity extends AppCompatActivity {
             error ->  runOnUiThread(()->Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG).show()));
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
     }
+
 }

@@ -19,10 +19,15 @@ import com.example.myapplication.*;
  */
 public class HomePage extends AppCompatActivity {
 
+    private ImageView profilePic;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_home_page);
+
+        profilePic = (ImageView) findViewById(R.id.riderProfilePic);
+        HelperFunctions.setProfilePic(profilePic);
     }
 
     /**
