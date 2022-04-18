@@ -81,6 +81,14 @@ public class TripController {
         return tripService.completeTripById(id);
     }
 
+    @ApiOperation(value = "Set the trip as being started", response = String.class)
+    @PutMapping("/setTripStarted")
+    String startTripById(
+            @RequestParam int tripId) {
+        tripService.completeTripById(tripId);
+        return "Started trip with id " + tripId;
+    }
+
     //returns a list of all trips that have not been completed
     @ApiOperation(value = "Retrieve a list of uncompleted trips of a driver", response = Iterable.class)
     @GetMapping("/getAllActiveTripsFromDriverId")
