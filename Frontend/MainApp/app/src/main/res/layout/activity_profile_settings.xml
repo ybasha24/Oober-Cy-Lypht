@@ -161,7 +161,7 @@
         android:id="@+id/chooseImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="setProfilePicture"
+        android:onClick="tempSetProfilePicture"
         android:text="profile picture"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

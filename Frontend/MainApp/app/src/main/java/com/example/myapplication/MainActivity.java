@@ -52,13 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-//        Intent intent = new Intent(Settings.ACTION_INTERNAL_STORAGE_SETTINGS, Uri.parse("package:" + getPackageName()));
-//        startActivity(intent);
-
-        try {
-            Log.e("error", String.valueOf(Settings.System.canWrite(getApplicationContext())));
-        }catch(Exception e){}
-//
         if(isLoggedIn){
             String email = prefs.getString("email", "");
             String password = prefs.getString("password", "");
@@ -110,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
                             editor.putBoolean("isLoggedIn", true);
                             editor.apply();
                         }
-                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         startActivity(intent);
                     }
                     else {

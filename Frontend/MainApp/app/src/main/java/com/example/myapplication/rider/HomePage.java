@@ -23,7 +23,6 @@ import com.example.myapplication.*;
 public class HomePage extends AppCompatActivity {
 
     private ImageView profilePic;
-    private String uriString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -31,14 +30,7 @@ public class HomePage extends AppCompatActivity {
         setContentView(R.layout.activity_rider_home_page);
 
         profilePic = (ImageView) findViewById(R.id.riderProfilePic);
-        uriString = HelperFunctions.getProfilePic();
-        Uri uri = Uri.parse(uriString);
-        try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-            profilePic.setImageBitmap(bitmap);
-        } catch(Exception e){
-            Log.e("error", e.toString());
-        }
+        HelperFunctions.setProfilePic(profilePic);
     }
 
     /**

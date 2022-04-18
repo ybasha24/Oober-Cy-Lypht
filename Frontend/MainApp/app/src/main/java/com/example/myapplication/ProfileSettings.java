@@ -63,7 +63,6 @@ public class ProfileSettings extends AppCompatActivity {
     ImageView profilePic;
 
     private String uriString;
-    private static int RESULT_LOAD_IMAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,10 +80,10 @@ public class ProfileSettings extends AppCompatActivity {
         email = findViewById(R.id.editTextEmail2);
         profilePic = (ImageView) findViewById(R.id.profilePic);
 
+        setPreviousDetails();
+
         try {
-            uriString = HelperFunctions.getProfilePic();
-            profilePic.setImageURI(Uri.parse(uriString));
-            setPreviousDetails();
+            HelperFunctions.setProfilePic(profilePic);
         }catch(Exception e){
             Log.e("error", e.toString());
         }
@@ -176,7 +175,7 @@ public class ProfileSettings extends AppCompatActivity {
      * sets profile picture
      * @param view view that is referencing this method
      */
-    public void setProfilePicture(View view) {
+    public void tempSetProfilePicture(View view) {
         Intent getIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         getIntent.setType("image/*");
         Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");

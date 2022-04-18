@@ -40,15 +40,14 @@ import java.io.File;
 public class HomePage extends AppCompatActivity {
 
     private ImageView profilePic;
-    private String uriString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_home_page);
-        profilePic = (ImageView) findViewById(R.id.driverProfilePic);
 
-        setProfilePic();
+        profilePic = (ImageView) findViewById(R.id.driverProfilePic);
+        HelperFunctions.setProfilePic(profilePic);
     }
 
     /**
@@ -93,19 +92,4 @@ public class HomePage extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-
-    public void setProfilePic(){
-        uriString = HelperFunctions.getProfilePic();
-        Uri uri = Uri.parse(uriString);
-
-
-        try {
-//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-//            Glide.with(this).load(uri).into(profilePic);
-            profilePic.setImageURI(uri);
-        } catch (Exception e) {
-            Log.e("error", e.toString());
-        }
-    }
-
 }
