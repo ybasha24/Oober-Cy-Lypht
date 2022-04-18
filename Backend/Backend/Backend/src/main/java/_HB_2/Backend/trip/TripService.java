@@ -214,6 +214,13 @@ public class TripService {
         return tripRepository.findById(tripId);
     }
 
+    public Trip startTripById(int tripId) {
+        Trip tripToBeCompleted = tripRepository.findById(tripId);
+        tripToBeCompleted.setHasStarted(true);
+        tripRepository.save(tripToBeCompleted);
+        return tripRepository.findById(tripId);
+    }
+
     public void deleteTripById(int id) {
         tripRepository.deleteById(id);
     }
