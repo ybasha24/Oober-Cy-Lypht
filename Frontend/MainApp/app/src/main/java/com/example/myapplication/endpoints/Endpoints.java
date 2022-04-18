@@ -63,5 +63,8 @@ public final class Endpoints {
      */
     public static final String SetProfilePictureUrl = "http://coms-309-030.class.las.iastate.edu:8080/user/userId?id=";
 
-
+    /**
+     * gets user details
+     */
+    public static final String GetUserUrl = "http://coms-309-030.class.las.iastate.edu:8080/user/getUser?id=";
 }

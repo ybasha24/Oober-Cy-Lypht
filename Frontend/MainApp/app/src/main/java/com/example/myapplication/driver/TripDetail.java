@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
@@ -20,25 +21,30 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TripDetail extends AppCompatActivity {
 
     JSONObject trip;
+    ArrayList<String> riderNames;
+    TextView riders;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_detail);
         trip = TripsAdapter.currentJson;
         setDetails();
+        riderNames = new ArrayList<>();
     }
 
     private void setDetails(){
-        TextView origin = (TextView) findViewById(R.id.originTV);
-        TextView dest = (TextView) findViewById(R.id.destTV);
-        TextView start = (TextView) findViewById(R.id.starttimeTV);
-        TextView end = (TextView) findViewById(R.id.endTimeTV);
-        TextView riders = (TextView) findViewById(R.id.ridersTV);
+        TextView origin = findViewById(R.id.originTV);
+        TextView dest = findViewById(R.id.destTV);
+        TextView start = findViewById(R.id.starttimeTV);
+        TextView end = findViewById(R.id.endTimeTV);
+        riders = findViewById(R.id.ridersTV);
 
         try {
             origin.setText(trip.getString("originAddress"));
@@ -46,11 +52,9 @@ public class TripDetail extends AppCompatActivity {
             start.setText(trip.getString("scheduledStartDate"));
             end.setText(trip.getString("scheduledEndDate"));
             JSONArray riderIdsArray = trip.getJSONArray("riderIds");
-            int[] riderIds = new int[riderIdsArray.length()];
-            for(int i = 0; i < riderIdsArray.length(); i++){
-                riderIds[i] = riderIdsArray.getInt(i);
+            for(int i = 0; i < riderIdsArray.length(); i++) {
+                setRiderNames(riderIdsArray.getInt(i));
             }
-            riders.setText(Arrays.toString(riderIds));
         }
         catch(Exception e){
             Log.e("error", e.toString());
@@ -71,21 +75,37 @@ public class TripDetail extends AppCompatActivity {
     public void deleteTrip(View v){
         try {
             StringRequest req = new StringRequest(Request.Method.DELETE, Endpoints.DeleteTripUrl + "?id=" + trip.getInt("id"),
-                    response -> {
-                        Intent i = new Intent(this, TripsList.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        this.startActivity(i);
-                        Toast toast = Toast.makeText(this, "Successfully deleted trip", Toast.LENGTH_LONG);
-                        toast.show();
-                    },
-                    error -> {
-                        Log.e("trips error", error.toString());
-                        Toast toast = Toast.makeText(this, "Error deleting trip", Toast.LENGTH_LONG);
-                        toast.show();
-                    }
+                response -> {
+                    Intent i = new Intent(this, TripsList.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    this.startActivity(i);
+                    Toast toast = Toast.makeText(this, "Successfully deleted trip", Toast.LENGTH_LONG);
+                    toast.show();
+                },
+                error -> {
+                    Log.e("trips error", error.toString());
+                    Toast toast = Toast.makeText(this, "Error deleting trip", Toast.LENGTH_LONG);
+                    toast.show();
+                }
             );
             AppController.getInstance().addToRequestQueue(req, "string_req");
         }
         catch(Exception e){}
+    }
+
+    public void setRiderNames(int id){
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, Endpoints.GetUserUrl + id, null,
+            response -> {
+                try {
+                    riderNames.add(response.getString("firstName") + " " + response.getString("lastName"));
+                    riders.setText("Riders: " + riderNames.toString());
+                }
+                catch(Exception e){
+                    Log.e("error", e.toString());
+                }
+            },
+            error -> { }
+        );
+        AppController.getInstance().addToRequestQueue(req, "string_req");
     }
 }
