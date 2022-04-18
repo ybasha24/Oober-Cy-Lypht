@@ -1,37 +1,15 @@
 package com.example.myapplication.driver;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.ProfileSettings;
 import com.example.myapplication.*;
 import com.example.myapplication.driver.createtrip.SelectTripTime;
-import com.example.myapplication.endpoints.OtherConstants;
-import com.google.android.gms.common.internal.Constants;
-
-import java.io.File;
 
 
 /**
