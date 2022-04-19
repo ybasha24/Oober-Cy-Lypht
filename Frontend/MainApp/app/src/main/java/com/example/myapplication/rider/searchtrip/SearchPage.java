@@ -76,7 +76,8 @@ public class SearchPage extends AppCompatActivity {
                     Log.e("response", response.toString());
                     if(response != null) {
                         tripsList = response;
-                        listView.setAdapter(new TripsAdapter(tripsList, getApplicationContext()));
+                        //listView.setAdapter(new TripsAdapter(tripsList, getApplicationContext()));
+                        sortList();
                     }
                 },
                 error -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG));
