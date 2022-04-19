@@ -10,17 +10,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.*;
-import com.example.myapplication.app.AppController;
-import com.example.myapplication.driver.createtrip.SelectTripTime;
-import com.example.myapplication.endpoints.Endpoints;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -105,9 +98,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
             } catch (Exception e) {
             }
 
-            Button viewTripButton = view.findViewById(R.id.viewTripButton);
-
-
+            Button viewTripButton = view.findViewById(R.id.adminDeleteTripButton);
             viewTripButton.setOnClickListener(v -> viewTrip(position));
 
             return view;
