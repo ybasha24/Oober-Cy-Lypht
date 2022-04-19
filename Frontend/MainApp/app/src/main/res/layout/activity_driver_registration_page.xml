@@ -3,7 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".driver.RegistrationPage">
+
+    <Button
+        android:id="@+id/registerDriverButton"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="248dp"
+        android:layout_height="59dp"
+        android:backgroundTint="#D62929"
+        android:onClick="registerDriver"
+        android:text="@string/app_Register"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.849" />
 
     <TextView
         android:id="@+id/textView"
@@ -81,21 +97,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView"
         app:layout_constraintVertical_bias="0.219" />
-
-    <Button
-        android:id="@+id/registerRiderButton"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="274dp"
-        android:layout_height="99dp"
-        android:backgroundTint="#D62929"
-        android:onClick="register"
-        android:text="@string/app_Register"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.941" />
 
     <EditText
         android:id="@+id/editTextPassword"

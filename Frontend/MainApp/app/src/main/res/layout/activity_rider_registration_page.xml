@@ -71,7 +71,7 @@
         android:layout_width="248dp"
         android:layout_height="59dp"
         android:backgroundTint="#D62929"
-        android:onClick="register"
+        android:onClick="registerRider"
         android:text="@string/app_Register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

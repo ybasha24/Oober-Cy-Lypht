@@ -33,7 +33,7 @@ public class RegistrationPage extends AppCompatActivity {
      * @param view the activity that is referencing this method
      * @throws JSONException throws JSON Exception
      */
-    public void register(View view) throws JSONException {
+    public void registerDriver(View view) throws JSONException {
         TextView tv = findViewById(R.id.regStatusTextView);
         String firstName = ((EditText) findViewById(R.id.editTextFirstName)).getText().toString();
         String lastName = ((EditText) findViewById(R.id.editTextLastName)).getText().toString();
