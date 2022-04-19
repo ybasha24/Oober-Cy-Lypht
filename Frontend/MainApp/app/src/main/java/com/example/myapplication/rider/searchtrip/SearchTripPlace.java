@@ -45,8 +45,16 @@ public class SearchTripPlace extends AppCompatActivity implements OnMapReadyCall
     private GoogleMap mMap;
     private AutocompleteSupportFragment autocompleteOriginFragment;
     private AutocompleteSupportFragment autocompleteDestFragment;
-    static private LatLng origin;
-    static private LatLng dest;
+
+    /**
+     * start address of trip in Latitude and Longitude form
+     */
+    static public LatLng origin;
+
+    /**
+     * start address of trip in Latitude and Longitude form
+     */
+    static public LatLng dest;
     /**
      * origin of the trip as a string
      */
