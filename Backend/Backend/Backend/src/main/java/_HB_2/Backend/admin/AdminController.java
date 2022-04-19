@@ -96,18 +96,21 @@ public class AdminController {
         return adminService.addAsDriver(id);
     }
 
+    @ApiOperation(value = "Delete Rider Review By Review Id", response = String.class)
     @DeleteMapping(value = "deleteRiderReviewByReviewId")
     String deleteRiderReviewByReviewId(@RequestParam int riderReviewId) {
         riderReviewService.deleteReview(riderReviewId);
         return "You have deleted rider review: " + riderReviewId;
     }
 
+    @ApiOperation(value = "Delete Driver Review By Review Id", response = String.class)
     @DeleteMapping(value = "deleteDriverReviewByReviewId")
     String deleteDriverReviewByReviewId(@RequestParam int driverReviewId) {
         driverReviewService.deleteReview(driverReviewId);
         return "You have deleted rider review: " + driverReviewId;
     }
-    
+
+    @ApiOperation(value = "Delete Rating by Rating Id", response = String.class)
     @DeleteMapping(value = "deleteRatingByRatingId")
     String deleteRatingByRatingId(@RequestParam int ratingId) {
         ratingService.deleteRating(ratingId);
