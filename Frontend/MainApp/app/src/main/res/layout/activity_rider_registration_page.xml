@@ -66,7 +66,7 @@
         app:layout_constraintVertical_bias="0.222" />
 
     <Button
-        android:id="@+id/findRideButton"
+        android:id="@+id/registerRiderButton"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="248dp"
         android:layout_height="59dp"
