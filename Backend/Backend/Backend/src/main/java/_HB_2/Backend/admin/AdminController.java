@@ -1,5 +1,6 @@
 package _HB_2.Backend.admin;
 
+import _HB_2.Backend.rating.RatingService;
 import _HB_2.Backend.review.driverReview.DriverReviewService;
 import _HB_2.Backend.review.riderReview.RiderReviewService;
 import _HB_2.Backend.trip.Trip;
@@ -26,6 +27,9 @@ public class AdminController {
 
     @Autowired
     private DriverReviewService driverReviewService;
+
+    @Autowired
+    private RatingService ratingService;
 
     @ApiOperation(value = "Enter a new admin", response = User.class)
     @PostMapping("/registerAdmin")
@@ -98,13 +102,17 @@ public class AdminController {
         return "You have deleted rider review: " + riderReviewId;
     }
 
-//    /admin/deleteDriverReview @RequestParam int driverId, @RequestParam int reviewId
     @DeleteMapping(value = "deleteDriverReviewByReviewId")
     String deleteDriverReviewByReviewId(@RequestParam int driverReviewId) {
         driverReviewService.deleteReview(driverReviewId);
         return "You have deleted rider review: " + driverReviewId;
     }
-
+    
+    @DeleteMapping(value = "deleteRatingByRatingId")
+    String deleteRatingByRatingId(@RequestParam int ratingId) {
+        ratingService.deleteRating(ratingId);
+        return "You have deleted rating: " + ratingId;
+    }
 
 
 }

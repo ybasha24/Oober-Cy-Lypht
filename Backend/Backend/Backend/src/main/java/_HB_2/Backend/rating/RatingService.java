@@ -59,4 +59,8 @@ public class RatingService {
 
         return averageRating;
     }
+
+    public void deleteRating(int ratingId) {
+        ratingRepository.deleteById(ratingId);
+    }
 }
