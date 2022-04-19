@@ -112,11 +112,11 @@ public class SearchPage extends AppCompatActivity {
                 driverDest = new LatLng(endAddressList.get(0).getLatitude(), endAddressList.get(0).getLongitude());
                 Log.e("Lat/long", driverOrigin.toString());
                 String routeOrigin = "origins=" + driverOrigin.latitude + "," + driverOrigin.longitude
-                     //   + "|" + SearchTripPlace.origin.latitude + "," + SearchTripPlace.origin.longitude
+                        + "|" + SearchTripPlace.origin.latitude + "," + SearchTripPlace.origin.longitude
                         + "|" + SearchTripPlace.dest.latitude + "," + SearchTripPlace.dest.longitude;
                 Log.e("route start", routeOrigin);
                 String routeDest = "destinations=" + SearchTripPlace.origin.latitude + "," + SearchTripPlace.origin.longitude
-                       // + "|" + SearchTripPlace.dest.latitude + "," + SearchTripPlace.dest.longitude
+                        + "|" + SearchTripPlace.dest.latitude + "," + SearchTripPlace.dest.longitude
                         + "|" + driverDest.latitude + "," + driverDest.longitude;
                 Log.e("route dest", routeDest);
                 String params = routeOrigin + "&"  + routeDest + "&units=imperial" + "&key=" + OtherConstants.GoogleMapsAPIKey;
@@ -140,14 +140,16 @@ public class SearchPage extends AppCompatActivity {
                         JSONObject rows0 = response.getJSONArray("rows").getJSONObject(0);
                         JSONObject rows1 = response.getJSONArray("rows").getJSONObject(1);
                         JSONObject rows2 = response.getJSONArray("rows").getJSONObject(2);
-                        JSONArray elements = (JSONArray) rows0.get("elements");
-                        double dist1 = elements.getJSONObject(0).getJSONObject("distance").getInt("value") / 1000.0; //in meters, so divide to get in km
+                        JSONArray elements1 = (JSONArray) rows0.get("elements");
+                        JSONArray elements2 = (JSONArray) rows1.get("elements");
+                        JSONArray elements3 = (JSONArray) rows2.get("elements");
+                        double dist1 = elements1.getJSONObject(0).getJSONObject("distance").getInt("value") / 1000.0; //in meters, so divide to get in km
                         Log.e("Distance 1", "" + dist1);
-                        double dist2 = elements.getJSONObject(1).getJSONObject("distance").getInt("value") / 1000.0; //in meters, so divide to get in km
+                        double dist2 = elements2.getJSONObject(1).getJSONObject("distance").getInt("value") / 1000.0; //in meters, so divide to get in km
                         Log.e("Distance 2", "" + dist2);
-//                        double dist3 = elements.getJSONObject(2).getJSONObject("distance").getInt("value") / 1000.0; //in meters, so divide to get in km
-//                        Log.e("Distance 3", "" + dist3);
-                        newDistance = dist1 + dist2;// + dist3;
+                        double dist3 = elements3.getJSONObject(2).getJSONObject("distance").getInt("value") / 1000.0; //in meters, so divide to get in km
+                        Log.e("Distance 3", "" + dist3);
+                        newDistance = dist1 + dist2 + dist3;
                         Log.e("Distance", "" + newDistance);
 
                     }
