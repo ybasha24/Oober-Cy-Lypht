@@ -1,12 +1,10 @@
-package com.example.myapplication.driver;
+package com.example.myapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.myapplication.*;
-import com.example.myapplication.endpoints.OtherConstants;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -40,9 +38,11 @@ import android.widget.TextView;
 import java.util.Arrays;
 import java.util.List;
 
-public class OngoingTrip extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = OngoingTrip.class.getSimpleName();
+    private static final String TAG = MainActivity.class.getSimpleName();
+    public static final String GoogleMapsAPIKey = "AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM";
+
     private GoogleMap map;
     private CameraPosition cameraPosition;
 
@@ -83,7 +83,7 @@ public class OngoingTrip extends AppCompatActivity {
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_driver_ongoing_trip);
 
-        Places.initialize(getApplicationContext(), OtherConstants.GoogleMapsAPIKey);
+        Places.initialize(getApplicationContext(), GoogleMapsAPIKey);
         placesClient = Places.createClient(this);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -239,7 +239,7 @@ public class OngoingTrip extends AppCompatActivity {
                         }
                     }
                     // Show a dialog, which is a list of likely places
-                    OngoingTrip.this.openPlacesDialog();
+                    MainActivity.this.openPlacesDialog();
                 }
                 else {
                     Log.e(TAG, "Exception: %s", task.getException());
@@ -276,9 +276,9 @@ public class OngoingTrip extends AppCompatActivity {
         };
 
         AlertDialog dialog = new AlertDialog.Builder(this)
-            .setTitle("Pick a place")
-            .setItems(likelyPlaceNames, listener)
-            .show();
+                .setTitle("Pick a place")
+                .setItems(likelyPlaceNames, listener)
+                .show();
     }
 
     private void updateLocationUI() {
