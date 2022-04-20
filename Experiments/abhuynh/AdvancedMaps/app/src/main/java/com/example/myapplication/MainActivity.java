@@ -31,6 +31,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -38,7 +39,7 @@ import android.widget.TextView;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     public static final String GoogleMapsAPIKey = "AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM";
@@ -89,9 +90,7 @@ public class MainActivity extends AppCompatActivity {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync((OnMapReadyCallback) this);
-
-        showCurrentPlace();
+        mapFragment.getMapAsync(this);
     }
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -101,6 +100,21 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onSaveInstanceState(outState);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.current_place_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.option_get_place) {
+            showCurrentPlace();
+        }
+        return true;
+    }
+
 
     public void onMapReady(GoogleMap map) {
         this.map = map;
