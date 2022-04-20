@@ -25,6 +25,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM" />
         <activity
+            android:name=".rider.searchtrip.ViewTripInfo"
+            android:parentActivityName=".rider.searchtrip.SearchPage"
+            android:exported="false"/>
+        <activity
             android:name=".rider.searchtrip.SearchPage"
             android:exported="false" />
         <activity
