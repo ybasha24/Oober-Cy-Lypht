@@ -20,10 +20,10 @@
         app:layout_constraintVertical_bias="0.976" />
 
     <Button
-        android:id="@+id/startTripBtn"
+        android:id="@+id/startTripButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="confirm"
+        android:onClick="startTrip"
         android:text="Start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

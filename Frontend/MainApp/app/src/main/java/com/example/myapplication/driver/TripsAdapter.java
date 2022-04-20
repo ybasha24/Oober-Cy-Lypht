@@ -98,7 +98,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
             } catch (Exception e) {
             }
 
-            Button viewTripButton = view.findViewById(R.id.adminDeleteTripButton);
+            Button viewTripButton = view.findViewById(R.id.driverViewTripButton);
             viewTripButton.setOnClickListener(v -> viewTrip(position));
 
             return view;

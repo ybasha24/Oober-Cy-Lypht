@@ -22,7 +22,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TripDetail extends AppCompatActivity {
 
@@ -33,7 +32,7 @@ public class TripDetail extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trip_detail);
+        setContentView(R.layout.activity_driver_trip_detail);
         trip = TripsAdapter.currentJson;
         setDetails();
         riderNames = new ArrayList<>();
@@ -93,7 +92,15 @@ public class TripDetail extends AppCompatActivity {
         catch(Exception e){}
     }
 
-    public void setRiderNames(int id){
+    public void startTrip(View v){
+        Intent i = new Intent(this, OngoingTrip.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(i);
+    }
+
+
+
+    private void setRiderNames(int id){
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, Endpoints.GetUserUrl + id, null,
             response -> {
                 try {
