@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.RequestFuture;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
@@ -52,6 +53,7 @@ public class SearchPage extends AppCompatActivity {
     private LatLng driverDest;
     private double newDistance;
     private double driverDistance;
+    private RequestFuture<String> future;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +104,7 @@ public class SearchPage extends AppCompatActivity {
     {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         JSONArray filteredList = new JSONArray();
+        future = RequestFuture.newFuture();
         for(int i = 0; i < tripsList.length(); i++)
         {
             try {
@@ -124,21 +127,15 @@ public class SearchPage extends AppCompatActivity {
                     String params = routeOrigin + "&"  + routeDest + "&units=imperial" + "&key=" + OtherConstants.GoogleMapsAPIKey;
                     params = params.replaceAll(" ", "%20");
                     String url = Endpoints.GoogleMapsDistanceUrl + params;
-                    makeRequest(url);
-                    Log.e("Radius", "HI" + (temp.getDouble("radius")) * 1.6);
-                    if(newDistance != -1 && (newDistance - driverDistance < (temp.getDouble("radius")) * 1.6))
-                    {
-                        filteredList.put(temp);
-                    }
-
+                    makeRequest(url, temp, filteredList);
                 }
             }
             catch (Exception e){}
         }
-        listView.setAdapter(new TripsAdapter(filteredList, getApplicationContext()));
+
     }
 
-    private void makeRequest(String url)
+    private void makeRequest(String url, JSONObject item, JSONArray list)
     {
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
                 response -> {
@@ -159,11 +156,16 @@ public class SearchPage extends AppCompatActivity {
                         Log.e("Driver distance", "" + driverDistance);
                         newDistance = dist1 + dist2 + dist3;
                         Log.e("Distance", "" + newDistance);
-
+                        if(newDistance != -1 && (newDistance - driverDistance < (item.getDouble("radius")) * 1.6))
+                        {
+                            list.put(item);
+                            listView.setAdapter(new TripsAdapter(list, getApplicationContext()));
+                        }
                     }
                     catch(JSONException e){ Log.e("Maps error", e.toString()); newDistance = -1; }
                 },
                 error -> {Log.e("Maps error", error.toString()); newDistance = -1;});
         AppController.getInstance().addToRequestQueue(req, "obj_req");
+
     }
 }
