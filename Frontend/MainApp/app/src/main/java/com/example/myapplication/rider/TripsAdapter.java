@@ -26,6 +26,9 @@ import com.example.myapplication.rider.searchtrip.ViewTripInfo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * adapter class that shows all the trips of a rider
  */
@@ -158,11 +161,17 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
             String startDate = list.getJSONObject(position).getString("scheduledStartDate");
             String startLocation = list.getJSONObject(position).getString("originAddress");
             String endLocation = list.getJSONObject(position).getString("destAddress");
+            String yourStart = com.example.myapplication.rider.searchtrip.SearchTripPlace.originAddress;
+            String yourEnd = com.example.myapplication.rider.searchtrip.SearchTripPlace.destAddress;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime startD = LocalDateTime.parse(startDate);
             Intent i = new Intent(this.context, ViewTripInfo.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            i.putExtra("startDate", startDate);
+            i.putExtra("startDate", startD);
             i.putExtra("startLocation", startLocation);
             i.putExtra("endLocation", endLocation);
+            i.putExtra("yourStart", yourStart);
+            i.putExtra("yourEnd", yourEnd);
             this.context.startActivity(i);
         }catch (Exception e){Log.e("Error popup", "" + e);}
     }

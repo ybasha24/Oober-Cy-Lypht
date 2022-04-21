@@ -22,7 +22,31 @@ public class ViewTripInfo extends AppCompatActivity {
         LocalDateTime startDate =(LocalDateTime) getIntent().getSerializableExtra("startDate");
         String startLocation = getIntent().getStringExtra("startLocation");
         String endLocation = getIntent().getStringExtra("endLocation");
-        //info.setText(startDate);
+        String yourStartLocation = getIntent().getStringExtra("yourStart");
+        String yourEndLocation = getIntent().getStringExtra("yourEnd");
+        info.setText( "Driver start time: " + prettyHoursAndMinutes(startDate.getHour(),
+                startDate.getMinute()) + "\nDriver start location: " + startLocation +
+                "\nDriver End Location: " + endLocation + "\nYour start Location" +
+                yourStartLocation + "\nYour end location: " + yourEndLocation);
+    }
+
+    private static String prettyHoursAndMinutes(int hour, int minute){
+        if(hour > 12){
+            if(minute >= 10) {
+                return (hour - 12) + ":" + minute + " PM";
+            }
+            else{
+                return (hour - 12) + ":0" + minute + " PM";
+            }
+        }
+        else{
+            if(minute >= 10) {
+                return (hour) + ":" + minute + " PM";
+            }
+            else{
+                return (hour) + ":0" + minute + " PM";
+            }
+        }
     }
 
 
