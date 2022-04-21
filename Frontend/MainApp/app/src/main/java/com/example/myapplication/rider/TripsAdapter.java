@@ -1,7 +1,10 @@
 package com.example.myapplication.rider;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +20,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
 import com.example.myapplication.endpoints.Endpoints;
+import com.example.myapplication.rider.searchtrip.SearchPage;
+import com.example.myapplication.rider.searchtrip.ViewTripInfo;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * adapter class that shows all the trips of a rider
@@ -27,6 +35,8 @@ import org.json.JSONObject;
 public class TripsAdapter extends BaseAdapter implements ListAdapter {
     private JSONArray list;
     private Context context;
+    private AlertDialog.Builder builder;
+    private AlertDialog alertDialog;
 
     /**
      * creates a TripsAdapter object
@@ -94,7 +104,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
             View view = convertView;
             if (view == null) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.trip_item2, null);
+                view = inflater.inflate(R.layout.rider_trip_item, null);
             }
 
             TextView tv = view.findViewById(R.id.riderSearchText);
@@ -107,8 +117,12 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
             }
 
             Button addToTripButton = view.findViewById(R.id.add_trip);
+            Button viewTripButton = view.findViewById(R.id.view_trip);
             addToTripButton.setOnClickListener(v -> {
                 addToTrip(position);
+            });
+            viewTripButton.setOnClickListener(v -> {
+                viewTrip(position);
             });
             return view;
         }
@@ -142,4 +156,23 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
        catch (Exception e){}
     }
 
+    public void viewTrip(int position){
+        try {
+            String startDate = list.getJSONObject(position).getString("scheduledStartDate");
+            String startLocation = list.getJSONObject(position).getString("originAddress");
+            String endLocation = list.getJSONObject(position).getString("destAddress");
+            String yourStart = com.example.myapplication.rider.searchtrip.SearchTripPlace.originAddress;
+            String yourEnd = com.example.myapplication.rider.searchtrip.SearchTripPlace.destAddress;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime startD = LocalDateTime.parse(startDate);
+            Intent i = new Intent(this.context, ViewTripInfo.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("startDate", startD);
+            i.putExtra("startLocation", startLocation);
+            i.putExtra("endLocation", endLocation);
+            i.putExtra("yourStart", yourStart);
+            i.putExtra("yourEnd", yourEnd);
+            this.context.startActivity(i);
+        }catch (Exception e){Log.e("Error popup", "" + e);}
+    }
 }
