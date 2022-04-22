@@ -24,11 +24,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class TripDetail extends AppCompatActivity {
 
     JSONObject trip;
     public static JSONArray riderNames;
+    public static HashMap<String, Integer> nameToIdMap;
     TextView riders;
 
     @Override
@@ -38,6 +40,7 @@ public class TripDetail extends AppCompatActivity {
         trip = TripsAdapter.currentJson;
         Log.e("error", trip.toString());
         riderNames = new JSONArray();
+        nameToIdMap = new HashMap<>();
         setDetails();
     }
 
@@ -99,8 +102,10 @@ public class TripDetail extends AppCompatActivity {
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, Endpoints.GetUserUrl + id, null,
             response -> {
                 try {
-                    riderNames.put(response.getString("firstName") + " " + response.getString("lastName"));
+                    String name = response.getString("firstName") + " " + response.getString("lastName");
+                    riderNames.put(name);
                     riders.setText("Riders: " + riderNames.toString());
+                    nameToIdMap.put(name, id);
                 }
                 catch(Exception e){
                     Log.e("error", e.toString());

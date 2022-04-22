@@ -24,7 +24,8 @@ public class RateRidersAdapter extends BaseAdapter implements ListAdapter {
     private JSONArray list;
     private Context context;
 
-    public static JSONObject currentJson;
+    public static String currentRiderString;
+
     /**
      * creates a RateRidersAdapter object
      * @param list list of trips
@@ -109,7 +110,7 @@ public class RateRidersAdapter extends BaseAdapter implements ListAdapter {
 
     public void rateRider(int position){
         try {
-            currentJson = list.getJSONObject(position);
+            currentRiderString = list.getString(position);
             Intent i = new Intent(this.context, RateRider.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             this.context.startActivity(i);
