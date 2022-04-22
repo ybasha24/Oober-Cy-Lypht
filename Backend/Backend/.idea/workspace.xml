@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6204127e-fd91-498f-a5bb-f7702c2c2300" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Frontend/MainApp/app/src/main/java/com/example/myapplication/rider/TripsList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/MainApp/app/src/main/java/com/example/myapplication/rider/TripsAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/MainApp/app/src/main/java/com/example/myapplication/rider/TripsAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/MainApp/app/src/main/java/com/example/myapplication/rider/searchtrip/SearchPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/MainApp/app/src/main/java/com/example/myapplication/rider/searchtrip/SearchPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/MainApp/app/src/main/java/com/example/myapplication/rider/searchtrip/ViewTripInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/MainApp/app/src/main/java/com/example/myapplication/rider/searchtrip/ViewTripInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/MainApp/app/src/main/res/layout/activity_rider_ride_info.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/MainApp/app/src/main/res/layout/activity_rider_trip_info.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Frontend/MainApp/app/src/main/res/layout/rider_trip_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/MainApp/app/src/main/res/layout/rider_trip_item.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
