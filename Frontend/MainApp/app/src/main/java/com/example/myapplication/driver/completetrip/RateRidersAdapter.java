@@ -18,7 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * adapter class that shows all the trips of a driver
+ * adapter class that shows all the riders that a driver can rate
  */
 public class RateRidersAdapter extends BaseAdapter implements ListAdapter {
     private JSONArray list;
@@ -26,11 +26,15 @@ public class RateRidersAdapter extends BaseAdapter implements ListAdapter {
 
     public static JSONObject currentJson;
     /**
-     * creates a TripsAdapter object
+     * creates a RateRidersAdapter object
      * @param list list of trips
      * @param context context to put the list on
      */
     public RateRidersAdapter(JSONArray list, Context context) {
+        try {
+            Log.e("error", list.getString(0));
+        }catch(Exception e){}
+
         if(list == null){
             this.list = null;
         }
@@ -91,10 +95,7 @@ public class RateRidersAdapter extends BaseAdapter implements ListAdapter {
 
             TextView tv = view.findViewById(R.id.textView);
             try {
-                JSONObject json = list.getJSONObject(position);
-                Log.e("Json logging", json.toString());
-
-                tv.setText(json.toString());
+                tv.setText(list.getString(position));
             } catch (Exception e) {
             }
 

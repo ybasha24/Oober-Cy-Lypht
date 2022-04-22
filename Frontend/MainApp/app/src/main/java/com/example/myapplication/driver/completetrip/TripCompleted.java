@@ -24,7 +24,6 @@ import org.json.JSONException;
 public class TripCompleted extends AppCompatActivity {
 
     private ListView listView;
-    private JSONArray tripsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

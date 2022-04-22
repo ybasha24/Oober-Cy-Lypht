@@ -14,6 +14,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
+import com.example.myapplication.driver.completetrip.TripCompleted;
 import com.example.myapplication.driver.createtrip.SelectTripTime;
 import com.example.myapplication.endpoints.Endpoints;
 
@@ -35,6 +36,8 @@ public class TripDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_detail);
         trip = TripsAdapter.currentJson;
+        Log.e("error", trip.toString());
+        riderNames = new JSONArray();
         setDetails();
     }
 
@@ -106,5 +109,11 @@ public class TripDetail extends AppCompatActivity {
             error -> { }
         );
         AppController.getInstance().addToRequestQueue(req, "string_req");
+    }
+
+    public void startTrip(View v){
+        Intent i = new Intent(this, TripCompleted.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(i);
     }
 }
