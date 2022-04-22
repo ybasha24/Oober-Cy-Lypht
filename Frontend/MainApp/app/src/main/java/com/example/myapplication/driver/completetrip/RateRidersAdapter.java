@@ -1,4 +1,4 @@
-package com.example.myapplication.driver;
+package com.example.myapplication.driver.completetrip;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,8 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import com.example.myapplication.*;
+import com.example.myapplication.R;
+import com.example.myapplication.driver.TripDetail;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,7 +20,7 @@ import org.json.JSONObject;
 /**
  * adapter class that shows all the trips of a driver
  */
-public class TripsAdapter extends BaseAdapter implements ListAdapter {
+public class RateRidersAdapter extends BaseAdapter implements ListAdapter {
     private JSONArray list;
     private Context context;
 
@@ -29,7 +30,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
      * @param list list of trips
      * @param context context to put the list on
      */
-    public TripsAdapter(JSONArray list, Context context) {
+    public RateRidersAdapter(JSONArray list, Context context) {
         if(list == null){
             this.list = null;
         }
@@ -85,7 +86,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
             View view = convertView;
             if (view == null) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.driver_trip_item, null);
+                view = inflater.inflate(R.layout.driver_rate_rider_item, null);
             }
 
             TextView tv = view.findViewById(R.id.textView);
@@ -93,23 +94,22 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
                 JSONObject json = list.getJSONObject(position);
                 Log.e("Json logging", json.toString());
 
-                tv.setText("From: " + json.getString("originAddress") + "\nTo: " + json.getString("destAddress") +
-                        "\nTime: " + json.getString("scheduledStartDate") + "\n->" + json.getString("scheduledEndDate"));
+                tv.setText(json.toString());
             } catch (Exception e) {
             }
 
-            Button viewTripButton = view.findViewById(R.id.driverRateRiderButton);
-            viewTripButton.setOnClickListener(v -> viewTrip(position));
+            Button rateRiderButton = view.findViewById(R.id.driverRateRiderButton);
+            rateRiderButton.setOnClickListener(v -> rateRider(position));
 
             return view;
         }
         return null;
     }
 
-    public void viewTrip(int position){
+    public void rateRider(int position){
         try {
             currentJson = list.getJSONObject(position);
-            Intent i = new Intent(this.context, TripDetail.class);
+            Intent i = new Intent(this.context, RateRider.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             this.context.startActivity(i);
         }

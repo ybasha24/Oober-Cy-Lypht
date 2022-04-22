@@ -27,7 +27,7 @@ import java.util.Arrays;
 public class TripDetail extends AppCompatActivity {
 
     JSONObject trip;
-    ArrayList<String> riderNames;
+    public static JSONArray riderNames;
     TextView riders;
 
     @Override
@@ -36,7 +36,6 @@ public class TripDetail extends AppCompatActivity {
         setContentView(R.layout.activity_trip_detail);
         trip = TripsAdapter.currentJson;
         setDetails();
-        riderNames = new ArrayList<>();
     }
 
     private void setDetails(){
@@ -97,7 +96,7 @@ public class TripDetail extends AppCompatActivity {
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, Endpoints.GetUserUrl + id, null,
             response -> {
                 try {
-                    riderNames.add(response.getString("firstName") + " " + response.getString("lastName"));
+                    riderNames.put(response.getString("firstName") + " " + response.getString("lastName"));
                     riders.setText("Riders: " + riderNames.toString());
                 }
                 catch(Exception e){

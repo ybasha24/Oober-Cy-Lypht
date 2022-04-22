@@ -1,4 +1,4 @@
-package com.example.myapplication.driver;
+package com.example.myapplication.driver.completetrip;
 
 import androidx.appcompat.app.AppCompatActivity;
 
