@@ -20,6 +20,12 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".driver.RateRider"
+            android:exported="false" />
+        <activity
+            android:name=".driver.TripCompleted"
+            android:exported="false" />
+        <activity
             android:name=".driver.TripDetail"
             android:exported="false" />
 
@@ -29,8 +35,8 @@
 
         <activity
             android:name=".rider.searchtrip.ViewTripInfo"
-            android:parentActivityName=".rider.searchtrip.SearchPage"
-            android:exported="false"/>
+            android:exported="false"
+            android:parentActivityName=".rider.searchtrip.SearchPage" />
         <activity
             android:name=".rider.searchtrip.SearchPage"
             android:exported="false" />
