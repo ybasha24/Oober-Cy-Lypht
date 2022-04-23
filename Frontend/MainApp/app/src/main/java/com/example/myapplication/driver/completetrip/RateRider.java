@@ -70,6 +70,7 @@ public class RateRider extends AppCompatActivity {
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, reviewUrl, obj,
                 response -> {
+                    RateRidersAdapter.finishRating(RateRidersAdapter.currentPosition);
                     Intent intent = new Intent(this, TripCompleted.class);
                     startActivity(intent);
                 },

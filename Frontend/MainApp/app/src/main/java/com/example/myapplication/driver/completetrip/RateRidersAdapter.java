@@ -21,11 +21,11 @@ import org.json.JSONObject;
  * adapter class that shows all the riders that a driver can rate
  */
 public class RateRidersAdapter extends BaseAdapter implements ListAdapter {
-    private JSONArray list;
+    private static JSONArray list;
     private Context context;
 
+    public static int currentPosition;
     public static String currentRiderString;
-
     /**
      * creates a RateRidersAdapter object
      * @param list list of trips
@@ -97,8 +97,7 @@ public class RateRidersAdapter extends BaseAdapter implements ListAdapter {
             TextView tv = view.findViewById(R.id.textView);
             try {
                 tv.setText(list.getString(position));
-            } catch (Exception e) {
-            }
+            } catch (Exception e) { }
 
             Button rateRiderButton = view.findViewById(R.id.driverRateRiderButton);
             rateRiderButton.setOnClickListener(v -> rateRider(position));
@@ -111,10 +110,15 @@ public class RateRidersAdapter extends BaseAdapter implements ListAdapter {
     public void rateRider(int position){
         try {
             currentRiderString = list.getString(position);
+            currentPosition = position;
             Intent i = new Intent(this.context, RateRider.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             this.context.startActivity(i);
         }
         catch(Exception e){}
+    }
+
+    public static void finishRating(int position){
+        list.remove(position);
     }
 }
