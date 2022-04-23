@@ -31,5 +31,4 @@ public class RateRider extends AppCompatActivity {
     public void submitRating(){
         //make 2 requests
     }
-
 }

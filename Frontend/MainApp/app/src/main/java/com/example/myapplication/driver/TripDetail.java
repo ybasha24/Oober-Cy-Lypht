@@ -22,8 +22,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class TripDetail extends AppCompatActivity {
@@ -31,7 +29,7 @@ public class TripDetail extends AppCompatActivity {
     JSONObject trip;
     public static JSONArray riderNames;
     public static HashMap<String, Integer> nameToIdMap;
-    TextView riders;
+    TextView ridersTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +47,7 @@ public class TripDetail extends AppCompatActivity {
         TextView dest = findViewById(R.id.destTV);
         TextView start = findViewById(R.id.starttimeTV);
         TextView end = findViewById(R.id.endTimeTV);
-        riders = findViewById(R.id.ridersTV);
+        ridersTV = findViewById(R.id.ridersTV);
 
         try {
             origin.setText(trip.getString("originAddress"));
@@ -104,7 +102,7 @@ public class TripDetail extends AppCompatActivity {
                 try {
                     String name = response.getString("firstName") + " " + response.getString("lastName");
                     riderNames.put(name);
-                    riders.setText("Riders: " + riderNames.toString());
+                    ridersTV.setText(prettyArrayListNames());
                     nameToIdMap.put(name, id);
                 }
                 catch(Exception e){
@@ -120,5 +118,19 @@ public class TripDetail extends AppCompatActivity {
         Intent i = new Intent(this, TripCompleted.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(i);
+    }
+
+    public String prettyArrayListNames(){
+        String names = "Riders:\n";
+
+        try {
+            for (int i = 0; i < riderNames.length(); i++) {
+                names += ("\t\t- " + riderNames.getString(i));
+                if(i < riderNames.length() - 1){
+                    names += "\n";
+                }
+            }
+        }catch(Exception e){}
+        return names;
     }
 }
