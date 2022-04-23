@@ -22,11 +22,11 @@ import org.json.JSONObject;
 
 public class RateRider extends AppCompatActivity {
 
-    TextView tv;
-    EditText comments;
-    RatingBar rating;
-    int driverId;
-    int riderId;
+    private TextView tv;
+    private EditText comments;
+    private RatingBar rating;
+    private int driverId;
+    private int riderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +44,13 @@ public class RateRider extends AppCompatActivity {
         rating = findViewById(R.id.driverRatingRiderBar);
     }
 
+    /**
+     * driver rates a rider from 0 - 5
+     * @param view the view that is referencing this method
+     */
     public void submitRating(View view){
 
-        String rateUrl = "http://coms-309-030.class.las.iastate.edu:8080/rating/createRating?raterId=" + driverId + "&ratedId=" + riderId;
+        String rateUrl = Endpoints.createRatingUrl + driverId + "&ratedId=" + riderId;
 
         JSONObject obj = new JSONObject();
         try {
@@ -59,9 +63,12 @@ public class RateRider extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
     }
 
+    /**
+     * driver leaves comments for a rider
+     */
     public void submitReview() {
 
-        String reviewUrl = "http://coms-309-030.class.las.iastate.edu:8080/riderReview/postRiderReview?driverId=" + driverId + "&riderId=" + riderId;
+        String reviewUrl = Endpoints.postRiderReview + driverId + "&riderId=" + riderId;
 
         JSONObject obj = new JSONObject();
         try {

@@ -21,11 +21,19 @@ import org.json.JSONObject;
  * adapter class that shows all the riders that a driver can rate
  */
 public class RateRidersAdapter extends BaseAdapter implements ListAdapter {
+
     private static JSONArray list;
     private Context context;
 
+    /**
+     * current position in the list of riders
+     */
     public static int currentPosition;
+    /**
+     * current name of the rider in the list
+     */
     public static String currentRiderString;
+
     /**
      * creates a RateRidersAdapter object
      * @param list list of trips
@@ -107,6 +115,10 @@ public class RateRidersAdapter extends BaseAdapter implements ListAdapter {
         return null;
     }
 
+    /**
+     * rates a rider by proceeding to the next activity
+     * @param position position of the rider in the list
+     */
     public void rateRider(int position){
         try {
             currentRiderString = list.getString(position);
@@ -118,6 +130,10 @@ public class RateRidersAdapter extends BaseAdapter implements ListAdapter {
         catch(Exception e){}
     }
 
+    /**
+     * once a rating/review is submitted successfully, the rider cannot be rated/reviewed anymore -> remove them from list
+     * @param position
+     */
     public static void finishRating(int position){
         list.remove(position);
     }

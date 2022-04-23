@@ -39,6 +39,10 @@ public class TripCompleted extends AppCompatActivity {
         } catch(Exception e){}
     }
 
+    /**
+     * finishes a trip and goes back to home screen
+     * @param v view that is referencing this method
+     */
     public void finishTrip(View v){
         Intent i = new Intent(this, HomePage.class);
         startActivity(i);

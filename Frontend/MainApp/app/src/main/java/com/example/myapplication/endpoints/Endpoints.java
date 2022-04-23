@@ -79,4 +79,14 @@ public final class Endpoints {
      * gets user details
      */
     public static final String GetUserUrl = "http://coms-309-030.class.las.iastate.edu:8080/user/getUser?id=";
+
+    /**
+     * where a rating is mader for a user
+     */
+    public static final String createRatingUrl = "http://coms-309-030.class.las.iastate.edu:8080/rating/createRating?raterId=";
+
+    /**
+     * where a driver reviews a rider
+     */
+    public static final String postRiderReview = "http://coms-309-030.class.las.iastate.edu:8080/riderReview/postRiderReview?driverId=";
 }
