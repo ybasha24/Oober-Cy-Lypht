@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/registeringDriverButton"
+        android:id="@+id/profileUpdate"
         android:layout_width="220dp"
         android:layout_height="90dp"
 

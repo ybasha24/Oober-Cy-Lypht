@@ -13,12 +13,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.884"
-        app:layout_constraintStart_toEndOf="@+id/riderSearchText"
+        app:layout_constraintStart_toEndOf="@+id/riderListText"
         app:layout_constraintTop_toBottomOf="@+id/delete_trip"
         app:layout_constraintVertical_bias="0.034" />
 
     <TextView
-        android:id="@+id/riderSearchText"
+        android:id="@+id/riderListText"
         android:layout_width="210dp"
         android:layout_height="105dp"
         android:text="TextView"
@@ -37,7 +37,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.88"
-        app:layout_constraintStart_toEndOf="@+id/riderSearchText"
+        app:layout_constraintStart_toEndOf="@+id/riderListText"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.04" />
 </androidx.constraintlayout.widget.ConstraintLayout>

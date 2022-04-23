@@ -79,4 +79,9 @@ public final class Endpoints {
      * gets user details
      */
     public static final String GetUserUrl = "http://coms-309-030.class.las.iastate.edu:8080/user/getUser?id=";
+
+    /**
+     * gets trips of a specific rider
+     */
+    public static final String GetRiderTrips = "http://coms-309-030.class.las.iastate.edu:8080/trip/getAllActiveTripsFromRiderId?riderId=";
 }

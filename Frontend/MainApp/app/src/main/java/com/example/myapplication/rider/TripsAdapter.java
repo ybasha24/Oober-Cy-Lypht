@@ -102,7 +102,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
                 view = inflater.inflate(R.layout.rider_trip_item, null);
             }
 
-            TextView tv = view.findViewById(R.id.riderSearchText);
+            TextView tv = view.findViewById(R.id.riderListText);
             try {
                 JSONObject json = list.getJSONObject(position);
                 Log.e("Json logging", json.toString());
@@ -129,7 +129,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
                 view = inflater.inflate(R.layout.rider_trip_info_item, null);
             }
 
-            TextView tv = view.findViewById(R.id.riderSearchText);
+            TextView tv = view.findViewById(R.id.riderListText);
             try {
                 JSONObject json = list.getJSONObject(position);
                 Log.e("Json logging", json.toString());

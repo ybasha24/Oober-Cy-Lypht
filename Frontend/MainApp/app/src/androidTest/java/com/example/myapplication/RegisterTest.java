@@ -65,7 +65,7 @@ public class RegisterTest {
     public void testRegisterDriver(){
         onView(withId(R.id.registerButton)).perform(click());
         try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
-        onView(withId(R.id.registeringDriverButton)).perform(click());
+        onView(withId(R.id.profileUpdate)).perform(click());
         try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
         onView(withId(R.id.editTextFirstName)).perform(typeText("first"));
         onView(withId(R.id.editTextLastName)).perform(typeText("last"));

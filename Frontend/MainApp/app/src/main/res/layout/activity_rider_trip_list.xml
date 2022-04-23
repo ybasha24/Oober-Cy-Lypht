@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/InfoView"
-        android:layout_width="325dp"
-        android:layout_height="469dp"
+    <ListView
+        android:id="@+id/trip_Info_List"
+        android:layout_width="396dp"
+        android:layout_height="643dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
