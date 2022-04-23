@@ -46,20 +46,34 @@ public class RateRider extends AppCompatActivity {
 
     public void submitRating(View view){
 
+        String rateUrl = "http://coms-309-030.class.las.iastate.edu:8080/rating/createRating?raterId=" + driverId + "&ratedId=" + riderId;
+
         JSONObject obj = new JSONObject();
         try {
             obj.put("rating", rating.getRating());
-        }catch(Exception e){}
-
-        String rateUrl = "http://coms-309-030.class.las.iastate.edu:8080/rating/createRating?raterId=5&ratedId=14";
+        } catch(Exception e){ }
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, rateUrl, obj,
+                response -> submitReview(),
+                error -> runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG).show()));
+        AppController.getInstance().addToRequestQueue(req, "post_object_tag");
+    }
+
+    public void submitReview() {
+
+        String reviewUrl = "http://coms-309-030.class.las.iastate.edu:8080/riderReview/postRiderReview?driverId=" + driverId + "&riderId=" + riderId;
+
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("review", comments.getText().toString());
+        } catch (Exception e) { }
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, reviewUrl, obj,
                 response -> {
-                        Intent intent = new Intent(this, TripCompleted.class);
-                        startActivity(intent);
+                    Intent intent = new Intent(this, TripCompleted.class);
+                    startActivity(intent);
                 },
                 error -> runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG).show()));
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
-        //make 2 requests
     }
 }
