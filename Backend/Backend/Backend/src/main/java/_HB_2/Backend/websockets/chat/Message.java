@@ -2,16 +2,10 @@ package _HB_2.Backend.websockets.chat;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
+import _HB_2.Backend.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Entity
@@ -22,8 +16,9 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String userName;
+    @JsonIgnore
+    @ManyToOne
+    private User userName;
 
     @Lob
     private String content;
@@ -35,7 +30,7 @@ public class Message {
 
     public Message() {};
 
-    public Message(String userName, String content) {
+    public Message(User userName, String content) {
         this.userName = userName;
         this.content = content;
     }
@@ -48,11 +43,11 @@ public class Message {
         this.id = id;
     }
 
-    public String getUserName() {
+    public User getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName) {
+    public void setUserName(User userName) {
         this.userName = userName;
     }
 

@@ -13,6 +13,8 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import _HB_2.Backend.user.User;
+import _HB_2.Backend.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,9 @@ public class ChatSocket {
     public void setMessageRepository(MessageRepository repo) {
         msgRepo = repo;  // we are setting the static variable
     }
+
+    @Autowired
+    private UserService userService;
 
     // Store all socket session and their corresponding username.
     private static Map<Session, String> sessionUsernameMap = new Hashtable<>();
@@ -83,8 +88,9 @@ public class ChatSocket {
             broadcast(username + ": " + message);
         }
 
+        User findUser = userService.getUserByEmail(username);
         // Saving chat history to repository
-        msgRepo.save(new Message(username, message));
+        msgRepo.save(new Message(findUser, message));
     }
 
 
@@ -97,7 +103,7 @@ public class ChatSocket {
         sessionUsernameMap.remove(session);
         usernameSessionMap.remove(username);
 
-        // broadcase that the user disconnected
+        // broadcast that the user disconnected
         String message = username + " disconnected";
         broadcast(message);
     }
@@ -151,5 +157,5 @@ public class ChatSocket {
         return sb.toString();
     }
 
-} // end of Class
+}
 
