@@ -83,10 +83,20 @@ public final class Endpoints {
     /**
      * where a rating is mader for a user
      */
-    public static final String createRatingUrl = "http://coms-309-030.class.las.iastate.edu:8080/rating/createRating?raterId=";
+    public static final String CreateRatingUrl = "http://coms-309-030.class.las.iastate.edu:8080/rating/createRating?raterId=";
 
     /**
      * where a driver reviews a rider
      */
-    public static final String postRiderReview = "http://coms-309-030.class.las.iastate.edu:8080/riderReview/postRiderReview?driverId=";
+    public static final String PostRiderReview = "http://coms-309-030.class.las.iastate.edu:8080/riderReview/postRiderReview?driverId=";
+
+    /**
+     * gets the rating for a user
+     */
+    public static final String GetUserRating = "http://coms-309-030.class.las.iastate.edu:8080/rating/getUserRating?userId";
+
+    /**
+     * gets the reviews of a rider
+     */
+    public static final String GetRiderReviews = "http://coms-309-030.class.las.iastate.edu:8080/riderReview/getAllRiderReviewsByRiderId?riderId=";
 }

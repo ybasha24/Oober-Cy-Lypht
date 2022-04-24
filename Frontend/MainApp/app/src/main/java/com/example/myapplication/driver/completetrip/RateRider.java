@@ -52,7 +52,7 @@ public class RateRider extends AppCompatActivity {
      */
     public void submitRating(View view){
 
-        String rateUrl = Endpoints.createRatingUrl + driverId + "&ratedId=" + riderId;
+        String rateUrl = Endpoints.CreateRatingUrl + driverId + "&ratedId=" + riderId;
 
         JSONObject obj = new JSONObject();
         try {
@@ -70,7 +70,7 @@ public class RateRider extends AppCompatActivity {
      */
     public void submitReview() {
 
-        String reviewUrl = Endpoints.postRiderReview + driverId + "&riderId=" + riderId;
+        String reviewUrl = Endpoints.PostRiderReview + driverId + "&riderId=" + riderId;
 
         JSONObject obj = new JSONObject();
         try {
