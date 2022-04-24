@@ -23,7 +23,7 @@ public class TripsList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rider_trip_info);
+        setContentView(R.layout.activity_rider_trip_list);
         listView = findViewById(R.id.trip_Info_List);
         setList();
     }
@@ -36,7 +36,7 @@ public class TripsList extends AppCompatActivity {
                         Log.e("response", response.toString());
                         if(response != null) {
                             arr = response;
-                            listView.setAdapter(new TripsAdapter(arr,"TripsList",getApplicationContext()));
+                            listView.setAdapter(new TripsAdapter(arr, "TripsList", getApplicationContext()));
                         }
                     },
                     error -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG));

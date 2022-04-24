@@ -84,4 +84,8 @@ public final class Endpoints {
      * gets trips of a specific rider
      */
     public static final String GetRiderTrips = "http://coms-309-030.class.las.iastate.edu:8080/trip/getAllActiveTripsFromRiderId?riderId=";
+    /**
+     * removes a rider from trip
+     */
+    public static final String RemoveRiderFromTrip = "http://coms-309-030.class.las.iastate.edu:8080/trip/removeRiderFromTrip?tripId=";
 }

@@ -146,7 +146,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
             viewTripButton.setOnClickListener(v -> {
                 viewTrip(position);
             });
-
+            return view;
         }
         return null;
 
@@ -201,6 +201,26 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
 
     public void removeFromTrip(int position)
     {
+        try {
+            String url = Endpoints.RemoveRiderFromTrip + list.getJSONObject(position).getInt("tripID")
+                    +"&riderID=" + list.getJSONObject(position).getInt("riderID");
+            StringRequest req = new StringRequest(Request.Method.PUT, url,
+                    response -> {
+                        Intent i = new Intent(this.context, TripsList.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        this.context.startActivity(i);
+                        Toast toast = Toast.makeText(this.context, "Successfully removed from trip", Toast.LENGTH_LONG);
+                        toast.show();
+                    },
+                    error -> {
+                        Log.e("trips error", error.toString());
+                        Toast toast = Toast.makeText(this.context, "Error adding trip", Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+            );
+            AppController.getInstance().addToRequestQueue(req, "string_req");
 
+        }
+        catch (Exception e) {}
     }
 }
