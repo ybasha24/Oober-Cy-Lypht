@@ -18,7 +18,7 @@ public class Message {
 
     @JsonIgnore
     @ManyToOne
-    private User userName;
+    private User userSent;
 
     @Lob
     private String content;
@@ -31,7 +31,7 @@ public class Message {
     public Message() {};
 
     public Message(User userName, String content) {
-        this.userName = userName;
+        this.userSent = userName;
         this.content = content;
     }
 
@@ -44,11 +44,11 @@ public class Message {
     }
 
     public User getUserName() {
-        return userName;
+        return userSent;
     }
 
     public void setUserName(User userName) {
-        this.userName = userName;
+        this.userSent = userName;
     }
 
     public String getContent() {
