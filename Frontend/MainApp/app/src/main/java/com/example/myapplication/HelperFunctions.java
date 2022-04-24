@@ -95,6 +95,7 @@ public class HelperFunctions {
 
         return errorFlag;
     }
+
     public static void setProfilePic(ImageView imageview){
         try {
             imageview.setImageURI(Uri.parse(MainActivity.accountObj.getString("profilePicture")));
@@ -103,4 +104,6 @@ public class HelperFunctions {
             Log.e("error", e.toString());
         }
     }
+
+
 }

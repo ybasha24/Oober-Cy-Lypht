@@ -99,4 +99,10 @@ public final class Endpoints {
      * gets the reviews of a rider
      */
     public static final String GetRiderReviews = "http://coms-309-030.class.las.iastate.edu:8080/riderReview/getAllRiderReviewsByRiderId?riderId=";
+
+    /**
+     * gets the reviews of a rider
+     */
+    public static final String GetDriverReviews = "http://coms-309-030.class.las.iastate.edu:8080/driverReview/getAllDriverReviewsByDriverId?driverId=";
+
 }
