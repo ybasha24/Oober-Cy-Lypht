@@ -33,15 +33,15 @@ public class TripController {
         return t;
     }
 
-    @ApiOperation(value = "Enter a new trip, created by a rider", response = Trip.class)
-    @PostMapping("/createTripByRider")
-    Trip createTripByRider(
-            @RequestParam int riderId,
-            @RequestBody Trip trip){
-        Trip t = tripService.createTripByRider(riderId, trip);
-
-        return t;
-    }
+//    @ApiOperation(value = "Enter a new trip, created by a rider", response = Trip.class)
+//    @PostMapping("/createTripByRider")
+//    Trip createTripByRider(
+//            @RequestParam int riderId,
+//            @RequestBody Trip trip){
+//        Trip t = tripService.createTripByRider(riderId, trip);
+//
+//        return t;
+//    }
 
     @ApiOperation(value = "Retrieve a trip given its id", response = Trip.class)
     @GetMapping("/getTrip")
@@ -120,7 +120,7 @@ public class TripController {
     }
 
     @ApiOperation(value = "Retrieve a list of trips for a rider given their input", response = Iterable.class)
-    @GetMapping("/getTripsForRider")
+    @GetMapping("/getPossibleTripsForRider")
     List<Trip> getTripsForRider(
             @RequestParam("scheduledStartDate")
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime scheduledStartDate,
