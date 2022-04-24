@@ -93,7 +93,7 @@ public final class Endpoints {
     /**
      * gets the rating for a user
      */
-    public static final String GetUserRating = "http://coms-309-030.class.las.iastate.edu:8080/rating/getUserRating?userId";
+    public static final String GetUserRating = "http://coms-309-030.class.las.iastate.edu:8080/rating/getUserRating?userId=";
 
     /**
      * gets the reviews of a rider
