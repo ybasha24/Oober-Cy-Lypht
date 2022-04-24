@@ -26,7 +26,7 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_home_page);
 
-        profilePic = (ImageView) findViewById(R.id.riderProfilePic);
+        profilePic = findViewById(R.id.riderProfilePic);
         HelperFunctions.setProfilePic(profilePic);
     }
 
@@ -62,6 +62,15 @@ public class HomePage extends AppCompatActivity {
     public void searchRides(View view)
     {
         Intent intent = new Intent(this, SearchTripTime.class);
+        startActivity(intent);
+    }
+
+    /**
+     * allows for rider to see their reviews written from previous drivers
+     * @param view the activity that is referencing this method
+     */
+    public void viewReviews(View view){
+        Intent intent = new Intent(this, Reviews.class);
         startActivity(intent);
     }
 

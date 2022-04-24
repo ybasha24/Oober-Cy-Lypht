@@ -20,6 +20,9 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".rider.Reviews"
+            android:exported="false" />
+        <activity
             android:name=".driver.completetrip.RateRider"
             android:exported="false" />
         <activity
