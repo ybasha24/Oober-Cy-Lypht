@@ -1,6 +1,4 @@
-package com.example.myapplication.driver.completetrip;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.myapplication.rider.completetrip;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,19 +8,23 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.myapplication.*;
+import com.example.myapplication.MainActivity;
+import com.example.myapplication.R;
 import com.example.myapplication.app.AppController;
-import com.example.myapplication.driver.TripDetail;
+import com.example.myapplication.driver.completetrip.RateRidersAdapter;
+import com.example.myapplication.driver.completetrip.TripCompleted;
 import com.example.myapplication.endpoints.Endpoints;
 
 import org.json.JSONObject;
 
 /**
- * activity for driver rating/reviewing a rider
+ * activity for rider rating/reviewing a driver
  */
-public class RateRider extends AppCompatActivity {
+public class RateDriver extends AppCompatActivity {
 
     private TextView tv;
     private EditText comments;
@@ -33,21 +35,21 @@ public class RateRider extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_driver_rate_rider);
+        setContentView(R.layout.activity_rider_rate_driver);
         try {
-            driverId = MainActivity.accountObj.getInt("id");
-            riderId = TripDetail.nameToIdMap.get(RateRidersAdapter.currentRiderString);
+            driverId = 0; //set this later
+            riderId = MainActivity.accountObj.getInt("id");
 
         }catch(Exception e){}
         tv = findViewById(R.id.ratingNameTV);
-        tv.setText("Rating: " + RateRidersAdapter.currentRiderString + "; id = " + riderId);
+        tv.setText("Rating: " + driverId);
 
-        comments = findViewById(R.id.driverCommentingRiderET);
-        rating = findViewById(R.id.driverRatingRiderBar);
+        comments = findViewById(R.id.riderCommentingDriverET);
+        rating = findViewById(R.id.riderRatingDriverBar);
     }
 
     /**
-     * driver rates a rider from 0 - 5
+     * rider rates a driver from 0 - 5
      * @param view the view that is referencing this method
      */
     public void submitRating(View view){
@@ -66,7 +68,7 @@ public class RateRider extends AppCompatActivity {
     }
 
     /**
-     * driver leaves comments for a rider
+     * rider leaves comments for a driver
      */
     public void submitReview() {
 

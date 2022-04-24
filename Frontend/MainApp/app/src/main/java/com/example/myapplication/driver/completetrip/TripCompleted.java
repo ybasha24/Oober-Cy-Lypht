@@ -21,6 +21,9 @@ import com.example.myapplication.endpoints.Endpoints;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+/**
+ * activity that appears when a trip is completed, allowing driver to choose from riders to rate
+ */
 public class TripCompleted extends AppCompatActivity {
 
     private ListView listView;
