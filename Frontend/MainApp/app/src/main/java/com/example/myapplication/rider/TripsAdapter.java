@@ -17,6 +17,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
 import com.example.myapplication.endpoints.Endpoints;
+import com.example.myapplication.rider.searchtrip.SearchTripPlace;
 import com.example.myapplication.rider.searchtrip.ViewTripInfo;
 
 import org.json.JSONArray;
@@ -159,7 +160,8 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
     public void addToTrip(int position) {
        try{
            String url = Endpoints.AddRiderToTripUrl+list.getJSONObject(position).getInt("id")+
-                   "&riderId="+MainActivity.accountObj.getInt("id");
+                   "&riderId="+MainActivity.accountObj.getInt("id") + "&riderOriginAddress=" +
+                   SearchTripPlace.originAddress + "&riderDestAddress=" + SearchTripPlace.destAddress;
            StringRequest req = new StringRequest(Request.Method.PUT, url,
                    response -> {
                        Intent i = new Intent(this.context, HomePage.class);
