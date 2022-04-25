@@ -14,16 +14,6 @@ public class RiderStopService {
 
     public List<RiderStop> getRiderStopsByTripId(int tripId) {
 
-//        List<RiderStop> allRiderStops = new ArrayList<>();
-//        allRiderStops = riderStopRepository.findAll();
-//        List<RiderStop> riderStopsForThisTrip = new ArrayList<>();
-//
-//        for(RiderStop riderStop : allRiderStops) {
-//            if (riderStop.getTripId() == tripId) {
-//                riderStopsForThisTrip.add(riderStop);
-//            }
-//        }
-
         List<RiderStop> riderStopsForThisTrip = riderStopRepository.getRiderStopsByTripId(tripId);
         return riderStopsForThisTrip;
     }
