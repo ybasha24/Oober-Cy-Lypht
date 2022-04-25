@@ -23,7 +23,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
     private JSONArray list;
     private Context context;
 
-    public static JSONObject currentJson;
+    public static JSONObject currentTrip;
     /**
      * creates a TripsAdapter object
      * @param list list of trips
@@ -108,7 +108,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
 
     public void viewTrip(int position){
         try {
-            currentJson = list.getJSONObject(position);
+            currentTrip = list.getJSONObject(position);
             Intent i = new Intent(this.context, TripDetail.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             this.context.startActivity(i);

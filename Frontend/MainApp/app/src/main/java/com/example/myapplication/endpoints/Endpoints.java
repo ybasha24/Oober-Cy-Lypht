@@ -114,4 +114,9 @@ public final class Endpoints {
      * gets the reviews of a rider
      */
     public static final String GetDriverReviews = "http://coms-309-030.class.las.iastate.edu:8080/driverReview/getAllDriverReviewsByDriverId?driverId=";
+
+    /**
+     * gets origin and destinations of riders in a trip
+     */
+    public static final String GetRiderStops = "http://coms-309-030.class.las.iastate.edu:8080/riderStop/getRiderStopsByTripId?tripId=";
 }

@@ -5,6 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.myapplication.app.AppController;
+import com.example.myapplication.endpoints.Endpoints;
 import com.google.android.gms.location.FusedLocationProviderClient;
 
 import android.location.LocationListener;
@@ -26,11 +30,13 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
+
 import com.example.myapplication.*;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -56,8 +62,11 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
     private LocationManager locationManager;
     private LocationListener locationListener;
 
-    private ArrayList<String> origins;
-    private ArrayList<String> destinations;
+    private LinkedHashMap<String, String> origins;
+    private LinkedHashMap<String, String> destinations;
+
+    private TextView driverInstructionsTV;
+    private String currentGoal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,17 +78,26 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         }
         setContentView(R.layout.activity_driver_ongoing_trip);
 
+        driverInstructionsTV = findViewById(R.id.driverInstructionsTV);
+        origins = new LinkedHashMap<>();
+        destinations = new LinkedHashMap<>();
+        setRiderLocations();
+
         Places.initialize(getApplicationContext(), GoogleMapsAPIKey);
         placesClient = Places.createClient(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
+                Location currentGoalLocation = new Location(currentGoal);
+                if(location.distanceTo(currentGoalLocation) < 100){
+                    setNextGoal();
+                }
+
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), DEFAULT_ZOOM));
                 Log.e("error", "location change" + latitude + " " + longitude);
             }
@@ -106,7 +124,6 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         updateLocationUI();
         getDeviceLocation();
     }
-
 
     private void getDeviceLocation() {
         try {
@@ -181,10 +198,46 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
 
     private void setRiderLocations(){
         try{
-            JSONObject trip = TripsAdapter.currentJson;
+            JSONObject trip = TripsAdapter.currentTrip;
+            int tripId = trip.getInt("id");
+            String url = Endpoints.GetRiderStops + tripId;
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
+                response -> {
+                    try {
+                        for(int i = 0; i < response.length(); i++){
+                            JSONObject obj = response.getJSONObject(i);
+                            int riderId = obj.getInt("id");
+                            String origin = obj.getString("riderOriginAddress");
+                            String destination = obj.getString("riderDestAddress");
+                            origins.put(TripDetail.idToNameMap.get(riderId), origin);
+                            destinations.put(TripDetail.idToNameMap.get(riderId), destination);
+                        }
+                    }
+                    catch(Exception e){
+                        Log.e("error", e.toString());
+                    }
+                },
+                error -> { }
+            );
+            AppController.getInstance().addToRequestQueue(req, "json_array_req");
+
             
         }catch(Exception e){}
     }
 
+    private void setNextGoal(){
+        if(origins.size() > 0) {
+            for (String rider : origins.keySet()) {
+                driverInstructionsTV.setText("Pick up " + rider + " at " + origins.get(rider));
+                currentGoal = origins.get(rider);
+            }
+        }
+        else if(destinations.size() > 0) {
+            for (String rider : destinations.keySet()) {
+                driverInstructionsTV.setText("Drop off " + rider + " at " + destinations.get(rider));
+                currentGoal = destinations.get(rider);
+            }
+        }
+    }
 
 }

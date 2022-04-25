@@ -14,7 +14,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
-import com.example.myapplication.driver.completetrip.TripCompleted;
 import com.example.myapplication.driver.createtrip.SelectTripTime;
 import com.example.myapplication.endpoints.Endpoints;
 
@@ -22,7 +21,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TripDetail extends AppCompatActivity {
@@ -30,16 +28,18 @@ public class TripDetail extends AppCompatActivity {
     JSONObject trip;
     public static JSONArray riderNames;
     public static HashMap<String, Integer> nameToIdMap;
+    public static HashMap<Integer, String> idToNameMap;
     TextView ridersTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_trip_detail);
-        trip = TripsAdapter.currentJson;
+        trip = TripsAdapter.currentTrip;
         Log.e("error", trip.toString());
         riderNames = new JSONArray();
         nameToIdMap = new HashMap<>();
+        idToNameMap = new HashMap<>();
         setDetails();
     }
 
@@ -113,6 +113,7 @@ public class TripDetail extends AppCompatActivity {
                     riderNames.put(name);
                     ridersTV.setText(prettyArrayListNames());
                     nameToIdMap.put(name, id);
+                    idToNameMap.put(id, name);
                 }
                 catch(Exception e){
                     Log.e("error", e.toString());
