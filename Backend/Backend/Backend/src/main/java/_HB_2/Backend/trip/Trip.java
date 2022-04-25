@@ -234,4 +234,8 @@ public class Trip {
     public void setRatePerMin(double ratePerMin) {
         this.ratePerMin = ratePerMin;
     }
+
+    public void addRiderStop(RiderStop riderStop) {
+        this.riderStops.add(riderStop);
+    }
 }
