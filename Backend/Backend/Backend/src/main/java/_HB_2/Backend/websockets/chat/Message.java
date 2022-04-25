@@ -20,6 +20,10 @@ public class Message {
     @ManyToOne
     private User userSent;
 
+    @JsonIgnore
+    @ManyToOne
+    private User userReceived;
+
     @Lob
     private String content;
 
@@ -33,6 +37,13 @@ public class Message {
     public Message(User userName, String content) {
         this.userSent = userName;
         this.content = content;
+        this.userReceived = null;
+    }
+
+    public Message(User userSent, User userReceived, String content) {
+        this.userSent = userSent;
+        this.content = content;
+        this.userReceived = userReceived;
     }
 
     public Long getId() {
@@ -43,12 +54,20 @@ public class Message {
         this.id = id;
     }
 
-    public User getUserName() {
+    public User getUserSent() {
         return userSent;
     }
 
-    public void setUserName(User userName) {
+    public void setUserSent(User userName) {
         this.userSent = userName;
+    }
+
+    public User getUserReceived() {
+        return userReceived;
+    }
+
+    public void setUserReceived(User userName) {
+        this.userReceived = userName;
     }
 
     public String getContent() {

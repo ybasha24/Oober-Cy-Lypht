@@ -83,19 +83,23 @@ public class ChatSocket {
         // Direct message to a user using the format "@username <message>"
         if (message.startsWith("@")) {
             String destUsername = message.split(" ")[0].substring(1);
+            User userReceived = userService.getUserByEmail(destUsername);
 
             // send the message to the sender and receiver
             sendMessageToPArticularUser(destUsername, "[DM] " + username + ": " + message);
             sendMessageToPArticularUser(username, "[DM] " + username + ": " + message);
 
+            User findUser = userService.getUserByEmail(username);
+            // Saving chat history to repository
+            msgRepo.save(new Message(findUser, userReceived, message));
+
         }
         else { // broadcast
             broadcast(username + ": " + message);
+            User findUser = userService.getUserByEmail(username);
+            // Saving chat history to repository
+            msgRepo.save(new Message(findUser, message));
         }
-
-        User findUser = userService.getUserByEmail(username);
-        // Saving chat history to repository
-        msgRepo.save(new Message(findUser, message));
     }
 
 
@@ -156,7 +160,7 @@ public class ChatSocket {
         StringBuilder sb = new StringBuilder();
         if(messages != null && messages.size() != 0) {
             for (Message message : messages) {
-                sb.append(message.getUserName() + ": " + message.getContent() + "\n");
+                sb.append(message.getUserSent() + ": " + message.getContent() + "\n");
             }
         }
         return sb.toString();
