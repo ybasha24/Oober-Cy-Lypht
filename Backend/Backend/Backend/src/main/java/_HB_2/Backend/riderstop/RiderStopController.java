@@ -17,7 +17,7 @@ public class RiderStopController {
     RiderStopService riderStopService;
 
     @ApiOperation(value = "Get RiderStops for a Trip", response = Trip.class)
-    @PostMapping("/getRiderStopsByTripId")
+    @GetMapping("/getRiderStopsByTripId")
     List<RiderStop> getRiderStopsByTripId(@RequestParam int tripId) {
 
         List<RiderStop> riderStops = riderStopService.getRiderStopsByTripId(tripId);
