@@ -28,6 +28,8 @@ public class ChatSocket {
     // method
     private static MessageRepository msgRepo;
 
+    private static UserService userService;
+
     /*
      * Grabs the MessageRepository singleton from the Spring Application
      * Context.  This works because of the @Controller annotation on this
@@ -41,7 +43,9 @@ public class ChatSocket {
     }
 
     @Autowired
-    private UserService userService;
+    public void setUserService(UserService userService) {
+        this.userService = userService;  // we are setting the static variable
+    }
 
     // Store all socket session and their corresponding username.
     private static Map<Session, String> sessionUsernameMap = new Hashtable<>();
@@ -62,8 +66,9 @@ public class ChatSocket {
         //Send chat history to the newly connected user
         sendMessageToPArticularUser(username, getChatHistory());
 
+        User enter = userService.getUserByEmail(username);
         // broadcast that new user joined
-        String message = "User:" + username + " has Joined the Chat";
+        String message = "User: " + enter.getFirstName() + " " + enter.getLastName() + " has Joined the Chat";
         broadcast(message);
     }
 
