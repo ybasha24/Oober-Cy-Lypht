@@ -7,10 +7,13 @@ import androidx.core.content.ContextCompat;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.myapplication.app.AppController;
 import com.example.myapplication.endpoints.Endpoints;
+import com.example.myapplication.endpoints.OtherConstants;
 import com.google.android.gms.location.FusedLocationProviderClient;
 
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationListener;
@@ -22,6 +25,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
@@ -35,10 +39,14 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.example.myapplication.*;
+import com.google.maps.android.PolyUtil;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 
 public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback {
@@ -123,8 +131,8 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
                     }
                     setNextGoal();
                 }
-
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), DEFAULT_ZOOM));
+                drawRoute(latitude, longitude, goalLat, goalLong);
                 Log.e("error", "location change: " + latitude + " " + longitude + " | dist : " + currentGoalLocation.toString());
             }
         };
@@ -132,7 +140,7 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
             return;
         }
         locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 10, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 10, locationListener);
     }
 
     @Override
@@ -269,6 +277,31 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
                 currentGoalString = destinations.get(rider);
             }
         }
+    }
+
+    private void drawRoute(double currentOrigin, double currentLatitute, double goalOrigin, double goalLatitute){
+        String routeOrigin = "origin=" + currentOrigin + "," + currentLatitute;
+        String waypoints = "";
+        String routeDest = "destination=" + goalOrigin + "," + goalLatitute;
+        String params = routeOrigin + "&" + waypoints + "&"  + routeDest + "&key=" + OtherConstants.GoogleMapsAPIKey;
+        String url = Endpoints.GoogleMapsDirectionUrl + params;
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                response -> {
+                    try {
+                        JSONArray routeArray = response.getJSONArray("routes");
+                        JSONObject routes = routeArray.getJSONObject(0);
+                        JSONObject overviewPolylines = routes.getJSONObject("overview_polyline");
+                        String encodedString = overviewPolylines.getString("points");
+                        List<LatLng> list = PolyUtil.decode(encodedString);
+                        map.addPolyline(new PolylineOptions().addAll(list).width(12).color(Color.parseColor("#05b1fb")).geodesic(true));
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentOrigin, currentLatitute), 10.0f));
+                    }
+                    catch(JSONException e){ Log.e("Maps error", e.toString()); }
+                },
+                error -> Log.e("Maps error", error.toString())
+        );
+        AppController.getInstance().addToRequestQueue(req, "obj_req");
     }
 
 }
