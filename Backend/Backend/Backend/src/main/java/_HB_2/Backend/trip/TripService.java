@@ -81,10 +81,11 @@ public class TripService {
         riderStop.setRiderId(riderId);
         riderStop.setRiderOriginAddress(riderOriginAddress);
         riderStop.setRiderDestAddress(riderDestAddress);
+        riderStop.setTripId(tripId);
         riderStopRepository.save(riderStop);
 
-        //add the rider stop to the trip
-        addRiderToThis.addRiderStop(riderStop);
+//        //add the rider stop to the trip
+//        addRiderToThis.addRiderStop(riderStop);
 
         tripRepository.save(addRiderToThis);
         return tripRepository.findById(tripId);
@@ -94,7 +95,9 @@ public class TripService {
         Trip removeRiderFromThis = tripRepository.findById(tripId);
         User rider = riderRepository.findById(riderId);
         removeRiderFromThis.removeRiderById(rider);
-        removeRiderFromThis.removeRiderStop(riderId);
+
+        riderStopRepository.deleteByTripIdAndRiderId(tripId, riderId);
+//        removeRiderFromThis.removeRiderStop(riderId);
 //        RiderStop riderStop = riderStopRepository.findByTripIdAndRiderId(tripId, riderId);
         tripRepository.save(removeRiderFromThis);
         return tripRepository.findById(tripId);

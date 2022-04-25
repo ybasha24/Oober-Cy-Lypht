@@ -42,9 +42,9 @@ public class Trip {
     @JoinColumn(name = "Driver_ID")
     private User tripDriver;
 
-    @OneToMany
-    @JoinColumn(name = "Trip_Id")
-    private Set<RiderStop> riderStops;
+//    @OneToMany
+//    @JoinColumn(name = "Trip_Id")
+//    private Set<RiderStop> riderStops;
 
     @JsonIgnore
     @ManyToMany
@@ -235,15 +235,15 @@ public class Trip {
         this.ratePerMin = ratePerMin;
     }
 
-    public void addRiderStop(RiderStop riderStop) {
-        this.riderStops.add(riderStop);
-    }
-
-    public void removeRiderStop(int riderId) {
-        for(RiderStop riderStop: this.riderStops) {
-            if (riderStop.getRiderId() == riderId) {
-                this.riderStops.remove(riderStop);
-            }
-        }
-    }
+//    public void addRiderStop(RiderStop riderStop) {
+//        this.riderStops.add(riderStop);
+//    }
+//
+//    public void removeRiderStop(int riderId) {
+//        for(RiderStop riderStop: this.riderStops) {
+//            if (riderStop.getRiderId() == riderId) {
+//                this.riderStops.remove(riderStop);
+//            }
+//        }
+//    }
 }

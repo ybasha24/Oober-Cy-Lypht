@@ -16,6 +16,12 @@ public interface RiderStopRepository extends JpaRepository<RiderStop, Integer> {
     @Transactional
     void deleteById(int id);
 
+    @Query("DELETE FROM RiderStop r where r.tripId = ?1 and r.riderId = ?2")
+    void deleteByTripIdAndRiderId(int tripId, int riderId);
+
+    @Query("SELECT r FROM RiderStop r WHERE r.tripId = ?1")
+    List<RiderStop> getRiderStopsByTripId(int tripId);
+
 //    @Query("SELECT t FROM Trip t WHERE t.tripDriver.id = ?1 AND t.isCompleted = false")
 //    List<Trip> getAllUncompletedTripsByDriverId(int driverId);
 //    @Query("SELECT r FROM RiderStop r WHERE r.riderId = ?2 and r.tripId = ?1")

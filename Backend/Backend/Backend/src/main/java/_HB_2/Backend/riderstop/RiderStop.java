@@ -14,6 +14,8 @@ public class RiderStop {
 
     private int riderId;
 
+    private int tripId;
+
     private String riderOriginAddress;
 
     private String riderDestAddress;
@@ -23,6 +25,10 @@ public class RiderStop {
     public int getRiderId() {return riderId;}
 
     public void setRiderId(int riderId) {this.riderId = riderId;}
+
+    public int getTripId() {return tripId;}
+
+    public void setTripId(int tripId) {this.tripId = tripId;}
 
     public String getRiderOriginAddress() {return riderOriginAddress;}
 
