@@ -92,7 +92,6 @@ public class SearchPage extends AppCompatActivity {
                     Log.e("response", response.toString());
                     if(response != null) {
                         tripsList = response;
-                        //listView.setAdapter(new TripsAdapter(tripsList, getApplicationContext()));
                         sortList();
                     }
                 },
@@ -159,7 +158,7 @@ public class SearchPage extends AppCompatActivity {
                         if(newDistance != -1 && (newDistance - driverDistance < (item.getDouble("radius")) * 1.6))
                         {
                             list.put(item);
-                            listView.setAdapter(new TripsAdapter(list, getApplicationContext()));
+                            listView.setAdapter(new TripsAdapter(list, "SearchPage", getApplicationContext()));
                         }
                     }
                     catch(JSONException e){ Log.e("Maps error", e.toString()); newDistance = -1; }

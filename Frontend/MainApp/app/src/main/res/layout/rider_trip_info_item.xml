@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.884"
         app:layout_constraintStart_toEndOf="@+id/riderListText"
-        app:layout_constraintTop_toBottomOf="@+id/add_to_trip"
+        app:layout_constraintTop_toBottomOf="@+id/delete_trip"
         app:layout_constraintVertical_bias="0.034" />
 
     <TextView
@@ -30,10 +30,10 @@
         app:layout_constraintVertical_bias="0.053" />
 
     <Button
-        android:id="@+id/add_to_trip"
+        android:id="@+id/delete_trip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="add to trip"
+        android:text="Delete Trip"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.88"

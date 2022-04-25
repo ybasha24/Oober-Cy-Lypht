@@ -65,4 +65,11 @@ public class HomePage extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void viewTrips(View view)
+    {
+        Intent intent = new Intent(this, TripsList.class);
+        startActivity(intent);
+    }
+
+
 }

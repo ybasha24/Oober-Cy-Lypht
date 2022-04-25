@@ -19,14 +19,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".driver.TripDetail"
-            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM" />
 
+        <activity
+            android:name=".rider.TripsList"
+            android:parentActivityName=".rider.HomePage"
+            android:exported="false" />
+        <activity
+            android:name=".driver.TripDetail"
+            android:exported="false" />
         <activity
             android:name=".rider.searchtrip.ViewTripInfo"
             android:parentActivityName=".rider.searchtrip.SearchPage"

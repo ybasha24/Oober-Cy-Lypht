@@ -17,13 +17,14 @@ public class ViewTripInfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rider_ride_info);
+        setContentView(R.layout.activity_rider_trip_info);
         info = findViewById(R.id.InfoView);
         LocalDateTime startDate =(LocalDateTime) getIntent().getSerializableExtra("startDate");
         String startLocation = getIntent().getStringExtra("startLocation");
         String endLocation = getIntent().getStringExtra("endLocation");
         String yourStartLocation = getIntent().getStringExtra("yourStart");
         String yourEndLocation = getIntent().getStringExtra("yourEnd");
+
         info.setText( "Driver start time: " + prettyHoursAndMinutes(startDate.getHour(),
                 startDate.getMinute()) + "\nDriver start location: " + startLocation +
                 "\nDriver End Location: " + endLocation + "\nYour start Location" +
