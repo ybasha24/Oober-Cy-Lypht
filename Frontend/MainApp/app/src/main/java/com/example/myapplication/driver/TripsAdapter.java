@@ -85,7 +85,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
             View view = convertView;
             if (view == null) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.trip_item, null);
+                view = inflater.inflate(R.layout.driver_trip_item, null);
             }
 
             TextView tv = view.findViewById(R.id.textView);
@@ -98,7 +98,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
             } catch (Exception e) {
             }
 
-            Button viewTripButton = view.findViewById(R.id.adminDeleteTripButton);
+            Button viewTripButton = view.findViewById(R.id.driverRateRiderButton);
             viewTripButton.setOnClickListener(v -> viewTrip(position));
 
             return view;

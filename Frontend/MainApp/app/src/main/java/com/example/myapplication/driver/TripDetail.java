@@ -14,6 +14,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
+import com.example.myapplication.driver.completetrip.TripCompleted;
 import com.example.myapplication.driver.createtrip.SelectTripTime;
 import com.example.myapplication.endpoints.Endpoints;
 
@@ -21,22 +22,24 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 
 public class TripDetail extends AppCompatActivity {
 
     JSONObject trip;
-    ArrayList<String> riderNames;
-    TextView riders;
+    public static JSONArray riderNames;
+    public static HashMap<String, Integer> nameToIdMap;
+    TextView ridersTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_detail);
         trip = TripsAdapter.currentJson;
+        Log.e("error", trip.toString());
+        riderNames = new JSONArray();
+        nameToIdMap = new HashMap<>();
         setDetails();
-        riderNames = new ArrayList<>();
     }
 
     private void setDetails(){
@@ -44,7 +47,7 @@ public class TripDetail extends AppCompatActivity {
         TextView dest = findViewById(R.id.destTV);
         TextView start = findViewById(R.id.starttimeTV);
         TextView end = findViewById(R.id.endTimeTV);
-        riders = findViewById(R.id.ridersTV);
+        ridersTV = findViewById(R.id.ridersTV);
 
         try {
             origin.setText(trip.getString("originAddress"));
@@ -97,8 +100,10 @@ public class TripDetail extends AppCompatActivity {
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, Endpoints.GetUserUrl + id, null,
             response -> {
                 try {
-                    riderNames.add(response.getString("firstName") + " " + response.getString("lastName"));
-                    riders.setText("Riders: " + riderNames.toString());
+                    String name = response.getString("firstName") + " " + response.getString("lastName");
+                    riderNames.put(name);
+                    ridersTV.setText(prettyArrayListNames());
+                    nameToIdMap.put(name, id);
                 }
                 catch(Exception e){
                     Log.e("error", e.toString());
@@ -107,5 +112,25 @@ public class TripDetail extends AppCompatActivity {
             error -> { }
         );
         AppController.getInstance().addToRequestQueue(req, "string_req");
+    }
+
+    public void startTrip(View v){
+        Intent i = new Intent(this, TripCompleted.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(i);
+    }
+
+    public String prettyArrayListNames(){
+        String names = "Riders:\n";
+
+        try {
+            for (int i = 0; i < riderNames.length(); i++) {
+                names += ("\t\t- " + riderNames.getString(i));
+                if(i < riderNames.length() - 1){
+                    names += "\n";
+                }
+            }
+        }catch(Exception e){}
+        return names;
     }
 }

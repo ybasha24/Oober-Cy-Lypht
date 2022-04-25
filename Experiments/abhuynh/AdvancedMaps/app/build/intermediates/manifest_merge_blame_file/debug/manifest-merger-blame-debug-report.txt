@@ -1,0 +1,177 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.myapplication"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+8-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="32" />
+9-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:5:5-67
+11-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:5:22-64
+12    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+12-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:6:5-79
+12-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:6:22-76
+13    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+13-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:7:5-81
+13-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:7:22-78
+14    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- Include required permissions for Google Maps API to run. -->
+14-->[com.google.android.libraries.places:places:2.5.0] /Users/abhuynh/.gradle/caches/transforms-3/99096c7b856ba108aa01fd288f479a5b/transformed/places-2.5.0/AndroidManifest.xml:10:5-76
+14-->[com.google.android.libraries.places:places:2.5.0] /Users/abhuynh/.gradle/caches/transforms-3/99096c7b856ba108aa01fd288f479a5b/transformed/places-2.5.0/AndroidManifest.xml:10:22-73
+15    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+15-->[com.google.android.gms:play-services-maps:18.0.2] /Users/abhuynh/.gradle/caches/transforms-3/a64e665a61503a80e49bfac8d9433f50/transformed/play-services-maps-18.0.2/AndroidManifest.xml:23:5-79
+15-->[com.google.android.gms:play-services-maps:18.0.2] /Users/abhuynh/.gradle/caches/transforms-3/a64e665a61503a80e49bfac8d9433f50/transformed/play-services-maps-18.0.2/AndroidManifest.xml:23:22-76
+16
+17    <uses-feature
+17-->[com.google.android.gms:play-services-maps:18.0.2] /Users/abhuynh/.gradle/caches/transforms-3/a64e665a61503a80e49bfac8d9433f50/transformed/play-services-maps-18.0.2/AndroidManifest.xml:26:5-28:35
+18        android:glEsVersion="0x00020000"
+18-->[com.google.android.gms:play-services-maps:18.0.2] /Users/abhuynh/.gradle/caches/transforms-3/a64e665a61503a80e49bfac8d9433f50/transformed/play-services-maps-18.0.2/AndroidManifest.xml:27:9-41
+19        android:required="true" />
+19-->[com.google.android.gms:play-services-maps:18.0.2] /Users/abhuynh/.gradle/caches/transforms-3/a64e665a61503a80e49bfac8d9433f50/transformed/play-services-maps-18.0.2/AndroidManifest.xml:28:9-32
+20
+21    <queries>
+21-->[com.google.android.gms:play-services-maps:18.0.2] /Users/abhuynh/.gradle/caches/transforms-3/a64e665a61503a80e49bfac8d9433f50/transformed/play-services-maps-18.0.2/AndroidManifest.xml:30:5-34:15
+22
+23        <!-- Needs to be explicitly declared on Android R+ -->
+24        <package android:name="com.google.android.apps.maps" />
+24-->[com.google.android.gms:play-services-maps:18.0.2] /Users/abhuynh/.gradle/caches/transforms-3/a64e665a61503a80e49bfac8d9433f50/transformed/play-services-maps-18.0.2/AndroidManifest.xml:33:9-64
+24-->[com.google.android.gms:play-services-maps:18.0.2] /Users/abhuynh/.gradle/caches/transforms-3/a64e665a61503a80e49bfac8d9433f50/transformed/play-services-maps-18.0.2/AndroidManifest.xml:33:18-61
+25    </queries>
+26
+27    <application
+27-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:9:5-33:19
+28        android:allowBackup="true"
+28-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:12:9-35
+29        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+29-->[androidx.core:core:1.7.0] /Users/abhuynh/.gradle/caches/transforms-3/02483169c4c9e0ddffa88758188ac6f1/transformed/core-1.7.0/AndroidManifest.xml:24:18-86
+30        android:debuggable="true"
+31        android:extractNativeLibs="false"
+32        android:icon="@mipmap/ic_launcher"
+32-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:13:9-43
+33        android:label="@string/app_name"
+33-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:14:9-41
+34        android:roundIcon="@mipmap/ic_launcher_round"
+34-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:15:9-54
+35        android:supportsRtl="true"
+35-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:16:9-35
+36        android:testOnly="true"
+37        android:theme="@style/Theme.MyApplication" >
+37-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:17:9-51
+38        <meta-data
+38-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:19:9-21:71
+39            android:name="com.google.android.geo.API_KEY"
+39-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:20:13-58
+40            android:value="AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM" />
+40-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:21:13-68
+41
+42        <activity
+42-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:23:9-32:20
+43            android:name="com.example.myapplication.MainActivity"
+43-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:25:13-41
+44            android:exported="true" >
+44-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:26:13-36
+45            <intent-filter>
+45-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:27:13-31:29
+46                <action android:name="android.intent.action.MAIN" />
+46-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:28:17-69
+46-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:28:25-66
+47
+48                <category android:name="android.intent.category.LAUNCHER" />
+48-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:30:17-77
+48-->/Users/abhuynh/Desktop/2_hb_2/Experiments/abhuynh/AdvancedMaps/app/src/main/AndroidManifest.xml:30:27-74
+49            </intent-filter>
+50        </activity>
+51        <activity
+51-->[com.google.android.libraries.places:places:2.5.0] /Users/abhuynh/.gradle/caches/transforms-3/99096c7b856ba108aa01fd288f479a5b/transformed/places-2.5.0/AndroidManifest.xml:14:9-20:20
+52            android:name="com.google.android.libraries.places.widget.AutocompleteActivity"
+52-->[com.google.android.libraries.places:places:2.5.0] /Users/abhuynh/.gradle/caches/transforms-3/99096c7b856ba108aa01fd288f479a5b/transformed/places-2.5.0/AndroidManifest.xml:15:13-91
+53            android:exported="false"
+53-->[com.google.android.libraries.places:places:2.5.0] /Users/abhuynh/.gradle/caches/transforms-3/99096c7b856ba108aa01fd288f479a5b/transformed/places-2.5.0/AndroidManifest.xml:16:13-37
+54            android:label="@string/places_autocomplete_label"
+54-->[com.google.android.libraries.places:places:2.5.0] /Users/abhuynh/.gradle/caches/transforms-3/99096c7b856ba108aa01fd288f479a5b/transformed/places-2.5.0/AndroidManifest.xml:17:13-62
+55            android:theme="@style/PlacesAutocompleteOverlay"
+55-->[com.google.android.libraries.places:places:2.5.0] /Users/abhuynh/.gradle/caches/transforms-3/99096c7b856ba108aa01fd288f479a5b/transformed/places-2.5.0/AndroidManifest.xml:18:13-61
+56            android:windowSoftInputMode="adjustResize" >
+56-->[com.google.android.libraries.places:places:2.5.0] /Users/abhuynh/.gradle/caches/transforms-3/99096c7b856ba108aa01fd288f479a5b/transformed/places-2.5.0/AndroidManifest.xml:19:13-55
+57        </activity> <!-- Needs to be explicitly declared on P+ -->
+58        <uses-library
+58-->[com.google.android.gms:play-services-maps:18.0.2] /Users/abhuynh/.gradle/caches/transforms-3/a64e665a61503a80e49bfac8d9433f50/transformed/play-services-maps-18.0.2/AndroidManifest.xml:39:9-41:40
+59            android:name="org.apache.http.legacy"
+59-->[com.google.android.gms:play-services-maps:18.0.2] /Users/abhuynh/.gradle/caches/transforms-3/a64e665a61503a80e49bfac8d9433f50/transformed/play-services-maps-18.0.2/AndroidManifest.xml:40:13-50
+60            android:required="false" />
+60-->[com.google.android.gms:play-services-maps:18.0.2] /Users/abhuynh/.gradle/caches/transforms-3/a64e665a61503a80e49bfac8d9433f50/transformed/play-services-maps-18.0.2/AndroidManifest.xml:41:13-37
+61
+62        <meta-data
+62-->[com.google.maps.android:android-maps-utils:2.3.0] /Users/abhuynh/.gradle/caches/transforms-3/673d0214a7a39c9494f1bee0fe751ccf/transformed/android-maps-utils-2.3.0/AndroidManifest.xml:10:9-12:69
+63            android:name="com.google.android.gms.version"
+63-->[com.google.maps.android:android-maps-utils:2.3.0] /Users/abhuynh/.gradle/caches/transforms-3/673d0214a7a39c9494f1bee0fe751ccf/transformed/android-maps-utils-2.3.0/AndroidManifest.xml:11:13-58
+64            android:value="@integer/google_play_services_version" />
+64-->[com.google.maps.android:android-maps-utils:2.3.0] /Users/abhuynh/.gradle/caches/transforms-3/673d0214a7a39c9494f1bee0fe751ccf/transformed/android-maps-utils-2.3.0/AndroidManifest.xml:12:13-66
+65
+66        <activity
+66-->[com.google.android.gms:play-services-base:18.0.1] /Users/abhuynh/.gradle/caches/transforms-3/53207dac8a8df2118dd13aece775a512/transformed/play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
+67            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+67-->[com.google.android.gms:play-services-base:18.0.1] /Users/abhuynh/.gradle/caches/transforms-3/53207dac8a8df2118dd13aece775a512/transformed/play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+68            android:exported="false"
+68-->[com.google.android.gms:play-services-base:18.0.1] /Users/abhuynh/.gradle/caches/transforms-3/53207dac8a8df2118dd13aece775a512/transformed/play-services-base-18.0.1/AndroidManifest.xml:22:19-43
+69            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+69-->[com.google.android.gms:play-services-base:18.0.1] /Users/abhuynh/.gradle/caches/transforms-3/53207dac8a8df2118dd13aece775a512/transformed/play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+70
+71        <provider
+71-->[androidx.emoji2:emoji2:1.0.0] /Users/abhuynh/.gradle/caches/transforms-3/278083bef5dd79cb476949a0d92ce592/transformed/emoji2-1.0.0/AndroidManifest.xml:26:9-34:20
+72            android:name="androidx.startup.InitializationProvider"
+72-->[androidx.emoji2:emoji2:1.0.0] /Users/abhuynh/.gradle/caches/transforms-3/278083bef5dd79cb476949a0d92ce592/transformed/emoji2-1.0.0/AndroidManifest.xml:27:13-67
+73            android:authorities="com.example.myapplication.androidx-startup"
+73-->[androidx.emoji2:emoji2:1.0.0] /Users/abhuynh/.gradle/caches/transforms-3/278083bef5dd79cb476949a0d92ce592/transformed/emoji2-1.0.0/AndroidManifest.xml:28:13-68
+74            android:exported="false" >
+74-->[androidx.emoji2:emoji2:1.0.0] /Users/abhuynh/.gradle/caches/transforms-3/278083bef5dd79cb476949a0d92ce592/transformed/emoji2-1.0.0/AndroidManifest.xml:29:13-37
+75            <meta-data
+75-->[androidx.emoji2:emoji2:1.0.0] /Users/abhuynh/.gradle/caches/transforms-3/278083bef5dd79cb476949a0d92ce592/transformed/emoji2-1.0.0/AndroidManifest.xml:31:13-33:52
+76                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+76-->[androidx.emoji2:emoji2:1.0.0] /Users/abhuynh/.gradle/caches/transforms-3/278083bef5dd79cb476949a0d92ce592/transformed/emoji2-1.0.0/AndroidManifest.xml:32:17-75
+77                android:value="androidx.startup" />
+77-->[androidx.emoji2:emoji2:1.0.0] /Users/abhuynh/.gradle/caches/transforms-3/278083bef5dd79cb476949a0d92ce592/transformed/emoji2-1.0.0/AndroidManifest.xml:33:17-49
+78            <meta-data
+78-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/abhuynh/.gradle/caches/transforms-3/4d932a67b7be3c4366d55752ebd69384/transformed/lifecycle-process-2.4.0/AndroidManifest.xml:31:13-33:52
+79                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+79-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/abhuynh/.gradle/caches/transforms-3/4d932a67b7be3c4366d55752ebd69384/transformed/lifecycle-process-2.4.0/AndroidManifest.xml:32:17-78
+80                android:value="androidx.startup" />
+80-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/abhuynh/.gradle/caches/transforms-3/4d932a67b7be3c4366d55752ebd69384/transformed/lifecycle-process-2.4.0/AndroidManifest.xml:33:17-49
+81        </provider>
+82
+83        <service
+83-->[com.google.android.datatransport:transport-backend-cct:2.3.0] /Users/abhuynh/.gradle/caches/transforms-3/68e378122f9009b57188265875ad6a0d/transformed/transport-backend-cct-2.3.0/AndroidManifest.xml:29:9-35:19
+84            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+84-->[com.google.android.datatransport:transport-backend-cct:2.3.0] /Users/abhuynh/.gradle/caches/transforms-3/68e378122f9009b57188265875ad6a0d/transformed/transport-backend-cct-2.3.0/AndroidManifest.xml:30:13-103
+85            android:exported="false" >
+85-->[com.google.android.datatransport:transport-backend-cct:2.3.0] /Users/abhuynh/.gradle/caches/transforms-3/68e378122f9009b57188265875ad6a0d/transformed/transport-backend-cct-2.3.0/AndroidManifest.xml:31:13-37
+86            <meta-data
+86-->[com.google.android.datatransport:transport-backend-cct:2.3.0] /Users/abhuynh/.gradle/caches/transforms-3/68e378122f9009b57188265875ad6a0d/transformed/transport-backend-cct-2.3.0/AndroidManifest.xml:32:13-34:39
+87                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+87-->[com.google.android.datatransport:transport-backend-cct:2.3.0] /Users/abhuynh/.gradle/caches/transforms-3/68e378122f9009b57188265875ad6a0d/transformed/transport-backend-cct-2.3.0/AndroidManifest.xml:33:17-94
+88                android:value="cct" />
+88-->[com.google.android.datatransport:transport-backend-cct:2.3.0] /Users/abhuynh/.gradle/caches/transforms-3/68e378122f9009b57188265875ad6a0d/transformed/transport-backend-cct-2.3.0/AndroidManifest.xml:34:17-36
+89        </service>
+90        <service
+90-->[com.google.android.datatransport:transport-runtime:2.2.3] /Users/abhuynh/.gradle/caches/transforms-3/b571065a6ca3d1269194db2da199feb6/transformed/transport-runtime-2.2.3/AndroidManifest.xml:26:9-30:19
+91            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+91-->[com.google.android.datatransport:transport-runtime:2.2.3] /Users/abhuynh/.gradle/caches/transforms-3/b571065a6ca3d1269194db2da199feb6/transformed/transport-runtime-2.2.3/AndroidManifest.xml:27:13-117
+92            android:exported="false"
+92-->[com.google.android.datatransport:transport-runtime:2.2.3] /Users/abhuynh/.gradle/caches/transforms-3/b571065a6ca3d1269194db2da199feb6/transformed/transport-runtime-2.2.3/AndroidManifest.xml:28:13-37
+93            android:permission="android.permission.BIND_JOB_SERVICE" >
+93-->[com.google.android.datatransport:transport-runtime:2.2.3] /Users/abhuynh/.gradle/caches/transforms-3/b571065a6ca3d1269194db2da199feb6/transformed/transport-runtime-2.2.3/AndroidManifest.xml:29:13-69
+94        </service>
+95
+96        <receiver
+96-->[com.google.android.datatransport:transport-runtime:2.2.3] /Users/abhuynh/.gradle/caches/transforms-3/b571065a6ca3d1269194db2da199feb6/transformed/transport-runtime-2.2.3/AndroidManifest.xml:32:9-34:40
+97            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+97-->[com.google.android.datatransport:transport-runtime:2.2.3] /Users/abhuynh/.gradle/caches/transforms-3/b571065a6ca3d1269194db2da199feb6/transformed/transport-runtime-2.2.3/AndroidManifest.xml:33:13-132
+98            android:exported="false" />
+98-->[com.google.android.datatransport:transport-runtime:2.2.3] /Users/abhuynh/.gradle/caches/transforms-3/b571065a6ca3d1269194db2da199feb6/transformed/transport-runtime-2.2.3/AndroidManifest.xml:34:13-37
+99    </application>
+100
+101</manifest>
