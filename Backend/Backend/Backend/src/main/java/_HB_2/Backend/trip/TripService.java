@@ -1,5 +1,7 @@
 package _HB_2.Backend.trip;
 
+import _HB_2.Backend.riderstop.RiderStop;
+import _HB_2.Backend.riderstop.RiderStopRepository;
 import _HB_2.Backend.user.User;
 import _HB_2.Backend.driver.DriverRepository;
 import _HB_2.Backend.rider.RiderRepository;
@@ -20,6 +22,9 @@ public class TripService {
 
     @Autowired
     RiderRepository riderRepository;
+
+    @Autowired
+    RiderStopRepository riderStopRepository;
 
     //there should be no riders in the trip initially
     public Trip createTripByDriver(int Id, Trip trip) {
@@ -60,12 +65,25 @@ public class TripService {
 
     }
 
-    public Trip addRiderToTripById(int tripId, int riderId){
+    public Trip addRiderToTripById(int tripId, int riderId, String riderOriginAddress, String riderDestAddress){
         //need to do a try/catch here
             //what if we try to add a rider but the trip is already full???
+
+        //find the trip we are adding the rider to
         Trip addRiderToThis = tripRepository.findById(tripId);
+        //find the rider we are adding to the trip
         User rider = riderRepository.findById(riderId);
+        //add the rider to the trip
         addRiderToThis.addRider(rider);
+
+        //create a riderStop
+        RiderStop riderStop = new RiderStop();
+        riderStop.setRiderId(riderId);
+        riderStop.setRiderOriginAddress(riderOriginAddress);
+        riderStop.setRiderDestAddress(riderDestAddress);
+        riderStop.setTripId(tripId);
+        riderStopRepository.save(riderStop);
+
         tripRepository.save(addRiderToThis);
         return tripRepository.findById(tripId);
     }
@@ -74,6 +92,8 @@ public class TripService {
         Trip removeRiderFromThis = tripRepository.findById(tripId);
         User rider = riderRepository.findById(riderId);
         removeRiderFromThis.removeRiderById(rider);
+
+        riderStopRepository.deleteByTripIdAndRiderId(tripId, riderId);
         tripRepository.save(removeRiderFromThis);
         return tripRepository.findById(tripId);
     }
