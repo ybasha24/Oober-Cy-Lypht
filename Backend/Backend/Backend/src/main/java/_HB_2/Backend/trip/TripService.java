@@ -94,6 +94,8 @@ public class TripService {
         Trip removeRiderFromThis = tripRepository.findById(tripId);
         User rider = riderRepository.findById(riderId);
         removeRiderFromThis.removeRiderById(rider);
+        removeRiderFromThis.removeRiderStop(riderId);
+//        RiderStop riderStop = riderStopRepository.findByTripIdAndRiderId(tripId, riderId);
         tripRepository.save(removeRiderFromThis);
         return tripRepository.findById(tripId);
     }

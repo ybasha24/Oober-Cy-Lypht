@@ -43,7 +43,7 @@ public class Trip {
     private User tripDriver;
 
     @OneToMany
-    @JoinColumn(name = "Rider_Stop_Id")
+    @JoinColumn(name = "Trip_Id")
     private Set<RiderStop> riderStops;
 
     @JsonIgnore
@@ -237,5 +237,13 @@ public class Trip {
 
     public void addRiderStop(RiderStop riderStop) {
         this.riderStops.add(riderStop);
+    }
+
+    public void removeRiderStop(int riderId) {
+        for(RiderStop riderStop: this.riderStops) {
+            if (riderStop.getRiderId() == riderId) {
+                this.riderStops.remove(riderStop);
+            }
+        }
     }
 }
