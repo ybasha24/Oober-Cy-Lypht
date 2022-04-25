@@ -63,8 +63,10 @@ public class TripController {
     @ApiOperation(value = "Add a rider to an existing trip", response = Trip.class)
     @PutMapping("/addRiderToTrip")
     Trip addRiderToTrip(@RequestParam int tripId,
-                          @RequestParam int riderId) {
-        return tripService.addRiderToTripById(tripId, riderId);
+                          @RequestParam int riderId,
+                        @RequestParam String riderOriginAddress,
+                        @RequestParam String riderDestAddress) {
+        return tripService.addRiderToTripById(tripId, riderId, riderOriginAddress, riderDestAddress);
     }
 
     @ApiOperation(value = "Remove a rider from a trip", response = Trip.class)

@@ -1,5 +1,6 @@
 package _HB_2.Backend.trip;
 
+import _HB_2.Backend.riderstop.RiderStop;
 import _HB_2.Backend.user.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -40,6 +41,10 @@ public class Trip {
     @ManyToOne
     @JoinColumn(name = "Driver_ID")
     private User tripDriver;
+
+    @OneToMany
+    @JoinColumn(name = "Rider_Stop_Id")
+    private Set<RiderStop> riderStops;
 
     @JsonIgnore
     @ManyToMany
