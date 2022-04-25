@@ -11,6 +11,8 @@ import com.example.myapplication.app.AppController;
 import com.example.myapplication.endpoints.Endpoints;
 import com.google.android.gms.location.FusedLocationProviderClient;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.LocationListener;
 
 import com.google.android.gms.location.LocationServices;
@@ -37,6 +39,7 @@ import com.example.myapplication.*;
 import org.json.JSONObject;
 
 import java.util.LinkedHashMap;
+import java.util.Locale;
 
 public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -66,8 +69,11 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
     private LinkedHashMap<String, String> destinations;
 
     private TextView driverInstructionsTV;
-    private String currentGoal;
-
+    private String currentGoalString;
+    private Address currentGoalAddress;
+    private Location currentGoalLocation;
+    private String currentGoalRider;
+    private Geocoder geocoder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +87,10 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         driverInstructionsTV = findViewById(R.id.driverInstructionsTV);
         origins = new LinkedHashMap<>();
         destinations = new LinkedHashMap<>();
+
+        geocoder = new Geocoder(this, Locale.getDefault());
+        currentGoalLocation = new Location("");
+
         setRiderLocations();
 
         Places.initialize(getApplicationContext(), GoogleMapsAPIKey);
@@ -93,13 +103,29 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
             public void onLocationChanged(Location location) {
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
-                Location currentGoalLocation = new Location(currentGoal);
+                try {
+                    currentGoalAddress = geocoder.getFromLocationName(currentGoalString, 1).get(0);
+                }catch(Exception e){}
+                Log.e("error", currentGoalString);
+                Log.e("error", currentGoalAddress.toString());
+                double goalLat = currentGoalAddress.getLatitude();
+                double goalLong = currentGoalAddress.getLongitude();
+
+                currentGoalLocation.setLatitude(goalLat);
+                currentGoalLocation.setLongitude(goalLong);
+
                 if(location.distanceTo(currentGoalLocation) < 100){
+                    if(origins.size() > 0){
+                        origins.remove(currentGoalRider);
+                    }
+                    else if(destinations.size() > 0){
+                        destinations.remove(currentGoalRider);
+                    }
                     setNextGoal();
                 }
 
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), DEFAULT_ZOOM));
-                Log.e("error", "location change" + latitude + " " + longitude);
+                Log.e("error", "location change: " + latitude + " " + longitude + " | dist : " + currentGoalLocation.toString());
             }
         };
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -206,12 +232,15 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
                     try {
                         for(int i = 0; i < response.length(); i++){
                             JSONObject obj = response.getJSONObject(i);
-                            int riderId = obj.getInt("id");
+                            int riderId = obj.getInt("riderId");
                             String origin = obj.getString("riderOriginAddress");
                             String destination = obj.getString("riderDestAddress");
                             origins.put(TripDetail.idToNameMap.get(riderId), origin);
                             destinations.put(TripDetail.idToNameMap.get(riderId), destination);
+                            setNextGoal();
                         }
+                        Log.e("error", origins.toString());
+                        Log.e("error", destinations.toString());
                     }
                     catch(Exception e){
                         Log.e("error", e.toString());
@@ -229,13 +258,15 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         if(origins.size() > 0) {
             for (String rider : origins.keySet()) {
                 driverInstructionsTV.setText("Pick up " + rider + " at " + origins.get(rider));
-                currentGoal = origins.get(rider);
+                currentGoalRider = rider;
+                currentGoalString = origins.get(rider);
             }
         }
         else if(destinations.size() > 0) {
             for (String rider : destinations.keySet()) {
                 driverInstructionsTV.setText("Drop off " + rider + " at " + destinations.get(rider));
-                currentGoal = destinations.get(rider);
+                currentGoalRider = rider;
+                currentGoalString = destinations.get(rider);
             }
         }
     }
