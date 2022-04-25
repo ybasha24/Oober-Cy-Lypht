@@ -53,7 +53,7 @@ public final class Endpoints {
     /**
      * where a rider searches for a trip based on start date
      */
-    public static final String RiderSearchTripUrl = "http://coms-309-030.class.las.iastate.edu:8080/trip/getTripsForRider?scheduledStartDate=";
+    public static final String RiderSearchTripUrl = "http://coms-309-030.class.las.iastate.edu:8080/trip/getPossibleTripsForRider?scheduledStartDate=";
 
     /**
      * where a rider is added to a trip
