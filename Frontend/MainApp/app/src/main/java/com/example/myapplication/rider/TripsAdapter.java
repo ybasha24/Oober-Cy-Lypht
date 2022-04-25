@@ -202,8 +202,8 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
     public void removeFromTrip(int position)
     {
         try {
-            String url = Endpoints.RemoveRiderFromTrip + list.getJSONObject(position).getInt("tripID")
-                    +"&riderID=" + list.getJSONObject(position).getInt("riderID");
+            String url = Endpoints.RemoveRiderFromTrip + list.getJSONObject(position).getInt("id")
+                    +"&riderId=" + MainActivity.accountObj.getInt("id");
             StringRequest req = new StringRequest(Request.Method.PUT, url,
                     response -> {
                         Intent i = new Intent(this.context, TripsList.class);
