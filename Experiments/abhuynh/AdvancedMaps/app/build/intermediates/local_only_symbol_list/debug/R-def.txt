@@ -1,0 +1,28 @@
+R_DEF: Internal format may change without notice
+local
+color black
+color purple_200
+color purple_500
+color purple_700
+color teal_200
+color teal_700
+color white
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+id map
+id option_get_place
+id trip_snippet
+id trip_title
+layout activity_driver_ongoing_trip
+layout activity_main
+layout activity_ongoing_trip_details
+menu current_place_menu
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+string default_info_snippet
+string default_info_title
+string option_get_place
+string pick_place
+string title_activity_maps
+style Theme.MyApplication

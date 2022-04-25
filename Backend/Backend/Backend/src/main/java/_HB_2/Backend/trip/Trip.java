@@ -1,5 +1,6 @@
 package _HB_2.Backend.trip;
 
+import _HB_2.Backend.riderstop.RiderStop;
 import _HB_2.Backend.user.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -40,6 +41,10 @@ public class Trip {
     @ManyToOne
     @JoinColumn(name = "Driver_ID")
     private User tripDriver;
+
+//    @OneToMany
+//    @JoinColumn(name = "Trip_Id")
+//    private Set<RiderStop> riderStops;
 
     @JsonIgnore
     @ManyToMany
@@ -229,4 +234,16 @@ public class Trip {
     public void setRatePerMin(double ratePerMin) {
         this.ratePerMin = ratePerMin;
     }
+
+//    public void addRiderStop(RiderStop riderStop) {
+//        this.riderStops.add(riderStop);
+//    }
+//
+//    public void removeRiderStop(int riderId) {
+//        for(RiderStop riderStop: this.riderStops) {
+//            if (riderStop.getRiderId() == riderId) {
+//                this.riderStops.remove(riderStop);
+//            }
+//        }
+//    }
 }

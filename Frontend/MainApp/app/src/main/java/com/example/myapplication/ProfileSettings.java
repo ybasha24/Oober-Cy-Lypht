@@ -54,7 +54,7 @@ public class ProfileSettings extends AppCompatActivity {
         state = findViewById(R.id.editTextState2);
         zip = findViewById(R.id.editTextZip2);
         email = findViewById(R.id.editTextEmail2);
-        profilePic = (ImageView) findViewById(R.id.profilePic);
+        profilePic = findViewById(R.id.profilePic);
 
         setPreviousDetails();
 

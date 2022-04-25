@@ -33,15 +33,15 @@ public class TripController {
         return t;
     }
 
-    @ApiOperation(value = "Enter a new trip, created by a rider", response = Trip.class)
-    @PostMapping("/createTripByRider")
-    Trip createTripByRider(
-            @RequestParam int riderId,
-            @RequestBody Trip trip){
-        Trip t = tripService.createTripByRider(riderId, trip);
-
-        return t;
-    }
+//    @ApiOperation(value = "Enter a new trip, created by a rider", response = Trip.class)
+//    @PostMapping("/createTripByRider")
+//    Trip createTripByRider(
+//            @RequestParam int riderId,
+//            @RequestBody Trip trip){
+//        Trip t = tripService.createTripByRider(riderId, trip);
+//
+//        return t;
+//    }
 
     @ApiOperation(value = "Retrieve a trip given its id", response = Trip.class)
     @GetMapping("/getTrip")
@@ -63,8 +63,10 @@ public class TripController {
     @ApiOperation(value = "Add a rider to an existing trip", response = Trip.class)
     @PutMapping("/addRiderToTrip")
     Trip addRiderToTrip(@RequestParam int tripId,
-                          @RequestParam int riderId) {
-        return tripService.addRiderToTripById(tripId, riderId);
+                          @RequestParam int riderId,
+                        @RequestParam String riderOriginAddress,
+                        @RequestParam String riderDestAddress) {
+        return tripService.addRiderToTripById(tripId, riderId, riderOriginAddress, riderDestAddress);
     }
 
     @ApiOperation(value = "Remove a rider from a trip", response = Trip.class)
@@ -120,7 +122,7 @@ public class TripController {
     }
 
     @ApiOperation(value = "Retrieve a list of trips for a rider given their input", response = Iterable.class)
-    @GetMapping("/getTripsForRider")
+    @GetMapping("/getPossibleTripsForRider")
     List<Trip> getTripsForRider(
             @RequestParam("scheduledStartDate")
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime scheduledStartDate,
@@ -138,5 +140,7 @@ public class TripController {
         tripService.deleteTripById(id);
         return "You have deleted trip " + id;
     }
+
+
 
 }

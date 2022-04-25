@@ -53,7 +53,7 @@ public final class Endpoints {
     /**
      * where a rider searches for a trip based on start date
      */
-    public static final String RiderSearchTripUrl = "http://coms-309-030.class.las.iastate.edu:8080/trip/getTripsForRider?scheduledStartDate=";
+    public static final String RiderSearchTripUrl = "http://coms-309-030.class.las.iastate.edu:8080/trip/getPossibleTripsForRider?scheduledStartDate=";
 
     /**
      * where a rider is added to a trip
@@ -79,4 +79,39 @@ public final class Endpoints {
      * gets user details
      */
     public static final String GetUserUrl = "http://coms-309-030.class.las.iastate.edu:8080/user/getUser?id=";
+
+    /**
+     * gets trips of a specific rider
+     */
+    public static final String GetRiderTrips = "http://coms-309-030.class.las.iastate.edu:8080/trip/getAllActiveTripsFromRiderId?riderId=";
+
+    /**
+     * removes a rider from trip
+     */
+    public static final String RemoveRiderFromTrip = "http://coms-309-030.class.las.iastate.edu:8080/trip/removeRiderFromTrip?tripId=";
+
+    /**
+     * where a rating is mader for a user
+     */
+    public static final String CreateRatingUrl = "http://coms-309-030.class.las.iastate.edu:8080/rating/createRating?raterId=";
+
+    /**
+     * where a driver reviews a rider
+     */
+    public static final String PostRiderReview = "http://coms-309-030.class.las.iastate.edu:8080/riderReview/postRiderReview?driverId=";
+
+    /**
+     * gets the rating for a user
+     */
+    public static final String GetUserRating = "http://coms-309-030.class.las.iastate.edu:8080/rating/getUserRating?userId=";
+
+    /**
+     * gets the reviews of a rider
+     */
+    public static final String GetRiderReviews = "http://coms-309-030.class.las.iastate.edu:8080/riderReview/getAllRiderReviewsByRiderId?riderId=";
+
+    /**
+     * gets the reviews of a rider
+     */
+    public static final String GetDriverReviews = "http://coms-309-030.class.las.iastate.edu:8080/driverReview/getAllDriverReviewsByDriverId?driverId=";
 }

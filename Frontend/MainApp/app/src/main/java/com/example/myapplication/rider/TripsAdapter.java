@@ -17,9 +17,13 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
 import com.example.myapplication.endpoints.Endpoints;
+import com.example.myapplication.rider.searchtrip.SearchTripPlace;
+import com.example.myapplication.rider.searchtrip.ViewTripInfo;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.time.LocalDateTime;
 
 /**
  * adapter class that shows all the trips of a rider
@@ -27,6 +31,7 @@ import org.json.JSONObject;
 public class TripsAdapter extends BaseAdapter implements ListAdapter {
     private JSONArray list;
     private Context context;
+    private String page;
 
     /**
      * creates a TripsAdapter object
@@ -34,13 +39,14 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
      * @param list    list of trips
      * @param context context to put the list on
      */
-    public TripsAdapter(JSONArray list, Context context) {
+    public TripsAdapter(JSONArray list, String page, Context context) {
         if (list == null) {
             this.list = null;
         } else {
             this.list = list;
         }
         this.context = context;
+        this.page = page;
     }
 
     /**
@@ -90,14 +96,14 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        if (list != null) {
+        if (list != null && page.equals("SearchPage")) {
             View view = convertView;
             if (view == null) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.trip_item2, null);
+                view = inflater.inflate(R.layout.rider_trip_item, null);
             }
 
-            TextView tv = view.findViewById(R.id.riderSearchText);
+            TextView tv = view.findViewById(R.id.riderListText);
             try {
                 JSONObject json = list.getJSONObject(position);
                 Log.e("Json logging", json.toString());
@@ -106,13 +112,45 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
             } catch (Exception e) {
             }
 
-            Button addToTripButton = view.findViewById(R.id.add_trip);
+            Button addToTripButton = view.findViewById(R.id.add_to_trip);
+            Button viewTripButton = view.findViewById(R.id.view_trip);
             addToTripButton.setOnClickListener(v -> {
                 addToTrip(position);
+            });
+            viewTripButton.setOnClickListener(v -> {
+                viewTrip(position);
+            });
+            return view;
+        }
+        else if(list != null && page.equals("TripsList"))
+        {
+            View view = convertView;
+            if (view == null) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = inflater.inflate(R.layout.rider_trip_info_item, null);
+            }
+
+            TextView tv = view.findViewById(R.id.riderListText);
+            try {
+                JSONObject json = list.getJSONObject(position);
+                Log.e("Json logging", json.toString());
+                tv.setText("From: " + json.getString("originAddress") + "\nTo: " + json.getString("destAddress") +
+                        "\nTime: " + json.getString("scheduledStartDate") + "\n->" + json.getString("scheduledEndDate"));
+            } catch (Exception e) {
+            }
+
+            Button removeFromTripButton = view.findViewById(R.id.delete_trip);
+            Button viewTripButton = view.findViewById(R.id.view_trip);
+            removeFromTripButton.setOnClickListener(v -> {
+                removeFromTrip(position);
+            });
+            viewTripButton.setOnClickListener(v -> {
+                viewTrip(position);
             });
             return view;
         }
         return null;
+
     }
 
     /**
@@ -122,7 +160,8 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
     public void addToTrip(int position) {
        try{
            String url = Endpoints.AddRiderToTripUrl+list.getJSONObject(position).getInt("id")+
-                   "&riderId="+MainActivity.accountObj.getInt("id");
+                   "&riderId="+MainActivity.accountObj.getInt("id") + "&riderOriginAddress=" +
+                   SearchTripPlace.originAddress + "&riderDestAddress=" + SearchTripPlace.destAddress;
            StringRequest req = new StringRequest(Request.Method.PUT, url,
                    response -> {
                        Intent i = new Intent(this.context, HomePage.class);
@@ -142,4 +181,48 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
        catch (Exception e){}
     }
 
+    public void viewTrip(int position){
+        try {
+            String startDate = list.getJSONObject(position).getString("scheduledStartDate");
+            String startLocation = list.getJSONObject(position).getString("originAddress");
+            String endLocation = list.getJSONObject(position).getString("destAddress");
+            String yourStart = com.example.myapplication.rider.searchtrip.SearchTripPlace.originAddress;
+            String yourEnd = com.example.myapplication.rider.searchtrip.SearchTripPlace.destAddress;
+            LocalDateTime startD = LocalDateTime.parse(startDate);
+            Intent i = new Intent(this.context, ViewTripInfo.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("startDate", startD);
+            i.putExtra("startLocation", startLocation);
+            i.putExtra("endLocation", endLocation);
+            i.putExtra("yourStart", yourStart);
+            i.putExtra("yourEnd", yourEnd);
+           // i.putExtra("prevPage", );
+            this.context.startActivity(i);
+        }catch (Exception e){Log.e("Error popup", "" + e);}
+    }
+
+    public void removeFromTrip(int position)
+    {
+        try {
+            String url = Endpoints.RemoveRiderFromTrip + list.getJSONObject(position).getInt("id")
+                    +"&riderId=" + MainActivity.accountObj.getInt("id");
+            StringRequest req = new StringRequest(Request.Method.PUT, url,
+                    response -> {
+                        Intent i = new Intent(this.context, TripsList.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        this.context.startActivity(i);
+                        Toast toast = Toast.makeText(this.context, "Successfully removed from trip", Toast.LENGTH_LONG);
+                        toast.show();
+                    },
+                    error -> {
+                        Log.e("trips error", error.toString());
+                        Toast toast = Toast.makeText(this.context, "Error adding trip", Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+            );
+            AppController.getInstance().addToRequestQueue(req, "string_req");
+
+        }
+        catch (Exception e) {}
+    }
 }
