@@ -127,7 +127,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
             View view = convertView;
             if (view == null) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.rider_trip_info_item, null);
+                view = inflater.inflate(R.layout.rider_trip_info_item, parent, false);
             }
 
             TextView tv = view.findViewById(R.id.riderListText);
@@ -141,12 +141,17 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
 
             Button removeFromTripButton = view.findViewById(R.id.delete_trip);
             Button viewTripButton = view.findViewById(R.id.view_trip);
+            Button chatWithDriverButton = view.findViewById(R.id.chatWithDriverButton);
             removeFromTripButton.setOnClickListener(v -> {
                 removeFromTrip(position);
             });
             viewTripButton.setOnClickListener(v -> {
                 viewTrip(position);
             });
+            chatWithDriverButton.setOnClickListener(v -> {
+                viewTrip(position);
+            });
+
             return view;
         }
         return null;
@@ -224,5 +229,11 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
 
         }
         catch (Exception e) {}
+    }
+
+    public void chat(int position){
+        Intent i = new Intent(this.context, Chat.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.context.startActivity(i);
     }
 }

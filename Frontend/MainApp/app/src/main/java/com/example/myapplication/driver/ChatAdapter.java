@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.driver;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,9 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import com.example.myapplication.Chat;
+import com.example.myapplication.R;
 
 import org.json.JSONArray;
 

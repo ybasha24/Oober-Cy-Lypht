@@ -107,7 +107,7 @@ public class TripDetail extends AppCompatActivity {
                     riderNames.put(name);
 //                    ridersTV.setText(prettyArrayListNames());
                     nameToIdMap.put(name, id);
-                    ridersListView.setAdapter(new com.example.myapplication.ChatAdapter(riderNames, getApplicationContext()));
+                    ridersListView.setAdapter(new ChatAdapter(riderNames, getApplicationContext()));
                 }
                 catch(Exception e){
                     Log.e("error", e.toString());
