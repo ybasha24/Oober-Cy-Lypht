@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".rider.RiderRegistrationPage">
+    tools:context=".rider.RegistrationPage">
 
     <TextView
         android:id="@+id/textView"
@@ -66,12 +66,12 @@
         app:layout_constraintVertical_bias="0.222" />
 
     <Button
-        android:id="@+id/findRideButton"
+        android:id="@+id/registerRiderButton"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="248dp"
         android:layout_height="59dp"
         android:backgroundTint="#D62929"
-        android:onClick="register"
+        android:onClick="registerRider"
         android:text="@string/app_Register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

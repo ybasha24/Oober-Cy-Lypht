@@ -6,11 +6,17 @@ import com.example.myapplication.endpoints.Endpoints;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.view.View;
 
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -19,8 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.myapplication.app.AppController;
-import com.example.myapplication.driver.HomePage;
-import com.example.myapplication.rider.RiderHomePage;
+import com.example.myapplication.rider.HomePage;
 
 /**
  * start page of the app; allows for signing in or for registering of an account
@@ -40,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
      */
     public boolean isLoggedIn;
 
+    private EditText usernameField;
+    private EditText passwordField;
+    private CheckBox checkbox;
+    private ProgressBar signInLoader;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,13 +59,21 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        usernameField = (EditText) findViewById(R.id.usernameInput);
+        passwordField = (EditText) findViewById(R.id.passwordInput);
+        checkbox = (CheckBox) findViewById(R.id.staySignedInCheckBox);
+        signInLoader = (ProgressBar) findViewById(R.id.signInLoader);
+        signInLoader.setVisibility(View.INVISIBLE);
+
+
         if(isLoggedIn){
             String email = prefs.getString("email", "");
             String password = prefs.getString("password", "");
+            usernameField.setText(email);
+            passwordField.setText(password);
+            checkbox.setChecked(true);
+            signInLoader.setVisibility(View.VISIBLE);
             signInRequest(email, password);
-        }
-        else{
-            setContentView(R.layout.activity_main);
         }
     }
 
@@ -71,26 +89,26 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * the user makes an account, either a driver or a rider
-     * @param view acitivty that is referencing this method
+     * @param view activity that is referencing this method
      */
     public void register(View view){
         Intent intent = new Intent(this, RegistrationOptions.class);
         startActivity(intent);
     }
 
-    public void signInRequest(String email, String password){
+    private void signInRequest(String email, String password){
         String url = Endpoints.LoginUrl + email + "&password=" + password;
-
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
-                response -> {
+            response -> {
                 try {
                     accountObj = response;
                     Intent intent = null;
                     if(!accountObj.isNull("firstName")){
-                        if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver"))
-                            intent = new Intent(this, HomePage.class);
+                        if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver")) {
+                            intent = new Intent(this, com.example.myapplication.driver.HomePage.class);
+                        }
                         else if (!accountObj.isNull("arider") && accountObj.getBoolean("arider"))
-                            intent = new Intent(this, RiderHomePage.class);
+                            intent = new Intent(this, HomePage.class);
                         else if (!(accountObj.isNull("anAdmin")) && accountObj.getBoolean("anAdmin"))
                             intent = new Intent(this, com.example.myapplication.admin.HomePage.class);
                         if(((CheckBox) findViewById(R.id.staySignedInCheckBox)).isChecked()){
@@ -113,4 +131,5 @@ public class MainActivity extends AppCompatActivity {
             error ->  runOnUiThread(()->Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG).show()));
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
     }
+
 }

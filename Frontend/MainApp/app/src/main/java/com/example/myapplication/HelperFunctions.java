@@ -1,6 +1,9 @@
 package com.example.myapplication;
 
+import android.net.Uri;
+import android.util.Log;
 import android.util.Patterns;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -92,4 +95,15 @@ public class HelperFunctions {
 
         return errorFlag;
     }
+
+    public static void setProfilePic(ImageView imageview){
+        try {
+            imageview.setImageURI(Uri.parse(MainActivity.accountObj.getString("profilePicture")));
+        }
+        catch(Exception e){
+            Log.e("error", e.toString());
+        }
+    }
+
+
 }

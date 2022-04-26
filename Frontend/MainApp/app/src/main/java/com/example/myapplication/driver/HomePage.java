@@ -1,27 +1,31 @@
 package com.example.myapplication.driver;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-
+import android.widget.ImageView;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.ProfileSettings;
 import com.example.myapplication.*;
 import com.example.myapplication.driver.createtrip.SelectTripTime;
-import com.example.myapplication.endpoints.OtherConstants;
+
 
 /**
  * home page of the driver
  */
 public class HomePage extends AppCompatActivity {
 
+    private ImageView profilePic;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_home_page);
+
+        profilePic = findViewById(R.id.driverProfilePic);
+        HelperFunctions.setProfilePic(profilePic);
     }
 
     /**
@@ -30,7 +34,6 @@ public class HomePage extends AppCompatActivity {
      */
     public void createRide(View view){
         Intent intent = new Intent(this, SelectTripTime.class);
-        OtherConstants.SearchTrip = false;
         startActivity(intent);
     }
 
@@ -40,7 +43,6 @@ public class HomePage extends AppCompatActivity {
      */
     public void viewCreatedRides(View view){
         Intent i = new Intent(this, TripsList.class);
-        OtherConstants.SearchTrip = false;
         startActivity(i);
     }
 
@@ -50,11 +52,6 @@ public class HomePage extends AppCompatActivity {
      */
     public void profileSettings(View view){
         Intent i = new Intent(this, ProfileSettings.class);
-        startActivity(i);
-    }
-
-    public void chat(View view){
-        Intent i = new Intent(this, ChatChooseUser.class);
         startActivity(i);
     }
 

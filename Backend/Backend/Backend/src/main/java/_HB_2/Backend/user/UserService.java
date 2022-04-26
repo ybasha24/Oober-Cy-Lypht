@@ -34,15 +34,15 @@ public class UserService {
     public User editUser(int id, User newUserInfo) {
 
         User newUser = userRepository.findById(id);
-        newUser.setFirstName(newUserInfo.firstName);
-        newUser.setLastName(newUserInfo.lastName);
-        newUser.setAddress(newUserInfo.address);
-        newUser.setCity(newUserInfo.city);
-        newUser.setState(newUserInfo.state);
-        newUser.setZip(newUserInfo.zip);
-        newUser.setEmail(newUserInfo.email);
-        newUser.setPhoneNumber(newUserInfo.phoneNumber);
-        newUser.setPassword(newUserInfo.password);
+        newUser.setFirstName(newUserInfo.getFirstName());
+        newUser.setLastName(newUserInfo.getLastName());
+        newUser.setAddress(newUserInfo.getAddress());
+        newUser.setCity(newUserInfo.getCity());
+        newUser.setState(newUserInfo.getState());
+        newUser.setZip(newUserInfo.getZip());
+        newUser.setEmail(newUserInfo.getEmail());
+        newUser.setPhoneNumber(newUserInfo.getPhoneNumber());
+        newUser.setPassword(newUserInfo.getPassword());
 
         userRepository.save(newUser);
 
@@ -54,5 +54,44 @@ public class UserService {
         list = userRepository.findAll();
         return list;
 
+    }
+
+    public String setProfilePicture(int userId, String path) {
+        User u =userRepository.findById(userId);
+        u.setProfilePicture(path);
+        userRepository.save(u);
+        return userRepository.findById(userId).getProfilePicture();
+    }
+
+    public String deleteProfilePicture(int userId) {
+        User u = userRepository.findById(userId);
+        u.setProfilePicture(null);
+        userRepository.save(u);
+
+        String picturePath = userRepository.findById(userId).getProfilePicture();
+        if (picturePath == null) {
+            return "You have successfully removed the profile picture for user# " + userId;
+        } else {
+            return "There was a problem removing the profile picture for user# " + userId;
+        }
+    }
+
+    public boolean banUserById(int userId) {
+        User u = userRepository.findById(userId);
+        u.setBanned(true);
+        userRepository.save(u);
+        return u.isBanned();
+    }
+
+    public boolean unBanUserById(int userId) {
+        User u = userRepository.findById(userId);
+        u.setBanned(false);
+        userRepository.save(u);
+        return u.isBanned();
+    }
+
+    public boolean getBannedStatusById(int userId) {
+        User u = userRepository.findById(userId);
+        return u.isBanned();
     }
 }

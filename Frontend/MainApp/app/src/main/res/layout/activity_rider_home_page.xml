@@ -4,10 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".rider.RiderHomePage">
+    tools:context=".rider.HomePage">
 
     <Button
-        android:id="@+id/findRideButton"
+        android:id="@+id/TripsListButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="viewTrips"
+        android:text="View Trips"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.415" />
+
+    <Button
+        android:id="@+id/registerRiderButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="searchRides"
@@ -16,10 +29,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.231" />
+        app:layout_constraintVertical_bias="0.327" />
+
+    <ImageView
+        android:id="@+id/riderProfilePic"
+        android:layout_width="151dp"
+        android:layout_height="128dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.026"
+        app:srcCompat="@android:drawable/screen_background_light" />
 
     <Button
-        android:id="@+id/profileButton"
+        android:id="@+id/profileUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="profileSettings"
@@ -29,7 +53,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.332" />
+        app:layout_constraintVertical_bias="0.499" />
 
     <Button
         android:id="@+id/signOutButton"
@@ -39,9 +63,22 @@
         android:text="Sign out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.423" />
+        app:layout_constraintVertical_bias="0.677" />
+        app:layout_constraintVertical_bias="0.622" />
+
+    <Button
+        android:id="@+id/riderReviewsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="viewReviews"
+        android:text="Reviews"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.585" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

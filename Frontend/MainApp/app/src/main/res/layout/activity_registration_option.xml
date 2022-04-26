@@ -6,20 +6,21 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/profileButton"
+        android:id="@+id/profileUpdate"
         android:layout_width="220dp"
         android:layout_height="90dp"
-        android:layout_marginTop="400dp"
 
         android:onClick="driverRegistration"
         android:text="@string/Driver_Registration"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.599" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/registeringRiderButton"
         android:layout_width="220dp"
         android:layout_height="90dp"
         android:layout_marginTop="240dp"

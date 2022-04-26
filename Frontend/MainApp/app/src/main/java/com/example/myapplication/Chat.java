@@ -55,7 +55,7 @@ public class Chat extends AppCompatActivity {
          */
 
         //replace with username
-        String w = "ws://10.0.2.2:8080/websocket/" + e1.getText().toString();
+        String w = "ws://10.0.2.2:8080/websocket/" + chosenUser;
 
         try {
             Log.d("Socket:", "Trying socket");
@@ -63,8 +63,8 @@ public class Chat extends AppCompatActivity {
                 @Override
                 public void onMessage(String message) {
                     Log.d("", "run() returned: " + message);
-                    String s = t1.getText().toString();
-                    t1.setText(s + "\nServer:" + message);
+//                    String s = t1.getText().toString();
+//                    t1.setText(s + "\nServer:" + message);
                 }
 
                 @Override

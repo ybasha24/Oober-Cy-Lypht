@@ -18,6 +18,7 @@
     <string name="Registration_Option">Are you registering as a Driver or Rider?</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="title_activity_select_ride_start">SelectRideStart</string>
+    <string name="title_activity_search_ride_start">SearchRideStart</string>
     <string name="response" />
 
 </resources>

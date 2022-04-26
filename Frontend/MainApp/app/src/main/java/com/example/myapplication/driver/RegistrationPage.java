@@ -13,12 +13,11 @@ import com.example.myapplication.MainActivity;
 import com.example.myapplication.app.AppController;
 import org.json.JSONException;
 import org.json.JSONObject;
-//import com.example.myapplication.*;
 import com.example.myapplication.endpoints.Endpoints;
 import com.example.myapplication.HelperFunctions;
 import com.example.myapplication.*;
 /**
- * where the driver registers for an accout
+ * where the driver registers for an account
  */
 public class RegistrationPage extends AppCompatActivity {
 
@@ -32,9 +31,9 @@ public class RegistrationPage extends AppCompatActivity {
     /**
      * takes the fields provided and creates a driver from them if valid
      * @param view the activity that is referencing this method
-     * @throws JSONException
+     * @throws JSONException throws JSON Exception
      */
-    public void register(View view) throws JSONException {
+    public void registerDriver(View view) throws JSONException {
         TextView tv = findViewById(R.id.regStatusTextView);
         String firstName = ((EditText) findViewById(R.id.editTextFirstName)).getText().toString();
         String lastName = ((EditText) findViewById(R.id.editTextLastName)).getText().toString();

@@ -5,24 +5,47 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
 
     <application
         android:name=".app.AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".ChatChooseUser"
-            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM" />
-
+        <activity
+            android:name=".rider.Reviews"
+            android:exported="false" />
+        <activity
+            android:name=".driver.completetrip.RateRider"
+            android:exported="false" />
+        <activity
+            android:name=".driver.completetrip.TripCompleted"
+            android:exported="false" />
+        <activity
+            android:name=".driver.TripDetail"
+            android:exported="false" />
+        <activity
+            android:name=".rider.TripsList"
+            android:parentActivityName=".rider.HomePage"
+            android:exported="false" />
+        <activity
+            android:name=".rider.searchtrip.ViewTripInfo"
+            android:exported="false"
+            android:parentActivityName=".rider.searchtrip.SearchPage" />
+        <activity
+            android:name=".rider.searchtrip.SearchPage"
+            android:exported="false" />
         <activity
             android:name=".admin.UsersList"
             android:exported="false" />
@@ -49,13 +72,23 @@
             android:name=".driver.createtrip.SelectTripTime"
             android:exported="false" />
         <activity
+            android:name=".rider.searchtrip.SearchTripPlace"
+            android:exported="false"
+            android:label="@string/title_activity_search_ride_start" />
+        <activity
+            android:name=".rider.searchtrip.SearchTripTime"
+            android:exported="false" />
+        <activity
             android:name=".ProfileSettings"
             android:exported="false" />
         <activity
-            android:name=".rider.RiderRegistrationPage"
+            android:name=".rider.RegistrationPage"
             android:exported="false" />
         <activity
-            android:name=".rider.RiderHomePage"
+            android:name=".driver.RegistrationPage"
+            android:exported="false" />
+        <activity
+            android:name=".rider.HomePage"
             android:exported="false" />
         <activity
             android:name=".RegistrationOptions"

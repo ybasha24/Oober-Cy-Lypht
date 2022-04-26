@@ -79,7 +79,7 @@ public class ChatAdapter extends BaseAdapter implements ListAdapter {
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.chat_user_item, null);
-            chatButton = view.findViewById(R.id.editTripButton);
+            chatButton = view.findViewById(R.id.chatButton);
             tv = view.findViewById(R.id.textView);
         }
 
@@ -102,33 +102,10 @@ public class ChatAdapter extends BaseAdapter implements ListAdapter {
      * @param position position of the trip in the list
      */
     public void chat(int position){
-        Intent i = new Intent(this.context, ChatChooseUser.class);
+        Intent i = new Intent(this.context, Chat.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.context.startActivity(i);
 
-//        try {
-//            Log.e("trips error", Endpoints.DeleteTripUrl + "?id=" + list.getJSONObject(position).getInt("id"));
-//
-//            StringRequest req = new StringRequest(Request.Method.DELETE, Endpoints.DeleteTripUrl + "?id=" + list.getJSONObject(position).getInt("id"),
-//                    response -> {
-//                        Toast toast = Toast.makeText(this.context, "Successfully deleted trip", Toast.LENGTH_LONG);
-//                        toast.show();
-//                        Log.d("success", response);
-//                        Intent i = new Intent(this.context, TripsList.class);
-//                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        this.context.startActivity(i);
-//                    },
-//                    error -> {
-//                        Log.e("error", error.toString());
-//                        Toast toast = Toast.makeText(this.context, "Error deleting trip", Toast.LENGTH_LONG);
-//                        toast.show();
-//                    }
-//            );
-//            AppController.getInstance().addToRequestQueue(req, "string_req");
-//        }
-//        catch(Exception e){
-//            Log.e("error", e.toString());
-//        }
     }
 
 

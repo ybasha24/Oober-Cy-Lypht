@@ -48,7 +48,7 @@ public class ConfirmTrip extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_confirm_ride);
+        setContentView(R.layout.activity_driver_confirm_trip);
 
         radiusSlider = findViewById(R.id.radiusSlider);
         radiusTV = findViewById(R.id.radiusTV);
@@ -102,7 +102,7 @@ public class ConfirmTrip extends AppCompatActivity {
     /**
      * Confirms ride details and creates ride through the remote server
      * @param v the activity that is referencing this method
-     * @throws JSONException
+     * @throws JSONException throws JSON Exception
      */
     public void confirm(View v) throws JSONException {
         JSONObject obj = new JSONObject();

@@ -16,14 +16,14 @@ public class Rating {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "Rater_id")
-    User rater;
+    private User rater;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "Rated_id")
-    User rated;
+    private User rated;
 
-    int rating;
+    private int rating;
 
     public Rating(){
 

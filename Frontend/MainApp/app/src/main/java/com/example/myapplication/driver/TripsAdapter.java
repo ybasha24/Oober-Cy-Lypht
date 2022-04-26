@@ -10,17 +10,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.*;
-import com.example.myapplication.app.AppController;
-import com.example.myapplication.driver.createtrip.SelectTripTime;
-import com.example.myapplication.endpoints.Endpoints;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -30,6 +23,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
     private JSONArray list;
     private Context context;
 
+    public static JSONObject currentJson;
     /**
      * creates a TripsAdapter object
      * @param list list of trips
@@ -91,7 +85,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
             View view = convertView;
             if (view == null) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.trip_item, null);
+                view = inflater.inflate(R.layout.driver_trip_item, null);
             }
 
             TextView tv = view.findViewById(R.id.textView);
@@ -104,54 +98,20 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
             } catch (Exception e) {
             }
 
-            Button editTripButton = view.findViewById(R.id.editTripButton);
-            Button deleteTripButton = view.findViewById(R.id.deleteTripButton);
-
-            editTripButton.setOnClickListener(v -> editTrip(position));
-
-            deleteTripButton.setOnClickListener(v -> deleteTrip(position));
+            Button viewTripButton = view.findViewById(R.id.driverRateRiderButton);
+            viewTripButton.setOnClickListener(v -> viewTrip(position));
 
             return view;
         }
         return null;
     }
 
-    /**
-     * edits a trip
-     * @param position position of the trip in the list
-     */
-    public void editTrip(int position){
-        Intent i = new Intent(this.context, SelectTripTime.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    public void viewTrip(int position){
         try {
-            i.putExtra("editing", true);
-            i.putExtra("tripId", list.getJSONObject(position).getInt("id"));
-        }
-        catch(JSONException e) {}
-        this.context.startActivity(i);
-    }
-
-    /**
-     * deletes a trip
-     * @param position position of the trip in the list
-     */
-    public void deleteTrip(int position){
-        try {
-            StringRequest req = new StringRequest(Request.Method.DELETE, Endpoints.DeleteTripUrl + "?id=" + list.getJSONObject(position).getInt("id"),
-                response -> {
-                    Intent i = new Intent(this.context, TripsList.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    this.context.startActivity(i);
-                    Toast toast = Toast.makeText(this.context, "Successfully deleted trip", Toast.LENGTH_LONG);
-                    toast.show();
-                },
-                error -> {
-                    Log.e("trips error", error.toString());
-                    Toast toast = Toast.makeText(this.context, "Error deleting trip", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-            );
-            AppController.getInstance().addToRequestQueue(req, "string_req");
+            currentJson = list.getJSONObject(position);
+            Intent i = new Intent(this.context, TripDetail.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.context.startActivity(i);
         }
         catch(Exception e){}
     }
