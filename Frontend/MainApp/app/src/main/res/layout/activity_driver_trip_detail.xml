@@ -16,7 +16,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.399"></ListView>
+        app:layout_constraintVertical_bias="0.499"></ListView>
 
     <Button
         android:id="@+id/editTripBtn"
@@ -110,6 +110,7 @@
         android:layout_width="337dp"
         android:layout_height="wrap_content"
         android:maxLines="10"
+        android:text="Riders"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

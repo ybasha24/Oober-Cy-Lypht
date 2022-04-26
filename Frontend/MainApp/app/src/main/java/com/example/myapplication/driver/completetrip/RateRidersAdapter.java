@@ -12,10 +12,8 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.driver.TripDetail;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  * adapter class that shows all the riders that a driver can rate
@@ -102,7 +100,7 @@ public class RateRidersAdapter extends BaseAdapter implements ListAdapter {
                 view = inflater.inflate(R.layout.driver_rate_rider_item, null);
             }
 
-            TextView tv = view.findViewById(R.id.textView);
+            TextView tv = view.findViewById(R.id.chatWithRiderTV);
             try {
                 tv.setText(list.getString(position));
             } catch (Exception e) { }

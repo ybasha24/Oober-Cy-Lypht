@@ -12,7 +12,6 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  * adapter class that shows all the trips ever made
@@ -78,15 +77,14 @@ public class ChatAdapter extends BaseAdapter implements ListAdapter {
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.chat_user_item, null);
-            chatButton = view.findViewById(R.id.chatButton);
-            tv = view.findViewById(R.id.textView);
+            view = inflater.inflate(R.layout.driver_rider_chat_item, null);
+            chatButton = view.findViewById(R.id.chatWithRiderButton);
+            tv = view.findViewById(R.id.chatWithRiderTV);
         }
 
         try {
-            JSONObject json = list.getJSONObject(position);
-            Log.d("json", json.toString());
-            tv.setText(json.getString("firstName") + " " + json.getString("lastName"));
+            String name = list.getString(position);
+            tv.setText(name);
         }
         catch(Exception e){
             Log.e("error", e.toString());

@@ -36,7 +36,7 @@ public class TripDetail extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trip_detail);
+        setContentView(R.layout.activity_driver_trip_detail);
         trip = TripsAdapter.currentJson;
         Log.e("error", trip.toString());
         riderNames = new JSONArray();
@@ -61,7 +61,6 @@ public class TripDetail extends AppCompatActivity {
             for(int i = 0; i < riderIdsArray.length(); i++) {
                 setRiderNames(riderIdsArray.getInt(i));
             }
-            ridersListView.setAdapter(new com.example.myapplication.ChatAdapter(trip.getJSONArray("riderIds"), getApplicationContext()));
         }
         catch(Exception e){
             Log.e("error", e.toString());
@@ -106,8 +105,9 @@ public class TripDetail extends AppCompatActivity {
                 try {
                     String name = response.getString("firstName") + " " + response.getString("lastName");
                     riderNames.put(name);
-                    ridersTV.setText(prettyArrayListNames());
+//                    ridersTV.setText(prettyArrayListNames());
                     nameToIdMap.put(name, id);
+                    ridersListView.setAdapter(new com.example.myapplication.ChatAdapter(riderNames, getApplicationContext()));
                 }
                 catch(Exception e){
                     Log.e("error", e.toString());
