@@ -15,6 +15,12 @@
             android:layout_height="match_parent"
             android:text="TextView" />
 
+        <Button
+            android:id="@+id/view_trip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trip Details" />
+
     </TableRow>
 
     <TableRow
@@ -36,12 +42,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Delete Trip" />
-
-        <Button
-            android:id="@+id/view_trip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Trip Details" />
 
     </TableRow>
 
