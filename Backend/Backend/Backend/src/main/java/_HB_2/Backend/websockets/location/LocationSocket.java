@@ -55,7 +55,7 @@ public class LocationSocket {
 
 
     @OnMessage
-    public void onMessage(Session session, String location) throws IOException {
+    public void onMessage(String location) throws IOException {
 
         // Handle new messages
         logger.info("Entered into Message: Got Message:" + location);
