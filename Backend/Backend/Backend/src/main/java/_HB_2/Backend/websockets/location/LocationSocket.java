@@ -47,9 +47,8 @@ public class LocationSocket {
         sessionUsernameMap.put(session, username);
         usernameSessionMap.put(username, session);
 
-        User enter = userService.getUserByEmail(username);
         // broadcast that new user joined
-        String message = "User: " + enter.getFirstName() + " " + enter.getLastName() + " has Joined The Ride";
+        String message = "You have joined the ride";
         broadcastDisconnect(message);
     }
 
@@ -79,7 +78,7 @@ public class LocationSocket {
         usernameSessionMap.remove(username);
 
         // broadcast that the user disconnected
-        String message = username + " Has Left The Ride";
+        String message = "You have left the ride";
         broadcastDisconnect(message);
     }
 
