@@ -49,7 +49,7 @@ public class LocationSocket {
 
         User enter = userService.getUserByEmail(username);
         // broadcast that new user joined
-        String message = "User: " + enter.getFirstName() + " " + enter.getLastName() + " has Joined the Chat";
+        String message = "User: " + enter.getFirstName() + " " + enter.getLastName() + " has Joined The Ride";
         broadcastDisconnect(message);
     }
 
@@ -79,7 +79,7 @@ public class LocationSocket {
         usernameSessionMap.remove(username);
 
         // broadcast that the user disconnected
-        String message = username + " disconnected";
+        String message = username + " Has Left The Ride";
         broadcastDisconnect(message);
     }
 
