@@ -50,7 +50,7 @@ public class LocationSocket {
         User enter = userService.getUserByEmail(username);
         // broadcast that new user joined
         String message = "User: " + enter.getFirstName() + " " + enter.getLastName() + " has Joined the Chat";
-        broadcast(message);
+        broadcastDisconnect(message);
     }
 
 
@@ -91,7 +91,21 @@ public class LocationSocket {
 
         // broadcast that the user disconnected
         String message = username + " disconnected";
-        broadcast(message);
+        broadcastDisconnect(message);
+    }
+
+    private void broadcastDisconnect(String message) {
+        sessionUsernameMap.forEach((session, username) -> {
+            try {
+                session.getBasicRemote().sendText(message);
+            }
+            catch (IOException e) {
+                logger.info("Exception: " + e.getMessage().toString());
+                e.printStackTrace();
+            }
+
+        });
+
     }
 
 
@@ -102,9 +116,12 @@ public class LocationSocket {
         throwable.printStackTrace();
     }
 
-    private void broadcast(String message) {
+    private void broadcast(Float lon, Float lat) {
         sessionUsernameMap.forEach((session, username) -> {
             try {
+                String longitude = String.valueOf(lon);
+                String latitude = String.valueOf(lat);
+                String message = longitude + " : " + latitude;
                 session.getBasicRemote().sendText(message);
             }
             catch (IOException e) {
