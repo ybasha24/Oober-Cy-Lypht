@@ -7,6 +7,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         RegisterTest.class,
+        SignInUserTest.class,
         DeleteUserTest.class
 })
 public class TestSuite {

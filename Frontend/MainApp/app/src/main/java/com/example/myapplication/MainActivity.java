@@ -98,11 +98,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void signInRequest(String email, String password){
         String url = Endpoints.LoginUrl + email + "&password=" + password;
-        if(email.equals("admin") && password.equals("admin"))
-        {
-            Intent intent = new Intent(this, com.example.myapplication.admin.HomePage.class);
-            startActivity(intent);
-        } //NEED TO REMOVE
+//        if(email.equals("admin") && password.equals("admin"))
+//        {
+//            Intent intent = new Intent(this, com.example.myapplication.admin.HomePage.class);
+//            startActivity(intent);
+//        } //NEED TO REMOVE
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
             response -> {
                 try {
