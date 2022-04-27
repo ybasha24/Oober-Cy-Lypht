@@ -21,26 +21,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller      // this is needed for this to be an endpoint to springboot
-@ServerEndpoint(value = "/chat/{username}")  // this is Websocket url
-public class ChatSocket {
-
-    // cannot autowire static directly (instead we do it by the below
-    // method
-    private static MessageRepository msgRepo;
+@ServerEndpoint(value = "/location/{username}")  // this is Websocket url
+public class LocationSocket {
 
     private static UserService userService;
-
-    /*
-     * Grabs the MessageRepository singleton from the Spring Application
-     * Context.  This works because of the @Controller annotation on this
-     * class and because the variable is declared as static.
-     * There are other ways to set this. However, this approach is
-     * easiest.
-     */
-    @Autowired
-    public void setMessageRepository(MessageRepository repo) {
-        msgRepo = repo;  // we are setting the static variable
-    }
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -51,7 +35,7 @@ public class ChatSocket {
     private static Map<Session, String> sessionUsernameMap = new Hashtable<>();
     private static Map<String, Session> usernameSessionMap = new Hashtable<>();
 
-    private final Logger logger = LoggerFactory.getLogger(ChatSocket.class);
+    private final Logger logger = LoggerFactory.getLogger(LocationSocket.class);
 
     @OnOpen
     public void onOpen(Session session, @PathParam("username") String username)
@@ -62,9 +46,6 @@ public class ChatSocket {
         // store connecting user information
         sessionUsernameMap.put(session, username);
         usernameSessionMap.put(username, session);
-
-        //Send chat history to the newly connected user
-        sendMessageToPArticularUser(username, getChatHistory());
 
         User enter = userService.getUserByEmail(username);
         // broadcast that new user joined
@@ -90,15 +71,11 @@ public class ChatSocket {
             sendMessageToPArticularUser(username, "[DM] " + username + ": " + message);
 
             User findUser = userService.getUserByEmail(username);
-            // Saving chat history to repository
-            msgRepo.save(new Message(findUser, userReceived, message));
 
         }
         else { // broadcast
             broadcast(username + ": " + message);
             User findUser = userService.getUserByEmail(username);
-            // Saving chat history to repository
-            msgRepo.save(new Message(findUser, message));
         }
     }
 
@@ -125,18 +102,6 @@ public class ChatSocket {
         throwable.printStackTrace();
     }
 
-
-    private void sendMessageToPArticularUser(String username, String message) {
-        try {
-            usernameSessionMap.get(username).getBasicRemote().sendText(message);
-        }
-        catch (IOException e) {
-            logger.info("Exception: " + e.getMessage().toString());
-            e.printStackTrace();
-        }
-    }
-
-
     private void broadcast(String message) {
         sessionUsernameMap.forEach((session, username) -> {
             try {
@@ -149,21 +114,6 @@ public class ChatSocket {
 
         });
 
-    }
-
-
-    // Gets the Chat history from the repository
-    private String getChatHistory() {
-        List<Message> messages = msgRepo.findAll();
-
-        // convert the list to a string
-        StringBuilder sb = new StringBuilder();
-        if(messages != null && messages.size() != 0) {
-            for (Message message : messages) {
-                sb.append(message.getUserSent() + ": " + message.getContent() + "\n");
-            }
-        }
-        return sb.toString();
     }
 
 }
