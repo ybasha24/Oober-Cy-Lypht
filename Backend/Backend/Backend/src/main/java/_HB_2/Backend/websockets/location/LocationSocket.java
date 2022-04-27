@@ -55,28 +55,17 @@ public class LocationSocket {
 
 
     @OnMessage
-    public void onMessage(Session session, String message) throws IOException {
+    public void onMessage(Session session, String location) throws IOException {
 
         // Handle new messages
-        logger.info("Entered into Message: Got Message:" + message);
-        String username = sessionUsernameMap.get(session);
+        logger.info("Entered into Message: Got Message:" + location);
 
-        // Direct message to a user using the format "@username <message>"
-        if (message.startsWith("@")) {
-            String destUsername = message.split(" ")[0].substring(1);
-            User userReceived = userService.getUserByEmail(destUsername);
+        String[] coords = location.split(":");
+        String lon = coords[0];
+        String lat = coords[1];
 
-            // send the message to the sender and receiver
-            sendMessageToPArticularUser(destUsername, "[DM] " + username + ": " + message);
-            sendMessageToPArticularUser(username, "[DM] " + username + ": " + message);
+        broadcast(lon, lat);
 
-            User findUser = userService.getUserByEmail(username);
-
-        }
-        else { // broadcast
-            broadcast(username + ": " + message);
-            User findUser = userService.getUserByEmail(username);
-        }
     }
 
 
@@ -116,12 +105,10 @@ public class LocationSocket {
         throwable.printStackTrace();
     }
 
-    private void broadcast(Float lon, Float lat) {
+    private void broadcast(String lon, String lat) {
         sessionUsernameMap.forEach((session, username) -> {
             try {
-                String longitude = String.valueOf(lon);
-                String latitude = String.valueOf(lat);
-                String message = longitude + " : " + latitude;
+                String message = lon + ":" + lat;
                 session.getBasicRemote().sendText(message);
             }
             catch (IOException e) {
