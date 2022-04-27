@@ -5,6 +5,7 @@ import _HB_2.Backend.reports.Reports;
 import _HB_2.Backend.review.driverReview.DriverReview;
 import _HB_2.Backend.review.riderReview.RiderReview;
 import _HB_2.Backend.trip.Trip;
+import _HB_2.Backend.websockets.chat.Message;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -62,6 +63,14 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "rated", orphanRemoval = true)
     private Set<Rating> rating;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "userSent", orphanRemoval = true)
+    private Set<Message> userSent;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "userReceived", orphanRemoval = true)
+    private Set<Message> userReceived;
 
     @JsonIgnore
     @OneToMany(mappedBy = "reporter", orphanRemoval = true)
