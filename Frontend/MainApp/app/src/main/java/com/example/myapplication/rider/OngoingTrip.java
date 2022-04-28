@@ -1,4 +1,4 @@
-package com.example.myapplication.driver;
+package com.example.myapplication.rider;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -76,18 +76,7 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
     private static final String KEY_LOCATION = "location";
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
-    private LocationManager locationManager;
-    private LocationListener locationListener;
 
-    private LinkedHashMap<String, String> origins;
-    private LinkedHashMap<String, String> destinations;
-
-    private TextView driverInstructionsTV;
-    private String currentGoalString;
-    private Address currentGoalAddress;
-    private Location currentGoalLocation;
-    private String currentGoalRider;
-    private Geocoder geocoder;
 
     private WebSocketClient cc;
 
@@ -101,14 +90,6 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         }
         setContentView(R.layout.activity_driver_ongoing_trip);
 
-        driverInstructionsTV = findViewById(R.id.driverInstructionsTV);
-        origins = new LinkedHashMap<>();
-        destinations = new LinkedHashMap<>();
-
-        geocoder = new Geocoder(this, Locale.getDefault());
-        currentGoalLocation = new Location("");
-
-        setRiderLocations();
         connect();
 
         Places.initialize(getApplicationContext(), OtherConstants.GoogleMapsAPIKey);
@@ -117,46 +98,6 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
-        //major class that details what is done when location changes
-        locationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
-
-                sendLocation(longitude, latitude);
-
-                try {
-                    currentGoalAddress = geocoder.getFromLocationName(currentGoalString, 1).get(0);
-                }catch(Exception e){}
-                Log.e("error", currentGoalString);
-                Log.e("error", currentGoalAddress.toString());
-                double goalLat = currentGoalAddress.getLatitude();
-                double goalLong = currentGoalAddress.getLongitude();
-
-                currentGoalLocation.setLatitude(goalLat);
-                currentGoalLocation.setLongitude(goalLong);
-
-                if(location.distanceTo(currentGoalLocation) < 100){
-                    if(origins.size() > 0){
-                        origins.remove(currentGoalRider);
-                    }
-                    else if(destinations.size() > 0){
-                        destinations.remove(currentGoalRider);
-                    }
-                    setNextGoal();
-                }
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), DEFAULT_ZOOM));
-                drawRoute(latitude, longitude, goalLat, goalLong);
-                Log.e("error", "location change: " + latitude + " " + longitude + " | dist : " + currentGoalLocation.toString());
-            }
-        };
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-
-        locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 10, locationListener);
     }
 
     @Override
@@ -246,80 +187,6 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
-    private void setRiderLocations(){
-        try{
-            JSONObject trip = TripsAdapter.currentTrip;
-            int tripId = trip.getInt("id");
-            String url = Endpoints.GetRiderStops + tripId;
-            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
-                response -> {
-                    try {
-                        for(int i = 0; i < response.length(); i++){
-                            JSONObject obj = response.getJSONObject(i);
-                            int riderId = obj.getInt("riderId");
-                            String origin = obj.getString("riderOriginAddress");
-                            String destination = obj.getString("riderDestAddress");
-                            origins.put(TripDetail.idToNameMap.get(riderId), origin);
-                            destinations.put(TripDetail.idToNameMap.get(riderId), destination);
-                            setNextGoal();
-                        }
-                        Log.e("error", origins.toString());
-                        Log.e("error", destinations.toString());
-                    }
-                    catch(Exception e){
-                        Log.e("error", e.toString());
-                    }
-                },
-                error -> { }
-            );
-            AppController.getInstance().addToRequestQueue(req, "json_array_req");
-
-            
-        }catch(Exception e){}
-    }
-
-    private void setNextGoal(){
-        if(origins.size() > 0) {
-            for (String rider : origins.keySet()) {
-                driverInstructionsTV.setText("Pick up " + rider + " at " + origins.get(rider));
-                currentGoalRider = rider;
-                currentGoalString = origins.get(rider);
-            }
-        }
-        else if(destinations.size() > 0) {
-            for (String rider : destinations.keySet()) {
-                driverInstructionsTV.setText("Drop off " + rider + " at " + destinations.get(rider));
-                currentGoalRider = rider;
-                currentGoalString = destinations.get(rider);
-            }
-        }
-    }
-
-    private void drawRoute(double currentOrigin, double currentLatitute, double goalOrigin, double goalLatitute){
-        String routeOrigin = "origin=" + currentOrigin + "," + currentLatitute;
-        String waypoints = "";
-        String routeDest = "destination=" + goalOrigin + "," + goalLatitute;
-        String params = routeOrigin + "&" + waypoints + "&"  + routeDest + "&key=" + OtherConstants.GoogleMapsAPIKey;
-        String url = Endpoints.GoogleMapsDirectionUrl + params;
-
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
-                response -> {
-                    try {
-                        JSONArray routeArray = response.getJSONArray("routes");
-                        JSONObject routes = routeArray.getJSONObject(0);
-                        JSONObject overviewPolylines = routes.getJSONObject("overview_polyline");
-                        String encodedString = overviewPolylines.getString("points");
-                        List<LatLng> list = PolyUtil.decode(encodedString);
-                        map.addPolyline(new PolylineOptions().addAll(list).width(12).color(Color.parseColor("#05b1fb")).geodesic(true));
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentOrigin, currentLatitute), 10.0f));
-                    }
-                    catch(JSONException e){ Log.e("Maps error", e.toString()); }
-                },
-                error -> Log.e("Maps error", error.toString())
-        );
-        AppController.getInstance().addToRequestQueue(req, "obj_req");
-    }
-
     private void connect(){
 
         Draft[] drafts = {new Draft_6455()};
@@ -329,7 +196,11 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
             Log.e("error", "Trying socket");
             cc = new WebSocketClient(new URI(url), drafts[0]) {
                 @Override
-                public void onMessage(String message) { }
+                public void onMessage(String message) {
+                    double latitude = 0;
+                    double longitude = 0;
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), DEFAULT_ZOOM));
+                }
                 @Override
                 public void onOpen(ServerHandshake handshake) { }
                 @Override
@@ -340,11 +211,5 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         } catch (URISyntaxException e) { Log.e("error:", e.getMessage()); }
         cc.connect();
     }
-
-    private void sendLocation(double a, double b){
-        //ideally add email
-        cc.send(a + ":" + b);
-    }
-
 
 }
