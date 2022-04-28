@@ -149,7 +149,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
                 viewTrip(position);
             });
             chatWithDriverButton.setOnClickListener(v -> {
-                viewTrip(position);
+                chat(position);
             });
 
             return view;
@@ -232,8 +232,12 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
     }
 
     public void chat(int position){
-        Intent i = new Intent(this.context, Chat.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        this.context.startActivity(i);
+        try {
+            String receiverEmail = list.getJSONObject(position).getString("driverId");
+            Intent i = new Intent(this.context, Chat.class);
+            i.putExtra("receiverEmail", receiverEmail);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.context.startActivity(i);
+        }catch(Exception e) {}
     }
 }

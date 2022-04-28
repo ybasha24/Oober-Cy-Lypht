@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,20 +21,24 @@ public class Chat extends AppCompatActivity {
 
     private Button sendButton;
     private WebSocketClient cc;
-    EditText message;
-    private String chosenUser;
+    private EditText message;
+    private TextView conversation;
+    private String receiverEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
         sendButton = findViewById(R.id.sendMessageButton);
         message = findViewById(R.id.messageEditText);
+        conversation = findViewById(R.id.conversationTV);
+        receiverEmail = getIntent().getStringExtra("receiverEmail");
         connect();
 
         sendButton.setOnClickListener(v -> {
             try {
-                cc.send("@" + chosenUser + " " + message.getText().toString());
+                cc.send("@" + receiverEmail + " " + message.getText().toString());
             } catch (Exception e) {
                 Log.d("ExceptionSendMessage:", e.getMessage().toString());
             }
@@ -55,16 +58,16 @@ public class Chat extends AppCompatActivity {
          */
 
         //replace with username
-        String w = "ws://10.0.2.2:8080/websocket/" + chosenUser;
+        String url = "ws://coms-309-030.class.las.iastate.edu:8080/chat/{" + MainActivity.accountEmail + "}";
 
         try {
             Log.d("Socket:", "Trying socket");
-            cc = new WebSocketClient(new URI(w), (Draft) drafts[0]) {
+            cc = new WebSocketClient(new URI(url), (Draft) drafts[0]) {
                 @Override
                 public void onMessage(String message) {
                     Log.d("", "run() returned: " + message);
-//                    String s = t1.getText().toString();
-//                    t1.setText(s + "\nServer:" + message);
+                    String s = conversation.getText().toString();
+                    conversation.setText(s + "\nServer:" + message);
                 }
 
                 @Override
