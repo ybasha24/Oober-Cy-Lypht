@@ -100,6 +100,7 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
     }
 
     @Override
@@ -126,6 +127,9 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
                     if (task.isSuccessful()) {
                         lastKnownLocation = task.getResult();
                         if (lastKnownLocation != null) {
+//                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+//                                    new LatLng(41.7711,
+//                                            -93.5822), DEFAULT_ZOOM));
                             map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                     new LatLng(lastKnownLocation.getLatitude(),
                                             lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
@@ -175,11 +179,12 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
             return;
         }
         try {
+            //Add your own circle based on driver's location
             if (locationPermissionGranted) {
-                map.setMyLocationEnabled(true);
+//                map.setMyLocationEnabled(true);
                 map.getUiSettings().setMyLocationButtonEnabled(true);
             } else {
-                map.setMyLocationEnabled(false);
+//                map.setMyLocationEnabled(false);
                 map.getUiSettings().setMyLocationButtonEnabled(false);
                 lastKnownLocation = null;
                 getLocationPermission();
