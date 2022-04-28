@@ -99,7 +99,7 @@ public class TripDetail extends AppCompatActivity {
 
     public void startTrip(View v){
         try {
-            StringRequest req = new StringRequest(Request.Method.GET, Endpoints.SetTripStartedUrl + trip.getInt("id"),
+            StringRequest req = new StringRequest(Request.Method.PUT, Endpoints.SetTripStartedUrl + trip.getInt("id"),
                 response -> {
                     Intent i = new Intent(this, OngoingTrip.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -107,7 +107,7 @@ public class TripDetail extends AppCompatActivity {
                 },
                 error -> Log.e("error", error.toString())
             );
-            AppController.getInstance().addToRequestQueue(req, "get_string_req");
+            AppController.getInstance().addToRequestQueue(req, "put_string_req");
         }
         catch(Exception e) {
             Log.e("error", e.toString());

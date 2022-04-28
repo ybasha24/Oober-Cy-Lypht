@@ -31,7 +31,10 @@ public class TripsList extends AppCompatActivity {
         setList();
     }
 
-    public void setList() {
+    /**
+     * sets list of trips of rider
+     */
+    private void setList() {
         try {
         String url = Endpoints.GetRiderTrips + MainActivity.accountObj.getInt("id");
             JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
@@ -39,6 +42,8 @@ public class TripsList extends AppCompatActivity {
                         Log.e("response", response.toString());
 
                         try {
+                            // Check if a trip has started by going through all trips.
+                            // If there is a trip that has started, immediately go to OngoingTrip.class activity
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject obj = response.getJSONObject(i);
                                 if (obj.getBoolean("hasStarted")){
