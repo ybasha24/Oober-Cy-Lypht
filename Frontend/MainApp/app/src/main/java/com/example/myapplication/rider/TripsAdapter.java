@@ -241,6 +241,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
                     response -> {
                         try {
                             String receiverEmail = response.getString("email");
+                            Log.e("error", receiverEmail);
                             Intent i = new Intent(this.context, Chat.class);
                             i.putExtra("receiverEmail", receiverEmail);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

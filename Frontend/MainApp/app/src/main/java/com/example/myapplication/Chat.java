@@ -45,9 +45,10 @@ public class Chat extends AppCompatActivity {
 
         sendButton.setOnClickListener(v -> {
             try {
+                Log.e("error", "trying to send message: " + "@" + receiverEmail + " " + message.getText().toString());
                 cc.send("@" + receiverEmail + " " + message.getText().toString());
             } catch (Exception e) {
-                Log.d("ExceptionSendMessage:", e.getMessage().toString());
+                Log.e("error:", e.getMessage());
             }
         });
     }
