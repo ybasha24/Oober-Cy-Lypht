@@ -79,6 +79,7 @@ public class ChatSocket {
         // Handle new messages
         logger.info("Entered into Message: Got Message:" + message);
         String username = sessionUsernameMap.get(session);
+        //get user first name based on email and then return that first name
 
         // Direct message to a user using the format "@username <message>"
         if (message.startsWith("@")) {
