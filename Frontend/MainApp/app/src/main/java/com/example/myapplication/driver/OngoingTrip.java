@@ -49,17 +49,25 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft;
+import org.java_websocket.drafts.Draft_6455;
+import org.java_websocket.handshake.ServerHandshake;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+
 public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = OngoingTrip.class.getSimpleName();
     public static final String GoogleMapsAPIKey = "AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM";
 
     private GoogleMap map;
-    private CameraPosition cameraPosition;
 
+    private CameraPosition cameraPosition;
     private PlacesClient placesClient;
 
-    private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
     private static final int DEFAULT_ZOOM = 15;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean locationPermissionGranted;
@@ -82,6 +90,9 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
     private Location currentGoalLocation;
     private String currentGoalRider;
     private Geocoder geocoder;
+
+    private WebSocketClient cc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,8 +111,9 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         currentGoalLocation = new Location("");
 
         setRiderLocations();
+        connect();
 
-        Places.initialize(getApplicationContext(), GoogleMapsAPIKey);
+        Places.initialize(getApplicationContext(), OtherConstants.GoogleMapsAPIKey);
         placesClient = Places.createClient(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -303,5 +315,32 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         );
         AppController.getInstance().addToRequestQueue(req, "obj_req");
     }
+
+    private void connect(){
+
+        Draft[] drafts = {new Draft_6455()};
+        String url = "ws://localhost:8080/location/{" + MainActivity.accountEmail + "}";
+
+        try {
+            Log.e("error", "Trying socket");
+            cc = new WebSocketClient(new URI(url), drafts[0]) {
+                @Override
+                public void onMessage(String message) { }
+                @Override
+                public void onOpen(ServerHandshake handshake) { }
+                @Override
+                public void onClose(int code, String reason, boolean remote) { }
+                @Override
+                public void onError(Exception e) { Log.e("error:", e.toString()); }
+            };
+        } catch (URISyntaxException e) { Log.e("error:", e.getMessage()); }
+        cc.connect();
+    }
+
+    private void sendLocation(double a, double b){
+        //ideally add email
+        cc.send(a + ":" + b);
+    }
+
 
 }
