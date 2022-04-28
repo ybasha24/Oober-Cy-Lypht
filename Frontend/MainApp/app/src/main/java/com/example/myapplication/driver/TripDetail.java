@@ -98,12 +98,21 @@ public class TripDetail extends AppCompatActivity {
     }
 
     public void startTrip(View v){
-        Intent i = new Intent(this, OngoingTrip.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        this.startActivity(i);
+        try {
+            StringRequest req = new StringRequest(Request.Method.GET, Endpoints.SetTripStartedUrl + trip.getInt("id"),
+                response -> {
+                    Intent i = new Intent(this, OngoingTrip.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    this.startActivity(i);
+                },
+                error -> Log.e("error", error.toString())
+            );
+            AppController.getInstance().addToRequestQueue(req, "get_string_req");
+        }
+        catch(Exception e) {
+            Log.e("error", e.toString());
+        }
     }
-
-
 
     private void setRiderNames(int id){
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, Endpoints.GetUserUrl + id, null,
@@ -121,7 +130,7 @@ public class TripDetail extends AppCompatActivity {
             },
             error -> { }
         );
-        AppController.getInstance().addToRequestQueue(req, "string_req");
+        AppController.getInstance().addToRequestQueue(req, "get_obj_req");
     }
 
 //    public void startTrip(View v){

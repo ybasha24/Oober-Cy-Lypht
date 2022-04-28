@@ -119,4 +119,10 @@ public final class Endpoints {
      * gets origin and destinations of riders in a trip
      */
     public static final String GetRiderStops = "http://coms-309-030.class.las.iastate.edu:8080/riderStop/getRiderStopsByTripId?tripId=";
+
+    /**
+     * starts a trip
+     */
+    public static final String SetTripStartedUrl = "http://coms-309-030.class.las.iastate.edu:8080/trip/setTripStarted?tripId=";
+
 }
