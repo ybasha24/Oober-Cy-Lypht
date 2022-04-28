@@ -90,8 +90,8 @@ public class ChatSocket {
             String newMessage = message.replace("@"+destUsername,"");
 
             // send the message to the sender and receiver
-            sendMessageToPArticularUser(destUsername, "[DM] " + sender.getFirstName() + ": " + newMessage);
-            sendMessageToPArticularUser(username, "[DM] " + sender.getFirstName() + ": " + newMessage);
+            sendMessageToPArticularUser(destUsername, sender.getFirstName() + ": " + newMessage);
+            sendMessageToPArticularUser(username, sender.getFirstName() + ": " + newMessage);
 
             User findUser = userService.getUserByEmail(username);
             // Saving chat history to repository
