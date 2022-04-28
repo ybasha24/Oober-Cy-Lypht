@@ -95,7 +95,7 @@ public class ChatSocket {
 
             User findUser = userService.getUserByEmail(username);
             // Saving chat history to repository
-            msgRepo.save(new Message(findUser, userReceived, message));
+            msgRepo.save(new Message(findUser, userReceived, newMessage));
 
         }
     }
