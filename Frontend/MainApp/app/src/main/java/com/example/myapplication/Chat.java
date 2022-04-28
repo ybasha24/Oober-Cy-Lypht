@@ -1,6 +1,9 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +25,7 @@ public class Chat extends AppCompatActivity {
     private Button sendButton;
     private WebSocketClient cc;
     private EditText message;
-    private TextView conversation;
+    TextView conversation;
     private String receiverEmail;
 
     @Override
@@ -33,6 +36,9 @@ public class Chat extends AppCompatActivity {
         sendButton = findViewById(R.id.sendMessageButton);
         message = findViewById(R.id.messageEditText);
         conversation = findViewById(R.id.conversationTV);
+        conversation.setMovementMethod(new ScrollingMovementMethod());
+
+
         receiverEmail = getIntent().getStringExtra("receiverEmail");
         connect();
 
@@ -60,8 +66,15 @@ public class Chat extends AppCompatActivity {
                 @Override
                 public void onMessage(String message) {
                     Log.e("error", "run() returned: " + message);
-                    String s = conversation.getText().toString();
-                    conversation.setText(s + "\nServer:" + message);
+
+                    new Handler(Looper.getMainLooper()).post(new Runnable(){
+                        @Override
+                        public void run() {
+                            String s = conversation.getText().toString();
+                            conversation.setText(s + "\n" + message);
+                        }
+                    });
+//                    conversation.setText(s + "\n" + message);
                 }
 
                 @Override

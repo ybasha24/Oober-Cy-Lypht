@@ -19,12 +19,12 @@
         android:layout_height="wrap_content"
         android:text="Send"
         android:id="@+id/sendMessageButton" />
+
     <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:textSize="20dp"
         android:id="@+id/conversationTV"
-        android:text="The Coversation will appear here:\n"
-        />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:textSize="10sp" />
 
 </LinearLayout>
