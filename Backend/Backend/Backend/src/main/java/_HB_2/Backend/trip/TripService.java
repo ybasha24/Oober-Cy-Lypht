@@ -244,4 +244,10 @@ public class TripService {
     public void deleteTripById(int id) {
         tripRepository.deleteById(id);
     }
+
+    public User getDriverInfoByTripId(int tripId) {
+        Trip t = tripRepository.findById(tripId);
+        User driver = t.getTripDriver();
+        return driver;
+    }
 }

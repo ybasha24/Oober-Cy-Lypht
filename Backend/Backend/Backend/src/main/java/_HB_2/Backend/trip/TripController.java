@@ -1,6 +1,7 @@
 package _HB_2.Backend.trip;
 
 import _HB_2.Backend.reports.Reports;
+import _HB_2.Backend.user.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,6 +140,12 @@ public class TripController {
             @RequestParam int id) {
         tripService.deleteTripById(id);
         return "You have deleted trip " + id;
+    }
+
+    @ApiOperation(value = "Get driver info by Trip Id", response = User.class)
+    @GetMapping("/getDriverInfoByTripId")
+    User getDriverInfoByTripId(@RequestParam int tripId) {
+        return tripService.getDriverInfoByTripId(tripId);
     }
 
 
