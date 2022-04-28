@@ -111,6 +111,8 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         setRiderLocations();
         connect();
 
+        Log.e("error", "connected");
+
         Places.initialize(getApplicationContext(), OtherConstants.GoogleMapsAPIKey);
         placesClient = Places.createClient(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -323,7 +325,7 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
     private void connect(){
 
         Draft[] drafts = {new Draft_6455()};
-        String url = "ws://localhost:8080/location/{" + MainActivity.accountEmail + "}";
+        String url = "ws://coms-309-030.class.las.iastate.edu:8080/location/%7B" + MainActivity.accountEmail + "%7D";
 
         try {
             Log.e("error", "Trying socket");

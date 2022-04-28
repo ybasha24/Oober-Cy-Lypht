@@ -35,6 +35,8 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -190,16 +192,25 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
     private void connect(){
 
         Draft[] drafts = {new Draft_6455()};
-        String url = "ws://localhost:8080/location/{" + MainActivity.accountEmail + "}";
+        String url = "ws://coms-309-030.class.las.iastate.edu:8080/location/%7B" + MainActivity.accountEmail + "%7D";
 
         try {
             Log.e("error", "Trying socket");
             cc = new WebSocketClient(new URI(url), drafts[0]) {
                 @Override
                 public void onMessage(String message) {
-                    double latitude = 0;
-                    double longitude = 0;
-                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), DEFAULT_ZOOM));
+                    new Handler(Looper.getMainLooper()).post(new Runnable(){
+                        @Override
+                        public void run() {
+                            try {
+                                String latlng[] = message.split(":");
+                                double lat = Double.parseDouble(latlng[0]);
+                                double longit = Double.parseDouble(latlng[1]);
+                                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, longit), DEFAULT_ZOOM));
+                            }catch(Exception e){}
+                        }
+                    });
+//                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), DEFAULT_ZOOM));
                 }
                 @Override
                 public void onOpen(ServerHandshake handshake) { }
