@@ -13,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
@@ -233,11 +235,29 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
 
     public void chat(int position){
         try {
-            String receiverEmail = list.getJSONObject(position).getString("driverId");
-            Intent i = new Intent(this.context, Chat.class);
-            i.putExtra("receiverEmail", receiverEmail);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            this.context.startActivity(i);
-        }catch(Exception e) {}
+            JSONObject obj = list.getJSONObject(position);
+            String url = Endpoints.GetTripDriverUrl + obj.getInt("id");
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
+                    response -> {
+                        try {
+                            String receiverEmail = response.getString("email");
+                            Intent i = new Intent(this.context, Chat.class);
+                            i.putExtra("receiverEmail", receiverEmail);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            this.context.startActivity(i);
+                        }
+                        catch(Exception e){
+                            Log.e("error", e.toString());
+                        }
+                    },
+                    error -> {
+                        Log.e("error", error.toString());
+                    }
+            );
+            AppController.getInstance().addToRequestQueue(req, "get_obj_req");
+        }
+        catch(Exception e) {
+            Log.e("error", e.toString());
+        }
     }
 }

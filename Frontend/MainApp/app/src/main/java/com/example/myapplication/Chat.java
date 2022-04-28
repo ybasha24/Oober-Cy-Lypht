@@ -51,13 +51,6 @@ public class Chat extends AppCompatActivity {
                 new Draft_6455()
         };
 
-        /**
-         * If running this on an android device, make sure it is on the same network as your
-         * computer, and change the ip address to that of your computer.
-         * If running on the emulator, you can use localhost.
-         */
-
-        //replace with username
         String url = "ws://coms-309-030.class.las.iastate.edu:8080/chat/{" + MainActivity.accountEmail + "}";
 
         try {
