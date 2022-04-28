@@ -17,7 +17,7 @@ import com.example.myapplication.R;
 import org.json.JSONArray;
 
 /**
- * adapter class that shows all the trips ever made
+ * adapter class that shows all the trips ever made by the driver
  */
 public class ChatAdapter extends BaseAdapter implements ListAdapter {
     private JSONArray list;
@@ -103,11 +103,18 @@ public class ChatAdapter extends BaseAdapter implements ListAdapter {
      * @param position position of the trip in the list
      */
     public void chat(int position){
-        Intent i = new Intent(this.context, Chat.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        this.context.startActivity(i);
+        Log.e("error", "trying to chat");
+        try {
+            String riderName = list.getString(position);
+            String receiverEmail = TripDetail.nameToEmailMap.get(riderName);
+            Log.e("error", riderName + " " + receiverEmail);
+            Intent intent = new Intent(this.context, Chat.class);
+            intent.putExtra("receiverEmail", receiverEmail);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.context.startActivity(intent);
+        }catch(Exception e){
+            Log.e("error", e.toString());
+        }
 
     }
-
-
 }

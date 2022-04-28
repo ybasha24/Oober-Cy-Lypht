@@ -36,6 +36,7 @@ public class Chat extends AppCompatActivity {
         receiverEmail = getIntent().getStringExtra("receiverEmail");
         connect();
 
+
         sendButton.setOnClickListener(v -> {
             try {
                 cc.send("@" + receiverEmail + " " + message.getText().toString());
@@ -51,36 +52,35 @@ public class Chat extends AppCompatActivity {
                 new Draft_6455()
         };
 
-        String url = "ws://coms-309-030.class.las.iastate.edu:8080/chat/{" + MainActivity.accountEmail + "}";
+        String url = "ws://coms-309-030.class.las.iastate.edu:8080/chat/%7B" + MainActivity.accountEmail + "%7D";
 
         try {
-            Log.d("Socket:", "Trying socket");
+            Log.e("error:", "Trying socket");
             cc = new WebSocketClient(new URI(url), (Draft) drafts[0]) {
                 @Override
                 public void onMessage(String message) {
-                    Log.d("", "run() returned: " + message);
+                    Log.e("error", "run() returned: " + message);
                     String s = conversation.getText().toString();
                     conversation.setText(s + "\nServer:" + message);
                 }
 
                 @Override
                 public void onOpen(ServerHandshake handshake) {
-                    Log.d("OPEN", "run() returned: " + "is connecting");
+                    Log.e("error", "run() returned: " + "is connecting");
                 }
 
                 @Override
                 public void onClose(int code, String reason, boolean remote) {
-                    Log.d("CLOSE", "onClose() returned: " + reason);
+                    Log.e("error", "onClose() returned: " + reason);
                 }
 
                 @Override
                 public void onError(Exception e) {
-                    Log.d("Exception:", e.toString());
+                    Log.e("error:", e.toString());
                 }
             };
         } catch (URISyntaxException e) {
-            Log.d("Exception:", e.getMessage().toString());
-            e.printStackTrace();
+            Log.e("error", e.toString());
         }
         cc.connect();
     }

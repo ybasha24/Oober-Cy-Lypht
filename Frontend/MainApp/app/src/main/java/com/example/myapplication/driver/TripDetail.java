@@ -30,6 +30,7 @@ public class TripDetail extends AppCompatActivity {
     JSONObject trip;
     public static JSONArray riderNames;
     public static HashMap<String, Integer> nameToIdMap;
+    public static HashMap<String, String> nameToEmailMap;
     TextView ridersTV;
     ListView ridersListView;
 
@@ -41,6 +42,7 @@ public class TripDetail extends AppCompatActivity {
         Log.e("error", trip.toString());
         riderNames = new JSONArray();
         nameToIdMap = new HashMap<>();
+        nameToEmailMap = new HashMap<>();
         setDetails();
     }
 
@@ -104,9 +106,10 @@ public class TripDetail extends AppCompatActivity {
             response -> {
                 try {
                     String name = response.getString("firstName") + " " + response.getString("lastName");
+                    String email = response.getString("email");
                     riderNames.put(name);
-//                    ridersTV.setText(prettyArrayListNames());
                     nameToIdMap.put(name, id);
+                    nameToEmailMap.put(name, email);
                     ridersListView.setAdapter(new ChatAdapter(riderNames, getApplicationContext()));
                 }
                 catch(Exception e){
