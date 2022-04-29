@@ -6,6 +6,7 @@ import _HB_2.Backend.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -47,7 +48,7 @@ public class Trip {
 //    private Set<RiderStop> riderStops;
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name = "Trip_Riders",
                 joinColumns = @JoinColumn(name = "trip_id"),
                 inverseJoinColumns = @JoinColumn(name = "rider_id"))
@@ -197,6 +198,7 @@ public class Trip {
         this.tripDriver = tripDriver;
     }
 
+    @Transactional
     public Set<User> getRiders() {
         return riders;
     }
