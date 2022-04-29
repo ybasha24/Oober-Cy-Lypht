@@ -103,7 +103,7 @@ public class UsersAdapter extends BaseAdapter implements ListAdapter {
             view = inflater.inflate(R.layout.admin_user_item, null);
             editUserButton = view.findViewById(R.id.editUserButton);
             deleteUserButton = view.findViewById(R.id.deleteUserButton);
-            tv = view.findViewById(R.id.textView);
+            tv = view.findViewById(R.id.chatWithRiderTV);
         }
 
         try {

@@ -24,7 +24,7 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_home_page);
 
-        profilePic = (ImageView) findViewById(R.id.driverProfilePic);
+        profilePic = findViewById(R.id.driverProfilePic);
         HelperFunctions.setProfilePic(profilePic);
     }
 
@@ -42,8 +42,8 @@ public class HomePage extends AppCompatActivity {
      * @param view the activity that is referencing this method
      */
     public void viewCreatedRides(View view){
-        Intent intent = new Intent(this, TripsList.class);
-        startActivity(intent);
+        Intent i = new Intent(this, TripsList.class);
+        startActivity(i);
     }
 
     /**
@@ -51,8 +51,8 @@ public class HomePage extends AppCompatActivity {
      * @param view the activity that is referencing this method
      */
     public void profileSettings(View view){
-        Intent intent = new Intent(this, ProfileSettings.class);
-        startActivity(intent);
+        Intent i = new Intent(this, ProfileSettings.class);
+        startActivity(i);
     }
 
     /**

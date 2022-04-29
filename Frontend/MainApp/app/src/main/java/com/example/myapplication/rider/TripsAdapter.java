@@ -13,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
@@ -127,7 +129,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
             View view = convertView;
             if (view == null) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.rider_trip_info_item, null);
+                view = inflater.inflate(R.layout.rider_trip_info_item, parent, false);
             }
 
             TextView tv = view.findViewById(R.id.riderListText);
@@ -141,12 +143,17 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
 
             Button removeFromTripButton = view.findViewById(R.id.delete_trip);
             Button viewTripButton = view.findViewById(R.id.view_trip);
+            Button chatWithDriverButton = view.findViewById(R.id.chatWithDriverButton);
             removeFromTripButton.setOnClickListener(v -> {
                 removeFromTrip(position);
             });
             viewTripButton.setOnClickListener(v -> {
                 viewTrip(position);
             });
+            chatWithDriverButton.setOnClickListener(v -> {
+                chat(position);
+            });
+
             return view;
         }
         return null;
@@ -224,5 +231,34 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
 
         }
         catch (Exception e) {}
+    }
+
+    public void chat(int position){
+        try {
+            JSONObject obj = list.getJSONObject(position);
+            String url = Endpoints.GetTripDriverUrl + obj.getInt("id");
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
+                    response -> {
+                        try {
+                            String receiverEmail = response.getString("email");
+                            Log.e("error", receiverEmail);
+                            Intent i = new Intent(this.context, Chat.class);
+                            i.putExtra("receiverEmail", receiverEmail);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            this.context.startActivity(i);
+                        }
+                        catch(Exception e){
+                            Log.e("error", e.toString());
+                        }
+                    },
+                    error -> {
+                        Log.e("error", error.toString());
+                    }
+            );
+            AppController.getInstance().addToRequestQueue(req, "get_obj_req");
+        }
+        catch(Exception e) {
+            Log.e("error", e.toString());
+        }
     }
 }

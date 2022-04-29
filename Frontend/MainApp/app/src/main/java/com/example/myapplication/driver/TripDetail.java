@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,16 +30,19 @@ public class TripDetail extends AppCompatActivity {
     JSONObject trip;
     public static JSONArray riderNames;
     public static HashMap<String, Integer> nameToIdMap;
+    public static HashMap<String, String> nameToEmailMap;
     TextView ridersTV;
+    ListView ridersListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trip_detail);
+        setContentView(R.layout.activity_driver_trip_detail);
         trip = TripsAdapter.currentJson;
         Log.e("error", trip.toString());
         riderNames = new JSONArray();
         nameToIdMap = new HashMap<>();
+        nameToEmailMap = new HashMap<>();
         setDetails();
     }
 
@@ -48,6 +52,7 @@ public class TripDetail extends AppCompatActivity {
         TextView start = findViewById(R.id.starttimeTV);
         TextView end = findViewById(R.id.endTimeTV);
         ridersTV = findViewById(R.id.ridersTV);
+        ridersListView = findViewById(R.id.ridersListView);
 
         try {
             origin.setText(trip.getString("originAddress"));
@@ -101,9 +106,11 @@ public class TripDetail extends AppCompatActivity {
             response -> {
                 try {
                     String name = response.getString("firstName") + " " + response.getString("lastName");
+                    String email = response.getString("email");
                     riderNames.put(name);
-                    ridersTV.setText(prettyArrayListNames());
                     nameToIdMap.put(name, id);
+                    nameToEmailMap.put(name, email);
+                    ridersListView.setAdapter(new ChatAdapter(riderNames, getApplicationContext()));
                 }
                 catch(Exception e){
                     Log.e("error", e.toString());
@@ -118,19 +125,5 @@ public class TripDetail extends AppCompatActivity {
         Intent i = new Intent(this, TripCompleted.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(i);
-    }
-
-    public String prettyArrayListNames(){
-        String names = "Riders:\n";
-
-        try {
-            for (int i = 0; i < riderNames.length(); i++) {
-                names += ("\t\t- " + riderNames.getString(i));
-                if(i < riderNames.length() - 1){
-                    names += "\n";
-                }
-            }
-        }catch(Exception e){}
-        return names;
     }
 }

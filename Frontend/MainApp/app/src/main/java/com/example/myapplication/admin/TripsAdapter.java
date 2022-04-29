@@ -91,7 +91,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
             view = inflater.inflate(R.layout.admin_trip_item, null);
             editTripButton = view.findViewById(R.id.adminEditTripButton);
             deleteTripButton = view.findViewById(R.id.driverRateRiderButton);
-            tv = view.findViewById(R.id.textView);
+            tv = view.findViewById(R.id.chatWithRiderTV);
         }
 
         try {

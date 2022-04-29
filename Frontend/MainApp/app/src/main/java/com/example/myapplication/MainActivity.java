@@ -36,6 +36,17 @@ public class MainActivity extends AppCompatActivity {
      * if signed in, this holds all the information about the user as an object
      */
     public static JSONObject accountObj;
+
+    /**
+     * if signed in, this is the user's email
+     */
+    public static String accountEmail;
+
+    /**
+     * if signed in, this is the user's id
+     */
+    public static int accountId;
+
     /**
      * holds the username and password of the account locally if "keep signed in" was checked upon log in
      */
@@ -59,10 +70,10 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        usernameField = (EditText) findViewById(R.id.usernameInput);
-        passwordField = (EditText) findViewById(R.id.passwordInput);
-        checkbox = (CheckBox) findViewById(R.id.staySignedInCheckBox);
-        signInLoader = (ProgressBar) findViewById(R.id.signInLoader);
+        usernameField = findViewById(R.id.usernameInput);
+        passwordField = findViewById(R.id.passwordInput);
+        checkbox = findViewById(R.id.staySignedInCheckBox);
+        signInLoader = findViewById(R.id.signInLoader);
         signInLoader.setVisibility(View.INVISIBLE);
 
 
@@ -102,6 +113,9 @@ public class MainActivity extends AppCompatActivity {
             response -> {
                 try {
                     accountObj = response;
+                    accountEmail = response.getString("email");
+                    accountId = response.getInt("id");
+
                     Intent intent = null;
                     if(!accountObj.isNull("firstName")){
                         if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver")) {

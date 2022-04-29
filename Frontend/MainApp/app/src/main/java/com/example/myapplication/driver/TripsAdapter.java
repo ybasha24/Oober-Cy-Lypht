@@ -88,7 +88,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
                 view = inflater.inflate(R.layout.driver_trip_item, null);
             }
 
-            TextView tv = view.findViewById(R.id.textView);
+            TextView tv = view.findViewById(R.id.chatWithRiderTV);
             try {
                 JSONObject json = list.getJSONObject(position);
                 Log.e("Json logging", json.toString());
