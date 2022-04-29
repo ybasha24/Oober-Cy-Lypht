@@ -90,9 +90,7 @@ public class LocationSocket {
             String email = rider.getEmail();
             sendMessageToPArticularUser(email,message);
         }
-
-
-
+        
     }
 
 
@@ -132,20 +130,7 @@ public class LocationSocket {
         throwable.printStackTrace();
     }
 
-//    private void broadcast(String lon, String lat) {
-//        sessionUsernameMap.forEach((session, username) -> {
-//            try {
-//                String message = lon + ":" + lat;
-//                session.getBasicRemote().sendText(message);
-//            }
-//            catch (IOException e) {
-//                logger.info("Exception: " + e.getMessage().toString());
-//                e.printStackTrace();
-//            }
-//
-//        });
-//
-//    }
+
 
     private void sendMessageToPArticularUser(String username, String message) {
         try {
