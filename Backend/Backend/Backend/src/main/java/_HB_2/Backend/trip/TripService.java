@@ -7,6 +7,7 @@ import _HB_2.Backend.driver.DriverRepository;
 import _HB_2.Backend.rider.RiderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -60,6 +61,7 @@ public class TripService {
         return trip;
     }
 
+    @Transactional
     public Trip getTripById(int id) {
         return tripRepository.findById(id);
 
