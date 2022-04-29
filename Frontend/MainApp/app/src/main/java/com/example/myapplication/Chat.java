@@ -3,7 +3,6 @@ package com.example.myapplication;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.Layout;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +12,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.myapplication.endpoints.Endpoints;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
@@ -28,9 +29,9 @@ public class Chat extends AppCompatActivity {
     private Button sendButton;
     private WebSocketClient cc;
     private EditText message;
-    TextView conversation;
+    private TextView conversation;
     private String receiverEmail;
-    ScrollView scrollView;
+    private ScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,47 +60,30 @@ public class Chat extends AppCompatActivity {
 
     private void connect(){
 
-        Draft[] drafts = {
-                new Draft_6455()
-        };
+        Draft[] drafts = {new Draft_6455()};
 
-        String url = "ws://coms-309-030.class.las.iastate.edu:8080/chat/%7B" + MainActivity.accountEmail + "%7D";
+        String url = Endpoints.ChatUrl + MainActivity.accountEmail + "%7D";
 
         try {
             Log.e("error:", "Trying socket");
-            cc = new WebSocketClient(new URI(url), (Draft) drafts[0]) {
+            cc = new WebSocketClient(new URI(url), drafts[0]) {
                 @Override
                 public void onMessage(String message) {
                     Log.e("error", "run() returned: " + message);
 
-                    new Handler(Looper.getMainLooper()).post(new Runnable(){
-                        @Override
-                        public void run() {
-                            scrollView.fullScroll(View.FOCUS_DOWN);
-                            String s = conversation.getText().toString();
-                            conversation.setText(s + "\n" + message);
-
-                            new Handler(Looper.getMainLooper()).post(new Runnable(){
-                                @Override
-                                public void run() {
-                                    scrollView.fullScroll(View.FOCUS_DOWN);
-                                }
-                            });
-                        }
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        scrollView.fullScroll(View.FOCUS_DOWN);
+                        String s = conversation.getText().toString();
+                        conversation.setText(s + "\n" + message);
+                        new Handler(Looper.getMainLooper()).post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
                     });
-
-
                 }
 
                 @Override
-                public void onOpen(ServerHandshake handshake) {
-                    Log.e("error", "run() returned: " + "is connecting");
-                }
+                public void onOpen(ServerHandshake handshake) { Log.e("error", "run() returned: " + "is connecting"); }
 
                 @Override
-                public void onClose(int code, String reason, boolean remote) {
-                    Log.e("error", "onClose() returned: " + reason);
-                }
+                public void onClose(int code, String reason, boolean remote) { Log.e("error", "onClose() returned: " + reason); }
 
                 @Override
                 public void onError(Exception e) {

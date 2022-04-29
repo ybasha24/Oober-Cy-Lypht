@@ -126,18 +126,4 @@ public class TripDetail extends AppCompatActivity {
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(i);
     }
-
-    public String prettyArrayListNames(){
-        String names = "Riders:\n";
-
-        try {
-            for (int i = 0; i < riderNames.length(); i++) {
-                names += ("\t\t- " + riderNames.getString(i));
-                if(i < riderNames.length() - 1){
-                    names += "\n";
-                }
-            }
-        }catch(Exception e){}
-        return names;
-    }
 }
