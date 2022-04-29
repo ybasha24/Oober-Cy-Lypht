@@ -3,10 +3,13 @@ package com.example.myapplication;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Layout;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +30,7 @@ public class Chat extends AppCompatActivity {
     private EditText message;
     TextView conversation;
     private String receiverEmail;
+    ScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +41,15 @@ public class Chat extends AppCompatActivity {
         message = findViewById(R.id.messageEditText);
         conversation = findViewById(R.id.conversationTV);
         conversation.setMovementMethod(new ScrollingMovementMethod());
+        scrollView = findViewById(R.id.chatScrollView);
 
 
         receiverEmail = getIntent().getStringExtra("receiverEmail");
         connect();
 
-
         sendButton.setOnClickListener(v -> {
             try {
-                Log.e("error", "trying to send message: " + "@" + receiverEmail + " " + message.getText().toString());
+                Log.e("error", "sending message: " + "@" + receiverEmail + " " + message.getText().toString());
                 cc.send("@" + receiverEmail + " " + message.getText().toString());
             } catch (Exception e) {
                 Log.e("error:", e.getMessage());
@@ -71,11 +75,20 @@ public class Chat extends AppCompatActivity {
                     new Handler(Looper.getMainLooper()).post(new Runnable(){
                         @Override
                         public void run() {
+                            scrollView.fullScroll(View.FOCUS_DOWN);
                             String s = conversation.getText().toString();
                             conversation.setText(s + "\n" + message);
+
+                            new Handler(Looper.getMainLooper()).post(new Runnable(){
+                                @Override
+                                public void run() {
+                                    scrollView.fullScroll(View.FOCUS_DOWN);
+                                }
+                            });
                         }
                     });
-//                    conversation.setText(s + "\n" + message);
+
+
                 }
 
                 @Override
@@ -98,8 +111,4 @@ public class Chat extends AppCompatActivity {
         }
         cc.connect();
     }
-
-
-
-
 }
