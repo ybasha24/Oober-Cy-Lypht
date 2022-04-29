@@ -23,8 +23,11 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
@@ -127,6 +130,7 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
                     if (task.isSuccessful()) {
                         lastKnownLocation = task.getResult();
                         if (lastKnownLocation != null) {
+//                            map.addCircle(new CircleOptions().center(new LatLng(41.7711, -93.5822)));
 //                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
 //                                    new LatLng(41.7711,
 //                                            -93.5822), DEFAULT_ZOOM));
@@ -181,10 +185,10 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         try {
             //Add your own circle based on driver's location
             if (locationPermissionGranted) {
-//                map.setMyLocationEnabled(true);
+                map.setMyLocationEnabled(true);
                 map.getUiSettings().setMyLocationButtonEnabled(true);
             } else {
-//                map.setMyLocationEnabled(false);
+                map.setMyLocationEnabled(false);
                 map.getUiSettings().setMyLocationButtonEnabled(false);
                 lastKnownLocation = null;
                 getLocationPermission();
@@ -211,11 +215,14 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
                                 String latlng[] = message.split(":");
                                 double lat = Double.parseDouble(latlng[0]);
                                 double longit = Double.parseDouble(latlng[1]);
+                                map.clear();
+                                map.addMarker(new MarkerOptions().position(new LatLng(lat, longit)).flat(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+                                //add way to indicate where/who driver is picking up and i am next to be dropped off
                                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, longit), DEFAULT_ZOOM));
+
                             }catch(Exception e){}
                         }
                     });
-//                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), DEFAULT_ZOOM));
                 }
                 @Override
                 public void onOpen(ServerHandshake handshake) { }
