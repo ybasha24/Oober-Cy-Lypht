@@ -19,6 +19,12 @@ public class MessageController {
 
     @Autowired
     MessageService messageService;
-    
+
+    @ApiOperation(value = "Get Message History for Two Users", response = Iterable.class)
+    @GetMapping("/getMessagesForPairOfUsers")
+    List<Message> getDriverInfoByTripId(@RequestParam int user1Id, int user2Id) {
+
+        return messageService.getMessagesForPairOfUser(user1Id, user2Id);
+    }
 
 }
