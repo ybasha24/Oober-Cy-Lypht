@@ -22,9 +22,16 @@ public class MessageController {
 
     @ApiOperation(value = "Get Message History for Two Users", response = Iterable.class)
     @GetMapping("/getMessagesForPairOfUsers")
-    List<Message> getDriverInfoByTripId(@RequestParam int user1Id, int user2Id) {
+    List<Message> getMessagesForPairOfUsers(@RequestParam int user1Id, int user2Id) {
 
         return messageService.getMessagesForPairOfUser(user1Id, user2Id);
+    }
+
+    @ApiOperation(value = "Delete Message History For Two Users", response = Iterable.class)
+    @GetMapping("/deleteMessagesForPairOfUsers")
+    List<Message> deleteMessagesForPairOfUsers(@RequestParam int user1Id, int user2Id) {
+
+        return messageService.deleteMessagesForPairOfUsers(user1Id, user2Id);
     }
 
 }

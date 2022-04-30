@@ -30,4 +30,18 @@ public class MessageService {
         }
         return list;
     }
+
+    public List<Message> deleteMessagesForPairOfUsers(int user1Id, int user2Id) {
+
+        //get all the messages for the two users and delete them
+        List<Message> list = getMessagesForPairOfUser(user1Id, user2Id);
+        for(Message message : list) {
+            Long id = message.getId();
+            messageRepository.deleteById(id);
+        }
+
+        //return the empty list of messages
+        list = getMessagesForPairOfUser(user1Id, user2Id);
+        return list;
+    }
 }
