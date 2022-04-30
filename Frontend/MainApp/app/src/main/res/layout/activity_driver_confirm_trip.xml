@@ -7,7 +7,7 @@
     tools:context=".driver.createtrip.ConfirmTrip">
 
     <Button
-        android:id="@+id/searchRideButton"
+        android:id="@+id/confirmRideButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="confirm"

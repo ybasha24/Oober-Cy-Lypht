@@ -6,7 +6,6 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.action.ViewActions.typeTextIntoFocusedView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
@@ -14,9 +13,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 
 import static org.hamcrest.Matchers.equalTo;
 
-import android.support.test.espresso.ViewInteraction;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TimePicker;
 
 import androidx.test.espresso.contrib.PickerActions;
@@ -27,16 +24,14 @@ import androidx.test.filters.LargeTest;
 
 import com.example.myapplication.driver.createtrip.ConfirmTrip;
 import com.example.myapplication.driver.createtrip.SelectTripPlace;
-import com.example.myapplication.rider.searchtrip.SearchTripPlace;
 
-import org.hamcrest.Matchers;
-import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
-import java.util.Calendar;
-
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class TripTestDriver {
@@ -49,6 +44,18 @@ public class TripTestDriver {
 
     @Rule
     public ActivityScenarioRule<MainActivity> mainActivityRule = new ActivityScenarioRule<>(MainActivity.class);
+
+    @Test
+    public void viewAndDeleteTrip()
+    {
+        onView(withId(R.id.usernameInput)).perform(typeText(email));
+        onView(withId(R.id.passwordInput)).perform(typeText(password));
+        onView(withId(R.id.passwordInput)).perform(closeSoftKeyboard());
+        onView(withId(R.id.loginButton)).perform(click());
+        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
+        onView(withId(R.id.driverRidesButton)).perform(click());
+        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
+    }
 
     @Test
     public void createTrip(){
@@ -69,13 +76,14 @@ public class TripTestDriver {
         SelectTripPlace.distance = 59.079;
         SelectTripPlace.durationHours = 0;
         SelectTripPlace.durationMinutes = 40;
-        onView(withId(R.id.SearchPageLocationButton)).perform(click());
-        //onView(withId())
-
-//        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
-//        onView(withId(R.id.autocomplete_origin_fragment)).perform(click());
-//        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
-//        onView(withId(android.R.id.button1)).perform(click());
-        //onView(withText("2229 Lincoln")).inRoot(withDecorView(Matchers.not(activity.window.decorView))).perform(click());
+        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
+        onView(withId(R.id.confirmRideLocationButton)).perform(click());
+        ConfirmTrip.radius = 10;
+        ConfirmTrip.maxRiders = 4;
+        ConfirmTrip.rate = 2.5;
+        onView(withId(R.id.confirmRideButton)).perform(click());
+        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
+        onView(withText("Sign out")).check(matches(isDisplayed()));
     }
+
 }

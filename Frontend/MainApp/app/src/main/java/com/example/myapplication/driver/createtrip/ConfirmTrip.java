@@ -30,9 +30,9 @@ public class ConfirmTrip extends AppCompatActivity {
     private LocalDateTime endDate;
     private String originAddress;
     private String destAddress;
-    private int radius = 0;
-    private int maxRiders = 0;
-    private double rate = 0;
+    public static int radius = 0;
+    public static int maxRiders = 0;
+    public static double rate = 0;
     private int durationHours;
     private int durationMinutes;
 
