@@ -15,6 +15,6 @@ public interface MessageRepository extends JpaRepository<Message, Long>{
 //    @Query(value = "SELECT m.* from trip t, trip_riders tr where tr.rider_id = ?1 and tr.trip_id = t.id and t.is_completed = false", nativeQuery = true)
 //    List<Trip> getAllUncompletedTripsByRiderId(int riderId);
 
-    @Query(value = "Select m from Messages where (user_sent_id = user1Id and user_received_id = user2Id) or  (user_sent_id = user2Id and user_received_id = user1Id)", nativeQuery = true)
+    @Query(value = "Select m from messages m where (user_sent_id = user1Id and user_received_id = user2Id) or  (user_sent_id = user2Id and user_received_id = user1Id)", nativeQuery = true)
     List<Message> findMessagesForPairOfUsers(int user1Id, int user2Id);
 }

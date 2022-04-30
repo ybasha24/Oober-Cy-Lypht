@@ -15,6 +15,19 @@ public class MessageService {
 
     public List<Message> getMessagesForPairOfUser(int user1Id, int user2Id) {
 
-        return messageRepository.findMessagesForPairOfUsers(user1Id, user2Id);
+//        List<Message> list = messageRepository.findMessagesForPairOfUsers(user1Id, user2Id);
+
+        List<Message> list = new ArrayList<>();
+        List<Message> allMessages = messageRepository.findAll();
+
+        for (Message message : allMessages){
+            if (message.getUserReceived() != null &&
+                    message.getUserSent() != null &&
+                    message.getUserReceived().getId() == user1Id && message.getUserSent().getId() == user2Id ||
+                    message.getUserReceived().getId() == user2Id && message.getUserSent().getId() == user1Id) {
+                list.add(message);
+            }
+        }
+        return list;
     }
 }
