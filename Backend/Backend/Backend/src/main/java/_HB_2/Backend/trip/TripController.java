@@ -145,6 +145,7 @@ public class TripController {
     @ApiOperation(value = "Get driver info by Trip Id", response = User.class)
     @GetMapping("/getDriverInfoByTripId")
     User getDriverInfoByTripId(@RequestParam int tripId) {
+
         return tripService.getDriverInfoByTripId(tripId);
     }
 
