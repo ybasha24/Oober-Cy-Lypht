@@ -88,7 +88,9 @@ public class LocationSocket {
         sendMessageToPArticularUser(username,message);
         for(User rider : ridersOnTrip) {
             String email = rider.getEmail();
-            sendMessageToPArticularUser(email,message);
+            if (sessionUsernameMap.containsValue(email)) {
+                sendMessageToPArticularUser(email, message);
+            }
         }
         
     }
