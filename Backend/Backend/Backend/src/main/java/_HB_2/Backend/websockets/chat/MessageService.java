@@ -21,10 +21,10 @@ public class MessageService {
         List<Message> allMessages = messageRepository.findAll();
 
         for (Message message : allMessages){
-            if (message.getUserReceived() != null &&
-                    message.getUserSent() != null &&
-                    message.getUserReceived().getId() == user1Id && message.getUserSent().getId() == user2Id ||
-                    message.getUserReceived().getId() == user2Id && message.getUserSent().getId() == user1Id) {
+            if ((message.getUserReceived() != null) &&
+                    (message.getUserSent() != null) &&
+                    (message.getUserReceived().getId() == user1Id && message.getUserSent().getId() == user2Id ||
+                    message.getUserReceived().getId() == user2Id && message.getUserSent().getId() == user1Id)) {
                 list.add(message);
             }
         }
