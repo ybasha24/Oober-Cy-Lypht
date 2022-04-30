@@ -325,7 +325,7 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
     private void connect(){
 
         Draft[] drafts = {new Draft_6455()};
-        String url = "ws://coms-309-030.class.las.iastate.edu:8080/location/%7B" + MainActivity.accountEmail + "%7D";
+        String url = "ws://coms-309-030.class.las.iastate.edu:8080/location/%7B" + MainActivity.accountEmail + "%7D" + "/%7B" + TripDetail.tripId + "%7D";
 
         try {
             Log.e("error", "Trying socket");

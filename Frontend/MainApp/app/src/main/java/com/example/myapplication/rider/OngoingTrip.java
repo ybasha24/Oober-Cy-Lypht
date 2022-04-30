@@ -9,6 +9,7 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.myapplication.app.AppController;
+import com.example.myapplication.driver.TripDetail;
 import com.example.myapplication.endpoints.Endpoints;
 import com.example.myapplication.endpoints.OtherConstants;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -201,8 +202,9 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
     private void connect(){
 
         Draft[] drafts = {new Draft_6455()};
-        String url = "ws://coms-309-030.class.las.iastate.edu:8080/location/%7B" + MainActivity.accountEmail + "%7D";
-
+        String url = "ws://coms-309-030.class.las.iastate.edu:8080/location/%7B" + MainActivity.accountEmail + "%7D" + "/%7B" + TripsList.tripId + "%7D";
+        Log.e("error", "" + TripsList.tripId);
+        Log.e("error", url);
         try {
             Log.e("error", "Trying socket");
             cc = new WebSocketClient(new URI(url), drafts[0]) {

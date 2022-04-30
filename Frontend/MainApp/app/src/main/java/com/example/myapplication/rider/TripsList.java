@@ -22,6 +22,8 @@ public class TripsList extends AppCompatActivity {
 
     private ListView listView;
     private JSONArray arr;
+    public static JSONObject trip;
+    public static int tripId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,11 @@ public class TripsList extends AppCompatActivity {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject obj = response.getJSONObject(i);
                                 if (obj.getBoolean("hasStarted")){
+                                    trip = obj;
+                                    try{
+                                        tripId = trip.getInt("id");
+                                    }catch(Exception e){}
+
                                     Intent intent = new Intent(this, OngoingTrip.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);

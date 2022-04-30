@@ -25,7 +25,8 @@ import java.util.HashMap;
 
 public class TripDetail extends AppCompatActivity {
 
-    JSONObject trip;
+    public static JSONObject trip;
+    public static int tripId;
     public static JSONArray riderNames;
     public static HashMap<String, Integer> nameToIdMap;
     public static HashMap<Integer, String> idToNameMap;
@@ -36,6 +37,9 @@ public class TripDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_trip_detail);
         trip = TripsAdapter.currentTrip;
+        try{
+            tripId = trip.getInt("id");
+        }catch(Exception e){}
         Log.e("error", trip.toString());
         riderNames = new JSONArray();
         nameToIdMap = new HashMap<>();
