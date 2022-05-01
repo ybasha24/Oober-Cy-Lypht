@@ -34,13 +34,10 @@ public class RiderStopControllerTest {
                     when().
                     get("/riderStop/getRiderStopsByTripId?tripId=24");
 
-
             // Check status code
             int statusCode = response.getStatusCode();
             assertEquals(200, statusCode);
-
-
-
+            
         }
 
 }
