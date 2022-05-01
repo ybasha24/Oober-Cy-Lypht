@@ -66,7 +66,7 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
     private PlacesClient placesClient;
 
     private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
-    private static final int DEFAULT_ZOOM = 15;
+    private static final float DEFAULT_ZOOM = 18.0f;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean locationPermissionGranted;
 
@@ -111,8 +111,6 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         setRiderLocations();
         connect();
 
-        Log.e("error", "connected");
-
         Places.initialize(getApplicationContext(), OtherConstants.GoogleMapsAPIKey);
         placesClient = Places.createClient(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -121,37 +119,39 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         //major class that details what is done when location changes
-        locationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
+        locationListener = location -> {
+            double currentLatitude = location.getLatitude();
+            double currentLongitude = location.getLongitude();
 
-                sendLocation(longitude, latitude);
+            sendLocation(currentLatitude, currentLongitude);
 
+            try {
+                currentGoalAddress = geocoder.getFromLocationName(currentGoalString, 1).get(0);
+            }catch(Exception e){}
+            double goalLatitude = currentGoalAddress.getLatitude();
+            double goalLongitude = currentGoalAddress.getLongitude();
+
+            currentGoalLocation.setLatitude(goalLatitude);
+            currentGoalLocation.setLongitude(goalLongitude);
+
+            if(location.distanceTo(currentGoalLocation) < 300){
+                if(origins.size() > 0){
+                    origins.remove(currentGoalRider);
+                }
+                else if(destinations.size() > 0) {
+                    destinations.remove(currentGoalRider);
+                }
+                setNextGoal();
                 try {
                     currentGoalAddress = geocoder.getFromLocationName(currentGoalString, 1).get(0);
                 }catch(Exception e){}
-                Log.e("error", currentGoalString);
-                Log.e("error", currentGoalAddress.toString());
-                double goalLat = currentGoalAddress.getLatitude();
-                double goalLong = currentGoalAddress.getLongitude();
+                goalLatitude = currentGoalAddress.getLatitude();
+                goalLongitude = currentGoalAddress.getLongitude();
 
-                currentGoalLocation.setLatitude(goalLat);
-                currentGoalLocation.setLongitude(goalLong);
-
-                if(location.distanceTo(currentGoalLocation) < 100){
-                    if(origins.size() > 0){
-                        origins.remove(currentGoalRider);
-                    }
-                    else if(destinations.size() > 0){
-                        destinations.remove(currentGoalRider);
-                    }
-                    setNextGoal();
-                }
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), DEFAULT_ZOOM));
-                drawRoute(latitude, longitude, goalLat, goalLong);
-                Log.e("error", "location change: " + latitude + " " + longitude + " | dist : " + currentGoalLocation.toString());
             }
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLatitude, currentLongitude), DEFAULT_ZOOM));
+            drawRoute(currentLatitude, currentLongitude, goalLatitude, goalLongitude);
+            Log.e("error", "location change: " + currentLatitude + " " + currentLongitude + " | dist : " + currentGoalLocation.toString());
         };
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -265,8 +265,6 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
                             destinations.put(TripDetail.idToNameMap.get(riderId), destination);
                             setNextGoal();
                         }
-                        Log.e("error", origins.toString());
-                        Log.e("error", destinations.toString());
                     }
                     catch(Exception e){
                         Log.e("error", e.toString());
@@ -281,6 +279,8 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void setNextGoal(){
+//        Log.e("error", "Next goal\nPick up: " + origins.toString() + "\nDrop off: " + destinations.toString());
+
         if(origins.size() > 0) {
             for (String rider : origins.keySet()) {
                 driverInstructionsTV.setText("Pick up " + rider + " at " + origins.get(rider));
@@ -295,12 +295,16 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
                 currentGoalString = destinations.get(rider);
             }
         }
+        else{
+            driverInstructionsTV.setText("Done.");
+        }
     }
 
-    private void drawRoute(double currentOrigin, double currentLatitute, double goalOrigin, double goalLatitute){
-        String routeOrigin = "origin=" + currentOrigin + "," + currentLatitute;
+    private void drawRoute(double currentLatitude, double currentLongitude, double goalLatitude, double goalLongitude){
+        Log.e("error", currentLatitude + " " + currentLongitude + " " + goalLatitude + " " + goalLongitude + " ");
+        String routeOrigin = "origin=" + currentLatitude + "," + currentLongitude;
         String waypoints = "";
-        String routeDest = "destination=" + goalOrigin + "," + goalLatitute;
+        String routeDest = "destination=" + goalLatitude + "," + goalLongitude;
         String params = routeOrigin + "&" + waypoints + "&"  + routeDest + "&key=" + OtherConstants.GoogleMapsAPIKey;
         String url = Endpoints.GoogleMapsDirectionUrl + params;
 
@@ -312,8 +316,9 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
                         JSONObject overviewPolylines = routes.getJSONObject("overview_polyline");
                         String encodedString = overviewPolylines.getString("points");
                         List<LatLng> list = PolyUtil.decode(encodedString);
+                        map.clear();
                         map.addPolyline(new PolylineOptions().addAll(list).width(12).color(Color.parseColor("#05b1fb")).geodesic(true));
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentOrigin, currentLatitute), 10.0f));
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLatitude, currentLongitude), DEFAULT_ZOOM));
                     }
                     catch(JSONException e){ Log.e("Maps error", e.toString()); }
                 },
@@ -326,7 +331,7 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
 
         Draft[] drafts = {new Draft_6455()};
         String url = "ws://coms-309-030.class.las.iastate.edu:8080/location/%7B" + MainActivity.accountEmail + "%7D" + "/%7B" + TripDetail.tripId + "%7D";
-
+        Log.e("error", url);
         try {
             Log.e("error", "Trying socket");
             cc = new WebSocketClient(new URI(url), drafts[0]) {
@@ -344,7 +349,6 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void sendLocation(double a, double b){
-        //ideally add email
         cc.send(a + ":" + b);
     }
 
