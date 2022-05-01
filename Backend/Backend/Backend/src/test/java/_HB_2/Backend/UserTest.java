@@ -2,9 +2,13 @@ package _HB_2.Backend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import _HB_2.Backend.driver.Driver;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import io.restassured.RestAssured;
@@ -21,6 +25,9 @@ public class UserTest {
     @LocalServerPort
     int port;
 
+    @Autowired
+    private TestRestTemplate restTemplate;
+
     @Before
     public void setUp() {
         RestAssured.port = port;
@@ -30,25 +37,19 @@ public class UserTest {
     @Test
     public void userTestsByMatt() {
         //send request and receive response
-        Response response = RestAssured.given().
-                header("Content-Type", "json").
-                header("charset","utf-8").
-                body("    \"firstName\": \"a\"," +
-                        "    \"lastName\": \"a\"," +
-                        "    \"address\": \"a\"," +
-                        "    \"city\" : \"a\"," +
-                        "    \"state\": \"a\"," +
-                        "    \"zip\": \"a\"," +
-                        "    \"email\": \"ThisIsMatt'sTest\"," +
-                        "    \"phoneNumber\": \"a\"," +
-                        "    \"password\": \"a\"").
-                when().
-                post("/driver/registerDriver");
+        Driver driver = new Driver("FirstNameTest",
+                                    "LastNameTest",
+                                    "AddressTest",
+                                    "CityTest",
+                                    "StateTest",
+                                    "ZipTest",
+                                    "EmailTest",
+                                    "PhoneNumberTest",
+                                    "PasswordTest");
+        ResponseEntity<String> responseEntity = this.restTemplate
+                .postForEntity("http://localhost:" + port + "/driver/registerDriver", driver, String.class);
+        assertEquals(200, responseEntity.getStatusCodeValue());
 
-
-        // Check status code
-        int statusCode = response.getStatusCode();
-        assertEquals(200, statusCode);
 
     }
 
