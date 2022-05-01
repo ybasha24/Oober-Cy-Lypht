@@ -37,7 +37,7 @@ public class RiderStopControllerTest {
             // Check status code
             int statusCode = response.getStatusCode();
             assertEquals(200, statusCode);
-            
+
         }
 
 }
