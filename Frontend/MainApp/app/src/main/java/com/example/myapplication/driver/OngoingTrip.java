@@ -13,6 +13,7 @@ import com.example.myapplication.endpoints.Endpoints;
 import com.example.myapplication.endpoints.OtherConstants;
 import com.google.android.gms.location.FusedLocationProviderClient;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
@@ -296,7 +297,11 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
             }
         }
         else{
+            Log.e("error", "finished all goals");
             driverInstructionsTV.setText("Done.");
+            Intent i = new Intent(this, com.example.myapplication.driver.completetrip.TripCompleted.class);
+            this.startActivity(i);
+            super.onBackPressed();
         }
     }
 
