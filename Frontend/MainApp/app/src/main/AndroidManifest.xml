@@ -19,10 +19,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".rider.OngoingTrip"
+            android:exported="false" />
+        <activity
+            android:name=".driver.OngoingTrip"
+            android:exported="false" />
+        <activity
+            android:name=".driver.TripDetail"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDmvxGMTWWetUCbk92F4hcCjNtY-0UhyaM" />
+
         <activity
             android:name=".rider.Reviews"
             android:exported="false" />
@@ -30,15 +40,15 @@
             android:name=".driver.completetrip.RateRider"
             android:exported="false" />
         <activity
+            android:name=".rider.completetrip.RateDriver"
+            android:exported="false" />
+        <activity
             android:name=".driver.completetrip.TripCompleted"
             android:exported="false" />
         <activity
-            android:name=".driver.TripDetail"
-            android:exported="false" />
-        <activity
             android:name=".rider.TripsList"
-            android:parentActivityName=".rider.HomePage"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".rider.HomePage" />
         <activity
             android:name=".rider.searchtrip.ViewTripInfo"
             android:exported="false"

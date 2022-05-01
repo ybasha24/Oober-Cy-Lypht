@@ -15,7 +15,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
-import com.example.myapplication.driver.completetrip.TripCompleted;
 import com.example.myapplication.driver.createtrip.SelectTripTime;
 import com.example.myapplication.endpoints.Endpoints;
 
@@ -27,10 +26,12 @@ import java.util.HashMap;
 
 public class TripDetail extends AppCompatActivity {
 
-    JSONObject trip;
+    public static JSONObject trip;
+    public static int tripId;
     public static JSONArray riderNames;
     public static HashMap<String, Integer> nameToIdMap;
     public static HashMap<String, String> nameToEmailMap;
+    public static HashMap<Integer, String> idToNameMap;
     TextView ridersTV;
     ListView ridersListView;
 
@@ -38,11 +39,14 @@ public class TripDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_trip_detail);
-        trip = TripsAdapter.currentJson;
+        trip = TripsAdapter.currentTrip;
+        try{
+            tripId = trip.getInt("id");
+        }catch(Exception e){}
         Log.e("error", trip.toString());
         riderNames = new JSONArray();
         nameToIdMap = new HashMap<>();
-        nameToEmailMap = new HashMap<>();
+        idToNameMap = new HashMap<>();
         setDetails();
     }
 
@@ -101,7 +105,24 @@ public class TripDetail extends AppCompatActivity {
         catch(Exception e){}
     }
 
-    public void setRiderNames(int id){
+    public void startTrip(View v){
+        try {
+            StringRequest req = new StringRequest(Request.Method.PUT, Endpoints.SetTripStartedUrl + trip.getInt("id"),
+                response -> {
+                    Intent i = new Intent(this, OngoingTrip.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    this.startActivity(i);
+                },
+                error -> Log.e("error", error.toString())
+            );
+            AppController.getInstance().addToRequestQueue(req, "put_string_req");
+        }
+        catch(Exception e) {
+            Log.e("error", e.toString());
+        }
+    }
+
+    private void setRiderNames(int id){
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, Endpoints.GetUserUrl + id, null,
             response -> {
                 try {
@@ -109,6 +130,7 @@ public class TripDetail extends AppCompatActivity {
                     String email = response.getString("email");
                     riderNames.put(name);
                     nameToIdMap.put(name, id);
+                    idToNameMap.put(id, name);
                     nameToEmailMap.put(name, email);
                     ridersListView.setAdapter(new ChatAdapter(riderNames, getApplicationContext()));
                 }
@@ -118,12 +140,6 @@ public class TripDetail extends AppCompatActivity {
             },
             error -> { }
         );
-        AppController.getInstance().addToRequestQueue(req, "string_req");
-    }
-
-    public void startTrip(View v){
-        Intent i = new Intent(this, TripCompleted.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        this.startActivity(i);
+        AppController.getInstance().addToRequestQueue(req, "get_obj_req");
     }
 }

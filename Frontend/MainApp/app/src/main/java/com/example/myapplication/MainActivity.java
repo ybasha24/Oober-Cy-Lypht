@@ -115,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
                     accountObj = response;
                     accountEmail = response.getString("email");
                     accountId = response.getInt("id");
-
                     Intent intent = null;
                     if(!accountObj.isNull("firstName")){
                         if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver")) {
