@@ -31,11 +31,8 @@ public class RiderStopControllerTest {
         public void getRiderStopsByTripId() {
             //send request and receive response
             Response response = RestAssured.given().
-                    header("Content-Type", "text/plain").
-                    header("charset","utf-8").
-                    body("hello").
                     when().
-                    post("/riderStop/getRiderStopsByTripId");
+                    get("/riderStop/getRiderStopsByTripId?tripId=24");
 
 
             // Check status code
