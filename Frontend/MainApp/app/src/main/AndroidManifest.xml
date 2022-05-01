@@ -40,6 +40,9 @@
             android:name=".driver.completetrip.RateRider"
             android:exported="false" />
         <activity
+            android:name=".rider.completetrip.RateDriver"
+            android:exported="false" />
+        <activity
             android:name=".driver.completetrip.TripCompleted"
             android:exported="false" />
         <activity

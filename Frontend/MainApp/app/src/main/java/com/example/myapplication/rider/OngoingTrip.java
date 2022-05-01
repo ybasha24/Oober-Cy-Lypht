@@ -7,14 +7,12 @@ import androidx.core.content.ContextCompat;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.myapplication.app.AppController;
-import com.example.myapplication.driver.TripDetail;
 import com.example.myapplication.endpoints.Endpoints;
 import com.example.myapplication.endpoints.OtherConstants;
 import com.google.android.gms.location.FusedLocationProviderClient;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationListener;
@@ -26,10 +24,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
@@ -42,17 +38,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.example.myapplication.*;
-import com.google.maps.android.PolyUtil;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 
 import org.java_websocket.client.WebSocketClient;
@@ -72,7 +62,7 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
     private PlacesClient placesClient;
 
     private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
-    private static final int DEFAULT_ZOOM = 15;
+    private static final float DEFAULT_ZOOM = 18.0f;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean locationPermissionGranted;
 
@@ -82,9 +72,19 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
     private static final String KEY_LOCATION = "location";
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
-
+    private LocationManager locationManager;
+    private LocationListener locationListener;
 
     private WebSocketClient cc;
+
+    private String myOriginString;
+    private Location myOriginLocation;
+    private String myDestinationString;
+    private Location myDestinationLocation;
+    private Geocoder geocoder;
+    private boolean trackDriverBoolean;
+
+    private Location driverLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +96,13 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         }
         setContentView(R.layout.activity_driver_ongoing_trip);
 
+        myOriginLocation = new Location("");
+        myDestinationLocation = new Location("");
+        driverLocation = new Location("");
+        geocoder = new Geocoder(this, Locale.getDefault());
+        trackDriverBoolean = true;
+
+        getMyStops();
         connect();
 
         Places.initialize(getApplicationContext(), OtherConstants.GoogleMapsAPIKey);
@@ -105,6 +112,25 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
+        locationListener = location -> {
+            Log.e("error", location.toString());
+
+            // We have arrived
+            if(location.distanceTo(myDestinationLocation) < 300){
+                Log.e("error", "arrived at location");
+                Intent i = new Intent(this, com.example.myapplication.rider.completetrip.RateDriver.class);
+                this.startActivity(i);
+                super.onBackPressed();
+            }
+            // Update camera if I move
+            else {
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), DEFAULT_ZOOM));
+                Log.e("error", "location change: " + location.getLatitude() + " " + location.getLongitude() + " | dist : " + myDestinationLocation.toString());
+            }
+        };
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) { return; }
+        locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 10, locationListener);
     }
 
     @Override
@@ -131,16 +157,11 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
                     if (task.isSuccessful()) {
                         lastKnownLocation = task.getResult();
                         if (lastKnownLocation != null) {
-//                            map.addCircle(new CircleOptions().center(new LatLng(41.7711, -93.5822)));
-//                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-//                                    new LatLng(41.7711,
-//                                            -93.5822), DEFAULT_ZOOM));
                             map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                     new LatLng(lastKnownLocation.getLatitude(),
                                             lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
                         }
                     } else {
-                        Log.e("error", "Current location is null. Using defaults.");
                         Log.e("error", "Exception: %s", task.getException());
                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
                         map.getUiSettings().setMyLocationButtonEnabled(false);
@@ -184,7 +205,6 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
             return;
         }
         try {
-            //Add your own circle based on driver's location
             if (locationPermissionGranted) {
                 map.setMyLocationEnabled(true);
                 map.getUiSettings().setMyLocationButtonEnabled(true);
@@ -210,21 +230,29 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
             cc = new WebSocketClient(new URI(url), drafts[0]) {
                 @Override
                 public void onMessage(String message) {
-                    new Handler(Looper.getMainLooper()).post(new Runnable(){
-                        @Override
-                        public void run() {
+                    if(trackDriverBoolean) {
+                        new Handler(Looper.getMainLooper()).post(() -> {
                             try {
                                 String latlng[] = message.split(":");
-                                double lat = Double.parseDouble(latlng[0]);
-                                double longit = Double.parseDouble(latlng[1]);
+                                double latitude = Double.parseDouble(latlng[0]);
+                                double longititude = Double.parseDouble(latlng[1]);
                                 map.clear();
-                                map.addMarker(new MarkerOptions().position(new LatLng(lat, longit)).flat(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
-                                //add way to indicate where/who driver is picking up and i am next to be dropped off
-                                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, longit), DEFAULT_ZOOM));
 
-                            }catch(Exception e){}
-                        }
-                    });
+                                Log.e("error", "driver location update");
+                                map.addMarker(new MarkerOptions().position(new LatLng(latitude, longititude)).flat(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+                                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longititude), DEFAULT_ZOOM));
+
+                                Address driverAddress = geocoder.getFromLocation(latitude, longititude, 1).get(0);
+                                driverLocation.setLatitude(driverAddress.getLatitude());
+                                driverLocation.setLongitude(driverAddress.getLongitude());
+
+                                // Driver has picked me up; now we are the same location
+                                if (driverLocation.distanceTo(myOriginLocation) < 300) {
+                                    trackDriverBoolean = false;
+                                }
+                            } catch (Exception e) { }
+                        });
+                    }
                 }
                 @Override
                 public void onOpen(ServerHandshake handshake) { }
@@ -237,4 +265,42 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         cc.connect();
     }
 
+    private void getMyStops(){
+        try{
+            int tripId = TripsList.tripId;
+            String url = Endpoints.GetRiderStops + tripId;
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
+                    response -> {
+                        try {
+                            for(int i = 0; i < response.length(); i++){
+                                JSONObject obj = response.getJSONObject(i);
+                                if(obj.getInt("riderId") == MainActivity.accountId) {
+                                    myOriginString = obj.getString("riderOriginAddress");
+                                    myDestinationString = obj.getString("riderDestAddress");
+                                    try {
+                                        Address myOriginAddress = geocoder.getFromLocationName(myDestinationString, 1).get(0);
+                                        myOriginLocation.setLatitude(myOriginAddress.getLatitude());
+                                        myOriginLocation.setLongitude(myOriginAddress.getLongitude());
+
+                                        Address myDestinationAddress = geocoder.getFromLocationName(myDestinationString, 1).get(0);
+                                        myDestinationLocation.setLatitude(myDestinationAddress.getLatitude());
+                                        myDestinationLocation.setLongitude(myDestinationAddress.getLongitude());
+                                    }
+                                    catch(Exception e){
+                                        Log.e("error", e.toString());
+                                    }
+                                }
+                            }
+                        }
+                        catch(Exception e){
+                            Log.e("error", e.toString());
+                        }
+                    },
+                    error -> Log.e("error", error.toString())
+            );
+            AppController.getInstance().addToRequestQueue(req, "json_array_req");
+
+
+        }catch(Exception e){}
+    }
 }
