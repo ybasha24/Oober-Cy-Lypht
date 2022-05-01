@@ -1,4 +1,0 @@
-3
-Des Moines, IA:1:Ames, IA:1
-Des Moines, IA:2:Ames, IA:1
-Des Moines, IA:3:Ames, IA:2
