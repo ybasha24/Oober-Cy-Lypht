@@ -63,6 +63,16 @@ public class UserTest {
         user = driverRepository.findByEmail("EmailTest");
         driverId = user.getId();
 
+        //make a rider
+
+        //set profile picture
+
+        //delete profile picture
+
+        //create a trip
+
+        //delete that trip
+
         //test editing the user
         driver = new Driver("FirstNameTest",
                 "LastNameTest",
