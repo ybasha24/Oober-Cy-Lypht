@@ -37,8 +37,10 @@ public class RatingService {
         List<Rating> userRatings = new ArrayList<>();
 
         for (Rating rating : allRatings) {
-            if (rating.getRated().getId() == userId) {
-                userRatings.add(rating);
+            if (rating.getRated() != null && rating.getRater() != null) {
+                if (rating.getRated().getId() == userId) {
+                    userRatings.add(rating);
+                }
             }
         }
 
