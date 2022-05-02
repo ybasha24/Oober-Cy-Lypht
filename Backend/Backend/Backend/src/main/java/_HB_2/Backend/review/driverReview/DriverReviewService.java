@@ -45,8 +45,12 @@ public class DriverReviewService {
         List<DriverReview> allDriverReviews = driverReviewRepository.findAll();
 
         for(DriverReview driverReview : allDriverReviews) {
-            if ( driverReview.getReviewDriver().getId() == driverId) {
-                driverReviews.add(driverReview);
+            if (driverReview.getReviewDriver() != null) {
+                if ( driverReview.getReviewDriver().getId() == driverId) {
+                    driverReviews.add(driverReview);
+                }
+//            if ( driverReview.getReviewDriver().getId() == driverId) {
+//                driverReviews.add(driverReview);
             }
         }
 
