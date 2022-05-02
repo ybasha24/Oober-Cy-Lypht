@@ -4,22 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.myapplication.*;
-import com.example.myapplication.app.AppController;
 import com.example.myapplication.driver.HomePage;
 import com.example.myapplication.driver.TripDetail;
-import com.example.myapplication.driver.TripsAdapter;
-import com.example.myapplication.endpoints.Endpoints;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 /**
  * activity that appears when a trip is completed, allowing driver to choose from riders to rate
@@ -37,7 +27,7 @@ public class TripCompleted extends AppCompatActivity {
 
     private void listAllRiders(){
         try {
-            listView = findViewById(R.id.listView);
+            listView = findViewById(R.id.driverTripsListView);
             listView.setAdapter(new RateRidersAdapter(TripDetail.riderNames, getApplicationContext()));
         } catch(Exception e){}
     }

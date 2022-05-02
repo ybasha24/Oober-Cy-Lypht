@@ -27,7 +27,7 @@ public class UsersList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users_list);
-        listView = findViewById(R.id.listView);
+        listView = findViewById(R.id.driverTripsListView);
         String url = "";
         url = "http://coms-309-030.class.las.iastate.edu:8080/user/getAllUsers";
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,

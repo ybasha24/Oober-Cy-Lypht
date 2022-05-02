@@ -34,7 +34,7 @@ public class TripsList extends AppCompatActivity {
 
     private void listAllTrips(){
         try {
-            listView = findViewById(R.id.listView);
+            listView = findViewById(R.id.driverTripsListView);
             String url = Endpoints.AllDriverTripsUrl + MainActivity.accountObj.getInt("id");
             JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
                 response -> {

@@ -2,7 +2,6 @@ package com.example.myapplication.rider.searchtrip;
 
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,12 +14,9 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.RequestFuture;
-import com.example.myapplication.MainActivity;
 import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
 import com.example.myapplication.endpoints.OtherConstants;
-import com.example.myapplication.rider.searchtrip.SearchTripPlace;
-import com.example.myapplication.rider.searchtrip.SearchTripTime;
 import com.example.myapplication.rider.TripsAdapter;
 import com.example.myapplication.endpoints.Endpoints;
 import com.google.android.gms.maps.model.LatLng;
@@ -84,7 +80,7 @@ public class SearchPage extends AppCompatActivity {
      */
     public void searchTrips(View view)
     {
-        listView = findViewById(R.id.listView);
+        listView = findViewById(R.id.driverTripsListView);
         String url = Endpoints.RiderSearchTripUrl + startDate +
                 "&scheduledEndDate=" + endDate;
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,

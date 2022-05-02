@@ -27,7 +27,7 @@ public class TripsList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_trips_list);
-        listView = findViewById(R.id.listView);
+        listView = findViewById(R.id.driverTripsListView);
         String url = "";
         url = "http://coms-309-030.class.las.iastate.edu:8080/trip/getAllTrips";
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,

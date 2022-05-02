@@ -47,6 +47,7 @@ public class TripDetail extends AppCompatActivity {
         riderNames = new JSONArray();
         nameToIdMap = new HashMap<>();
         idToNameMap = new HashMap<>();
+        nameToEmailMap = new HashMap<>();
         setDetails();
     }
 

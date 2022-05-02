@@ -9,7 +9,7 @@
     tools:context="com.example.myapplication.driver.TripsList">
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/driverTripsListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></ListView>
 
