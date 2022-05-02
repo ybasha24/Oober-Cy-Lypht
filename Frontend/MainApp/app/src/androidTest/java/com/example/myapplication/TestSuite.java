@@ -5,15 +5,15 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        RegisterTest.class,
 //        HomePageTest.class,
 //        TripTestDriver.class,
 //        OngoingTripTest.class,
-//        RateUserTest.class,
+        RateUserTest.class,
 //        ChatTest.class,
 
-        // Always run this
-        Cleanup.class,
+        // Always run these 2 together
+//        RegisterTest.class,
+//        Cleanup.class,
 
 })
 public class TestSuite {

@@ -60,55 +60,54 @@ public class RateUserTest {
     @Rule
     public ActivityScenarioRule<MainActivity> mainActivityRule = new ActivityScenarioRule<>(MainActivity.class);
 
-//    @Test
-//    public void driverRateRiderTest() {
-//        // Sign in
-//        String email = "driver2@gmail.com";
-//        String password = "abc";
-//        onView(withId(R.id.usernameInput)).perform(typeText(email));
-//        onView(withId(R.id.passwordInput)).perform(typeText(password));
-//        onView(withId(R.id.passwordInput)).perform(closeSoftKeyboard());
-//        onView(withId(R.id.loginButton)).perform(click());
-//        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
-//
-//
-//        // View all my trips
-//        onView(withId(R.id.driverRidesButton)).perform(click());
-//
-//        // View first trip
-//        onView(withText("View")).perform(click());
-//
-//        // Start the trip
-//        onView(withText("Start")).perform(click());
-//
-//        Intent i = new Intent(InstrumentationRegistry.getInstrumentation().getTargetContext(), TripCompleted.class);
-//        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        InstrumentationRegistry.getInstrumentation().getTargetContext().startActivity(i);
-//
-//        // Select the first (and only) rider to rate
-//        onView(withText("Rate")).perform(click());
-//
-//        // Write review and submit
-//        onView(withId(R.id.driverCommentingRiderET)).perform(typeText("Driver review for rider"));
-//        onView(withId(R.id.driverCommentingRiderET)).perform(closeSoftKeyboard());
-//        onView(withId(R.id.driverSubmitRatingButton)).perform(click());
-//
-//        // Finish trip
-//        onView(withId(R.id.driverFinishTripButton)).perform(click());
-//
-//        // Sign out
-//        onView(withId(R.id.signOutButton)).perform(click());
-//
-//        // Rider signs in
-//        onView(withId(R.id.usernameInput)).perform(typeText("rider3@gmail.com"));
-//        onView(withId(R.id.passwordInput)).perform(typeText("abc"));
-//        onView(withId(R.id.passwordInput)).perform(closeSoftKeyboard());
-//        onView(withId(R.id.loginButton)).perform(click());
-//
-//        // Rider views rating
-//        onView(withId(R.id.riderReviewsButton)).perform(click());
-//        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
-//    }
+    @Test
+    public void driverRateRiderTest() {
+        // Sign in
+        String email = "driver2@gmail.com";
+        String password = "abc";
+        onView(withId(R.id.usernameInput)).perform(typeText(email));
+        onView(withId(R.id.passwordInput)).perform(typeText(password));
+        onView(withId(R.id.passwordInput)).perform(closeSoftKeyboard());
+        onView(withId(R.id.loginButton)).perform(click());
+        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
+
+        // View all trips
+        onView(withId(R.id.driverRidesButton)).perform(click());
+
+        // View first trip
+        onView(withText("View")).perform(click());
+
+        // Start the trip
+        onView(withText("Start")).perform(click());
+
+        Intent i = new Intent(InstrumentationRegistry.getInstrumentation().getTargetContext(), TripCompleted.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        InstrumentationRegistry.getInstrumentation().getTargetContext().startActivity(i);
+
+        // Select the first (and only) rider to rate
+        onView(withText("Rate")).perform(click());
+
+        // Write review and submit
+        onView(withId(R.id.driverCommentingRiderET)).perform(typeText("Driver review for rider"));
+        onView(withId(R.id.driverCommentingRiderET)).perform(closeSoftKeyboard());
+        onView(withId(R.id.driverSubmitRatingButton)).perform(click());
+
+        // Finish trip
+        onView(withId(R.id.driverFinishTripButton)).perform(click());
+
+        // Sign out
+        onView(withId(R.id.signOutButton)).perform(click());
+
+        // Rider signs in
+        onView(withId(R.id.usernameInput)).perform(typeText("rider3@gmail.com"));
+        onView(withId(R.id.passwordInput)).perform(typeText("abc"));
+        onView(withId(R.id.passwordInput)).perform(closeSoftKeyboard());
+        onView(withId(R.id.loginButton)).perform(click());
+
+        // Rider views rating
+        onView(withId(R.id.riderReviewsButton)).perform(click());
+        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
+    }
 
     @Test
     public void riderRateDriverTest() {
@@ -120,9 +119,11 @@ public class RateUserTest {
         onView(withId(R.id.loginButton)).perform(click());
         try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
 
-
-        // View all my trips -> trip has already started
+        // View all my trips
         onView(withId(R.id.RiderTripsListButton)).perform(click());
+
+        // View ongoing trip
+        onView(withText("View")).perform(click());
         try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
 
         Intent i = new Intent(InstrumentationRegistry.getInstrumentation().getTargetContext(), RateDriver.class);
@@ -137,13 +138,13 @@ public class RateUserTest {
         // Sign out
         onView(withId(R.id.signOutButton)).perform(click());
 
-//        // Driver signs in
+        // Driver signs in
         onView(withId(R.id.usernameInput)).perform(typeText("driver2@gmail.com"));
         onView(withId(R.id.passwordInput)).perform(typeText("abc"));
         onView(withId(R.id.passwordInput)).perform(closeSoftKeyboard());
         onView(withId(R.id.loginButton)).perform(click());
 
-//        // Driver views rating
+        // Driver views rating
         onView(withId(R.id.driverReviewsButton)).perform(click());
         try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
     }

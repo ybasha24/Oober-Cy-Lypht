@@ -21,9 +21,7 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class OngoingTripTest {
-    private static final int SIMULATED_DELAY_MS = 2000;
-    private LocationManager locationManager;
-    private Handler mHandler;
+    private static final int SIMULATED_DELAY_MS = 2500;
 
     @Rule
     public ActivityScenarioRule<MainActivity> mainActivityRule = new ActivityScenarioRule<>(MainActivity.class);
@@ -34,8 +32,7 @@ public class OngoingTripTest {
         String email = "driver2@gmail.com";
         String password = "abc";
         onView(withId(R.id.usernameInput)).perform(typeText(email));
-        onView(withId(R.id.passwordInput)).perform(typeText(password));
-        onView(withId(R.id.passwordInput)).perform(closeSoftKeyboard());
+        onView(withId(R.id.passwordInput)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.loginButton)).perform(click());
         try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
 
@@ -47,6 +44,7 @@ public class OngoingTripTest {
 
         // Start the trip
         onView(withText("Start")).perform(click());
+        try { Thread.sleep(6000); } catch (InterruptedException e) { }
     }
 
     @Test
@@ -55,16 +53,15 @@ public class OngoingTripTest {
         String email = "rider3@gmail.com";
         String password = "abc";
         onView(withId(R.id.usernameInput)).perform(typeText(email));
-        onView(withId(R.id.passwordInput)).perform(typeText(password));
-        onView(withId(R.id.passwordInput)).perform(closeSoftKeyboard());
+        onView(withId(R.id.passwordInput)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.loginButton)).perform(click());
         try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
 
         // View all my trips
         onView(withId(R.id.RiderTripsListButton)).perform(click());
 
-        // If trip has started, it should open the maps
-
-        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
+        // View ongoing trip
+        onView(withText("View")).perform(click());
+        try { Thread.sleep(6000); } catch (InterruptedException e) { }
     }
 }
