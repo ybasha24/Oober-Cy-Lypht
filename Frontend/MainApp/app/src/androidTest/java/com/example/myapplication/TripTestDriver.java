@@ -43,7 +43,7 @@ public class TripTestDriver {
     public ActivityScenarioRule<MainActivity> mainActivityRule = new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void viewAndDeleteTrip()
+    public void viewTrip()
     {
         onView(withId(R.id.usernameInput)).perform(typeText(email));
         onView(withId(R.id.passwordInput)).perform(typeText(password));
@@ -62,12 +62,14 @@ public class TripTestDriver {
         onView(withId(R.id.passwordInput)).perform(typeText(password));
         onView(withId(R.id.passwordInput)).perform(closeSoftKeyboard());
         onView(withId(R.id.loginButton)).perform(click());
+        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
         onView(withId(R.id.createRideButton)).perform(click());
+        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
         onView(withId(R.id.selectTimeButton)).perform(click());
         onView(withClassName(equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(12, 15));
         onView(withId(android.R.id.button1)).perform(click());
         onView(withId(R.id.selectDateButton)).perform(click());
-        onView(withClassName(equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2022,4,27));
+        onView(withClassName(equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2022,5,12));
         onView(withId(android.R.id.button1)).perform(click());
         onView(withId(R.id.chooseStartButton)).perform(click());
         SelectTripPlace.originAddress = "2229 Lincoln Way, Ames, IA 50011, USA";

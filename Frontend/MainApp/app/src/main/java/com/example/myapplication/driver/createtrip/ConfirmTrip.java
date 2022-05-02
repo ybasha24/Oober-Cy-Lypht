@@ -35,6 +35,7 @@ public class ConfirmTrip extends AppCompatActivity {
     public static double rate = 0;
     private int durationHours;
     private int durationMinutes;
+    public static JSONObject tripInfo;
 
     private TextView radiusTV;
     private Slider radiusSlider;
@@ -129,6 +130,10 @@ public class ConfirmTrip extends AppCompatActivity {
 
         StringRequest req = new StringRequest(verb, url,
             response -> {
+                try {
+                    tripInfo = new JSONObject(response);
+                }
+                catch (Exception e){}
                 Intent intent = new Intent(this, HomePage.class);
                 this.startActivity(intent);
                 String toastText = "Successfully created trip";
