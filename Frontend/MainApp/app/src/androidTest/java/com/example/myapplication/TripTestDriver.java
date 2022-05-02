@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.espresso.Espresso.onView;
@@ -9,10 +10,17 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
+//import static android.support.test.espresso.
 
 
+import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasEntry;
+import static org.hamcrest.Matchers.is;
 
+import android.support.test.espresso.ViewAction;
+import android.support.test.espresso.ViewAssertion;
+import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
@@ -55,6 +63,8 @@ public class TripTestDriver {
         try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
         onView(withId(R.id.driverRidesButton)).perform(click());
         try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
+        onView(withId(R.id.listView)).check(matches(isDisplayed()));
+
     }
 
     @Test
