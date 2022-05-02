@@ -120,40 +120,47 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         //major class that details what is done when location changes
-        locationListener = location -> {
-            double currentLatitude = location.getLatitude();
-            double currentLongitude = location.getLongitude();
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                double currentLatitude = location.getLatitude();
+                double currentLongitude = location.getLongitude();
 
-            sendLocation(currentLatitude, currentLongitude);
+                sendLocation(currentLatitude, currentLongitude);
 
-            try {
-                currentGoalAddress = geocoder.getFromLocationName(currentGoalString, 1).get(0);
-            }catch(Exception e){}
-            double goalLatitude = currentGoalAddress.getLatitude();
-            double goalLongitude = currentGoalAddress.getLongitude();
-
-            currentGoalLocation.setLatitude(goalLatitude);
-            currentGoalLocation.setLongitude(goalLongitude);
-
-            if(location.distanceTo(currentGoalLocation) < 300){
-                if(origins.size() > 0){
-                    origins.remove(currentGoalRider);
-                }
-                else if(destinations.size() > 0) {
-                    destinations.remove(currentGoalRider);
-                }
-                setNextGoal();
                 try {
                     currentGoalAddress = geocoder.getFromLocationName(currentGoalString, 1).get(0);
                 }catch(Exception e){}
-                goalLatitude = currentGoalAddress.getLatitude();
-                goalLongitude = currentGoalAddress.getLongitude();
+                double goalLatitude = currentGoalAddress.getLatitude();
+                double goalLongitude = currentGoalAddress.getLongitude();
 
+                currentGoalLocation.setLatitude(goalLatitude);
+                currentGoalLocation.setLongitude(goalLongitude);
+
+                if(location.distanceTo(currentGoalLocation) < 300){
+                    if(origins.size() > 0){
+                        origins.remove(currentGoalRider);
+                    }
+                    else if(destinations.size() > 0) {
+                        destinations.remove(currentGoalRider);
+                    }
+                    setNextGoal();
+                    try {
+                        currentGoalAddress = geocoder.getFromLocationName(currentGoalString, 1).get(0);
+                    }catch(Exception e){}
+                    goalLatitude = currentGoalAddress.getLatitude();
+                    goalLongitude = currentGoalAddress.getLongitude();
+
+                }
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLatitude, currentLongitude), DEFAULT_ZOOM));
+                drawRoute(currentLatitude, currentLongitude, goalLatitude, goalLongitude);
+                Log.e("error", "location change: " + currentLatitude + " " + currentLongitude + " | dist : " + currentGoalLocation.toString());
             }
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLatitude, currentLongitude), DEFAULT_ZOOM));
-            drawRoute(currentLatitude, currentLongitude, goalLatitude, goalLongitude);
-            Log.e("error", "location change: " + currentLatitude + " " + currentLongitude + " | dist : " + currentGoalLocation.toString());
+
+            @Override
+            public void onProviderEnabled(@NonNull String provider){ }
         };
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -275,7 +282,7 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
             );
             AppController.getInstance().addToRequestQueue(req, "json_array_req");
 
-            
+
         }catch(Exception e){}
     }
 

@@ -13,7 +13,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
 import com.example.myapplication.endpoints.Endpoints;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,7 +28,7 @@ public class TripsList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_trip_list);
-        listView = findViewById(R.id.trip_Info_List);
+        listView = findViewById(R.id.riderTripsListView);
         setList();
     }
 

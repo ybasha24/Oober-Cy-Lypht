@@ -9,8 +9,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"
-        tools:ignore="MockLocation,ProtectedPermissions" />
+<!--    Need this for testing, but it breaks pipeline. Also, it completely breaks production. -->
+<!--    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"-->
+<!--        tools:ignore="MockLocation,ProtectedPermissions" />-->
 
     <application
         android:name=".app.AppController"

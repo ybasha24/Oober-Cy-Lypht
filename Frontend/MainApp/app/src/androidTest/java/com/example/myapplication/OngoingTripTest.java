@@ -14,12 +14,17 @@ import static org.hamcrest.core.IsInstanceOf.instanceOf;
 
 import android.content.Context;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.provider.ProviderProperties;
+import android.os.Build;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.SystemClock;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.ViewAssertion;
@@ -38,7 +43,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class DriverOngoingTripTest{
+public class OngoingTripTest {
     private static final int SIMULATED_DELAY_MS = 2000;
     private LocationManager locationManager;
     private Handler mHandler;
@@ -47,15 +52,15 @@ public class DriverOngoingTripTest{
     public ActivityScenarioRule<MainActivity> mainActivityRule = new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void ongoingTripTest(){
+    public void driverOngoingTripTest(){
         // Sign in
-//        String email = "driver2@email.com";
-//        String password = "abc";
-//        onView(withId(R.id.usernameInput)).perform(typeText(email));
-//        onView(withId(R.id.passwordInput)).perform(typeText(password));
-//        onView(withId(R.id.passwordInput)).perform(closeSoftKeyboard());
-//        onView(withId(R.id.loginButton)).perform(click());
-//        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
+        String email = "driver2@gmail.com";
+        String password = "abc";
+        onView(withId(R.id.usernameInput)).perform(typeText(email));
+        onView(withId(R.id.passwordInput)).perform(typeText(password));
+        onView(withId(R.id.passwordInput)).perform(closeSoftKeyboard());
+        onView(withId(R.id.loginButton)).perform(click());
+        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
 
         // View all my trips
         onView(withId(R.id.driverRidesButton)).perform(click());
@@ -65,31 +70,24 @@ public class DriverOngoingTripTest{
 
         // Start the trip
         onView(withText("Start")).perform(click());
-
-                locationManager = (LocationManager) InstrumentationRegistry.getInstrumentation().getTargetContext().getSystemService(Context.LOCATION_SERVICE);
-
-                String mockLocationProvider = LocationManager.GPS_PROVIDER;
-                locationManager.addTestProvider(mockLocationProvider, false, false, false, false, false, true, true, 0, 1);
-                locationManager.setTestProviderEnabled(mockLocationProvider, true);
-                Location loc = new Location(mockLocationProvider);
-                Location mockLocation = new Location(mockLocationProvider);
-
-                // Pick up rider at Ames Library
-                mockLocation.setLatitude(42.0625);
-                mockLocation.setLongitude(-93.6125);
-                mockLocation.setAccuracy(1);
-                locationManager.setTestProviderLocation( mockLocationProvider, mockLocation);
-
-                try { Thread.sleep(5000); } catch (InterruptedException e) { }
-
-                mockLocation.setLatitude(42.0023);
-                mockLocation.setLongitude(-93.6141);
-                mockLocation.setAccuracy(1);
-                locationManager.setTestProviderLocation( mockLocationProvider, mockLocation);
-
-                try { Thread.sleep(5000); } catch (InterruptedException e) { }
-
-
     }
 
+    @Test
+    public void riderOngoingTripTest(){
+        // Sign in
+        String email = "rider3@gmail.com";
+        String password = "abc";
+        onView(withId(R.id.usernameInput)).perform(typeText(email));
+        onView(withId(R.id.passwordInput)).perform(typeText(password));
+        onView(withId(R.id.passwordInput)).perform(closeSoftKeyboard());
+        onView(withId(R.id.loginButton)).perform(click());
+        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
+
+        // View all my trips
+        onView(withId(R.id.TripsListButton)).perform(click());
+
+        // If trip has started, it should open the maps
+
+        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
+    }
 }
