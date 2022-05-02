@@ -41,20 +41,19 @@
         map:layout_constraintStart_toStartOf="parent"
         map:layout_constraintTop_toTopOf="parent"
         map:layout_constraintVertical_bias="0.732"
-        tools:context=".driver.createtrip.SelectTripPlace" />
+        tools:context=".rider.searchtrip.SearchTripPlace" />
 
     <Button
-        android:id="@+id/SearchPageLocationButton"
+        android:id="@+id/searchPageLocationButton"
         android:layout_width="144dp"
         android:layout_height="49dp"
-        android:text="Proceed"
         android:onClick="proceed"
+        android:text="Proceed"
         map:layout_constraintBottom_toBottomOf="parent"
         map:layout_constraintEnd_toEndOf="parent"
         map:layout_constraintHorizontal_bias="1.0"
         map:layout_constraintStart_toStartOf="parent"
         map:layout_constraintTop_toTopOf="parent"
-        map:layout_constraintVertical_bias="1.0"
-        />
+        map:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

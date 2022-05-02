@@ -89,31 +89,31 @@ public class RegisterTest {
         onView(withText("Sign out")).check(matches(isDisplayed()));
     }
 
-//    @Test
-//    public void testRegisterRider(){
-//        onView(withId(R.id.registerButton)).perform(click());
-//        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
-//        onView(withId(R.id.registeringRiderButton)).perform(click());
-//        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
-//        onView(withId(R.id.editTextFirstName)).perform(typeText("first"));
-//        onView(withId(R.id.editTextLastName)).perform(typeText("last"));
-//        onView(withId(R.id.editTextEmail)).perform(typeText("rider@email.com"));
-//        onView(withId(R.id.editTextPassword)).perform(typeText("Password123!"));
-//        onView(withId(R.id.editTextPhone)).perform(typeText("515-123-1235"));
-//        onView(withId(R.id.editTextPhone)).perform(closeSoftKeyboard());
-//        onView(withId(R.id.editTextAddress)).perform(typeText("name"));
-//        onView(withId(R.id.editTextAddress)).perform(closeSoftKeyboard());
-//        onView(withId(R.id.editTextCity)).perform(typeText("name"));
-//        onView(withId(R.id.editTextCity)).perform(closeSoftKeyboard());
-//        onView(withId(R.id.editTextState)).perform(typeText("name"));
-//        onView(withId(R.id.editTextState)).perform(closeSoftKeyboard());
-//        onView(withId(R.id.editTextZip)).perform(typeText("12345"));
-//        onView(withId(R.id.editTextZip)).perform(closeSoftKeyboard());
-//        onView(withId(R.id.registerRiderButton)).perform(click());
-//        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
-//        try {
-//            createdRiderId = MainActivity.accountObj.getInt("id");
-//        }catch(Exception e){}
-//        onView(withText("Sign out")).check(matches(isDisplayed()));
-//    }
+    @Test
+    public void testRegisterRider(){
+        onView(withId(R.id.registerButton)).perform(click());
+        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
+        onView(withId(R.id.registeringRiderButton)).perform(click());
+        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
+        onView(withId(R.id.editTextFirstName)).perform(typeText("first"));
+        onView(withId(R.id.editTextLastName)).perform(typeText("last"));
+        onView(withId(R.id.editTextEmail)).perform(typeText("rider@email.com"));
+        onView(withId(R.id.editTextPassword)).perform(typeText("Password123!"));
+        onView(withId(R.id.editTextPhone)).perform(typeText("515-123-1235"));
+        onView(withId(R.id.editTextPhone)).perform(closeSoftKeyboard());
+        onView(withId(R.id.editTextAddress)).perform(typeText("name"));
+        onView(withId(R.id.editTextAddress)).perform(closeSoftKeyboard());
+        onView(withId(R.id.editTextCity)).perform(typeText("name"));
+        onView(withId(R.id.editTextCity)).perform(closeSoftKeyboard());
+        onView(withId(R.id.editTextState)).perform(typeText("name"));
+        onView(withId(R.id.editTextState)).perform(closeSoftKeyboard());
+        onView(withId(R.id.editTextZip)).perform(typeText("12345"));
+        onView(withId(R.id.editTextZip)).perform(closeSoftKeyboard());
+        onView(withId(R.id.registerRiderButton)).perform(click());
+        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
+        try {
+            createdRiderId = MainActivity.accountObj.getInt("id");
+        }catch(Exception e){}
+        onView(withText("Sign out")).check(matches(isDisplayed()));
+    }
 }

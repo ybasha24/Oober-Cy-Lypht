@@ -86,7 +86,7 @@ public class SearchTripPlace extends AppCompatActivity implements OnMapReadyCall
         origin = null;
         dest = null;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_ride_location);
+        setContentView(R.layout.activity_rider_search_ride_location);
         initAutoCompleteFragments();
     }
 
