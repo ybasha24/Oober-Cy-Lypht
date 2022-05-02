@@ -39,7 +39,7 @@ public class Trip {
     Prevents infinite loop in JSON objects returned.
      */
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "Driver_ID")
     private User tripDriver;
 
