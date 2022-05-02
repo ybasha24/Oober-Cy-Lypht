@@ -55,7 +55,7 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class ChatTest {
-    private static final int SIMULATED_DELAY_MS = 3000;
+    private static final int SIMULATED_DELAY_MS = 1000;
 
     @Rule
     public ActivityScenarioRule<MainActivity> mainActivityRule = new ActivityScenarioRule<>(MainActivity.class);
@@ -82,6 +82,8 @@ public class ChatTest {
         // Write and send message
         onView(withId(R.id.messageET)).perform(typeText("Hello rider. - Driver"), closeSoftKeyboard());
         onView(withId(R.id.sendMessageButton)).perform(click());
+        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
+
     }
 
     @Test
@@ -94,31 +96,15 @@ public class ChatTest {
         onView(withId(R.id.loginButton)).perform(click());
         try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
 
-
-        // View all my trips -> trip has already started
+        // View all my trips
         onView(withId(R.id.RiderTripsListButton)).perform(click());
-        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
 
-        Intent i = new Intent(InstrumentationRegistry.getInstrumentation().getTargetContext(), RateDriver.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        InstrumentationRegistry.getInstrumentation().getTargetContext().startActivity(i);
+        // Chat with driver
+        onView(withText("Chat")).perform(click());
 
-        // Write review and submit
-        onView(withId(R.id.riderCommentingDriverET)).perform(typeText("Driver review for rider"), closeSoftKeyboard());
-        onView(withId(R.id.riderSubmitRatingButton)).perform(click());
-        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
-
-        // Sign out
-        onView(withId(R.id.signOutButton)).perform(click());
-
-//        // Driver signs in
-        onView(withId(R.id.usernameInput)).perform(typeText("driver2@gmail.com"));
-        onView(withId(R.id.passwordInput)).perform(typeText("abc"));
-        onView(withId(R.id.passwordInput)).perform(closeSoftKeyboard());
-        onView(withId(R.id.loginButton)).perform(click());
-
-//        // Driver views rating
-        onView(withId(R.id.driverReviewsButton)).perform(click());
+        // Write and send message
+        onView(withId(R.id.messageET)).perform(typeText("Hello driver. - Rider"), closeSoftKeyboard());
+        onView(withId(R.id.sendMessageButton)).perform(click());
         try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
     }
 }
