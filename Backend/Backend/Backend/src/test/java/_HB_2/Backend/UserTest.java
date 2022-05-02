@@ -59,14 +59,11 @@ public class UserTest {
                 .postForEntity("http://localhost:" + port + "/driver/registerDriver", driver, String.class);
         assertEquals(200, responseEntity.getStatusCodeValue());
 
+        //find the id of the user we just created
         user = driverRepository.findByEmail("EmailTest");
         driverId = user.getId();
 
-    }
-
-    @Test
-    public void deleteUser() {
-        //send request and receive response
+        //delete the user we just created
         String string = "/user/deleteUser?id=" + driverId;
         Response response = RestAssured.given().
                 when().
@@ -75,7 +72,21 @@ public class UserTest {
         // Check status code
         int statusCode = response.getStatusCode();
         assertEquals(200, statusCode);
+
     }
+
+//    @Test
+//    public void deleteUser() {
+//        //send request and receive response
+//        String string = "/user/deleteUser?id=" + driverId;
+//        Response response = RestAssured.given().
+//                when().
+//                delete(string);
+//
+//        // Check status code
+//        int statusCode = response.getStatusCode();
+//        assertEquals(200, statusCode);
+//    }
 
 }
 
