@@ -77,7 +77,9 @@ public class UserTest {
                 .put("http://localhost:" + port + "/user/editUser?id=" + driverId, driver, String.class);
         assertEquals(200, responseEntity.getStatusCodeValue());
 
-
+        //check to see that the edit of our user took effect
+        user = driverRepository.findById(driverId);
+        assertEquals("EmailChangedTest", user.getEmail());
 
         //delete the user we just created
         String string = "/user/deleteUser?id=" + driverId;
