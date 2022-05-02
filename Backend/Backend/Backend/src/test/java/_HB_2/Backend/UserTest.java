@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import _HB_2.Backend.driver.Driver;
 import _HB_2.Backend.driver.DriverRepository;
+import _HB_2.Backend.user.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +30,12 @@ public class UserTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @Autowired
+    private DriverRepository driverRepository;
+
     private int driverId;
+
+    private User user;
 
     @Before
     public void setUp() {
@@ -53,16 +59,18 @@ public class UserTest {
                 .postForEntity("http://localhost:" + port + "/driver/registerDriver", driver, String.class);
         assertEquals(200, responseEntity.getStatusCodeValue());
 
-        driverId = driver.getId();
+        user = driverRepository.findByEmail("EmailTest");
+        driverId = user.getId();
 
     }
 
     @Test
     public void deleteUser() {
         //send request and receive response
+        String string = "/user/deleteUser?id=" + driverId;
         Response response = RestAssured.given().
                 when().
-                delete("/user/deleteUser?id=" + driverId);
+                delete(string);
 
         // Check status code
         int statusCode = response.getStatusCode();
