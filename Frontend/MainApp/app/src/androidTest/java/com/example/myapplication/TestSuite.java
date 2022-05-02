@@ -7,7 +7,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         RegisterTest.class,
         //HomePageTest.class,
-        //TripTestDriver.class,
+        TripTestDriver.class,
         TripRiderTest.class,
         DeleteUserTest.class
 })
