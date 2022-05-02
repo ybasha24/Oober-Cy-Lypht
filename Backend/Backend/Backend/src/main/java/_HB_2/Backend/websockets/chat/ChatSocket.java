@@ -64,7 +64,7 @@ public class ChatSocket {
         usernameSessionMap.put(username, session);
 
         //Send chat history to the newly connected user
-        sendMessageToPArticularUser(username, getChatHistory());
+//        sendMessageToPArticularUser(username, getChatHistory());
 
         User enter = userService.getUserByEmail(username);
         // broadcast that new user joined
@@ -87,15 +87,23 @@ public class ChatSocket {
             String destUsername = message.split(" ")[0].substring(1);
             User userReceived = userService.getUserByEmail(destUsername);
 
-            String newMessage = message.replace("@"+destUsername,"");
+            if (sessionUsernameMap.containsValue(destUsername)) {
 
-            // send the message to the sender and receiver
-            sendMessageToPArticularUser(destUsername, sender.getFirstName() + ": " + newMessage);
-            sendMessageToPArticularUser(username, sender.getFirstName() + ": " + newMessage);
+                String newMessage = message.replace("@" + destUsername, "");
 
-            User findUser = userService.getUserByEmail(username);
-            // Saving chat history to repository
-            msgRepo.save(new Message(findUser, userReceived, newMessage));
+                // send the message to the sender and receiver
+                sendMessageToPArticularUser(destUsername, sender.getFirstName() + ": " + newMessage);
+                sendMessageToPArticularUser(username, sender.getFirstName() + ": " + newMessage);
+
+                User findUser = userService.getUserByEmail(username);
+                // Saving chat history to repository
+                msgRepo.save(new Message(findUser, userReceived, newMessage));
+            }
+            else{
+                String newMessage = message.replace("@" + destUsername, "");
+                User findUser = userService.getUserByEmail(username);
+                msgRepo.save(new Message(findUser, userReceived, newMessage));
+            }
 
         }
     }
