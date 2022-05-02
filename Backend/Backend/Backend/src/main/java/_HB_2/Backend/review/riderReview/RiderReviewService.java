@@ -46,8 +46,10 @@ public class RiderReviewService {
         List<RiderReview> allRiderReviews = riderReviewRepository.findAll();
 
         for(RiderReview riderReview : allRiderReviews) {
-            if ( riderReview.getReviewRider().getId() == riderId) {
-                riderReviews.add(riderReview);
+            if (riderReview.getReviewRider() != null) {
+                if (riderReview.getReviewRider().getId() == riderId) {
+                    riderReviews.add(riderReview);
+                }
             }
         }
 
