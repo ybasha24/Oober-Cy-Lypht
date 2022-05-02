@@ -127,7 +127,7 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
                 double currentLongitude = location.getLongitude();
 
                 sendLocation(currentLatitude, currentLongitude);
-
+                Log.e("error", currentLatitude + " " + currentLongitude);
                 try {
                     currentGoalAddress = geocoder.getFromLocationName(currentGoalString, 1).get(0);
                 }catch(Exception e){}
@@ -345,7 +345,7 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         String url = "ws://coms-309-030.class.las.iastate.edu:8080/location/%7B" + MainActivity.accountEmail + "%7D" + "/%7B" + TripDetail.tripId + "%7D";
         Log.e("error", url);
         try {
-            Log.e("error", "Trying socket");
+            Log.e("error", "Trying socket" + TripsAdapter.currentTrip);
             cc = new WebSocketClient(new URI(url), drafts[0]) {
                 @Override
                 public void onMessage(String message) { }

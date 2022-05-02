@@ -115,10 +115,6 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         locationListener = location -> {
             Log.e("error", location.toString());
 
-            // If driver has picked me up
-            if (location.distanceTo(myOriginLocation) < 300) {
-                trackDriverBoolean = false;
-            }
             // We have arrived
             if(location.distanceTo(myDestinationLocation) < 300){
                 Log.e("error", "arrived at location");
@@ -249,6 +245,7 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
                                 Address driverAddress = geocoder.getFromLocation(latitude, longititude, 1).get(0);
                                 driverLocation.setLatitude(driverAddress.getLatitude());
                                 driverLocation.setLongitude(driverAddress.getLongitude());
+                                Log.e("error", "Driver distance: " + driverLocation.distanceTo(myOriginLocation));
 
                                 // Driver has picked me up; now we are the same location
                                 if (driverLocation.distanceTo(myOriginLocation) < 300) {
@@ -282,7 +279,7 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
                                     myOriginString = obj.getString("riderOriginAddress");
                                     myDestinationString = obj.getString("riderDestAddress");
                                     try {
-                                        Address myOriginAddress = geocoder.getFromLocationName(myDestinationString, 1).get(0);
+                                        Address myOriginAddress = geocoder.getFromLocationName(myOriginString, 1).get(0);
                                         myOriginLocation.setLatitude(myOriginAddress.getLatitude());
                                         myOriginLocation.setLongitude(myOriginAddress.getLongitude());
 
