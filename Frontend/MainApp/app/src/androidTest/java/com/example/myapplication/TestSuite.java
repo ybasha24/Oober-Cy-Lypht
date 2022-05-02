@@ -9,7 +9,8 @@ import org.junit.runners.Suite;
 //        HomePageTest.class,
 //        TripTestDriver.class,
 //        DeleteUserTest.class,
-        OngoingTripTest.class
+//        OngoingTripTest.class
+        RateUserTest.class
 })
 public class TestSuite {
 }

@@ -56,6 +56,16 @@ public class HomePage extends AppCompatActivity {
     }
 
     /**
+     * allows for rider to see their reviews written from previous drivers
+     * @param view the activity that is referencing this method
+     */
+    public void viewReviews(View view){
+        Intent intent = new Intent(this, com.example.myapplication.driver.Reviews.class);
+        startActivity(intent);
+    }
+
+
+    /**
      * signs the driver out and resets local parameters; goes to login screen
      * @param view the activity that is referencing this method
      */

@@ -41,6 +41,10 @@
             android:name=".rider.Reviews"
             android:exported="false" />
         <activity
+            android:name=".driver.Reviews"
+            android:exported="false" />
+
+        <activity
             android:name=".driver.completetrip.RateRider"
             android:exported="false" />
         <activity

@@ -101,6 +101,11 @@ public final class Endpoints {
     public static final String PostRiderReview = "http://coms-309-030.class.las.iastate.edu:8080/riderReview/postRiderReview?driverId=";
 
     /**
+     * where a driver reviews a rider
+     */
+    public static final String PostDriverReview = "http://coms-309-030.class.las.iastate.edu:8080/driverReview/postDriverReview?driverId=";
+
+    /**
      * gets the rating for a user
      */
     public static final String GetUserRating = "http://coms-309-030.class.las.iastate.edu:8080/rating/getUserRating?userId=";

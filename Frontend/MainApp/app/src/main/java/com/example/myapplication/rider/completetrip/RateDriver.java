@@ -18,6 +18,7 @@ import com.example.myapplication.app.AppController;
 import com.example.myapplication.driver.completetrip.RateRidersAdapter;
 import com.example.myapplication.driver.completetrip.TripCompleted;
 import com.example.myapplication.endpoints.Endpoints;
+import com.example.myapplication.rider.HomePage;
 
 import org.json.JSONObject;
 
@@ -72,7 +73,7 @@ public class RateDriver extends AppCompatActivity {
      */
     public void submitReview() {
 
-        String reviewUrl = Endpoints.PostRiderReview + driverId + "&riderId=" + riderId;
+        String reviewUrl = Endpoints.PostDriverReview + driverId + "&riderId=" + riderId;
 
         JSONObject obj = new JSONObject();
         try {
@@ -81,11 +82,11 @@ public class RateDriver extends AppCompatActivity {
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, reviewUrl, obj,
                 response -> {
-                    RateRidersAdapter.finishRating(RateRidersAdapter.currentPosition);
-                    Intent intent = new Intent(this, TripCompleted.class);
-                    startActivity(intent);
+                    Intent i = new Intent(this, HomePage.class);
+                    this.startActivity(i);
                 },
                 error -> runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG).show()));
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
+
     }
 }

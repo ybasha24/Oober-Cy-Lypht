@@ -31,7 +31,7 @@ public class Reviews extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rider_reviews);
+        setContentView(R.layout.activity_driver_reviews);
 
         try{
             driverId = MainActivity.accountObj.getInt("id");
