@@ -41,39 +41,15 @@ public class TripsList extends AppCompatActivity {
             JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
                     response -> {
                         Log.e("response", response.toString());
-
-                        try {
-                            // Check if a trip has started by going through all trips.
-                            // If there is a trip that has started, immediately go to OngoingTrip.class activity
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject obj = response.getJSONObject(i);
-                                if (obj.getBoolean("hasStarted")){
-                                    trip = obj;
-                                    try{
-                                        tripId = trip.getInt("id");
-                                    }catch(Exception e){}
-
-                                    Intent intent = new Intent(this, OngoingTrip.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
-                                }
-                            }
-
-                            if(response != null) {
-                                arr = response;
-                                listView.setAdapter(new TripsAdapter(arr, "TripsList", getApplicationContext()));
-                            }
-
-                        }catch(Exception e){}
-
-
-
+                        if(response != null) {
+                            arr = response;
+                            listView.setAdapter(new TripsAdapter(arr, "TripsList", getApplicationContext()));
+                        }
                     },
                     error -> Toast.makeText(getApplicationContext(), "Error: " + error, Toast.LENGTH_LONG));
             AppController.getInstance().addToRequestQueue(req, "array_req");
         }
         catch (Exception e){}
-
     }
 
 }

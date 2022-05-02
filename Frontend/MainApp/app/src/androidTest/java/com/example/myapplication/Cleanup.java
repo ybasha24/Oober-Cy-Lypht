@@ -16,8 +16,9 @@ import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class DeleteUserTest {
+public class Cleanup {
     private static final int SIMULATED_DELAY_MS = 2000;
+
     @Rule
     public ActivityScenarioRule<MainActivity> mainActivityRule = new ActivityScenarioRule<>(MainActivity.class);
 
@@ -25,19 +26,15 @@ public class DeleteUserTest {
     public void deleteUser(){
         String url = Endpoints.DeleteUserUrl + RegisterTest.createdRiderId;
         StringRequest req = new StringRequest(Request.Method.DELETE, url,
-                response -> {
-                },
-                error -> {
-                }
+            response -> { },
+            error -> { }
         );
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
 
         url = Endpoints.DeleteUserUrl + RegisterTest.createdDriverId;
         req = new StringRequest(Request.Method.DELETE, url,
-                response -> {
-                },
-                error -> {
-                }
+            response -> { },
+            error -> { }
         );
         AppController.getInstance().addToRequestQueue(req, "post_object_tag");
 

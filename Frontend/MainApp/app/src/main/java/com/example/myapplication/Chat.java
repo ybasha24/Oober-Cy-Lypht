@@ -39,7 +39,7 @@ public class Chat extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         sendButton = findViewById(R.id.sendMessageButton);
-        message = findViewById(R.id.messageEditText);
+        message = findViewById(R.id.messageET);
         conversation = findViewById(R.id.conversationTV);
         conversation.setMovementMethod(new ScrollingMovementMethod());
         scrollView = findViewById(R.id.chatScrollView);

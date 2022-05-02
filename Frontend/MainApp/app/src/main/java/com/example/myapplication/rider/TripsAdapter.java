@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.*;
 import com.example.myapplication.app.AppController;
@@ -120,12 +119,12 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
                 addToTrip(position);
             });
             viewTripButton.setOnClickListener(v -> {
-                viewTrip(position);
+                viewCandidateTrip(position);
             });
             return view;
         }
-        else if(list != null && page.equals("TripsList"))
-        {
+
+        else if(list != null && page.equals("TripsList")) {
             View view = convertView;
             if (view == null) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -138,21 +137,15 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
                 Log.e("Json logging", json.toString());
                 tv.setText("From: " + json.getString("originAddress") + "\nTo: " + json.getString("destAddress") +
                         "\nTime: " + json.getString("scheduledStartDate") + "\n->" + json.getString("scheduledEndDate"));
-            } catch (Exception e) {
-            }
+            } catch (Exception e) { }
 
             Button removeFromTripButton = view.findViewById(R.id.delete_trip);
-            Button viewTripButton = view.findViewById(R.id.view_trip);
+            Button viewTripButton = view.findViewById(R.id.riderViewTripButton);
             Button chatWithDriverButton = view.findViewById(R.id.chatWithDriverButton);
-            removeFromTripButton.setOnClickListener(v -> {
-                removeFromTrip(position);
-            });
-            viewTripButton.setOnClickListener(v -> {
-                viewTrip(position);
-            });
-            chatWithDriverButton.setOnClickListener(v -> {
-                chat(position);
-            });
+
+            removeFromTripButton.setOnClickListener(v -> removeFromTrip(position));
+            chatWithDriverButton.setOnClickListener(v -> chat(position));
+            viewTripButton.setOnClickListener(v -> viewMyTrip(position));
 
             return view;
         }
@@ -188,7 +181,7 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
        catch (Exception e){}
     }
 
-    public void viewTrip(int position){
+    public void viewCandidateTrip(int position){
         try {
             String startDate = list.getJSONObject(position).getString("scheduledStartDate");
             String startLocation = list.getJSONObject(position).getString("originAddress");
@@ -260,5 +253,22 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
         catch(Exception e) {
             Log.e("error", e.toString());
         }
+    }
+
+    public void viewMyTrip(int position) {
+        try {
+            JSONObject obj = list.getJSONObject(position);
+            if (obj.getBoolean("hasStarted")) {
+                TripsList.trip = obj;
+                TripsList.tripId = TripsList.trip.getInt("id");
+                Intent intent = new Intent(this.context, OngoingTrip.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                this.context.startActivity(intent);
+            }
+            else{
+                Toast toast = Toast.makeText(this.context, "Trip has not started", Toast.LENGTH_LONG);
+                toast.show();
+            }
+        } catch (Exception e) { Log.e("error", e.toString());}
     }
 }

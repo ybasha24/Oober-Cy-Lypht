@@ -55,7 +55,7 @@ public class RateDriver extends AppCompatActivity {
      */
     public void submitRating(View view){
 
-        String rateUrl = Endpoints.CreateRatingUrl + driverId + "&ratedId=" + riderId;
+        String rateUrl = Endpoints.CreateRatingUrl + riderId + "&ratedId=" + driverId;
 
         JSONObject obj = new JSONObject();
         try {
