@@ -1,15 +1,14 @@
 package com.example.myapplication;
 
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
-import android.location.LocationManager;
-import android.os.Handler;
-
+import androidx.test.espresso.Espresso;
+import androidx.test.espresso.action.ViewActions;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -40,10 +39,10 @@ public class OngoingTripTest {
         onView(withId(R.id.driverRidesButton)).perform(click());
 
         // View first trip
-        onView(withText("View")).perform(click());
+        Espresso.onView(ViewMatchers.withText("View")).perform(ViewActions.click());
 
         // Start the trip
-        onView(withText("Start")).perform(click());
+        Espresso.onView(ViewMatchers.withText("Start")).perform(ViewActions.click());
         try { Thread.sleep(6000); } catch (InterruptedException e) { }
     }
 
@@ -61,7 +60,7 @@ public class OngoingTripTest {
         onView(withId(R.id.RiderTripsListButton)).perform(click());
 
         // View ongoing trip
-        onView(withText("View")).perform(click());
+        Espresso.onView(ViewMatchers.withText("View")).perform(ViewActions.click());
         try { Thread.sleep(6000); } catch (InterruptedException e) { }
     }
 }

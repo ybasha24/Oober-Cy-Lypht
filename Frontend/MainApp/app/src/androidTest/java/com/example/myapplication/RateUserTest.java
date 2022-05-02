@@ -1,53 +1,25 @@
 package com.example.myapplication;
 
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-
-import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.location.provider.ProviderProperties;
-import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.SystemClock;
-import android.support.test.espresso.UiController;
-import android.support.test.espresso.ViewAction;
-import android.support.test.espresso.matcher.ViewMatchers;
-import android.view.View;
-import android.widget.ListView;
-import android.widget.RatingBar;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.test.espresso.DataInteraction;
-import androidx.test.espresso.ViewAssertion;
-import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.espresso.Espresso;
+import androidx.test.espresso.action.ViewActions;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.example.myapplication.driver.TripsAdapter;
-import com.example.myapplication.driver.completetrip.RateRider;
 import com.example.myapplication.driver.completetrip.TripCompleted;
 import com.example.myapplication.rider.completetrip.RateDriver;
-import com.google.android.gms.maps.OnMapReadyCallback;
 
-import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -85,7 +57,7 @@ public class RateUserTest {
         InstrumentationRegistry.getInstrumentation().getTargetContext().startActivity(i);
 
         // Select the first (and only) rider to rate
-        onView(withText("Rate")).perform(click());
+        Espresso.onView(ViewMatchers.withText("Rate")).perform(ViewActions.click());
 
         // Write review and submit
         onView(withId(R.id.driverCommentingRiderET)).perform(typeText("Driver review for rider"));

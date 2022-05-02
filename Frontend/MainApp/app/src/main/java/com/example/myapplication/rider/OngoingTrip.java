@@ -115,6 +115,10 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         locationListener = location -> {
             Log.e("error", location.toString());
 
+            // If driver has picked me up
+            if (location.distanceTo(myOriginLocation) < 300) {
+                trackDriverBoolean = false;
+            }
             // We have arrived
             if(location.distanceTo(myDestinationLocation) < 300){
                 Log.e("error", "arrived at location");

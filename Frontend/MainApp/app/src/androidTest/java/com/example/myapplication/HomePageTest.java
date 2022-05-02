@@ -1,24 +1,16 @@
 package com.example.myapplication;
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-
+import androidx.test.espresso.Espresso;
+import androidx.test.espresso.action.ViewActions;
+import androidx.test.espresso.assertion.ViewAssertions;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.filters.LargeTest;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.click;
 
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-
-import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -34,60 +26,60 @@ public class HomePageTest {
     public void driverProfileTest(){
         String email = "driver@email.com";
         String password = "Password123!";
-        onView(withId(R.id.usernameInput)).perform(typeText(email));
-        onView(withId(R.id.passwordInput)).perform(typeText(password));
-        onView(withId(R.id.passwordInput)).perform(closeSoftKeyboard());
-        onView(withId(R.id.loginButton)).perform(click());
+        Espresso.onView(ViewMatchers.withId(R.id.usernameInput)).perform(ViewActions.typeText(email));
+        Espresso.onView(ViewMatchers.withId(R.id.passwordInput)).perform(ViewActions.typeText(password));
+        Espresso.onView(ViewMatchers.withId(R.id.passwordInput)).perform(ViewActions.closeSoftKeyboard());
+        Espresso.onView(ViewMatchers.withId(R.id.loginButton)).perform(ViewActions.click());
         try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
-        onView(withId(R.id.profileUpdate)).perform(click());
-        onView(withText("Save Changes")).check(matches(isDisplayed()));
-        onView(withId(R.id.editTextFirstName2)).perform(typeText("Steve"));
-        onView(withId(R.id.editTextFirstName2)).perform(closeSoftKeyboard());
-        onView(withId(R.id.saveChangesButton)).perform(click());
-        onView(withText("Save Changes")).check(matches(isDisplayed()));
+        Espresso.onView(ViewMatchers.withId(R.id.profileUpdate)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withText("Save Changes")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+        Espresso.onView(ViewMatchers.withId(R.id.editTextFirstName2)).perform(ViewActions.typeText("Steve"));
+        Espresso.onView(ViewMatchers.withId(R.id.editTextFirstName2)).perform(ViewActions.closeSoftKeyboard());
+        Espresso.onView(ViewMatchers.withId(R.id.saveChangesButton)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withText("Save Changes")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
     }
 
     @Test
     public void riderProfileTest(){
         String email = "rider@email.com";
         String password = "Password123!";
-        onView(withId(R.id.usernameInput)).perform(typeText(email));
-        onView(withId(R.id.passwordInput)).perform(typeText(password));
-        onView(withId(R.id.passwordInput)).perform(closeSoftKeyboard());
-        onView(withId(R.id.loginButton)).perform(click());
+        Espresso.onView(ViewMatchers.withId(R.id.usernameInput)).perform(ViewActions.typeText(email));
+        Espresso.onView(ViewMatchers.withId(R.id.passwordInput)).perform(ViewActions.typeText(password));
+        Espresso.onView(ViewMatchers.withId(R.id.passwordInput)).perform(ViewActions.closeSoftKeyboard());
+        Espresso.onView(ViewMatchers.withId(R.id.loginButton)).perform(ViewActions.click());
         try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
-        onView(withId(R.id.profileUpdate)).perform(click());
-        onView(withText("Save Changes")).check(matches(isDisplayed()));
-        onView(withId(R.id.editTextFirstName2)).perform(typeText("Steve"));
-        onView(withId(R.id.editTextFirstName2)).perform(closeSoftKeyboard());
-        onView(withId(R.id.saveChangesButton)).perform(click());
-        onView(withText("Save Changes")).check(matches(isDisplayed()));
+        Espresso.onView(ViewMatchers.withId(R.id.profileUpdate)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withText("Save Changes")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+        Espresso.onView(ViewMatchers.withId(R.id.editTextFirstName2)).perform(ViewActions.typeText("Steve"));
+        Espresso.onView(ViewMatchers.withId(R.id.editTextFirstName2)).perform(ViewActions.closeSoftKeyboard());
+        Espresso.onView(ViewMatchers.withId(R.id.saveChangesButton)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withText("Save Changes")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
     }
 
     @Test
     public void signOutRiderTest(){
         String email = "rider@email.com";
         String password = "Password123!";
-        onView(withId(R.id.usernameInput)).perform(typeText(email));
-        onView(withId(R.id.passwordInput)).perform(typeText(password));
-        onView(withId(R.id.passwordInput)).perform(closeSoftKeyboard());
-        onView(withId(R.id.loginButton)).perform(click());
+        Espresso.onView(ViewMatchers.withId(R.id.usernameInput)).perform(ViewActions.typeText(email));
+        Espresso.onView(ViewMatchers.withId(R.id.passwordInput)).perform(ViewActions.typeText(password));
+        Espresso.onView(ViewMatchers.withId(R.id.passwordInput)).perform(ViewActions.closeSoftKeyboard());
+        Espresso.onView(ViewMatchers.withId(R.id.loginButton)).perform(ViewActions.click());
         try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
-        onView(withId(R.id.signOutButton)).perform(click());
-        onView(withText("Sign In")).check(matches(isDisplayed()));
+        Espresso.onView(ViewMatchers.withId(R.id.signOutButton)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withText("Sign In")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
     }
 
     @Test
     public void signOutDriverTest(){
         String email = "driver@email.com";
         String password = "Password123!";
-        onView(withId(R.id.usernameInput)).perform(typeText(email));
-        onView(withId(R.id.passwordInput)).perform(typeText(password));
-        onView(withId(R.id.passwordInput)).perform(closeSoftKeyboard());
-        onView(withId(R.id.loginButton)).perform(click());
+        Espresso.onView(ViewMatchers.withId(R.id.usernameInput)).perform(ViewActions.typeText(email));
+        Espresso.onView(ViewMatchers.withId(R.id.passwordInput)).perform(ViewActions.typeText(password));
+        Espresso.onView(ViewMatchers.withId(R.id.passwordInput)).perform(ViewActions.closeSoftKeyboard());
+        Espresso.onView(ViewMatchers.withId(R.id.loginButton)).perform(ViewActions.click());
         try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
-        onView(withId(R.id.signOutButton)).perform(click());
-        onView(withText("Sign In")).check(matches(isDisplayed()));
+        Espresso.onView(ViewMatchers.withId(R.id.signOutButton)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withText("Sign In")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
     }
 
 }
