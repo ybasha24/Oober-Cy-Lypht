@@ -250,6 +250,7 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
                                 // Driver has picked me up; now we are the same location
                                 if (driverLocation.distanceTo(myOriginLocation) < 300) {
                                     trackDriverBoolean = false;
+                                    map.clear();
                                 }
                             } catch (Exception e) { }
                         });

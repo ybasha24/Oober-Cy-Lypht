@@ -259,16 +259,32 @@ public class TripsAdapter extends BaseAdapter implements ListAdapter {
         try {
             JSONObject obj = list.getJSONObject(position);
             if (obj.getBoolean("hasStarted")) {
-                TripsList.trip = obj;
-                TripsList.tripId = TripsList.trip.getInt("id");
-                Intent intent = new Intent(this.context, OngoingTrip.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                this.context.startActivity(intent);
+                String url = Endpoints.GetTripDriverUrl + obj.getInt("id");
+                JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
+                    response -> {
+                        try {
+                            TripsList.trip = obj;
+                            TripsList.tripDriverId = response.getInt("id");
+                            TripsList.tripId = TripsList.trip.getInt("id");
+                            TripsList.tripDriverEmail = response.getString("email");
+                            Intent intent = new Intent(this.context, OngoingTrip.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            this.context.startActivity(intent);
+                        } catch (Exception e) {
+                            Log.e("error", e.toString());
+                        }
+                    },
+                    error -> Log.e("error", error.toString())
+                );
+                AppController.getInstance().addToRequestQueue(req, "get_obj_req");
             }
             else{
                 Toast toast = Toast.makeText(this.context, "Trip has not started", Toast.LENGTH_LONG);
                 toast.show();
             }
-        } catch (Exception e) { Log.e("error", e.toString());}
+        }
+        catch(Exception e) {
+            Log.e("error", e.toString());
+        }
     }
 }

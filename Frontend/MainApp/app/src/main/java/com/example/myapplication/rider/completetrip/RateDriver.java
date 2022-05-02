@@ -19,6 +19,7 @@ import com.example.myapplication.driver.completetrip.RateRidersAdapter;
 import com.example.myapplication.driver.completetrip.TripCompleted;
 import com.example.myapplication.endpoints.Endpoints;
 import com.example.myapplication.rider.HomePage;
+import com.example.myapplication.rider.TripsList;
 
 import org.json.JSONObject;
 
@@ -38,7 +39,7 @@ public class RateDriver extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_rate_driver);
         try {
-            driverId = 0; //set this later
+            driverId = TripsList.tripDriverId;
             riderId = MainActivity.accountObj.getInt("id");
 
         }catch(Exception e){}

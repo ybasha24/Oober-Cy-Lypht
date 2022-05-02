@@ -23,6 +23,8 @@ public class TripsList extends AppCompatActivity {
     private JSONArray arr;
     public static JSONObject trip;
     public static int tripId;
+    public static int tripDriverId;
+    public static String tripDriverEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
