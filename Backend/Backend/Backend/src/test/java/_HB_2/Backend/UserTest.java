@@ -63,6 +63,22 @@ public class UserTest {
         user = driverRepository.findByEmail("EmailTest");
         driverId = user.getId();
 
+        //test editing the user
+        driver = new Driver("FirstNameTest",
+                "LastNameTest",
+                "AddressTest",
+                "CityTest",
+                "StateTest",
+                "ZipTest",
+                "EmailChangedTest",
+                "PhoneNumberTest",
+                "PasswordTest");
+        this.restTemplate
+                .put("http://localhost:" + port + "/user/editUser?id=" + driverId, driver, String.class);
+        assertEquals(200, responseEntity.getStatusCodeValue());
+
+
+
         //delete the user we just created
         String string = "/user/deleteUser?id=" + driverId;
         Response response = RestAssured.given().
