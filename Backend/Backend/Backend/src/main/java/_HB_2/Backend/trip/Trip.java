@@ -48,7 +48,7 @@ public class Trip {
 //    private Set<RiderStop> riderStops;
 
     @JsonIgnore
-    @ManyToMany(fetch=FetchType.EAGER)
+    @ManyToMany(fetch=FetchType.EAGER,cascade = CascadeType.REMOVE)
     @JoinTable(name = "Trip_Riders",
                 joinColumns = @JoinColumn(name = "trip_id"),
                 inverseJoinColumns = @JoinColumn(name = "rider_id"))
