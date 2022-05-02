@@ -3,6 +3,7 @@ package _HB_2.Backend;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import _HB_2.Backend.driver.Driver;
+import _HB_2.Backend.driver.DriverRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,6 +29,8 @@ public class UserTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    private int driverId;
+
     @Before
     public void setUp() {
         RestAssured.port = port;
@@ -35,7 +38,7 @@ public class UserTest {
     }
 
     @Test
-    public void userTestsByMatt() {
+    public void createUser() {
         //send request and receive response
         Driver driver = new Driver("FirstNameTest",
                                     "LastNameTest",
@@ -50,7 +53,20 @@ public class UserTest {
                 .postForEntity("http://localhost:" + port + "/driver/registerDriver", driver, String.class);
         assertEquals(200, responseEntity.getStatusCodeValue());
 
+        driverId = driver.getId();
 
+    }
+
+    @Test
+    public void deleteUser() {
+        //send request and receive response
+        Response response = RestAssured.given().
+                when().
+                delete("/user/deleteUser?id=" + driverId);
+
+        // Check status code
+        int statusCode = response.getStatusCode();
+        assertEquals(200, statusCode);
     }
 
 }
