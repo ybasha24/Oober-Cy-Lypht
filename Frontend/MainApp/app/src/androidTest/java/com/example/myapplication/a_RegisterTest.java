@@ -28,7 +28,7 @@ public class a_RegisterTest {
     @Test
     public void testRegisterDriver(){
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withId(R.id.registeringDriverButton)).perform(click());
+        onView(withId(R.id.riderProfileButton)).perform(click());
         onView(withId(R.id.editTextFirstName)).perform(typeText("driver"), closeSoftKeyboard());
         onView(withId(R.id.editTextLastName)).perform(typeText("last"), closeSoftKeyboard());
         onView(withId(R.id.editTextEmail)).perform(typeText("driver@email.com"), closeSoftKeyboard());
