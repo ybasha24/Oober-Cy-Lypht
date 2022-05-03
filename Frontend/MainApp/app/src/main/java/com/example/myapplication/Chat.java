@@ -13,12 +13,17 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.myapplication.app.AppController;
 import com.example.myapplication.endpoints.Endpoints;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
 import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ServerHandshake;
+import org.json.JSONObject;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -31,6 +36,7 @@ public class Chat extends AppCompatActivity {
     private EditText message;
     private TextView conversation;
     private String receiverEmail;
+    private int receiverId;
     private ScrollView scrollView;
 
     @Override
@@ -44,8 +50,8 @@ public class Chat extends AppCompatActivity {
         conversation.setMovementMethod(new ScrollingMovementMethod());
         scrollView = findViewById(R.id.chatScrollView);
 
-
         receiverEmail = getIntent().getStringExtra("receiverEmail");
+        receiverId = getIntent().getIntExtra("receiverId", 0);
         connect();
 
         sendButton.setOnClickListener(v -> {
@@ -65,7 +71,6 @@ public class Chat extends AppCompatActivity {
         String url = Endpoints.ChatUrl + MainActivity.accountEmail + "%7D";
 
         try {
-            Log.e("error:", "Trying socket");
             cc = new WebSocketClient(new URI(url), drafts[0]) {
                 @Override
                 public void onMessage(String message) {
@@ -80,7 +85,27 @@ public class Chat extends AppCompatActivity {
                 }
 
                 @Override
-                public void onOpen(ServerHandshake handshake) { Log.e("error", "run() returned: " + "is connecting"); }
+                public void onOpen(ServerHandshake handshake) {
+                    Log.e("error", "Opening websocket connection...");
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        String url = Endpoints.GetMessages + MainActivity.accountId + "&user2Id=" + receiverId;
+                        Log.e("error", url);
+                        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url, null,
+                            response -> {
+                                Log.e("error", response.toString());
+                                try {
+                                    for (int i = 0; i < response.length(); i++) {
+                                        JSONObject nextMessageObj = (JSONObject) response.get(i);
+                                        String nextMessageString = nextMessageObj.getString("content");
+                                        conversation.setText(conversation.getText().toString() + "\n" + nextMessageString + "\n");
+                                    }
+                                }catch(Exception e){}
+                                new Handler(Looper.getMainLooper()).post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
+                            },
+                            error -> Log.e("error", error.toString()));
+                        AppController.getInstance().addToRequestQueue(req, "get_arr_req");
+                    });
+                }
 
                 @Override
                 public void onClose(int code, String reason, boolean remote) { Log.e("error", "onClose() returned: " + reason); }

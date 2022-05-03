@@ -139,4 +139,9 @@ public final class Endpoints {
      * starts a trip
      */
     public static final String SetTripStartedUrl = "http://coms-309-030.class.las.iastate.edu:8080/trip/setTripStarted?tripId=";
+
+    /**
+     * get messages for a pair
+     */
+    public static final String GetMessages = "http://coms-309-030.class.las.iastate.edu:8080/message/getMessagesForPairOfUsers?user1Id=";
 }

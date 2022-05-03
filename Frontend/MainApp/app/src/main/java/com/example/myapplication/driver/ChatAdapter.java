@@ -107,9 +107,11 @@ public class ChatAdapter extends BaseAdapter implements ListAdapter {
         try {
             String riderName = list.getString(position);
             String receiverEmail = TripDetail.nameToEmailMap.get(riderName);
+            int receiverId = TripDetail.nameToIdMap.get(riderName);
             Log.e("error", riderName + " " + receiverEmail);
             Intent intent = new Intent(this.context, Chat.class);
             intent.putExtra("receiverEmail", receiverEmail);
+            intent.putExtra("receiverId", receiverId);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             this.context.startActivity(intent);
         }catch(Exception e){

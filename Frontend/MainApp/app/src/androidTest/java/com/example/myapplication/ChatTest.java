@@ -41,7 +41,7 @@ public class ChatTest {
         // Write and send message
         Espresso.onView(ViewMatchers.withId(R.id.messageET)).perform(ViewActions.typeText("Hello rider. - Driver"), ViewActions.closeSoftKeyboard());
         Espresso.onView(ViewMatchers.withId(R.id.sendMessageButton)).perform(ViewActions.click());
-        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
+        try { Thread.sleep(SIMULATED_DELAY_MS * 4); } catch (InterruptedException e) { }
 
     }
 
@@ -64,6 +64,6 @@ public class ChatTest {
         // Write and send message
         Espresso.onView(ViewMatchers.withId(R.id.messageET)).perform(ViewActions.typeText("Hello driver. - Rider"), ViewActions.closeSoftKeyboard());
         Espresso.onView(ViewMatchers.withId(R.id.sendMessageButton)).perform(ViewActions.click());
-        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
+        try { Thread.sleep(SIMULATED_DELAY_MS * 4); } catch (InterruptedException e) { }
     }
 }
