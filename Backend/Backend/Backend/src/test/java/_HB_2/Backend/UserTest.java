@@ -88,6 +88,18 @@ public class UserTest {
         this.restTemplate
                 .put("http://localhost:" + port + "/user/banUserById?userId=" + driverId, String.class);
         assertEquals(200, responseEntity.getStatusCodeValue());
+        
+        //get banned status
+        Response response = RestAssured.given().
+                when().
+                get("/user/getBannedStatusById?userId=" + driverId);
+        //        // Check status code
+        int statusCode = response.getStatusCode();
+        assertEquals(200, statusCode);
+
+        //unban a user
+
+        //get banned status
 
         //test editing the user
         driver = new Driver("FirstNameTest",
@@ -109,12 +121,12 @@ public class UserTest {
 
         //delete the user we just created
         String string = "/user/deleteUser?id=" + driverId;
-        Response response = RestAssured.given().
+        response = RestAssured.given().
                 when().
                 delete(string);
 
         // Check status code
-        int statusCode = response.getStatusCode();
+        statusCode = response.getStatusCode();
         assertEquals(200, statusCode);
 
     }
