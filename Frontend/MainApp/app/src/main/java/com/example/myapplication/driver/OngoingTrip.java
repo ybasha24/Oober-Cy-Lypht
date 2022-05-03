@@ -118,55 +118,6 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
-        //major class that details what is done when location changes
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(@NonNull Location location) {
-                double currentLatitude = location.getLatitude();
-                double currentLongitude = location.getLongitude();
-
-                sendLocation(currentLatitude, currentLongitude);
-                Log.e("error", currentLatitude + " " + currentLongitude);
-                try {
-                    currentGoalAddress = geocoder.getFromLocationName(currentGoalString, 1).get(0);
-                }catch(Exception e){}
-                double goalLatitude = currentGoalAddress.getLatitude();
-                double goalLongitude = currentGoalAddress.getLongitude();
-
-                currentGoalLocation.setLatitude(goalLatitude);
-                currentGoalLocation.setLongitude(goalLongitude);
-
-                if(location.distanceTo(currentGoalLocation) < 300){
-                    if(origins.size() > 0){
-                        origins.remove(currentGoalRider);
-                    }
-                    else if(destinations.size() > 0) {
-                        destinations.remove(currentGoalRider);
-                    }
-                    setNextGoal();
-                    try {
-                        currentGoalAddress = geocoder.getFromLocationName(currentGoalString, 1).get(0);
-                    }catch(Exception e){}
-                    goalLatitude = currentGoalAddress.getLatitude();
-                    goalLongitude = currentGoalAddress.getLongitude();
-
-                }
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLatitude, currentLongitude), DEFAULT_ZOOM));
-                drawRoute(currentLatitude, currentLongitude, goalLatitude, goalLongitude);
-                Log.e("error", "location change: " + currentLatitude + " " + currentLongitude + " | dist : " + currentGoalLocation.toString());
-            }
-
-            @Override
-            public void onProviderEnabled(@NonNull String provider){ }
-        };
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-
-        locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 10, locationListener);
     }
 
     @Override
@@ -272,6 +223,53 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
                             origins.put(TripDetail.idToNameMap.get(riderId), origin);
                             destinations.put(TripDetail.idToNameMap.get(riderId), destination);
                             setNextGoal();
+
+                            //major class that details what is done when location changes
+                            locationListener = new LocationListener() {
+                                @Override
+                                public void onLocationChanged(@NonNull Location location) {
+                                    float currentLatitude = (float) location.getLatitude();
+                                    float currentLongitude = (float) location.getLongitude();
+
+                                    sendLocation(currentLatitude, currentLongitude);
+                                    Log.e("error", currentLatitude + " " + currentLongitude);
+                                    try {
+                                        currentGoalAddress = geocoder.getFromLocationName(currentGoalString, 1).get(0);
+                                    }catch(Exception e){
+                                        Log.e("error", e.toString());
+                                    }
+                                    double goalLatitude = currentGoalAddress.getLatitude();
+                                    double goalLongitude = currentGoalAddress.getLongitude();
+
+                                    currentGoalLocation.setLatitude(goalLatitude);
+                                    currentGoalLocation.setLongitude(goalLongitude);
+
+                                    if(location.distanceTo(currentGoalLocation) < 300){
+                                        if(origins.size() > 0){
+                                            origins.remove(currentGoalRider);
+                                        }
+                                        else if(destinations.size() > 0) {
+                                            destinations.remove(currentGoalRider);
+                                        }
+                                        setNextGoal();
+                                        try {
+                                            currentGoalAddress = geocoder.getFromLocationName(currentGoalString, 1).get(0);
+                                        }catch(Exception e){}
+                                        goalLatitude = currentGoalAddress.getLatitude();
+                                        goalLongitude = currentGoalAddress.getLongitude();
+                                    }
+                                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLatitude, currentLongitude), DEFAULT_ZOOM));
+                                    drawRoute(currentLatitude, currentLongitude, goalLatitude, goalLongitude);
+                                    Log.e("error", "location change: " + currentLatitude + " " + currentLongitude + " | dist : " + currentGoalLocation.toString());
+                                }
+                            };
+
+                            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                return;
+                            }
+
+                            locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+                            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 10, locationListener);
                         }
                     }
                     catch(Exception e){
@@ -287,9 +285,15 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void setNextGoal(){
-//        Log.e("error", "Next goal\nPick up: " + origins.toString() + "\nDrop off: " + destinations.toString());
 
-        if(origins.size() > 0) {
+        if(origins.size() == 0 && destinations.size() == 0){
+            Log.e("error", "finished all goals");
+            driverInstructionsTV.setText("Done.");
+            Intent i = new Intent(this, com.example.myapplication.driver.completetrip.TripCompleted.class);
+            this.startActivity(i);
+            super.onBackPressed();
+        }
+        else if(origins.size() > 0) {
             for (String rider : origins.keySet()) {
                 driverInstructionsTV.setText("Pick up " + rider + " at " + origins.get(rider));
                 currentGoalRider = rider;
@@ -303,13 +307,7 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
                 currentGoalString = destinations.get(rider);
             }
         }
-        else{
-            Log.e("error", "finished all goals");
-            driverInstructionsTV.setText("Done.");
-            Intent i = new Intent(this, com.example.myapplication.driver.completetrip.TripCompleted.class);
-            this.startActivity(i);
-            super.onBackPressed();
-        }
+
     }
 
     private void drawRoute(double currentLatitude, double currentLongitude, double goalLatitude, double goalLongitude){

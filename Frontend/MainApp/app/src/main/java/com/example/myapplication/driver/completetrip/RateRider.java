@@ -40,7 +40,7 @@ public class RateRider extends AppCompatActivity {
 
         }catch(Exception e){}
         tv = findViewById(R.id.ratingNameTV);
-        tv.setText("Rating: " + RateRidersAdapter.currentRiderString + "; id = " + riderId);
+        tv.setText("Rating: " + RateRidersAdapter.currentRiderString);
 
         comments = findViewById(R.id.driverCommentingRiderET);
         rating = findViewById(R.id.driverRatingRiderBar);

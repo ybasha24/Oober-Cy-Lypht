@@ -111,26 +111,6 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
-        locationListener = location -> {
-            Log.e("error", location.toString());
-
-            // We have arrived
-            if(location.distanceTo(myDestinationLocation) < 300){
-                Log.e("error", "arrived at location");
-                Intent i = new Intent(this, com.example.myapplication.rider.completetrip.RateDriver.class);
-                this.startActivity(i);
-                super.onBackPressed();
-            }
-            // Update camera if I move
-            else {
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), DEFAULT_ZOOM));
-                Log.e("error", "location change: " + location.getLatitude() + " " + location.getLongitude() + " | dist : " + myDestinationLocation.toString());
-            }
-        };
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) { return; }
-        locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 10, locationListener);
     }
 
     @Override
@@ -287,6 +267,26 @@ public class OngoingTrip extends AppCompatActivity implements OnMapReadyCallback
                                         Address myDestinationAddress = geocoder.getFromLocationName(myDestinationString, 1).get(0);
                                         myDestinationLocation.setLatitude(myDestinationAddress.getLatitude());
                                         myDestinationLocation.setLongitude(myDestinationAddress.getLongitude());
+
+                                        locationListener = location -> {
+                                            Log.e("error", location.toString() + "Distance to my destination: " + location.distanceTo(myDestinationLocation));
+
+                                            // We have arrived
+                                            if(location.distanceTo(myDestinationLocation) < 300){
+                                                Log.e("error", "arrived at location");
+                                                Intent intent = new Intent(this, com.example.myapplication.rider.completetrip.RateDriver.class);
+                                                this.startActivity(intent);
+                                                super.onBackPressed();
+                                            }
+                                            // Update camera if I move
+                                            else {
+                                                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), DEFAULT_ZOOM));
+                                                Log.e("error", "location change: " + location.getLatitude() + " " + location.getLongitude() + " | dist : " + myDestinationLocation.toString());
+                                            }
+                                        };
+                                        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) { return; }
+                                        locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+                                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 10, locationListener);
                                     }
                                     catch(Exception e){
                                         Log.e("error", e.toString());

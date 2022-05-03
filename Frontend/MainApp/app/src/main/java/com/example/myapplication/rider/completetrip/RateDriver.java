@@ -44,7 +44,7 @@ public class RateDriver extends AppCompatActivity {
 
         }catch(Exception e){}
         tv = findViewById(R.id.ratingNameTV);
-        tv.setText("Rating: " + driverId);
+//        tv.setText("Rating: " + driverId);
 
         comments = findViewById(R.id.riderCommentingDriverET);
         rating = findViewById(R.id.riderRatingDriverBar);
