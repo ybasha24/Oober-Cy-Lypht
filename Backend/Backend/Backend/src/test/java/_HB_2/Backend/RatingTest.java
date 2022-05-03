@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import _HB_2.Backend.driver.Driver;
 import _HB_2.Backend.driver.DriverRepository;
+import _HB_2.Backend.rating.Rating;
 import _HB_2.Backend.rider.Rider;
 import _HB_2.Backend.rider.RiderRepository;
 import _HB_2.Backend.user.User;
@@ -87,18 +88,42 @@ public class RatingTest {
         assertEquals(200, responseEntity2.getStatusCodeValue());
 
         //find the id of the user we just created
-        user1 = driverRepository.findByEmail("EmailTest");
-        driverId = user1.getId();
+        user2 = riderRepository.findByEmail("Email");
+        riderId = user2.getId();
+
+
+        //create a rating for both users:
+        Rating ratingForDriver = new Rating();
+        ratingForDriver.setRater(user2);
+        ratingForDriver.setRated(user1);
+        ratingForDriver.setRating(3);
+        ResponseEntity<String> responseEntity3 = this.restTemplate
+                .postForEntity("http://localhost:" + port + "/rating/createRating", ratingForDriver, String.class);
+
+        assertEquals(3, ratingForDriver.getRating());
+
+        Rating ratingForRider = new Rating();
+        ratingForRider.setRater(user1);
+        ratingForRider.setRated(user2);
+        ratingForRider.setRating(5);
+        ResponseEntity<String> responseEntity4 = this.restTemplate
+                .postForEntity("http://localhost:" + port + "/rating/createRating", ratingForRider, String.class);
+
+        assertEquals(5, ratingForRider.getRating());
 
 
 
-
+        //delete the trip we just created
+        this.restTemplate
+                .put("http://localhost:" + port + "/user/deleteUser?id=" + riderId, String.class);
+        assertEquals(200, responseEntity.getStatusCodeValue());
 
         //delete the user we just created
         String string = "/user/deleteUser?id=" + driverId;
         Response response = RestAssured.given().
                 when().
                 delete(string);
+
 
         // Check status code
         int statusCode = response.getStatusCode();
