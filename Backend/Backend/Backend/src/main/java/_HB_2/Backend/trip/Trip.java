@@ -71,8 +71,10 @@ public class Trip {
     public List<Integer> getRiderIds() {
         List<Integer> riderIds = new ArrayList<>();
 
-        for (User user : riders ) {
-            riderIds.add(user.getId());
+        if (riders != null) {
+            for (User user : riders) {
+                riderIds.add(user.getId());
+            }
         }
 
         return riderIds;
