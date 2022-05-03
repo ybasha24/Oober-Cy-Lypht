@@ -63,6 +63,7 @@ public class RateUserTest {
         onView(withId(R.id.driverCommentingRiderET)).perform(typeText("Driver review for rider"));
         onView(withId(R.id.driverCommentingRiderET)).perform(closeSoftKeyboard());
         onView(withId(R.id.driverSubmitRatingButton)).perform(click());
+        try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
 
         // Finish trip
         onView(withId(R.id.driverFinishTripButton)).perform(click());

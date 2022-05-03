@@ -24,7 +24,7 @@ public class RegistrationOptions extends AppCompatActivity {
      * @param view activity that is referencing this method
      */
     public void riderRegistration(View view){
-        Intent intent = new Intent(this, RegistrationPage.class);
+        Intent intent = new Intent(this, com.example.myapplication.rider.RegistrationPage.class);
         startActivity(intent);
     }
 
