@@ -41,7 +41,6 @@ public class TripTest {
     private TripRepository tripRepository;
 
     private int driverId;
-    private String profilePicture;
 
     private User user;
 
@@ -80,8 +79,27 @@ public class TripTest {
         trip.setNumberOfRiders(4);
         trip.setRadius(10);
         trip.setRatePerMin(3.5);
-        
 
+        ResponseEntity<Trip> responseEntity2 = this.restTemplate
+                .postForEntity("http://localhost:" + port + "/trip/createTripByDriver", trip, Trip.class, driverId, trip);
+        assertEquals(200, responseEntity2.getStatusCodeValue());
+
+        int tripId = trip.getId();
+
+        //check the different values of the trip:
+        assertEquals(LocalDateTime.parse("2022-04-05T17:09:42"), trip.getScheduledStartDate());
+        assertEquals(LocalDateTime.parse("2022-04-05T17:10:23"), trip.getScheduledEndDate());
+        assertEquals("615 10th St Ames IA, 50010", trip.getOriginAddress());
+        assertEquals("DS Airport, Des Moines, IA 50131", trip.getDestAddress());
+        assertEquals(user, trip.getTripDriver());
+        assertEquals(10, trip.getRadius());
+
+
+        //delete the trip we just created
+        this.restTemplate
+                .put("http://localhost:" + port + "/trip/deleteTripById?id=" + tripId, String.class);
+        assertEquals(200, responseEntity.getStatusCodeValue());
+        
         //delete the user we just created
         String string = "/user/deleteUser?id=" + driverId;
         Response response = RestAssured.given().
