@@ -8,6 +8,7 @@ import org.junit.runners.Suite;
         RegisterTest.class,
         HomePageTest.class,
         TripTestDriver.class,
+        TripRiderTest.class,
         OngoingTripTest.class,
         RateUserTest.class,
         ChatTest.class,

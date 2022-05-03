@@ -31,6 +31,7 @@ public class TripsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_trip_list);
         listView = findViewById(R.id.riderTripsListView);
+
         setList();
     }
 

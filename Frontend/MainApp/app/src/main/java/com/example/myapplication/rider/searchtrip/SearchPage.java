@@ -37,12 +37,11 @@ import java.util.Locale;
 public class SearchPage extends AppCompatActivity {
 
     private ListView listView;
-    private Slider radiusSlider;
     private JSONArray tripsList;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private String originAddress;
-    private String destAddress;
+    public static String originAddress;
+    public static String destAddress;
     private int durationHours;
     private int durationMinutes;
     private LatLng driverOrigin;
@@ -55,7 +54,6 @@ public class SearchPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_search_page);
-        radiusSlider = findViewById(R.id.radiusSlider);
 
         if(SearchTripTime.startDate != null){
             startDate = SearchTripTime.startDate;
