@@ -7,8 +7,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
 //        a_RegisterTest.class,
 //        b_HomePageTest.class,
-//        d_TripTestDriver.class,
-//        c_TripRiderTest.class,
+//        c_DriverTripTest.class,
+//        d_RiderTripTest.class,
 //        f_OngoingTripTest.class,
 //        g_RateUserTest.class,
 //        e_ChatTest.class,
