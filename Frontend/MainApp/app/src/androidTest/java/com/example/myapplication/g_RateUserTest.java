@@ -26,7 +26,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class RateUserTest {
+public class g_RateUserTest {
     private static final int SIMULATED_DELAY_MS = 3000;
 
     @Rule

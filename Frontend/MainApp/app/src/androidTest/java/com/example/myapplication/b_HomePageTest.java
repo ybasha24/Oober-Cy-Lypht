@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class HomePageTest {
+public class b_HomePageTest {
     private static final int SIMULATED_DELAY_MS = 2000;
     public static int createdRiderId = 0;
     public static int createdDriverId = 0;

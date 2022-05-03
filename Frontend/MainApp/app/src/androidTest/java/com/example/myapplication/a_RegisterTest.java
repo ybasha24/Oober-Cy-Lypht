@@ -18,8 +18,8 @@ import static androidx.test.espresso.action.ViewActions.click;
 // NEVER EVER RUN THIS STANDALONE
 @RunWith(AndroidJUnit4ClassRunner.class)
 @LargeTest
-public class RegisterTest {
-    private static final int SIMULATED_DELAY_MS = 5000;
+public class a_RegisterTest {
+    private static final int SIMULATED_DELAY_MS = 8000;
     public static int createdRiderId = 0;
     public static int createdDriverId = 0;
     @Rule
@@ -59,6 +59,7 @@ public class RegisterTest {
         onView(withId(R.id.editTextZip)).perform(typeText("12345"), closeSoftKeyboard());
         onView(withId(R.id.registerRiderButton)).perform(click());
         try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
+        try { createdRiderId = MainActivity.accountObj.getInt("id"); }catch(Exception e){}
         onView(withId(R.id.signOutButton)).perform(click());
     }
 }

@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class ChatTest {
+public class e_ChatTest {
     private static final int SIMULATED_DELAY_MS = 1000;
 
     @Rule

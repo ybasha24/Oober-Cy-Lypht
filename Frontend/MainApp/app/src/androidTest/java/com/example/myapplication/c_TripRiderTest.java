@@ -37,9 +37,9 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class TripRiderTest {
+public class c_TripRiderTest {
 
-    private static final int SIMULATED_DELAY_MS = 2000;
+    private static final int SIMULATED_DELAY_MS = 3500;
     public static int createdRiderId = 0;
     public static int createdDriverId = 0;
     private static String email = "rider@email.com";

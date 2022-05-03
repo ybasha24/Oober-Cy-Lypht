@@ -34,7 +34,7 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class TripTestDriver {
+public class d_TripTestDriver {
 
     private static final int SIMULATED_DELAY_MS = 2000;
     public static int createdRiderId = 0;

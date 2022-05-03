@@ -19,7 +19,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class OngoingTripTest {
+public class f_OngoingTripTest {
     private static final int SIMULATED_DELAY_MS = 2500;
 
     @Rule
