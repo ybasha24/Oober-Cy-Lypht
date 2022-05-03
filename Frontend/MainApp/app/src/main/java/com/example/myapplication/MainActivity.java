@@ -120,10 +120,12 @@ public class MainActivity extends AppCompatActivity {
                         if(!(accountObj.isNull("adriver")) && accountObj.getBoolean("adriver")) {
                             intent = new Intent(this, com.example.myapplication.driver.HomePage.class);
                         }
-                        else if (!accountObj.isNull("arider") && accountObj.getBoolean("arider"))
-                            intent = new Intent(this, HomePage.class);
-                        else if (!(accountObj.isNull("anAdmin")) && accountObj.getBoolean("anAdmin"))
+                        else if (!accountObj.isNull("arider") && accountObj.getBoolean("arider")) {
+                            intent = new Intent(this, com.example.myapplication.rider.HomePage.class);
+                        }
+                        else if (!(accountObj.isNull("anAdmin")) && accountObj.getBoolean("anAdmin")) {
                             intent = new Intent(this, com.example.myapplication.admin.HomePage.class);
+                        }
                         if(((CheckBox) findViewById(R.id.staySignedInCheckBox)).isChecked()){
                             SharedPreferences.Editor editor = getSharedPreferences("name", MODE_PRIVATE).edit();
                             editor.putString("email", email);

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.myapplication.app.AppController;
+import com.example.myapplication.rider.HomePage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -168,6 +169,19 @@ public class ProfileSettings extends AppCompatActivity {
             } catch (Exception e) {
                 Log.e("error", e.toString());
             }
+        }
+    }
+
+    public void onBackPressed() {
+        try {
+            Intent intent = null;
+            if (!(MainActivity.accountObj.isNull("adriver")) && MainActivity.accountObj.getBoolean("adriver")) {
+                intent = new Intent(this, com.example.myapplication.driver.HomePage.class);
+            } else if (!MainActivity.accountObj.isNull("arider") && MainActivity.accountObj.getBoolean("arider"))
+                intent = new Intent(this, com.example.myapplication.rider.HomePage.class);
+            startActivity(intent);
+        }catch(Exception e){
+            Log.e("error", e.toString());
         }
     }
 
