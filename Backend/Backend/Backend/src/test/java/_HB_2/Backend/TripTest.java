@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import _HB_2.Backend.driver.Driver;
 import _HB_2.Backend.driver.DriverRepository;
 import _HB_2.Backend.trip.Trip;
-import _HB_2.Backend.trip.TripRepository;
 import _HB_2.Backend.user.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,9 +36,6 @@ public class TripTest {
     @Autowired
     private DriverRepository driverRepository;
 
-    @Autowired
-    private TripRepository tripRepository;
-
     private int driverId;
 
     private User user;
@@ -51,7 +47,7 @@ public class TripTest {
     }
 
     @Test
-    public void createUser() {
+    public void createUserAndTrip() {
         //send request and receive response
         Driver driver = new Driver("FirstNameTest",
                 "LastNameTest",
@@ -76,13 +72,11 @@ public class TripTest {
         trip.setScheduledEndDate(LocalDateTime.parse("2022-04-05T17:10:23"));
         trip.setOriginAddress("615 10th St Ames IA, 50010");
         trip.setDestAddress("DS Airport, Des Moines, IA 50131");
-        trip.setNumberOfRiders(4);
         trip.setRadius(10);
         trip.setRatePerMin(3.5);
 
-        ResponseEntity<Trip> responseEntity2 = this.restTemplate
-                .postForEntity("http://localhost:" + port + "/trip/createTripByDriver", trip, Trip.class, driverId, trip);
-        assertEquals(200, responseEntity2.getStatusCodeValue());
+        ResponseEntity<String> responseEntity2 = this.restTemplate
+                .postForEntity("http://localhost:" + port + "/trip/createTripByDriver", trip, String.class, driverId, trip);
 
         int tripId = trip.getId();
 
@@ -91,7 +85,6 @@ public class TripTest {
         assertEquals(LocalDateTime.parse("2022-04-05T17:10:23"), trip.getScheduledEndDate());
         assertEquals("615 10th St Ames IA, 50010", trip.getOriginAddress());
         assertEquals("DS Airport, Des Moines, IA 50131", trip.getDestAddress());
-        assertEquals(user, trip.getTripDriver());
         assertEquals(10, trip.getRadius());
 
 
@@ -99,7 +92,7 @@ public class TripTest {
         this.restTemplate
                 .put("http://localhost:" + port + "/trip/deleteTripById?id=" + tripId, String.class);
         assertEquals(200, responseEntity.getStatusCodeValue());
-        
+
         //delete the user we just created
         String string = "/user/deleteUser?id=" + driverId;
         Response response = RestAssured.given().
