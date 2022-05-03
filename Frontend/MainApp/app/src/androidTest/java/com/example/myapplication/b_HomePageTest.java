@@ -31,9 +31,9 @@ public class b_HomePageTest {
         Espresso.onView(ViewMatchers.withId(R.id.passwordInput)).perform(ViewActions.closeSoftKeyboard());
         Espresso.onView(ViewMatchers.withId(R.id.loginButton)).perform(ViewActions.click());
         try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
-        Espresso.onView(ViewMatchers.withId(R.id.riderProfileButton)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.driverProfileButton)).perform(ViewActions.click());
         Espresso.onView(ViewMatchers.withText("Save Changes")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
-        Espresso.onView(ViewMatchers.withId(R.id.editTextFirstName2)).perform(ViewActions.typeText("Steve"));
+        Espresso.onView(ViewMatchers.withId(R.id.editTextFirstName2)).perform(ViewActions.replaceText("Steve"));
         Espresso.onView(ViewMatchers.withId(R.id.editTextFirstName2)).perform(ViewActions.closeSoftKeyboard());
         Espresso.onView(ViewMatchers.withId(R.id.saveChangesButton)).perform(ViewActions.click());
         Espresso.onView(ViewMatchers.withText("Save Changes")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
@@ -50,7 +50,7 @@ public class b_HomePageTest {
         try { Thread.sleep(SIMULATED_DELAY_MS); } catch (InterruptedException e) { }
         Espresso.onView(ViewMatchers.withId(R.id.riderProfileButton)).perform(ViewActions.click());
         Espresso.onView(ViewMatchers.withText("Save Changes")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
-        Espresso.onView(ViewMatchers.withId(R.id.editTextFirstName2)).perform(ViewActions.typeText("Steve"));
+        Espresso.onView(ViewMatchers.withId(R.id.editTextFirstName2)).perform(ViewActions.replaceText("Bobby"));
         Espresso.onView(ViewMatchers.withId(R.id.editTextFirstName2)).perform(ViewActions.closeSoftKeyboard());
         Espresso.onView(ViewMatchers.withId(R.id.saveChangesButton)).perform(ViewActions.click());
         Espresso.onView(ViewMatchers.withText("Save Changes")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));

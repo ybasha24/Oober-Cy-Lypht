@@ -20,7 +20,7 @@
         app:layout_constraintVertical_bias="0.3" />
 
     <Button
-        android:id="@+id/riderProfileButton"
+        android:id="@+id/driverProfileButton"
         android:layout_width="118dp"
         android:layout_height="48dp"
         android:onClick="profileSettings"
@@ -74,7 +74,7 @@
     <ImageView
         android:id="@+id/driverProfilePic"
         android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_height="136dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
