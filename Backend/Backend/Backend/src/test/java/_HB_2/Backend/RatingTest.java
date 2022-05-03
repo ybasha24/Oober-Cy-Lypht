@@ -113,21 +113,23 @@ public class RatingTest {
 
 
 
-        //delete the trip we just created
-        this.restTemplate
-                .put("http://localhost:" + port + "/user/deleteUser?id=" + riderId, String.class);
-        assertEquals(200, responseEntity.getStatusCodeValue());
-
         //delete the user we just created
         String string = "/user/deleteUser?id=" + driverId;
+        String string2 = "/user/deleteUser?id=" + riderId;
         Response response = RestAssured.given().
                 when().
                 delete(string);
+        Response response2 = RestAssured.given().
+                when().
+                delete(string2);
 
 
         // Check status code
         int statusCode = response.getStatusCode();
         assertEquals(200, statusCode);
+
+        int statusCode2 = response2.getStatusCode();
+        assertEquals(200, statusCode2);
 
     }
 
