@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import _HB_2.Backend.driver.Driver;
 import _HB_2.Backend.driver.DriverRepository;
 import _HB_2.Backend.rating.Rating;
+import _HB_2.Backend.review.driverReview.DriverReview;
+import _HB_2.Backend.review.riderReview.RiderReview;
 import _HB_2.Backend.rider.Rider;
 import _HB_2.Backend.rider.RiderRepository;
 import _HB_2.Backend.user.User;
@@ -26,7 +28,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
-public class RatingTest {
+public class RatingAndReviewTest {
 
     @LocalServerPort
     int port;
@@ -112,6 +114,32 @@ public class RatingTest {
         assertEquals(5, ratingForRider.getRating());
 
 
+        //create a review for both users:
+        DriverReview driverReview = new DriverReview();
+        driverReview.setReviewDriver(user1);
+        driverReview.setReviewer(riderId);
+        driverReview.setReview("He is amazing!");
+
+
+        int driverReviewId = driverReview.getId();
+        assertEquals("He is amazing!", driverReview.getReview());
+        //delete review
+        this.restTemplate
+                .put("http://localhost:" + port + "/driverReview/deleteDriverReviewByReviewId?reviewId=" + driverReviewId, String.class);
+        assertEquals(200, responseEntity.getStatusCodeValue());
+
+        RiderReview riderReview = new RiderReview();
+        riderReview.setReviewRider(user2);
+        riderReview.setReviewer(driverId);
+        riderReview.setReview("She is amazing!");
+
+
+        int riderReviewId = riderReview.getId();
+        assertEquals("She is amazing!", riderReview.getReview());
+        //delete review
+        this.restTemplate
+                .put("http://localhost:" + port + "/riderReview/deleteRiderReviewByReviewId?reviewId=" + riderReviewId, String.class);
+        assertEquals(200, responseEntity.getStatusCodeValue());
 
         //delete the user we just created
         String string = "/user/deleteUser?id=" + driverId;
@@ -122,7 +150,6 @@ public class RatingTest {
         Response response2 = RestAssured.given().
                 when().
                 delete(string2);
-
 
         // Check status code
         int statusCode = response.getStatusCode();
