@@ -84,9 +84,10 @@ public class UserTest {
                 .put("http://localhost:" + port + "/user/deleteProfilePicture?userId=" + driverId, String.class);
         assertEquals(200, responseEntity.getStatusCodeValue());
 
-        //create a trip
-
-        //delete that trip
+        //ban a user
+        this.restTemplate
+                .put("http://localhost:" + port + "/user/banUserById?userId=" + driverId, String.class);
+        assertEquals(200, responseEntity.getStatusCodeValue());
 
         //test editing the user
         driver = new Driver("FirstNameTest",
