@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import _HB_2.Backend.driver.Driver;
 import _HB_2.Backend.driver.DriverRepository;
 import _HB_2.Backend.user.User;
+import io.swagger.annotations.ApiOperation;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +19,8 @@ import io.restassured.response.Response;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -34,6 +37,7 @@ public class UserTest {
     private DriverRepository driverRepository;
 
     private int driverId;
+    private String profilePicture;
 
     private User user;
 
@@ -66,6 +70,21 @@ public class UserTest {
         //make a rider
 
         //set profile picture
+//        @ApiOperation(value = "Set user's profile picture", response = String.class)
+//        @PutMapping("/setProfilePicture")
+//        String setProfilePicture(@RequestParam int userId, String path) {
+//            return userService.setProfilePicture(userId, path);
+//        }
+
+        driverId = driverRepository.findByEmail("EmailTest").getId();
+        profilePicture = "ProfilePictureTest";
+        this.restTemplate
+                .put("http://localhost:" + port + "/user/setProfilePicture?userId=" + driverId + "&path=" + profilePicture, String.class);
+        assertEquals(200, responseEntity.getStatusCodeValue());
+
+        //test to see if we have set the correct profile picture
+        User user = driverRepository.findById(driverId);
+        assertEquals(profilePicture, user.getProfilePicture());
 
         //delete profile picture
 
