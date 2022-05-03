@@ -69,13 +69,6 @@ public class UserTest {
 
         //make a rider
 
-        //set profile picture
-//        @ApiOperation(value = "Set user's profile picture", response = String.class)
-//        @PutMapping("/setProfilePicture")
-//        String setProfilePicture(@RequestParam int userId, String path) {
-//            return userService.setProfilePicture(userId, path);
-//        }
-
         driverId = driverRepository.findByEmail("EmailTest").getId();
         profilePicture = "ProfilePictureTest";
         this.restTemplate
@@ -86,7 +79,10 @@ public class UserTest {
         User user = driverRepository.findById(driverId);
         assertEquals(profilePicture, user.getProfilePicture());
 
-        //delete profile picture
+        //delete profile picture test
+        this.restTemplate
+                .put("http://localhost:" + port + "/user/deleteProfilePicture?userId=" + driverId, String.class);
+        assertEquals(200, responseEntity.getStatusCodeValue());
 
         //create a trip
 
@@ -121,19 +117,6 @@ public class UserTest {
         assertEquals(200, statusCode);
 
     }
-
-//    @Test
-//    public void deleteUser() {
-//        //send request and receive response
-//        String string = "/user/deleteUser?id=" + driverId;
-//        Response response = RestAssured.given().
-//                when().
-//                delete(string);
-//
-//        // Check status code
-//        int statusCode = response.getStatusCode();
-//        assertEquals(200, statusCode);
-//    }
 
 }
 
